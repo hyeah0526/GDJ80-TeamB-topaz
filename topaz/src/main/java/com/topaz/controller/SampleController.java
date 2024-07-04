@@ -68,8 +68,6 @@ public class SampleController {
 	
 	/*
 	 * 사이드바 작동 테스트
-	 * 
-	 */
 	@GetMapping("/groupware/empMain")
 	public String empMain() {
 
@@ -198,7 +196,6 @@ public class SampleController {
 
 		return "groupware/volunteer/volunteerList";
 	}
-	
-	
+	*/
 	
 }
