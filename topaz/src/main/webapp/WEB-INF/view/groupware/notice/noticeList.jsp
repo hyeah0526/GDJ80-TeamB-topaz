@@ -1,7 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<!--
+   분류 번호: #10 - 공지 사항 목록 페이지
+   시작 날짜: 2024-07-05
+   담당자: 김지훈
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
+<head>
+</head>	
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
 	
@@ -17,7 +29,7 @@
 	
 	<!-- Title 시작 -->
 	<div class="pagetitle">
-      <h1>noticeList.jsp</h1>
+      <h1>공지 사항</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">중제목</a></li>
@@ -28,12 +40,54 @@
 
 	<!-- section 시작 -->
     <section class="section">
-    
-    
-    
-    
-    
-    </section><!-- section 종료 -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<form action="/topaz/groupware/notice/noticeAdd" method="get">
+							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit">작성</button>
+						</form>
+						<!-- Table with stripped rows -->
+						<table class="table datatable">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>제목</th>
+									<th>생성 일자</th>
+									<th>수정 일자</th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:forEach var="n" items="${noticeList}">
+								<tr>
+									<td>${n.no}</td>
+									<td>
+										<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}">
+											${n.title}
+										</a>
+									</td>
+									<td>${n.regTime}</td>
+									<td>${n.modTime}</td>
+								</tr>
+							</c:forEach>
+							</tbody>
+						</table>
+						<c:if test="${currentPage > 1 }">
+							<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
+								이전
+							</a>
+						</c:if>
+						<c:if test="${currentPage < lastPage }">
+							<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage + 1}">
+								다음
+							</a>
+						</c:if>	
+						<!-- End Table with stripped rows -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!-- section 종료 -->
 
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->
