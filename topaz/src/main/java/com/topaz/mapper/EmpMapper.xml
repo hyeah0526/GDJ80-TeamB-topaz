@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.EmpMapper">
+	
+	<!-- 직원 회원가입 -->
+	<insert id="insertEmp" parameterType="com.topaz.dto.Employee">
+		INSERT INTO
+			employee(
+				emp_no,
+				emp_pw,
+				emp_name,
+				emp_dept,
+				emp_grade,
+				emp_gender,
+				emp_birth,
+				emp_phonenumber,
+				post_no,
+				address,
+				emp_hiredate,
+				reg_time,
+				mod_time,
+				reg_id,
+				mod_id,
+				use_yn
+			)VALUES(
+				#{empNo},
+				#{empPw},
+				#{empName},
+				#{empDept},
+				#{empGrade},
+				#{empGender},
+				#{empBirth},
+				#{empPhoneNumber},
+				#{postNo},
+				#{address},
+				#{empHireDate},
+				NOW(),
+				NOW(),
+				#{empNo},
+				#{empNo},
+				'Y'
+			)
+	</insert>
+</mapper>

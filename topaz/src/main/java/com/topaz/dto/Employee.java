@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+/* 분류 번호 :  #4 - 직원 */
 public class Employee {
 	private String empNo;
 	private String empPw;

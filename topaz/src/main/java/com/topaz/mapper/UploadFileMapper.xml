@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.UploadFileMapper">
+	<!-- 파일저장 -->
+	<insert id="insertUploadFile" parameterType="com.topaz.dto.UploadFile">
+		INSERT INTO
+			file_upload(
+				file_no,
+				reference_no,
+				original_file_name,
+				file_name,
+				file_size,
+				file_type,
+				reg_time,
+				mod_time,
+				reg_id,
+				mod_id,
+				use_yn
+			)VALUES(
+				CURRENT_TIMESTAMP(5),
+				#{referenceNo},
+				#{OriginalFileName},
+				#{fileName},
+				#{fileSize},
+				#{fileType},
+				NOW(),
+				NOW(),
+				#{referenceNo},
+				#{referenceNo},
+				'Y'
+			)
+			
+	</insert>
+</mapper>
