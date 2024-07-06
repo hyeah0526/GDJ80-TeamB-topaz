@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.topaz.dto.EmployeeRequest;
 import com.topaz.service.EmployeeService;
@@ -29,6 +31,32 @@ public class EmployeeController {
 		return "groupware/emp/empAdd";
 	
 	}
+	
+	/*
+	 * 서비스명: #4 - 직원번호 중복 확인
+	 * 시작 날짜: 2024-07-06
+	 * 담당자: 김인수
+	*/
+	@ResponseBody
+	@GetMapping("/groupware/emp/selectEmpNo")
+	public String selectEmpNo(@RequestParam("empNo") String empNo) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / selectEmpNo / empNo : " + empNo);
+		
+		String resultEmpNo = employeeService.selectEmpNo(empNo);
+	
+		//resultEmpNo 디버깅
+		log.debug(Debug.KIS + "controller / selectEmpNo / resultEmpNo : " + resultEmpNo);
+		
+		if(resultEmpNo == null) {			
+			return "0";
+		}
+		
+		return "1";
+	}
+	
+	
 	
 	
 	/*

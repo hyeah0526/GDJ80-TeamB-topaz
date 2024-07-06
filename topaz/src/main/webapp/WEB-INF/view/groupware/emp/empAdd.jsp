@@ -13,8 +13,9 @@
 <head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-    <link rel="stylesheet" href="<c:url value='/css/insuEmp.css' />">
-    
+    <link rel="stylesheet" href="<c:url value='/css/insuEmp.css' />"> <!-- CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- JS -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- 다음 주소 API -->
 </head>
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
@@ -47,21 +48,13 @@
 			     				<input type="file" name="uploadFile" >
 					     	</div>
 					     	
-			     			<!-- 직원번호 -->
-			     			<label>직원번호</label>
-			     			<input type="text" name="empNo">
-			     			
-			     			<!-- 비밀번호 -->
-			     			<label>비밀번호</label>
-			     			<input type="text" name="empPw">
-			     			
 			     			<!-- 이름 -->
 			     			<label>이름</label>
-			     			<input type="text" name="empName">
+			     			<input type="text" name="empName" class="step" data-step="1" placeholder="이름">
 			     			
 			     			<!-- 부서 -->
 			     			<label>부서</label>
-			     			<select name="empDept">
+			     			<select name="empDept" class="step"  data-step="2">
 			     				<option value="E">인사부</option>
 			     				<option value="M">마케팅부</option>
 			     				<option value="W">행정부</option>
@@ -70,45 +63,58 @@
 			     			
 			     			<!-- 직위 -->
 			     			<label>직위</label>
-			     			<select name="empGrade">
+			     			<select name="empGrade" class="step"  data-step="3">
 			     				<option value="E">사원</option>
 			     				<option value="A">대리</option>
 			     				<option value="M">팀장</option>
 			     				<option value="H">부장</option>
 			     			</select>			
    			     			
+   			     			<!-- 직원번호 -->
+			     			<label>직원번호</label>
+   			     			<div>
+				     			<input type="text" name="empNo" class="step" data-step="4"  readonly>
+				     			<button type="button" id="empNoBtn" class="step" data-step="4" >직원 번호 생성</button>
+   			     			</div>
+			     			<!-- 비밀번호 -->
+			     			<label>비밀번호</label>
+			     			<input type="password" name="empPw" class="step"  data-step="5" placeholder="비밀번호">
+			     			
+   			     			
    			     			<!-- 생일 -->
    			     			<label>생일</label>
-   			     			<input type="date" name="empBirth">
+   			     			<input type="date" name="empBirth" class="step"  data-step="6">
 			     			
 			     			<!-- 전화번호 -->
 			     			<label>전화번호</label>
 			     			<div class="phoneNumber">
-	   			     			<input type="text" name="firstPhNumber">
+	   			     			<input type="text" name="firstPhNumber" class="step"  data-step="7" placeholder="010" maxlength="3" pattern="\d*">
 	   			     			<label>-</label>
-				     			<input type="text" name="secondPhNumber">
+				     			<input type="text" name="secondPhNumber" class="step"  data-step="8" placeholder="1234" maxlength="4" pattern="\d*">
 				     			<label>-</label>
-				     			<input type="text" name="thirdPhNumber">
+				     			<input type="text" name="thirdPhNumber" class="step"  data-step="9" placeholder="1234" maxlength="4" pattern="\d*">
 				     			<input type="hidden" id="empPhoneNumber" name="empPhoneNumber">
 			     			</div>
 			     			
 			     			<!-- 우편번호 -->
 			     			<div class="postInput">
 			     				<label>우편번호</label>
-			     				<button class="postNumberBtn">우편번호 검색</button>
+			     				<button class="step" type="button" data-step="10"   onclick="openPostcode()">우편번호 검색</button>
 			     			</div>
-							<input name="postNo" value="">
-			     			<input name="address" value="">
+							<input name="postNo"  class="step" data-step="11" placeholder="우편번호">
+			     			<input name="firstAddress" class="step" data-step="12" placeholder="주소">
+			     			<input name="addressDetail" class="step" data-step="13" placeholder="상세 주소">
+			     			<input type="hidden" id="address" name="address">
 			     			
 			     			<!-- 입사일 -->
 			     			<label>입사일</label>
-			     			<input type="date" name="empHireDate"> 
-			     			 
+			     			<input type="date" name="empHireDate" class="step" data-step="14"> 
+			     			
 			     			 <!-- 성별 -->
 			     			 <div>
 				     			 <label>성별 : </label>
-				     			 <input type="radio" name="empGender" value="F">여자
-				     			 <input type="radio" name="empGender" value="M">남자
+				     			 <input type="radio" name="empGender" value="F" data-step="15">여자
+				     			 <input type="radio" name="empGender" value="M" data-step="15">남자
 			     			 </div>
 			     			 
 			     			 <!-- 버튼 -->
@@ -118,29 +124,14 @@
 			     			 </div>
 			     		</form>
 			     	</div>
-			     	
-			     </div>	
-			     
-			     		
+			     </div>			
 			</div>
 		</div>
-
-
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
-	<script>
-		document.querySelector(".signupForm").addEventListener("submit", function() {
-			let first = document.getElementsByName("firstPhNumber")[0].value;
-			let second = document.getElementsByName("secondPhNumber")[0].value;
-			let third = document.getElementsByName("thirdPhNumber")[0].value;
-			let fullPhoneNumber = first + second + + third;
-		    document.getElementsByName("empPhoneNumber")[0].value = fullPhoneNumber;
-            console.log("Full Phone Number: " + fullPhoneNumber);
-		});
-	</script>
+	<script src="<c:url value='/js/insuEmp.js'/>"></script>
 </body>
-
 </html>
