@@ -12,6 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div>
 	<c:forEach var="n" items="${noticeDetail}">
 			<div>${n.newsNo}</div>
 			<div>
@@ -20,5 +21,6 @@
 			<div>${n.regTime}</div>
 			<div>${n.modTime}</div>
 	</c:forEach>
+</div>
 </body>
 </html>

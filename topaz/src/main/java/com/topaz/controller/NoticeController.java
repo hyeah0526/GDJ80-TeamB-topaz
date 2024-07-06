@@ -1,6 +1,5 @@
 package com.topaz.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.topaz.service.NoticeService;
 
@@ -21,8 +20,30 @@ public class NoticeController {
 	
 	@Autowired NoticeService noticeService;
 	
+	/*
+	 * 서비스명: noticeRemove()
+	 * 담당자: 김지훈
+	*/
 	
+	@PostMapping("/groupware/notice/noticeRemove")
+	public String noticeRemove() {
+		return "groupware/notice/noticeRemove";
+	}
 	
+	/*
+	 * 서비스명: noticeModify()
+	 * 담당자: 김지훈
+	*/
+	
+	@PostMapping("/groupware/notice/noticeModify")
+	public String noticeModify() {
+		return "groupware/notice/noticeModify";
+	}
+	
+	/*
+	 * 서비스명: noticeAdd()
+	 * 담당자: 김지훈
+	*/
 	@GetMapping("/groupware/notice/noticeAdd")
 	public String noticeAdd() {
 		return "groupware/notice/noticeAdd";

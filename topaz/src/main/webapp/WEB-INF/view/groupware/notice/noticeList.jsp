@@ -9,7 +9,6 @@
    담당자: 김지훈
 -->
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,11 +47,16 @@
 							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit">작성</button>
 						</form>
 						<!-- Table with stripped rows -->
+						<form action="/topaz/groupware/notice/noticeList" method="get">
+							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
+							<button type="submit">검색</button>
+						</form>
 						<table class="table datatable">
 							<thead>
 								<tr>
 									<th>No</th>
 									<th>제목</th>
+									<th>작성자</th>
 									<th>생성 일자</th>
 									<th>수정 일자</th>
 								</tr>
@@ -66,6 +70,7 @@
 											${n.title}
 										</a>
 									</td>
+									<td>${n.empName}</td>
 									<td>${n.regTime}</td>
 									<td>${n.modTime}</td>
 								</tr>
