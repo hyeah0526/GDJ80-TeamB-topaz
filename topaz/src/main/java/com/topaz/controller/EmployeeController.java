@@ -19,7 +19,8 @@ public class EmployeeController {
 	EmployeeService employeeService; // employeeService 의존성 주입
 	
 	/*
-	 * 서비스명: 직원 등록 뷰 
+	 * 서비스명: #4 - 직원등록 뷰 
+	 * 시작 날짜: 2024-07-05
 	 * 담당자: 김인수
 	*/
 	@GetMapping("/groupware/emp/empAdd")
@@ -31,16 +32,17 @@ public class EmployeeController {
 	
 	
 	/*
-	 * 서비스명: 직원 등록 액션
+	 * 서비스명: #4 - 직원등록 기능
+	 * 시작 날짜: 2024-07-05
 	 * 담당자: 김인수
 	*/
 	@PostMapping("/groupware/emp/empAdd")
 	public String empAdd(EmployeeRequest employeeRequest) {
 		
-		//매개변수 디비깅
+		//매개변수 디버깅
 		log.debug(Debug.KIS + "controller / empAdd / employeeRequest : " + employeeRequest);
 		
-		//직원정보 삽입
+		//서비스 레이어로 직원정보 이동
 		employeeService.insertEmp(employeeRequest);
 		
 		return "groupware/emp/empAdd";
