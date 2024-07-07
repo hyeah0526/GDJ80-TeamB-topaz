@@ -95,19 +95,6 @@
 		}
 	  });
 	
-	
-	$(document).ready(function() {
-		
-		// 일정 상세보기 클릭시 모달창 띄우기 
-		$('#todayDetailSpan').click(function(){
-			console.log("클릭이벤트 체크 todayDetailSpan ");
-			$("#detailSchedule").modal("show");
-		})
-		
-		
-	});
-	
-	
 	</script>
 	
 </head>
@@ -194,15 +181,51 @@
 				</div>
 				
 				<!-- 모달 일정 등록폼 -->
-				<div class="modal-body">
-					내용을 입력해주세요
-				</div>
-				
-				<!-- 모달 일정 취소/등록버튼 -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
-				</div>
+				<form action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
+					<div class="modal-body">
+						<div class="row mb-5">
+							<label for="inputEmail" class="col-sm-4 col-form-label">시작날짜</label>
+							<div class="col-sm-8 scheduleModalDiv">
+								<input type="date" class="form-control" name="startDate">
+							</div>
+							
+							<label for="inputEmail" class="col-sm-4 col-form-label">종료날짜</label>
+							<div class="col-sm-8 scheduleModalDiv">
+								<input type="date" class="form-control" name="endDate">
+							</div>
+							
+							<label for="inputEmail" class="col-sm-4 col-form-label">일정제목</label>
+							<div class="col-sm-8 scheduleModalDiv">
+								<input type="text" class="form-control" name="title">
+							</div>
+							
+							<label for="inputEmail" class="col-sm-4 col-form-label">일정종류</label>
+							<div class="col-sm-8 scheduleModalDiv">
+							<label for="meetingRadio">
+								<input class="form-check-input" type="radio" name="type" value="회의" id="meetingRadio" checked> 회의
+							</label>&nbsp;&nbsp;&nbsp;
+							<label for="festivalRadio">
+								<input class="form-check-input" type="radio" name="type" value="행사" id="festivalRadio"> 행사
+							</label>&nbsp;&nbsp;&nbsp;
+							<label for="inspectionRadio">
+								<input class="form-check-input" type="radio" name="type" value="점검" id="inspectionRadio"> 점검
+							</label>
+							</div>
+							
+							<label for="inputEmail" class="col-sm-4 col-form-label">일정내용</label>
+							<div class="col-sm-8">
+								<textarea rows="3" maxlength="100" class="col-sm-12" name="content" placeholder="100자 이하 작성"></textarea>
+								(/100)
+							</div>
+						</div>
+					</div>
+					
+					<!-- 모달 일정 취소/등록버튼 -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save</button>
+					</div>
+				</form>
 			</div></div>
 		</div><!-- End addSchedule Modal-->
 		

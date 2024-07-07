@@ -47,6 +47,15 @@
 	background-color: #af92e2;
 }
 
+.scheduleModalDiv{
+	margin-bottom: 15px;
+}
+
+/* 모달 내용등록 label */
+.modal-body label{
+	text-align: center;
+	font-weight: bolder;
+}
 
 
 

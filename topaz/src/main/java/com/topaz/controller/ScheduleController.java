@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.topaz.dto.Schedule;
 import com.topaz.service.ScheduleService;
 import com.topaz.utill.Debug;
 
@@ -35,5 +37,23 @@ public class ScheduleController {
 
 		return "groupware/schedule/scheduleList";
 	}
+	
+	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-07-07
+	 * 담당자: 박혜아
+	*/
+	@PostMapping("/groupware/schedule/scheduleList")
+	public String ScheduleAdd(Schedule schedule) {
+		log.debug(Debug.PHA + "ScheduleAdd controller--> " + schedule + Debug.END);
+
+		return "redirect:/groupware/schedule/scheduleList";
+	}
+	
+	
+	
+	
+	
 
 }

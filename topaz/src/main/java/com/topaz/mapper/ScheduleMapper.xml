@@ -4,7 +4,11 @@
 
 	<!-- 분류 번호: #6 - 사내 일정 관리 페이지 :: 전체조회 -->
 	<select id="selectScheduleList" resultType="map">
-		SELECT schedule_no scheduleNo, title, content, use_yn
+		SELECT 
+			schedule_no scheduleNo
+			, title
+			, content
+			, use_yn
 			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'M001' AND cd = type) type
 			, DATE_FORMAT(start_date, '%Y-%m-%dT%H:%i:%s') startDate
 			, DATE_FORMAT(end_date, '%Y-%m-%dT%H:%i:%s') endDate
@@ -15,7 +19,10 @@
 	
 	<!-- 분류 번호: #6 - 사내 일정 관리 페이지 :: 오늘의 일정조회 -->
 	<select id="selectScheduleTodayList" resultType="map">
-		SELECT s.schedule_no scheduleNo, s.title title, s.content content
+		SELECT 
+			s.schedule_no scheduleNo
+			, s.title title
+			, s.content content
 			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'M001' AND cd = s.type) type
 			, DATE_FORMAT(s.start_date, '%H:%i') startTime
 			, DATE_FORMAT(s.end_date, '%H:%i') endTime
