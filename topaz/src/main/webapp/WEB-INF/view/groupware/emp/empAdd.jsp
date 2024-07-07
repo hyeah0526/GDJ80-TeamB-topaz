@@ -44,9 +44,13 @@
 			     		<form class="signupForm" action="<c:url value='/groupware/emp/empAdd' />" method="post" enctype="multipart/form-data">
 			     			
 					     	<!-- 이미지 저장 -->
-					     	<div>
-			     				<input type="file" name="uploadFile" >
-					     	</div>
+					     	<div class="profileDiv">
+							    <input type="file" name="uploadFile" id="uploadFile">
+							    <div id="previewContainer" class="imagePreviewContainer" style="display:none;">
+							        <img id="preview">
+							        <span id="removeImage" class="removeImage">&times;</span>
+							    </div>
+							</div>
 					     	
 			     			<!-- 이름 -->
 			     			<label>이름</label>
@@ -127,12 +131,13 @@
 			     </div>			
 			</div>
 		</div>
-	</main><!-- End #main -->
+	</main>><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 	<script src="<c:url value='/js/insuEmp.js'/>"></script>
 	<script src="<c:url value='/js/post.js'/>"></script>
+	<script src="<c:url value='/js/profileValidation.js'/>"></script>
 </body>
 </html>

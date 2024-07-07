@@ -1,66 +1,162 @@
 @charset "UTF-8";
 
-.container{
-	width: 100%;
-	display: flex;
-	justify-content: center;
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
 }
 
-.colorDiv{
-	background-color: #f9f9f9;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	width: 70%;
-	display: flex;
-	flex-direction: column;
+.colorDiv {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+h1.titleH1 {
+    margin-top: 10px;
+    font-size: 32px;
+    color: #333;
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.mainContent {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.signupForm {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+}
+
+.signupForm label {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.signupForm input[type="text"],
+.signupForm input[type="password"],
+.signupForm input[type="date"],
+.signupForm select,
+.signupForm input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.phoneNumber {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.phoneNumber input {
+    width: 100%;
+}
+
+.phoneNumber label {
+    margin-left: 10px;
+    margin-right: 10px;
+    align-self: center;
+}
+
+.postInput {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    display: flex;
     align-items: center;
 }
 
-h1.titleH1{
-	margin-top:10px;
-	font-size: 42px;
+button, 
+.postInput button, 
+.signupForm input[type="file"]::file-selector-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none;
 }
 
-.title{
-	margin-top:20px;
-	margin-bottom:20px;
-	width: 50%;
-	display: flex;
-	justify-content: center;
-	padding: 10px;
-	border: 3px solid white;
+button:hover, 
+.postInput button:hover, 
+.signupForm input[type="file"]::file-selector-button:hover {
+    background-color: #0056b3;
 }
 
-.mainContent{
-	display: flex;
+.signupForm input[type="file"] {
+    border: none;
 }
 
-.signupForm{
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
+.formBtn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.phoneNumber{
-	display: flex;
+.profileDiv {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    width: 500px; 
+    height: 200px; 
+    overflow: hidden;
+    position: relative;
 }
 
-.phoneNumber input{
-	width: 100px;
+.imagePreviewContainer {
+    width: 150px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
-.phoneNumber label{
-	margin-left: 10px;
-	margin-right: 10px;
+.removeImage {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 0; 
 }
 
-
-.postInput{
-	margin-top: 20px;
-	margin-bottom: 5px;
+.removeImage:hover {
+    transform: scale(1.1);
 }
-.formBtn{
-	display: flex;
-	justify-content: space-between;
-	margin-top: 20px;
-	margin-bottom: 20px;
+
+#preview {
+   	width: 150px;
+    height: 200px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 5px;
 }
