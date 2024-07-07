@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!--
+   분류번호: #15 - 로그인
+   시작 날짜: 2024-07-07
+   담당자: 한은혜
+-->
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>로그인</title>
@@ -64,35 +68,30 @@
 
       <div class="container" data-aos="fade">
 
-        <div class="row gy-5 gx-lg-5">
-          <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required="">
-                </div>
-              </div>
-              <div class="form-group mt-3">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required="">
-              </div>
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" placeholder="Message" required=""></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-          </div><!-- End Contact Form -->
-
+        <div class="row justify-content-center">
+	          <div class="col-lg-4 ">
+	            <form action="" method="post" role="form" class="php-email-form">
+		              <div class="row mb-3 mt-5">
+		              	  <div class="form-group mt-3">
+		                	<label for="id" class="form-label">ID</label>
+		                 	<input type="text" name="id" class="form-control" id="id">
+		                  </div>
+		              
+			              <div class="form-group mt-3 mb-3">
+			              	<label for="pw" class="form-label">PW</label>
+			                <input type="password" class="form-control" name="pw" id="pw">
+			              </div>
+		              </div>
+		              <div class="text-center mb-3 mt-3"><button type="submit">Login</button></div>
+	            </form>
+	            
+	            <div class="row php-email-form mb-5">
+	            	<div class="col"><button type="button">비밀번호 찾기</button></div>
+	            	<div class="col mb-5"><button type="button">회원가입</button></div>
+	            </div>
+	          </div><!-- End Contact Form -->
+			</div>
         </div>
-
-      </div>
 
     </section><!-- 입력 폼 끝 -->
 
