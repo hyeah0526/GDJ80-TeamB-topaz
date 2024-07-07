@@ -50,7 +50,7 @@
 					     	
 			     			<!-- 이름 -->
 			     			<label>이름</label>
-			     			<input type="text" name="empName" class="step" data-step="1" placeholder="이름">
+			     			<input type="text" name="empName" class="step" data-step="1" placeholder="이름" maxlength="20">
 			     			
 			     			<!-- 부서 -->
 			     			<label>부서</label>
@@ -78,7 +78,7 @@
    			     			</div>
 			     			<!-- 비밀번호 -->
 			     			<label>비밀번호</label>
-			     			<input type="password" name="empPw" class="step"  data-step="5" placeholder="비밀번호">
+			     			<input type="password" name="empPw" class="step"  data-step="5" placeholder="비밀번호" maxlength="20">
 			     			
    			     			
    			     			<!-- 생일 -->
@@ -99,9 +99,9 @@
 			     			<!-- 우편번호 -->
 			     			<div class="postInput">
 			     				<label>우편번호</label>
-			     				<button class="step" type="button" data-step="10"   onclick="openPostcode()">우편번호 검색</button>
+			     				<button class="step" type="button" data-step="10"   onclick="openPostcode('postNo','firstAddress')">우편번호 검색</button>
 			     			</div>
-							<input name="postNo"  class="step" data-step="11" placeholder="우편번호">
+							<input name="postNo"  class="step" data-step="11" placeholder="우편번호" maxlength="5">
 			     			<input name="firstAddress" class="step" data-step="12" placeholder="주소">
 			     			<input name="addressDetail" class="step" data-step="13" placeholder="상세 주소">
 			     			<input type="hidden" id="address" name="address">
@@ -133,5 +133,6 @@
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 	<script src="<c:url value='/js/insuEmp.js'/>"></script>
+	<script src="<c:url value='/js/post.js'/>"></script>
 </body>
 </html>
