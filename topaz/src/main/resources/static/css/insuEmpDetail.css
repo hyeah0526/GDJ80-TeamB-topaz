@@ -1,0 +1,205 @@
+@charset "UTF-8";
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.colorDiv {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+h1.titleH1 {
+    margin-top: 10px;
+    font-size: 32px;
+    color: #333;
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.mainContent {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.signupForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px;
+}
+
+.signupForm label {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.signupForm input[type="text"],
+.signupForm input[type="password"],
+.signupForm input[type="date"],
+.signupForm select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.phoneNumber {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.phoneNumber input {
+    width: 100%;
+}
+
+.phoneNumber label {
+    margin-left: 10px;
+    margin-right: 10px;
+    align-self: center;
+}
+
+.postInput {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+button, 
+.postInput button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none;
+}
+
+button:hover, 
+postInput button:hover {
+    background-color: #0056b3;
+}
+
+.formBtn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.imageNameDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.imagePreviewContainer {
+    width: 150px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+input[type="radio"][name="empGender"] + label {
+    margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    color: #555;
+    cursor: default;
+}
+
+input[type="radio"][name="empGender"] {
+    display: none;
+    cursor: default;
+}
+
+input[type="radio"][name="empGender"] + label:before {
+    content: '';
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: white;
+}
+
+input[type="radio"][name="empGender"]:checked + label:before {
+    background: #000;
+    border-color: #ccc;
+}
+#preview {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.formRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.formGroup {
+    width: 48%;
+}
+
+.formGroup.fullWidth {
+    width: 100%;
+}
+
+.formRow > .formGroup {
+    margin-bottom: 20px;
+}
+
+.addressFields {
+    display: flex;
+    flex-direction: column;
+}
+
+.addressTextarea {
+    resize: none;
+    height: 100px;
+    width: 200px;
+    overflow: hidden;
+    word-wrap: break-word;
+}

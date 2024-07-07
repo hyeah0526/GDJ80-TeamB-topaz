@@ -1,5 +1,9 @@
 package com.topaz.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,4 +72,54 @@ public class EmployeeService {
 		
 		return empMapper.selectEmpNo(empNo);
 	}
+	
+
+	/*
+	 * 분류번호: #4 - 전체 직원조회
+	 * 시작 날짜: 2024-07-07
+	 * 담당자: 김인수
+	*/
+	public Map<String, Object> selectEmpAll(Map<String, Object> paramMap) {
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectEmpAll / paramMap : " + paramMap);
+		
+		//조건에 맞는 직원 수 가져오기
+	    int totalCount = empMapper.selectEmpAllCnt(paramMap);
+	    log.debug(Debug.KIS + "service / selectEmpAll / totalCount : " + totalCount);
+
+	    //마지막 페이지 계산
+	    int rowPerPage = (int) paramMap.get("rowPerPage");
+	    int lastPage =  (totalCount + rowPerPage - 1) / rowPerPage;
+	    log.debug(Debug.KIS + "service / selectEmpAll / lastPage : " + lastPage);
+	    
+
+	    //전체 직원 리스트 가져오기
+	    List<Map<String, Object>> empList = empMapper.selectEmpAll(paramMap);
+	    log.debug(Debug.KIS + "service / selectEmpAll / empList : " + empList);
+
+	    //결과를 맵에 담아서 반환
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("empList", empList);
+	    resultMap.put("lastPage", lastPage);
+		
+		return resultMap;
+	} 
+	
+	/*
+	 * 분류번호: #4 - 직원상세 조회
+	 * 시작 날짜: 2024-07-07
+	 * 담당자: 김인수
+	*/
+	public Map<String, Object> selectEmpOne(String empNo) {
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectEmpOne / empNo : " + empNo);
+		
+		//직원 리스트 가져오기
+		Map<String, Object> empOneList = empMapper.selectEmpOne(empNo);
+		log.debug(Debug.KIS + "service / selectEmpOne / empOneList : " + empOneList);
+	  
+		return empOneList;
+	} 
 }

@@ -1,0 +1,234 @@
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1.titleH1 {
+    margin-top: 10px;
+    font-size: 32px;
+    color: #333;
+    text-align: center;
+}
+
+form {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+form div.hireDateDiv {
+    width: 100%;
+}
+
+form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+form input[type="date"],
+form input[type="text"],
+form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+form button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th,
+table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+button.resetBtn {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+button.resetBtn:hover {
+    background-color: #0056b3;
+}
+
+button[type="button"]:not(.resetBtn) {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+button[type="button"]:not(.resetBtn):hover {
+    background-color: #0056b3;
+}
+
+
+
+@media (max-width: 768px) {
+    .deptYNDiv > div,
+    .gradeNoDiv > div {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+form button {
+    width: auto; 
+}
+
+button.resetBtn {
+    width: auto;
+}
+
+button[type="button"]:not(.resetBtn) {
+    width: auto; 
+}
+
+table tr:hover {
+    background-color: #d3eafc; 
+    cursor: pointer; 
+}
+
+
+.dateInput {
+    display: flex;
+    align-items: center;
+}
+
+.dateInput input[type="date"] {
+    width: calc(50% - 20px);
+}
+
+.dateInput span {
+    margin: 0 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.pagination a {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #0056b3;
+}
+
+.deptYNDiv,
+.gradeNoDiv {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.deptYNDiv > div,
+.gradeNoDiv > div {
+    width: 48%;
+}
+
+.btn {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; 
+    cursor: default;
+    
+}
+
+.pagination a.disabled {
+    color: #ccc;
+    pointer-events: none;
+    cursor: default;
+    pointer-events: none;
+}
+
+.pagination .currentPage {
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    color: #333;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.mainContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.colorDiv {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding: 20px;
+}

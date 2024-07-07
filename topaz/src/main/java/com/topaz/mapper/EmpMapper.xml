@@ -52,4 +52,120 @@
 			emp_no = #{empNo}
 	</select>
 	
+	<!-- 분류 번호 :  #4 - 전체 직원조회 -->
+	<select id="selectEmpAll" parameterType="Map" resultType="Map">
+		SELECT 
+			ROW_NUMBER() OVER (ORDER BY e.emp_hiredate) AS NO, 
+			e.emp_no empNo, 
+			e.emp_name empName, 
+		 	dept_code.cd_nm empDept, 
+		   	grade_code.cd_nm empGrade,
+			lv.year_count yearCnt, 
+			e.use_yn useYn
+		FROM
+			employee AS e
+		INNER JOIN  
+			`leave` AS lv
+		ON 
+			e.emp_no = lv.emp_no
+		LEFT JOIN
+			common_code AS dept_code
+		ON
+			dept_code.cd = e.emp_dept
+			AND dept_code.crp_cd = 'E001'
+		LEFT JOIN
+			common_code AS grade_code
+		ON
+			grade_code.cd = e.emp_grade
+			AND grade_code.crp_cd = 'E002'
+		WHERE
+	        1=1
+			<if test="startDate != null and startDate != ''">
+			    AND e.emp_hiredate &gt;= #{startDate}
+			</if>
+			<if test="endDate != null and endDate != ''">
+			    AND e.emp_hiredate &lt;= #{endDate}
+			</if>
+			<if test="useYn != null and useYn != ''">
+			    AND e.use_yn = #{useYn}
+			</if>
+			<if test="empDept != null and empDept != ''">
+			    AND e.emp_dept = #{empDept}
+			</if>
+			<if test="empGrade != null and empGrade != ''">
+			    AND e.emp_grade = #{empGrade}
+			</if>
+			<if test="empNo != null and empNo != ''">
+			    AND e.emp_no = #{empNo}
+			</if>
+		LIMIT #{currentPage}, #{rowPerPage};
+	</select>
+	
+	<!-- 분류 번호 :  #4 - 전체 직원수 조회 -->
+	<select id="selectEmpAllCnt" resultType="int">
+		 SELECT 
+		 	COUNT(*)
+   		FROM employee e
+    	INNER JOIN 
+    		`leave` lv 
+   		ON 
+   			e.emp_no = lv.emp_no
+    	WHERE
+	        1=1
+	        <if test="startDate != null and startDate != ''">
+	            AND e.emp_hiredate &gt;= #{startDate}
+	        </if>
+	        <if test="endDate != null and endDate != ''">
+	            AND e.emp_hiredate &lt;= #{endDate}
+	        </if>
+	        <if test="useYn != null and useYn != ''">
+	            AND e.use_yn = #{useYn}
+	        </if>
+	        <if test="empDept != null and empDept != ''">
+	            AND e.emp_dept = #{empDept}
+	        </if>
+	        <if test="empGrade != null and empGrade != ''">
+	            AND e.emp_grade = #{empGrade}
+	        </if>
+	        <if test="empNo != null and empNo != ''">
+	            AND e.emp_no = #{empNo}
+	        </if>
+	</select>
+	
+	<!-- 분류 번호 :  #4 - 직원 상세 조회 -->
+	<select id="selectEmpOne" resultType="Map">
+		SELECT
+			e.emp_no empNo, 
+			e.emp_pw empPw, 
+			e.emp_name empName, 
+			dept_code.cd_nm empDept,  
+			grade_code.cd_nm empGrade, 
+			e.emp_gender empGender, 
+			e.emp_birth empBirth, 
+			e.emp_phonenumber empPhoneNumber, 
+			e.post_no postNo, 
+			e.address, 
+			e.emp_hiredate empHireDate,
+			upload.file_name fileName
+		FROM 
+			employee e
+		LEFT JOIN
+			common_code AS dept_code
+		ON 
+			e.emp_dept = dept_code.cd
+			AND dept_code.crp_cd = 'E001'
+		LEFT JOIN
+			common_code AS  grade_code
+		ON
+			e.emp_grade = grade_code.cd
+			AND grade_code.crp_cd = 'E002'
+		LEFT JOIN
+			file_upload AS upload
+		ON	
+			e.emp_no = upload.reference_no
+			AND upload.file_type = 'image/png'
+		WHERE
+			e.emp_no = #{empNo};
+	</select>
+	
 </mapper>

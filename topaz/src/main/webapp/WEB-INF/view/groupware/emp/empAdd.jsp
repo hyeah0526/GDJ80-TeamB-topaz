@@ -13,8 +13,8 @@
 <head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-    <link rel="stylesheet" href="<c:url value='/css/insuEmp.css' />"> <!-- CSS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- JS -->
+    <link rel="stylesheet" href="<c:url value='/css/insuEmpAdd.css' />"> <!-- CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- 다음 주소 API -->
 </head>
 <body>
@@ -123,8 +123,8 @@
 			     			 
 			     			 <!-- 버튼 -->
 			     			 <div class="formBtn">
-			     			 	<button >뒤로가기</button>	
-			     			 	<button type="submit">등록</button>
+			     			 	<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">뒤로가기</button>	
+			     			 	<button type="submit">저장</button>
 			     			 </div>
 			     		</form>
 			     	</div>
