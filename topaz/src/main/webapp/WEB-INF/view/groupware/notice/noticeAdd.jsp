@@ -7,165 +7,166 @@
 -->    
 <!DOCTYPE html>
 <html lang="en">
-	<script type="text/javascript" src="/smartEditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	<head>
+		<!-- CSS / JS -->
+		<link href="/topaz/css/jihoon.css" rel="stylesheet">
+		<script src="/topaz/js/jihoon.js"></script>
+		<!-- naver smart edior -->
+		<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				
+				let oEditors = [];
+		
+				// 에디터 로딩 함수 정의 (함수명 수정)
+				function editorLoading(title, contents) {
+					nhn.husky.EZCreator.createInIFrame({
+						oAppRef : oEditors,
+						elPlaceHolder : "noticeContent", // html editor가 들어갈 textarea의 id입니다.
+						sSkinURI : "/topaz/smarteditor/SmartEditor2Skin.html", // html editor가 skin url 입니다.
+						htParams : {
+							// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+							bUseToolbar : true,
+							// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+							bUseVerticalResizer : true,
+							// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+							bUseModeChanger : true,
+							fOnBeforeUnload : function() {
+								// 페이지를 떠날 때 처리할 로직
+							},
+							fOnAppLoad : function() {
+								// 수정 모드를 구현할 때 사용할 부분입니다.
+								// 로딩이 끝난 후 값이 체워지게 하는 구현을 합니다.
+								if (contents) {
+									oEditors.getById["noticeContent"].exec(
+											"PASTE_HTML", [ contents ]);
+								}
+							},
+							fCreator : "createSEditor2"
+						}
+					});
+				}
+				// 에디터 로딩 함수 호출 (함수명 수정)
+				editorLoading("", "");
+			});
+		</script>
+	</head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
 	
-<body>
-	<!-- ======= header <Body> 부분 ======= -->
-	<jsp:include page="/WEB-INF/view/groupware/inc/hearderBody.jsp"></jsp:include>
+	<body>
+		<!-- ======= header <Body> 부분 ======= -->
+		<jsp:include page="/WEB-INF/view/groupware/inc/hearderBody.jsp"></jsp:include>
+		
+		<!-- ======= sideBar 부분 ======= -->
+		<jsp:include page="/WEB-INF/view/groupware/inc/sideBar.jsp"></jsp:include>
 	
-	<!-- ======= sideBar 부분 ======= -->
-	<jsp:include page="/WEB-INF/view/groupware/inc/sideBar.jsp"></jsp:include>
-
-	<!-- =============================== Main 메인 시작 부분 ================================ -->
-	<main id="main" class="main">
+		<!-- =============================== Main 메인 시작 부분 ================================ -->
+		<main id="main" class="main">
+		
+		    <div class="pagetitle">
+		      <h1>공지 사항</h1>
+		    </div>
 	
-	    <div class="pagetitle">
-	      <h1>공지 사항 작성</h1>
-	    </div><!-- End Page Title -->
-
-		<section class="section">
-			<div class="row">
-				<div class="col-lg-12">
-
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title">General Form Elements</h5>
-							<!-- General Form Elements -->
-							<form>
-								<div class="row mb-3">
-									<label for="inputText" class="col-sm-2 col-form-label">제목</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control">
-									</div>
-								</div>
-								<fieldset class="row mb-3">
-									<legend class="col-form-label col-sm-2 pt-0">등급</legend>
-									<div class="col-sm-10">
-										<div class="form-check">
-											<input class="form-check-input" type="radio"
-												name="grade" id="gridRadios1" value="1">
-											<label class="form-check-label" for="gridRadios1">
-												직원 </label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input" type="radio"
-												name="grade" id="gridRadios2" value="2">
-											<label class="form-check-label" for="gridRadios2">
-												외주 업체 </label>
-										</div>
-									</div>
-								</fieldset>
+			<section class="section">
+				<div class="row">
+					<div class="col-lg-10">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">공지 사항 작성</h5>
+								<form action="/groupware/notice/noticeAdd" method="post">
 								
-								<fieldset class="row mb-3">
-									<legend class="col-form-label col-sm-2 pt-0">종류</legend>
-									<div class="col-sm-10">
-										<div class="form-check">
-											<input class="form-check-input" type="radio" name="category" id="gridRadios1" value="1">
-											<label class="form-check-label" for="gridRadios1">
-												필독 </label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input" type="radio" name="category" id="gridRadios2" value="2">
-											<label class="form-check-label" for="gridRadios2">
-												일반
-											</label>
-										</div>
-										<div class="form-check">
-											<input class="form-check-input" type="radio" name="category" id="gridRadios3" value="3">
-											<label class="form-check-label" for="gridRadios3">
-												이벤트 
-											</label>
+									<div class="row mb-3">
+										<label for="noticeTitle" class="col-sm-2 col-form-label">제목</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="noticeTitle" name="title">
 										</div>
 									</div>
-								</fieldset>
-								<!-- start date -->
-								<div class="row mb-3">
-									<label for="inputDate" class="col-sm-2 col-form-label">게시 시작일</label>
-									<div class="col-sm-10">
-										<input type="date" class="form-control">
+									<fieldset class="row mb-3">
+										<legend class="col-form-label col-sm-2 pt-0">등급</legend>
+										<div class="col-sm-10">
+											<div class="form-check">
+												<input class="form-check-input" type="radio"
+													name="grade" id="noticeGradeOne" value="1">
+												<label class="form-check-label" for="noticeGradeOne">
+													직원 </label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio"
+													name="grade" id="noticeGradeTwo" value="2">
+												<label class="form-check-label" for="noticeGradeTwo">
+													외주 업체 </label>
+											</div>
+										</div>
+									</fieldset>
+									
+									<fieldset class="row mb-3">
+										<legend class="col-form-label col-sm-2 pt-0">종류</legend>
+										<div class="col-sm-10">
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="category" id="noticeCategory" value="1">
+												<label class="form-check-label" for="noticeCategory">
+													필독 </label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="category" id="noticeCategory" value="2">
+												<label class="form-check-label" for="noticeCategory">
+													일반
+												</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="category" id="noticeCategory" value="3">
+												<label class="form-check-label" for="noticeCategory">
+													이벤트 
+												</label>
+											</div>
+										</div>
+									</fieldset>
+									<!-- start date -->
+									<div class="row mb-3">
+										<label for="noticeStart" class="col-sm-2 col-form-label">게시 시작일</label>
+										<div class="col-sm-4">
+											<input type="date" class="form-control" id="noticeStart" name="startDate">
+										</div>
 									</div>
-								</div>
-								<!-- end date-->
-								<div class="row mb-3">
-									<label for="inputDate" class="col-sm-2 col-form-label">게시 종료일</label>
-									<div class="col-sm-10">
-										<input type="date" class="form-control">
+									<!-- end date-->
+									<div class="row mb-3">
+										<label for="noticeEnd" class="col-sm-2 col-form-label">게시 종료일</label>
+										<div class="col-sm-4">
+											<input type="date" class="form-control" id="noticeEnd" name="endDate">
+										</div>
 									</div>
-								</div>
-								
-								<div class="row mb-3">
-									<label for="inputPassword" class="col-sm-2 col-form-label">내용</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" style="height: 100px"
-											name="noticeContent" id="noticeContent"></textarea>
+									
+									<div class="row mb-3">
+										<label for="noticeContent" class="col-sm-2 col-form-label">내용</label>
+										<div class="col-sm-10">
+											<textarea class="form-control" style="height: 100px"
+												name="content" id="noticeContent"></textarea>
+										</div>
 									</div>
-								</div>
-								<div class="row mb-3">
-									<label for="inputNumber" class="col-sm-2 col-form-label">
-										첨부 파일
-									</label>
-									<div class="col-sm-10">
-										<input class="form-control" type="file" id="formFile">
-									</div>
-								</div>
-							<button type="button" class="btn btn-primary" onclick="/topaz/groupware/notice/noticeList">목록</button>	
-							<button type="submit" class="btn btn-primary">등록하기</button>
-							</form>
-							<!-- End General Form Elements -->
+								<!-- 	<div class="row mb-3">
+										<label for="noticeFile" class="col-sm-2 col-form-label">
+											첨부 파일
+										</label>
+										<div class="col-sm-10">
+											<input class="form-control" type="file" id="noticeFile">
+										</div>
+									</div> -->
+								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>	
+								<button type="submit" class="btn btn-primary">등록하기</button>
+								</form>
+								<!-- End General Form Elements -->
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-
-	</main><!-- End #main -->
+			</section>
 	
-	<!-- =============================== Main 메인 끝 부분 ================================ -->
-	
-	<!-- ======= footer 부분 ======= -->
-	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
-</body>
-
-<script>
-	let oEditors = [];
-
-	// 에디터 로딩 함수 정의
-	function editorLoding(title, noticeContent) {
-		nhn.husky.EZCreator.createInIFrame({
-			oAppRef : oEditors,
-			elPlaceHolder : document.getElementById('noticeContent'), // html editor가 들어갈 textarea의 id입니다.
-			sSkinURI : "/smarteditor/SmartEditor2Skin.html", // html editor가 skin url 입니다.
-			htParams : {
-				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseToolbar : true,
-				// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseVerticalResizer : true,
-				// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseModeChanger : true,
-				fOnBeforeUnload : function() {
-
-				}
-			},
-
-			/*
-			 * === 확인 후 적용 ===	
-			 * 수정 시 에디터에 데이터 저장
-			 */
-			fOnAppLoad : function() {
-				// 수정 모드를 구현할 때 사용할 부분입니다. 
-				// 로딩이 끝난 후 값이 체워지게 하는 구현을 합니다.
-				oEditors.getById["noticeContent"].exec("PASTE_HTML",
-						[ noticeContent ]); //로딩이 끝나면 contents를 txtContent에 넣습니다.
-			},
-
-			fCreator : "createSEditor2",
-		});
-	}
-
-	// 에디터 로딩 함수 호출
-	editorLoding("", "");
-</script>
-
+		</main><!-- End #main -->
+		
+		<!-- =============================== Main 메인 끝 부분 ================================ -->
+		
+		<!-- ======= footer 부분 ======= -->
+		<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	</body>
 </html>

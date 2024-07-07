@@ -12,6 +12,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<style>
+		.topNotice{
+			background-color: #F5F8FE;
+		} 
+	</style>
 </head>	
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
@@ -43,15 +48,18 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-body">
-						<form action="/topaz/groupware/notice/noticeAdd" method="get">
-							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit">작성</button>
-						</form>
+						
 						<!-- Table with stripped rows -->
 						<form action="/topaz/groupware/notice/noticeList" method="get">
+							<br>
 							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
 							<button type="submit">검색</button>
 						</form>
-						<table class="table datatable">
+						<br>
+						<form action="/topaz/groupware/notice/noticeAdd" method="get">
+							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit">작성</button>
+						</form>
+						<table class="table" id="noticeTable">
 							<thead>
 								<tr>
 									<th>No</th>
@@ -61,32 +69,85 @@
 									<th>수정 일자</th>
 								</tr>
 							</thead>
-							<tbody>
-							<c:forEach var="n" items="${noticeList}">
-								<tr>
-									<td>${n.no}</td>
-									<td>
-										<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}">
-											${n.title}
-										</a>
-									</td>
-									<td>${n.empName}</td>
-									<td>${n.regTime}</td>
-									<td>${n.modTime}</td>
-								</tr>
-							</c:forEach>
+							<!-- 상단 노출 공지사항 -->
+							<tbody class="topNotices">
+								<c:forEach var="n" items="${noticeList}">
+									<fmt:formatDate var="changedCurrentTime" value="${currentTime}" pattern="yyyy-MM-dd HH:mm:ss" />
+									<c:if test="${n.grade == '1' && (n.category == '1' || (n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate))}">
+										<tr>
+											<td>${n.no}</td>
+											<td>
+												<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}">
+													<c:choose>
+														<c:when test="${n.grade == '1' && n.category == '1'}">
+															<c:set var="title" value="&#128227; ${n.title}" />
+														</c:when>
+														<c:when test="${n.grade == '1' && n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate}">
+															<c:set var="title" value="&#127881; ${n.title}" />
+														</c:when>
+														<c:otherwise>
+															<c:set var="title" value="${n.title}" />
+														</c:otherwise>
+													</c:choose>
+													<c:out value="${title}" escapeXml="false" />
+												</a>
+											</td>
+											<td>${n.empName}</td>
+											<td>${n.regTime}</td>
+											<td>${n.modTime}</td>
+										</tr>
+									</c:if>
+								</c:forEach>
+							</tbody>
+							<!-- 전체 공지사항 (상단 노출 포함) -->
+							<tbody id="normallNotices">
+								<c:forEach var="n" items="${noticeList}">
+									<tr>
+										<td>${n.no}</td>
+										<td>
+											<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}">
+												<c:choose>
+													<c:when test="${n.grade == '1' && n.category == '1'}">
+														<c:set var="title" value="&#128227; ${n.title}" />
+													</c:when>
+													<c:when test="${n.grade == '1' && n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate}">
+														<c:set var="title" value="&#127881; ${n.title}" />
+													</c:when>
+													<c:otherwise>
+														<c:set var="title" value="${n.title}" />
+													</c:otherwise>
+												</c:choose>
+												<c:out value="${title}" escapeXml="false" />
+											</a>
+										</td>
+										<td>${n.empName}</td>
+										<td>${n.regTime}</td>
+										<td>${n.modTime}</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
-						<c:if test="${currentPage > 1 }">
-							<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
-								이전
-							</a>
-						</c:if>
-						<c:if test="${currentPage < lastPage }">
-							<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage + 1}">
-								다음
-							</a>
-						</c:if>	
+						<div>
+							<span>
+								<c:if test="${currentPage > 1 }">
+									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
+										이전
+									</a>
+								</c:if>
+							</span>
+							<span>
+								<c:if test="${currentPage > 0 }">
+									${currentPage } / ${lastPage }
+								</c:if>
+							</span>
+							<span>
+								<c:if test="${currentPage < lastPage }">
+									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage + 1}">
+										다음
+									</a>
+								</c:if>	
+							</span>
+						</div>
 						<!-- End Table with stripped rows -->
 					</div>
 				</div>
@@ -100,5 +161,4 @@
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 </body>
-
 </html>
