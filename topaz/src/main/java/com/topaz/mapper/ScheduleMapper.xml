@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.ScheduleMapper">
+
+	<!-- 분류 번호: #6 - 사내 일정 관리 페이지 :: 전체조회 -->
+	<select id="selectScheduleList" resultType="map">
+		SELECT schedule_no scheduleNo, title, content, use_yn
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'M001' AND cd = type) type
+			, DATE_FORMAT(start_date, '%Y-%m-%dT%H:%i:%s') startDate
+			, DATE_FORMAT(end_date, '%Y-%m-%dT%H:%i:%s') endDate
+		FROM schedules
+		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		AND (SELECT cd_nm FROM common_code WHERE crp_cd = 'M001' AND cd = TYPE) LIKE CONCAT('%',#{inputState},'%')
+	</select>
+	
+	<!-- 분류 번호: #6 - 사내 일정 관리 페이지 :: 오늘의 일정조회 -->
+	<select id="selectScheduleTodayList" resultType="map">
+		SELECT s.schedule_no scheduleNo, s.title title, s.content content
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'M001' AND cd = s.type) type
+			, DATE_FORMAT(s.start_date, '%H:%i') startTime
+			, DATE_FORMAT(s.end_date, '%H:%i') endTime
+		FROM schedules s
+		WHERE (CURDATE() BETWEEN DATE(s.start_date) AND DATE(s.end_date) 
+				OR (CURDATE() = DATE(s.start_date) AND CURDATE() = DATE(s.end_date)))
+		AND s.use_yn 
+				= (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		ORDER BY startTime
+	</select>
+	
+	
+</mapper>

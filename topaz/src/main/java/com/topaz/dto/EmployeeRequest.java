@@ -30,7 +30,7 @@ public class EmployeeRequest {
 	private MultipartFile uploadFile;
 	
 	
-	//employee 바인딩 메서드
+	//EmployeeRequest를 Employee 객체로 변환하는 메서드
 	public Employee toEmployee() {
 		Employee employee = new Employee();
 		employee.setEmpNo(this.empNo);
@@ -53,7 +53,7 @@ public class EmployeeRequest {
 		return employee;
 	}
 	
-	//uploadFile 바인딩 메서드
+	//EmployeeRequest의 업로드 파일 정보를 UploadFile 객체로 변환하는 메서드
 	public UploadFile toUploadFile() {
 		UploadFile uploadFile = new UploadFile();
 		uploadFile.setReferenceNo(this.empNo);

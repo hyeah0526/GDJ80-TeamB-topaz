@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+/* ==========사내일정 - scheduleList.jsp========== */
+.todayDiv{
+	margin: 3%;
+}
+
+.todayDiv button{
+	border: 0;
+	outline: 0;
+	background: none;
+}
+
+/* 캘린더 일정 간격 조정 */
+.fc-event {
+    margin-bottom: 3px; 
+}
+ 
+ /* 일요일 날짜 색상 */
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+
+/* 토요일 날짜 색상 */
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
+
+/* 평일 날짜 색상 */
+.fc-day-mon a, .fc-day-tue a, .fc-day-wed a,.fc-day-thu a, .fc-day-fri a {
+  color: #012970;
+  text-decoration: none;
+}
+
+/* 오늘의 일정 type별 색상 */
+.typeMeeting{
+	background-color: #81bbb2;
+}
+
+.typeInspection{
+	background-color: #ffbb57;
+}
+
+.typeFestival{
+	background-color: #af92e2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

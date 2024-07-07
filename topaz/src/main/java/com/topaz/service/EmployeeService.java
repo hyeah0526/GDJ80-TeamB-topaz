@@ -23,13 +23,13 @@ public class EmployeeService {
 	UploadFileService uploadFileService;
 	
 	/*
-	 * 분류번호: #4-직원등록
+	 * 분류번호: #4 - 직원등록
 	 * 시작 날짜: 2024-07-05
 	 * 담당자: 김인수
 	*/
 	public int insertEmp(EmployeeRequest employeeRequest) {
 
-		//디버깅ㅂ
+		//매개변수 디버깅
 		log.debug(Debug.KIS + "service / insertEmp / employeeRequest : " + employeeRequest);
 		
 		//직원 DTO에 view 데이터 바인딩
@@ -45,6 +45,7 @@ public class EmployeeService {
             uploadFileService.insertFile(employeeRequest);
         }
 		
+        //직원 정보 저장 확인 디버깅
 		log.debug(Debug.KIS + "service / insertEmp / row : " + row);
 		
 		if(row != 1) {
@@ -53,5 +54,18 @@ public class EmployeeService {
 		
 		
 		return row;
+	}
+	
+	/*
+	 * 분류번호: #4 - 직원번호 중복 확인
+	 * 시작 날짜: 2024-07-06
+	 * 담당자: 김인수
+	*/
+	public String selectEmpNo(String empNo) {
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectEmpNo / empNo : " + empNo);
+		
+		return empMapper.selectEmpNo(empNo);
 	}
 }

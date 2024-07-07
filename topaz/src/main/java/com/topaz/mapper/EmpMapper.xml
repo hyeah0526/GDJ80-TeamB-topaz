@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.EmpMapper">
 	
-	<!-- 직원 회원가입 -->
+	<!-- 분류 번호: #4 - 직원 등록  -->
 	<insert id="insertEmp" parameterType="com.topaz.dto.Employee">
 		INSERT INTO
 			employee(
@@ -41,4 +41,15 @@
 				'Y'
 			)
 	</insert>
+	
+	<!-- 분류 번호 :  #4 - 직원번호 중복 확인 -->
+	<select id="selectEmpNo" parameterType="String" resultType="String">
+		SELECT
+			emp_no
+		FROM
+			employee
+		WHERE
+			emp_no = #{empNo}
+	</select>
+	
 </mapper>

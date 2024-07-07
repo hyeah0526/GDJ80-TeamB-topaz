@@ -64,6 +64,18 @@ public class SampleController {
 	}
 	
 	
+	// 모달
+	@GetMapping("/groupware/samplePage/sample_modal")
+	public String sample_modal() {
+		// http://localhost/topaz/groupware/samplePage/sample_modal
+		return "groupware/samplePage/sample_modal";
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/*
@@ -73,19 +85,7 @@ public class SampleController {
 
 		return "groupware/empMain";
 	}
-	
-	@GetMapping("/groupware/notice/noticeList")
-	public String noticeList() {
 
-		return "groupware/notice/noticeList";
-	}
-	
-	@GetMapping("/groupware/schedule/scheduleList")
-	public String scheduleList() {
-
-		return "groupware/schedule/scheduleList";
-	}
-	
 	@GetMapping("/groupware/myPage/myInfo")
 	public String myInfo() {
 		
@@ -152,25 +152,6 @@ public class SampleController {
 	public String empAttendance() {
 
 		return "groupware/emp/empAttendance";
-	}
-	
-	
-	@GetMapping("/groupware/bpo/bpoMainIn")
-	public String bpoMainIn() {
-
-		return "groupware/bpo/bpoMainIn";
-	}
-	
-	@GetMapping("/groupware/bpo/bpoList")
-	public String bpoList() {
-
-		return "groupware/bpo/bpoList";
-	}
-	
-	@GetMapping("/groupware/bpo/bpoAdd")
-	public String bpoAdd() {
-
-		return "groupware/bpo/bpoAdd";
 	}
 	
 	@GetMapping("/groupware/resident/residentList")

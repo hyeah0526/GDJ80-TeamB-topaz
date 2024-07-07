@@ -2,19 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.NoticeMapper">
 
+	
+	<delete id="deleteNotice" parameterType="String">
+	UPDATE news_notice
+	SET 
+		use_yn = 'N',
+		mod_id = 'C3de4f5gh',
+		mod_time = NOW()
+	WHERE 
+		news_no = #{newsNo};
+	</delete>	
+	<update id="updateNotice" parameterType="int">
+	UPDATE news_notice
+	SET 
+		title = #{title},
+		content = #{content},
+		grade = #{grade},
+		category = #{category},
+		start_date = #{start_date},
+		end_date = #{end_date},
+		mod_id = 'C3de4f5gh',
+		mod_time = NOW()
+	WHERE 
+		news_no = #{newsNo};	
+	</update>
+	<insert id="insertNotice" parameterType="com.topaz.dto.Notice">
+		INSERT INTO news_notice(
+			news_no, title, content, grade, category, start_date, end_date, views, reg_time, mod_time, reg_id, mod_id, use_yn
+		) VALUES (
+			#{CURRENT_TIMESTAMP(5)}, #{title}, #{content}, #{grade}, #{category}, #{start_date}, #{end_date}, NULL, NOW(), NOW(), 'C3de4f5gh', 'C3de4f5gh', 'Y'
+		)
+	</insert>
 	<!-- 분류 번호: #10 - 공지 사항 상세 페이지 -->
+	<!-- 작성자 이름을 위한 news_notice-employee 테이블 간 JOIN -->
+	<!-- datetime 소수점 첫째까지 출력돼서 포맷 변환 -->
 	<select id="selectNoticeDetail" parameterType="map" resultType="map">
 		SELECT
-			news_no newsNo, title, content, grade, category, 
-			DATE_FORMAT(start_date, '%Y-%m-%d %H:%i:%s') startDate,
-			DATE_FORMAT(end_date, '%Y-%m-%d %H:%i:%s') endDate,
-			DATE_FORMAT(reg_time, '%Y-%m-%d %H:%i:%s') regTime, 
-			DATE_FORMAT(mod_time, '%Y-%m-%d %H:%i:%s') modTime, 
-			use_yn useYn
+			nn.news_no newsNo, nn.title, nn.content, nn.grade, nn.category, 
+			DATE_FORMAT(nn.start_date, '%Y-%m-%d %H:%i:%s') startDate,
+			DATE_FORMAT(nn.end_date, '%Y-%m-%d %H:%i:%s') endDate,
+			DATE_FORMAT(nn.reg_time, '%Y-%m-%d %H:%i:%s') regTime, 
+			DATE_FORMAT(nn.mod_time, '%Y-%m-%d %H:%i:%s') modTime, 
+			nn.use_yn useYn, e.emp_name empName
 		FROM
-			news_notice
+			news_notice nn
+		JOIN
+			employee e 
+		ON
+			nn.reg_id = e.emp_no	
 		WHERE 	
-			news_no = #{newsNo}
+			nn.news_no = #{newsNo}
 	
 	</select>
 	
@@ -28,35 +65,38 @@
 			use_yn = 'Y'
 			AND grade IN (1,2)
 			AND category IN (1,2,3)
-			AND (views IS NULL);	 
+			AND (start_date IS NOT NULL OR end_date IS NOT NULL);	 
 	</select> 
 	
 	<!-- 분류 번호: #10 - 공지 사항 목록 페이지 - 리스트 -->
+	<!-- 작성자 이름을 위한 news_notice-employee 테이블 간 JOIN -->
+	<!-- datetime 소수점 첫째까지 출력돼서 포맷 변환 -->
 	<select id="selectNoticeList" parameterType="map" resultType="map">
 		SELECT 
-			rowNum no, news_no newsNo, title, content, grade, category, 
-			DATE_FORMAT(start_date, '%Y-%m-%d %H:%i:%s') startDate, 
-			DATE_FORMAT(end_date, '%Y-%m-%d %H:%i:%s') endDate, 
-			DATE_FORMAT(reg_time, '%Y-%m-%d %H:%i:%s') regTime, 
-			DATE_FORMAT(mod_time, '%Y-%m-%d %H:%i:%s') modTime, 
-			use_yn useYn
-		FROM (
-		    SELECT *, ROW_NUMBER() OVER(ORDER BY news_no ASC) rowNum
-		    FROM news_notice
-		) rn
+			ROW_NUMBER() OVER(ORDER BY nn.news_no ASC) no, nn.news_no newsNo, nn.title title, nn.content content, nn.grade grade, nn.category category, 
+			DATE_FORMAT(nn.start_date, '%Y-%m-%d %H:%i:%s') startDate, 
+			DATE_FORMAT(nn.end_date, '%Y-%m-%d %H:%i:%s') endDate, 
+			DATE_FORMAT(nn.reg_time, '%Y-%m-%d %H:%i:%s') regTime, 
+			DATE_FORMAT(nn.mod_time, '%Y-%m-%d %H:%i:%s') modTime, 
+			nn.use_yn useYn, e.emp_name empName
+		FROM
+			news_notice nn
+			JOIN 
+				employee e 
+			ON 
+				nn.reg_id = e.emp_no
 		<where>
-			rn.use_yn = 'Y'
-			AND (views IS NULL)
-			AND grade IN (1,2)
-			AND category IN (1,2,3)
-			AND
+			nn.use_yn = 'Y'
+			AND (nn.start_date IS NOT NULL OR nn.end_date IS NOT NULL)
+			AND nn.grade IN (1,2)
+			AND nn.category IN (1,2,3)
 			<if test="searchWord != null">
-				title Like CONCAT('%', #{searchWord}, '%')
-				OR content Like CONCAT('%', #{searchWord}, '%')
+				AND (nn.title LIKE CONCAT('%', #{searchWord}, '%')
+				OR nn.content LIKE CONCAT('%', #{searchWord}, '%'))
 			</if>
 		</where>
 		ORDER BY 
-			rowNum DESC
-		LIMIT #{beginRow}, ${rowPerPage};
+			nn.news_no DESC
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 </mapper>
