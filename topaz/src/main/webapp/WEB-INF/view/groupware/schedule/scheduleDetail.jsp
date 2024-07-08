@@ -20,8 +20,8 @@
       <h1>사내 일정 상세 및 수정</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-	      <li class="breadcrumb-item">Schedule</li>
+          <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+	      <li class="breadcrumb-item"><a href="/topaz/groupware/schedule/scheduleList">Schedule</a></li>
           <li class="breadcrumb-item active">Schedule Detail & Edit</li>
         </ol>
       </nav>

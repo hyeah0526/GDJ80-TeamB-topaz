@@ -25,6 +25,8 @@ public interface ScheduleMapper {
 	/* 분류 번호: #6 - 사내 일정 상세보기 페이지 :: 사내일정 수정 */
 	int updateSchedule(Schedule schedule);
 	
+	/* 분류 번호: #6 - 사내 일정 상세보기 페이지 :: 사내일정 삭제(사용여부 Y -> N) */
+	int deleteSchedule(Schedule schedule);
 	
 
 }

@@ -99,10 +99,32 @@ public class ScheduleService {
 	public int modSchedule(Schedule schedule) {
 		//log.debug(Debug.PHA + "modSchedule Service 받아온 값--> " + schedule + Debug.END);
 		
+		// 사내 일정 수정
 		int updateRow = scheduleMapper.updateSchedule(schedule);
 		
 		if(updateRow == 1) {
 			log.debug(Debug.PHA + "modSchedule Service 수정성공!-> " + updateRow + Debug.END);
+		}
+		
+		
+		return updateRow;
+	}
+	
+	
+	/*
+	 * 분류번호: #6 - 사내 일정 관리 페이지(ScheduleDetail.jsp) :: 사내일정 삭제(사용여부 Y-> N 변경)
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 박혜아
+	*/
+	public int delSchedule(Schedule schedule) {
+		log.debug(Debug.PHA + "delSchedule Service 받아온 값(PK번호)--> " + schedule.getScheduleNo() + Debug.END);
+		log.debug(Debug.PHA + "delSchedule Service 받아온 값(수정자 아이디)--> " + schedule.getModId() + Debug.END);
+		
+		// 사내 일정 삭제(사용여부 Y-> N으로 수정)
+		int updateRow = scheduleMapper.deleteSchedule(schedule);
+		
+		if(updateRow == 1) {
+			log.debug(Debug.PHA + "delSchedule Service 삭제(사용여부 수정)성공!-> " + updateRow + Debug.END);
 		}
 		
 		

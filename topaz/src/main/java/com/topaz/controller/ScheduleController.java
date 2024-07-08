@@ -81,7 +81,7 @@ public class ScheduleController {
 	
 	
 	/*
-	 * 서비스명: 
+	 * 서비스명: getScheduleNo
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 박혜아
 	*/
@@ -100,5 +100,22 @@ public class ScheduleController {
 		return "redirect:/groupware/schedule/scheduleDetail?scheduleNo="+scheduleNo;
 	}
 	
+	
+	/*
+	 * 서비스명: delSchedule
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/groupware/schedule/scheduleRemove")
+	public String scheduleRemove(Schedule schedule) {
+		// 추후 로그인 구현 완료되면 수정자 아이디값 세팅
+		schedule.setModId("testMod"); // 세션 로그인 한 아이디
+		log.debug(Debug.PHA + "scheduleRemove controller scheduleNo--> " + schedule.getScheduleNo() + Debug.END);
+		log.debug(Debug.PHA + "scheduleRemove controller getModId--> " + schedule.getModId() + Debug.END);
+		
+		scheduleService.delSchedule(schedule);
+
+		return "redirect:/groupware/schedule/scheduleList";
+	}
 
 }

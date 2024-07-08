@@ -96,4 +96,16 @@
 	</update>
 	
 	
+	<!-- 분류 번호: #6 - 사내 일정 상세보기 페이지 :: 삭제(사용여부 Y -> N) -->
+	<update id="deleteSchedule" parameterType="com.topaz.dto.Schedule">
+		UPDATE 
+			schedules 
+		SET 
+			use_yn = 'N'
+			, mod_id = #{modId}
+		WHERE
+			schedule_no = #{scheduleNo}
+	</update>
+	
+	
 </mapper>
