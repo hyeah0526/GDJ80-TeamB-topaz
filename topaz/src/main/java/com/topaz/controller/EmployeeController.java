@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topaz.dto.Employee;
 import com.topaz.dto.EmployeeRequest;
 import com.topaz.service.EmployeeService;
 import com.topaz.utill.Debug;
@@ -151,5 +152,62 @@ public class EmployeeController {
 	    model.addAttribute("empDetail", empDetail);
 	    
 		return "groupware/emp/empDetail";
+	}
+	
+
+	/*
+	 * 서비스명: #4 - 직원 정보 수정 뷰 
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/empModify")
+	public String empModify(
+			Model model,
+			@RequestParam(name = "empNo") String empNo) {
+			
+		//직원 리스트 가져오기
+	    Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
+	    log.debug(Debug.KIS + "controller / empDetail / empDetail : " + empDetail);
+	  
+	    
+	    //모델 객체에 데이터 추가
+	    model.addAttribute("empDetail", empDetail);
+		
+		return "groupware/emp/empModify";
+	}
+	
+	
+	/*
+	 * 서비스명: #4 - 직원 정보 수정
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	@PostMapping("/groupware/emp/empModify")
+	public String empModify(Employee employee) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / empModify / employee : " + employee);
+		
+		//서비스 레이어로 수정될 직원정보 이동
+		employeeService.modifyEmpOne(employee);
+		
+		return "redirect:/groupware/emp/empDetail?empNo="+employee.getEmpNo();
+	}
+	
+	/*
+	 * 서비스명: #4 - 직원 정보 삭제
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/empDelete")
+	public String empDelete(Employee employee) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / empDelete / employee : " + employee);
+		
+		//서비스 레이어로 삭제될 직원정보 이동
+		employeeService.deleteEmpOne(employee);
+		
+		return "redirect:/groupware/emp/empList";
 	}
 }

@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@charset "UTF-8";
 
 body {
     font-family: Arial, sans-serif;
@@ -202,4 +201,15 @@ input[type="radio"][name="empGender"]:checked + label:before {
     width: 200px;
     overflow: hidden;
     word-wrap: break-word;
+}
+
+.phoneRow {
+	display: flex;
+	align-items: center;
+}
+.phoneRow input {
+	margin-right: 5px;
+}
+.phoneRow label {
+	margin-right: 5px;
 }

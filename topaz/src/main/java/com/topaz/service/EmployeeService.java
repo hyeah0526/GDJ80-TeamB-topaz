@@ -122,4 +122,47 @@ public class EmployeeService {
 	  
 		return empOneList;
 	} 
+	
+
+	/*
+	 * 분류번호: #4 - 직원 정보 수정
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	public int modifyEmpOne(Employee employee) {
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / modifyEmpOne / employee : " + employee);
+		
+		//직원 정보 저장
+		int row = empMapper.modifyEmpOne(employee);
+		log.debug(Debug.KIS + "service / modifyEmpOne / row : " + row);
+
+		if(row != 1) {
+			throw new RuntimeException();
+		}
+		
+		return row;
+	}
+	
+	/*
+	 * 분류번호: #4 - 직원 정보 삭제
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	public int deleteEmpOne(Employee employee) {
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / deleteEmpOne / employee : " + employee);
+		
+		//직원 정보 삭제
+		int row = empMapper.deleteEmpOne(employee);
+		log.debug(Debug.KIS + "service / deleteEmpOne / row : " + row);
+
+		if(row != 1) {
+			throw new RuntimeException();
+		}
+		
+		return row;
+	}
 }

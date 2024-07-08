@@ -24,7 +24,7 @@
 				use_yn
 			)VALUES(
 				#{empNo},
-				#{empPw},
+				SHA2(#{empPw}, 256),
 				#{empName},
 				#{empDept},
 				#{empGrade},
@@ -52,6 +52,7 @@
 			emp_no = #{empNo}
 	</select>
 	
+	
 	<!-- 분류 번호 :  #4 - 전체 직원조회 -->
 	<select id="selectEmpAll" parameterType="Map" resultType="Map">
 		SELECT 
@@ -60,7 +61,7 @@
 			e.emp_name empName, 
 		 	dept_code.cd_nm empDept, 
 		   	grade_code.cd_nm empGrade,
-			lv.year_count yearCnt, 
+			leave_code.cd_nm yearCnt, 
 			e.use_yn useYn
 		FROM
 			employee AS e
@@ -78,6 +79,11 @@
 		ON
 			grade_code.cd = e.emp_grade
 			AND grade_code.crp_cd = 'E002'
+		LEFT JOIN
+			common_code AS leave_code
+		ON
+			leave_code.cd = lv.year_count
+			AND leave_code.crp_cd = 'E004'
 		WHERE
 	        1=1
 			<if test="startDate != null and startDate != ''">
@@ -167,5 +173,32 @@
 		WHERE
 			e.emp_no = #{empNo};
 	</select>
+	 
+	 <!-- 분류 번호 :  #4 - 직원 정보 수정 -->
+	<update id="modifyEmpOne" parameterType="com.topaz.dto.Employee">
+	 	UPDATE 
+			employee 
+        SET
+            emp_dept = #{empDept},
+            emp_grade = #{empGrade},
+            emp_pw = SHA2(#{empPw}, 256),
+            emp_phonenumber = #{empPhoneNumber},
+            post_no = #{postNo},
+            address = #{address},
+            mod_time = NOW(),
+            mod_id = #{empNo}
+        WHERE 
+        	emp_no = #{empNo}
+	</update>
+	
+	<!-- 분류 번호 :  #4 - 직원 정보 삭제 -->
+	<update id="deleteEmpOne" parameterType="com.topaz.dto.Employee">
+	 	UPDATE 
+			employee 
+        SET
+           	use_yn = 'N'
+        WHERE 
+        	emp_no = #{empNo}
+	</update>
 	
 </mapper>

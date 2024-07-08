@@ -128,7 +128,7 @@
 					 <div class="pagination">
 				     	<c:choose>
 					        <c:when test="${currentPage > 1}">
-					            <a href="${pageContext.request.contextPath}/groupware/emp/empList?currentPage=${currentPage-1}">
+					            <a href="#" onclick="changePage(${currentPage-1})">
 					                이전
 					            </a>
 					        </c:when>
@@ -141,7 +141,7 @@
 					    <div class="currentPage">${currentPage}</div>
 					    <c:choose>
 					        <c:when test="${currentPage < lastPage}">
-					            <a href="${pageContext.request.contextPath}/groupware/emp/empList?currentPage=${currentPage+1}">
+					            <a href="#" onclick="changePage(${currentPage+1})">
 					                다음
 					            </a>
 					        </c:when>
@@ -167,10 +167,18 @@
 	             //폼을 초기화
 	             $('form')[0].reset();
 	
-	             // 페이지 새로고침
-	             window.location.href = $('form').attr('action');
+	          	//검색 조건을 제거한 기본 URL로 리다이렉트
+	             const baseUrl = window.location.href.split('?')[0];
+	             window.location.href = baseUrl;
 	         });
 	     });
+		 
+		// 페이지 이동과 동시에 URL 상태를 유지하는 함수
+         function changePage(page) {
+             const urlParams = new URLSearchParams(window.location.search);
+             urlParams.set('currentPage', page);
+             window.location.search = urlParams.toString();
+         }
 	</script>
 </body>
 </html>
