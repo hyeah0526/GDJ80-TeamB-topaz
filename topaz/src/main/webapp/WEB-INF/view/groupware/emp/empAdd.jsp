@@ -68,10 +68,10 @@
 			     			<!-- 직위 -->
 			     			<label>직위</label>
 			     			<select name="empGrade" class="step"  data-step="3">
-			     				<option value="E">사원</option>
-			     				<option value="A">대리</option>
-			     				<option value="M">팀장</option>
-			     				<option value="H">부장</option>
+			     				<option value="1">사원</option>
+			     				<option value="2">대리</option>
+			     				<option value="3">팀장</option>
+			     				<option value="4">부장</option>
 			     			</select>			
    			     			
    			     			<!-- 직원번호 -->

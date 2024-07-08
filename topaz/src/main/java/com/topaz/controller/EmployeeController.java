@@ -1,5 +1,6 @@
 package com.topaz.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +78,15 @@ public class EmployeeController {
 		
 		//서비스 레이어로 직원정보 이동
 		employeeService.insertEmp(employeeRequest);
+		
+		//저장 객체 생성
+		Map<String, Object> leaveMap = new HashMap<>();
+		leaveMap.put("empNo", employeeRequest.getEmpNo());
+		leaveMap.put("empGrade", employeeRequest.getEmpGrade());
+		leaveMap.put("yearCnt", ' ');
+		 
+		//서비스 레이어로 휴가정보 이동
+		employeeService.insertLeave(leaveMap);
 		
 		return "redirect:/groupware/emp/empList";
 	}
