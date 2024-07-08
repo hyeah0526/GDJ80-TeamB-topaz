@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.BpoMapper">
+
+	<!-- 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 예약일정 전체조회 -->
+	<select id="selectBpoRsvnList" parameterType="String" resultType="map">
+		SELECT 
+			os.rsvn_no rsvnNo
+			, o.outsourcing_name outsourcingName
+			, o.outsourcing_no outsourcingNo
+			, os.title title
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'W006' AND cd = os.state) state
+			, os.content content
+			, DATE_FORMAT(rsvn_start, '%Y-%m-%dT%H:%i:%s') rsvnStart
+			, DATE_FORMAT(rsvn_end, '%Y-%m-%dT%H:%i:%s') rsvnEnd
+		FROM outsourcing_rsvn os
+			INNER JOIN outsourcing o 
+				ON os.outsourcing_no = o.outsourcing_no
+		WHERE os.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		AND (SELECT cd_nm FROM common_code WHERE crp_cd = 'W006' AND cd = os.state) LIKE CONCAT('%','','%')
+		AND os.outsourcing_no = #{inputState}
+	</select>
+	
+	<!-- 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 외주업체 카테고리 가져오기 -->
+	<select id="selectBpoCategory" resultType="map">
+		SELECT outsourcing_no outsourcingNo, outsourcing_name outsourcingName
+		FROM outsourcing
+		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		AND outsourcing_type = (SELECT cd FROM common_code WHERE crp_cd = 'W002' AND cd = '2')
+	</select>
+</mapper>
