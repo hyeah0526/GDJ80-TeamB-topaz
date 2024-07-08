@@ -32,4 +32,15 @@ public interface EmpMapper {
 	
 	/* 분류 번호 :  #4 - 직원 정보 삭제 */
 	public int deleteEmpOne(Employee employee);
+	
+	/* 분류 번호 :  #4 - 직원 비밀번호 수정 */
+	public int modifyEmpPw(Map<String, Object> paramMap);
+	
+	/* 분류 번호 :  #2 - 변경 비밀번호 중복 확인 */
+	public String selectNewPw(Map<String, Object> paramMap);
+	
+	/* 분류 번호 :  #2 - 이전 비밀번호 저장 */
+	public int insertNewPw(Map<String, Object> paramMap);
+	
+	
 }

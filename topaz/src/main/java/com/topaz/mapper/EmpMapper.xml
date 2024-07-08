@@ -228,4 +228,55 @@
 				'Y'
 			)
 	</insert>
+	
+	
+	<!-- 분류 번호 :  #4 - 직원 비밀번호 수정 -->
+	<update id="modifyEmpPw" parameterType="com.topaz.dto.Employee">
+	 	UPDATE 
+			employee 
+        SET
+           	emp_pw = SHA2(#{newPw}, 256)
+        WHERE 
+        	emp_no = #{empNo}
+	</update>
+	
+	
+	
+	<!-- 분류 번호 :  #2 - 변경 비밀번호 중복 확인 -->
+	<select id="selectNewPw" parameterType="map" resultType="String">
+		SELECT
+			old_pw
+		FROM
+			old_pw_history
+		WHERE
+			user_no = #{empNo} AND  user_part = 'E' AND old_pw = SHA2(#{newPw}, 256)
+	</select>
+	
+	<!-- 분류 번호 :  #2 - 이전 비밀번호 저장 -->
+	<insert id="insertNewPw"  parameterType="map">
+		INSERT INTO 
+			old_pw_history(
+				old_pw_no,
+				user_no,
+				user_part,
+				old_pw,
+				reg_time,
+				mod_time,
+				reg_id,
+				mod_id,
+				use_yn
+			)VALUES(
+				CURRENT_TIMESTAMP(5),
+				#{empNo},
+				'E',
+				SHA2(#{currentPw}, 256),
+				NOW(),
+				NOW(),
+				#{empNo},
+				#{empNo},
+				'N'
+			)
+	</insert>
+	
+	
 </mapper>

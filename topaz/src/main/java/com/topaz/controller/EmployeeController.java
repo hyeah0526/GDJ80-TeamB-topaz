@@ -335,14 +335,16 @@ public class EmployeeController {
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
-	@PostMapping("/groupware/emp/myPwModify")
+	@PostMapping("/groupware/myPage/myPwModify")
 	public String myPwModify(@RequestParam Map<String, Object> paramMap) {
 		
 		//매개변수 디버깅
 		log.debug(Debug.KIS + "controller / myPwModify / paramMap : " + paramMap);
 		
+		//서비스 레이어로 비밀번호 정보 이동
+		employeeService.modifyMyPw(paramMap);
 		
-		return "redirect:/groupware/myPage/myInfo?empNo="+paramMap.get("empNo");
+		return "redirect:/groupware/login";
 	}
 	
 }

@@ -41,7 +41,7 @@
                     <!-- 내용저장 -->
                 	<div>
                 	
-                        <form class="signupForm" action="" method="post" enctype="multipart/form-data">
+                        <form class="signupForm" action="<c:url value='/groupware/myPage/myPwModify' />" method="post">
                             
                         	<div style="margin-bottom: 20px;">
 	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myInfo'">내 정보 조회</button>
@@ -59,31 +59,31 @@
                                 </div>
                                 
                                 <div class="formGroup">
-                                    <!-- 비밀번호 -->
+                                    <!-- 기존 비밀번호 -->
                                     <label>기존 비밀번호</label>
-									<input type="password" name="currentPw" class="step">                                
+									<input type="password" name="currentPw" class="step" placeholder="비밀번호" maxlength="20" >                                
                                 </div>
                             </div>
                             
                             
                             <div class="formRow">
                                 <div class="formGroup">
-                                    <!-- 생일 -->
+                                    <!-- 변경 비밀번호 -->
                                     <label>변경 비밀번호</label>
-                                    <input type="password" name="newPw" class="step" >                                    
+                                    <input type="password" name="newPw" class="step" placeholder="변경할 비밀번호를 입력해주세요." maxlength="20" >                                    
                                 </div>
                                 
                                 <div class="formGroup">
-                                    <!-- 전화번호 -->
+                                    <!-- 변경 비밀번호 확인 -->
                                     <label>변경 비밀번호 확인</label>
-                                    <input type="password" name="newPwCheck" class="step">
+                                    <input type="password" name="newPwCheck" class="step" placeholder="변경할 비밀번호를 입력해주세요." maxlength="20" >
                                 </div>                                    
                             </div>
                             
                              <!-- 버튼 -->
                              <div class="formBtn">
                                 <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myInfo'">뒤로가기</button>
-                                <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myPwModify?empNo=${empDetail.empNo}'">수정</button>
+                                <button type="submit" class="modifyBtn">수정</button>
                              </div>
                         </form>
                     </div>
@@ -96,5 +96,5 @@
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 </body>
-
+	<script src="<c:url value='/js/insuMyPwModify.js'/>"></script>
 </html>

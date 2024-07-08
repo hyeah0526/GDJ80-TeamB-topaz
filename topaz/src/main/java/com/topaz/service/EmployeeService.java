@@ -187,4 +187,37 @@ public class EmployeeService {
 		
 		return row;
 	}
+	
+	/*
+	 * 분류번호: #2 - 비밀번호 수정
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	public int modifyMyPw(Map<String, Object> paramMap) {
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / modifyMyPw / paramMap : " + paramMap);
+		
+		//비밀번호 중복 사용 확인
+		String newPw = empMapper.selectNewPw(paramMap);
+		log.debug(Debug.KIS + "service / modifyMyPw / newPw : " + newPw);
+
+		int changePw = 0;
+		
+		if(newPw == null) {
+			
+			//비밀번호 
+			int inserPw = empMapper.insertNewPw(paramMap);
+			log.debug(Debug.KIS + "service / modifyMyPw / inserPw : " + inserPw);
+			
+			if(inserPw > 0) {
+				changePw = empMapper.modifyEmpPw(paramMap);
+				log.debug(Debug.KIS + "service / modifyMyPw / changePw : " + changePw);
+			}
+		}else {
+			throw new RuntimeException();
+		}
+		
+		return changePw;
+	}
 }
