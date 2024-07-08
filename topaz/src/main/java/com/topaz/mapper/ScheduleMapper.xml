@@ -8,7 +8,6 @@
 			schedule_no scheduleNo
 			, title
 			, content
-			, use_yn
 			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'M001' AND cd = type) type
 			, DATE_FORMAT(start_date, '%Y-%m-%dT%H:%i:%s') startDate
 			, DATE_FORMAT(end_date, '%Y-%m-%dT%H:%i:%s') endDate
@@ -33,6 +32,35 @@
 				= (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 		ORDER BY startTime
 	</select>
+	
+	<!-- 분류 번호: #6 - 사내 일정 관리 페이지 :: 사내일정 등록 -->
+	<insert id="insertSchedule" parameterType="com.topaz.dto.Schedule">
+		INSERT INTO schedules(
+			schedule_no
+			, title
+			, type
+			, content
+			, start_date
+			, end_date
+			, reg_id
+			, reg_time
+			, mod_id
+			, mod_time
+			, use_yn
+		)VALUES(
+			CURRENT_TIMESTAMP(5)
+			, #{title}
+			, #{type}
+			, #{content}
+			, #{startDate}
+			, #{endDate}
+			, #{regId}
+			, NOW()
+			, #{modId}
+			, NOW()
+			, 'Y'
+		);
+	</insert>
 	
 	
 </mapper>

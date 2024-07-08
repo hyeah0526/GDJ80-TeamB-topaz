@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.topaz.dto.Schedule;
 import com.topaz.mapper.ScheduleMapper;
 import com.topaz.utill.Debug;
 
@@ -51,6 +52,22 @@ public class ScheduleService {
 		
 		
 		return scheduleTodayList;
+	}
+	
+	
+	/*
+	 * 분류번호: #6 - 사내 일정 관리 페이지(ScheduleList.jsp) :: 사내일정 추가
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 박혜아
+	*/
+	public int setSchedule(Schedule schedule) {
+		log.debug(Debug.PHA + "setSchedule Service 받아온 값--> " + schedule + Debug.END);
+		
+		// 사내일정 추가
+		int insertRow = scheduleMapper.insertSchedule(schedule);
+		
+		
+		return 0;
 	}
 
 }

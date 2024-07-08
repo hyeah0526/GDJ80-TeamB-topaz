@@ -19,6 +19,7 @@
     <script src="/topaz/fullcalendar-6.1.14/dist/index.global.js"></script>
 	<script src="/topaz/fullcalendar-6.1.14/dist/index.global.min.js"></script>
     
+    <!-- 캘린더API  -->
 	<script>
 	document.addEventListener('DOMContentLoaded', function() {
 		initializeCalendar(); // 페이지 로드 시 달력 초기화
@@ -46,7 +47,6 @@
 					// 모달 창 띄워서 신규 일정 추가
 					$("#addSchedule").modal("show");
 							
-							
                   }
               }
           },
@@ -66,11 +66,12 @@
 					for(i=0; i<response.length; i++){
 						// title, start, end 설정
 						calendar.addEvent({
-							title: response[i].title,
-							start: response[i].startDate,
-							end: response[i].endDate,
-							backgroundColor: getScheduleColor(response[i].type),
-							borderColor: getScheduleColor(response[i].type),
+							title: response[i].title, // 제목
+							start: response[i].startDate, // 시작날짜
+							end: response[i].endDate, // 종료날짜
+							url: '/topaz/groupware/schedule/scheduleDetail?scheduleNo='+response[i].scheduleNo, // 상세보기 이동
+							backgroundColor: getScheduleColor(response[i].type), // 타입별 색상 분류
+							borderColor: getScheduleColor(response[i].type), // 타입별 색상분류
 						})
 					}
 				}
@@ -94,7 +95,6 @@
 	    }
 		}
 	  });
-	
 	</script>
 	
 </head>
@@ -155,7 +155,7 @@
 								 	</c:choose>
 								 	${s.startTime} - ${s.endTime} ::  ${s.title}
 								 	<!-- <button id="todayDetailSpan"><span class="badge rounded-pill bg-primary">상세보기</span></button> -->
-								 	<a href="${pageContext.request.contextPath}/groupware/schedule/scheduleDetail.jsp?scheduleNo=${s.scheduleNo}">
+								 	<a href="/topaz/groupware/schedule/scheduleDetail?scheduleNo=${s.scheduleNo}">
 								 		<span class="badge rounded-pill bg-primary">상세보기</span>
 								 	</a>
 								 </div>
@@ -181,41 +181,41 @@
 				</div>
 				
 				<!-- 모달 일정 등록폼 -->
-				<form action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
+				<form id="addScheduleForm" action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
 					<div class="modal-body">
 						<div class="row mb-5">
 							<label for="inputEmail" class="col-sm-4 col-form-label">시작날짜</label>
 							<div class="col-sm-8 scheduleModalDiv">
-								<input type="date" class="form-control" name="startDate">
+								<input type="datetime-local" class="form-control" id="addStartDate" name="startDate">
 							</div>
 							
 							<label for="inputEmail" class="col-sm-4 col-form-label">종료날짜</label>
 							<div class="col-sm-8 scheduleModalDiv">
-								<input type="date" class="form-control" name="endDate">
+								<input type="datetime-local" class="form-control" id="addEndDate" name="endDate">
 							</div>
 							
 							<label for="inputEmail" class="col-sm-4 col-form-label">일정제목</label>
 							<div class="col-sm-8 scheduleModalDiv">
-								<input type="text" class="form-control" name="title">
+								<input type="text" class="form-control" id="addTitle" name="title">
 							</div>
 							
 							<label for="inputEmail" class="col-sm-4 col-form-label">일정종류</label>
 							<div class="col-sm-8 scheduleModalDiv">
 							<label for="meetingRadio">
-								<input class="form-check-input" type="radio" name="type" value="회의" id="meetingRadio" checked> 회의
+								<input class="form-check-input" type="radio" name="type" value="1" id="meetingRadio" checked> 회의
 							</label>&nbsp;&nbsp;&nbsp;
 							<label for="festivalRadio">
-								<input class="form-check-input" type="radio" name="type" value="행사" id="festivalRadio"> 행사
+								<input class="form-check-input" type="radio" name="type" value="2" id="festivalRadio"> 행사
 							</label>&nbsp;&nbsp;&nbsp;
 							<label for="inspectionRadio">
-								<input class="form-check-input" type="radio" name="type" value="점검" id="inspectionRadio"> 점검
+								<input class="form-check-input" type="radio" name="type" value="3" id="inspectionRadio"> 점검
 							</label>
 							</div>
 							
 							<label for="inputEmail" class="col-sm-4 col-form-label">일정내용</label>
 							<div class="col-sm-8">
-								<textarea rows="3" maxlength="100" class="col-sm-12" name="content" placeholder="100자 이하 작성"></textarea>
-								(/100)
+								<textarea rows="3" maxlength="100" class="col-sm-12" id="addContent" name="content" placeholder="100자 이하 작성" style="height: 150px"></textarea>
+								(<span id="chatHelper">0</span>/100)
 							</div>
 						</div>
 					</div>
@@ -223,7 +223,7 @@
 					<!-- 모달 일정 취소/등록버튼 -->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save</button>
+						<button id="addScheduleBtn" type="submit" class="btn btn-primary">Save</button>
 					</div>
 				</form>
 			</div></div>
@@ -234,6 +234,73 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	
+	
+	<!-- 신규일정등록 유효성검사 / 내용100자 글자수 세기 -->
+	<script>
+	// 키보드 이벤트 발생
+ 	$('#addContent').keyup(function() {
+		console.log('키보드 이벤트 확인');
+		
+		let cnt = $('#addContent').val().length;
+		//console.log('키보드 이벤트 확인 cnt-> ', cnt);
+		
+		// 100글자 이상일경우 문자열 자르기
+		if(cnt > 100){
+			console.log('100이상 작성으로 substr실행');
+			cnt = 100;
+			$('#addContent').val($('#addContent').val().substr(0, 100));
+		}
+		
+		// cnt수 사용자에게 보여주기
+		$('#chatHelper').html(cnt);
+		
+	});
+	
+	// 신규일정등록 유효성 검사
+	$('#addScheduleBtn').click(function() {
+		
+		// 시작 날짜 유효성 검사
+		if($('#addStartDate').val().length < 1){
+			console.log('시작날짜 유효성검사');
+			
+			alert('시작날짜를 입력해주세요');
+			$('#addStartDate').focus();
+			return false; 
+		}
+		
+		// 종료 날짜 유효성 검사
+		if($('#addEndDate').val().length < 1){
+			console.log('종료날짜 유효성검사');
+			
+			alert('종료날짜를 입력해주세요');
+			$('#addEndDate').focus();
+			return false; 
+		}
+		
+		// 제목 유효성 검사
+		if($('#addTitle').val().length < 1){
+			console.log('제목 유효성검사');
+			
+			alert('제목을 입력해주세요');
+			$('#addTitle').focus();
+			return false; 
+		}
+		
+		// 내용 유효성 검사
+		if($('#addContent').val().length < 1){
+			console.log('내용 유효성검사');
+			
+			alert('일정내용을 입력해주세요');
+			$('#addContent').focus();
+			return false; 
+		}
+		
+		
+		// 유효성 검사 완료시 Form 보내기
+		addScheduleForm.submit();
+	});
+	</script>
 </body>
 
 </html>

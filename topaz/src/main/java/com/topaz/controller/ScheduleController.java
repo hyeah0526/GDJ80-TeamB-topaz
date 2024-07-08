@@ -40,20 +40,32 @@ public class ScheduleController {
 	
 	
 	/*
-	 * 서비스명: 
+	 * 서비스명: setSchedule
 	 * 시작 날짜: 2024-07-07
 	 * 담당자: 박혜아
 	*/
 	@PostMapping("/groupware/schedule/scheduleList")
 	public String ScheduleAdd(Schedule schedule) {
+		
+		// 추후 로그인 구현 완료되면 아이디값 세팅
+		schedule.setRegId("testReg");
+		schedule.setModId("testMod");
 		log.debug(Debug.PHA + "ScheduleAdd controller--> " + schedule + Debug.END);
+		
+		// 일정 추가
+		scheduleService.setSchedule(schedule);
 
 		return "redirect:/groupware/schedule/scheduleList";
 	}
 	
 	
 	
-	
+	@GetMapping("/groupware/schedule/scheduleDetail")
+	public String scheduleDetail() {
+		
+
+		return "groupware/schedule/scheduleDetail";
+	}
 	
 
 }

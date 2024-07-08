@@ -13,11 +13,11 @@ public class Schedule {
 	private String title;
 	private String type;
 	private String content;
-	private String start_date;
+	private String startDate;
 	private String endDate;
-	private String regTime;
-	private String modTime;
 	private String regId;
+	private String regTime;
 	private String modId;
+	private String modTime;
 	private String useYn;
 }
