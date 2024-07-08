@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.LoginMapper">
+
+	<!-- 1: #1-로그인 -->
+	<select id="doEmpLogin" resultType="com.topaz.dto.Employee">
+		SELECT emp_no empNo, emp_pw empPw, emp_name empName, emp_dept empDept, emp_grade empGrade, use_yn useYN
+		FROM employee
+		WHERE use_yn = 'Y'
+		AND emp_no = #{strId}
+	</select>
+
+<!-- 	
+	<select id="getBpoLogin">
+		SELECT emp_no, emp_pw, emp_name, emp_dept, emp_grade
+		FROM employee
+		WHERE use_yn = 'Y'
+		AND emp_no = #{strId}
+	</select> -->
+
+
+
+
+
+</mapper>

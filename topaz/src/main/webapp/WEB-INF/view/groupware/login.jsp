@@ -31,25 +31,27 @@
 		                <div class="mb-3 pt-4 pb-2">
 		                  <h5 class="card-title text-center pb-0 fs-4">Login</h5>
 		                </div>
+		                
+		            <form method="post" class="row g-3 needs-validation" action="${pageContext.request.contextPath}/loginPost">
+		                
 		                <div class="mb-4 d-flex justify-content-center">
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="userType" value="employee" id="flexRadioDefault1">
-							  <label class="form-check-label" for="flexRadioDefault1">
+							  <input class="form-check-input" type="radio" name="userType" value="employee" id="userType1">
+							  <label class="form-check-label" for="userType1">
 							    직원 로그인
 							  </label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="userType" value="outsourcing" id="flexRadioDefault2" checked>
-							  <label class="form-check-label" for="flexRadioDefault2">
+							  <input class="form-check-input" type="radio" name="userType" value="outsourcing" id="userType2" >
+							  <label class="form-check-label" for="userType2">
 							    업체 로그인
 							  </label>
 							</div>
 						</div>
-						<div>
+						<div class="text-center justify-content-center" style="color: red;">
 							<span>${errMsg }</span>
 						</div>
 						
-	                  <form class="row g-3 needs-validation" novalidate>
 	                    <div class="col-12 mt-3 mb-2">
 	                      <label for="id" class="form-label">ID</label>
 	                      <input type="text" name="id" class="form-control" id="id">
