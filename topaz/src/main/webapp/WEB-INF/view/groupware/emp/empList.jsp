@@ -40,7 +40,12 @@
 				<!-- 메인 -->
 			     <div class="mainContent">
 			     
-			     	<form action="">
+			     	<form action="<c:url value='/groupware/emp/empList' />" method="get" >
+			     		<div style="margin-bottom: 20px;">
+                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
+                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
+                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근태조회</button>
+                    	</div>
 				     	<!-- 입사년도 -->
 				     	<div class="hireDateDiv">
 				     		<label>입사년도</label>
