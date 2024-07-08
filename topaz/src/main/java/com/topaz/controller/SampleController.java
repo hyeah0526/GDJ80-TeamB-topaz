@@ -16,6 +16,14 @@ public class SampleController {
 	 *  
 	 */
 	
+	// 시작(타이틀 제외 내용 비어있음)
+	@GetMapping("/groupware/samplePage/sample_start")
+	public String sample_start() {
+		// http://localhost/topaz/groupware/samplePage/sample_start
+		return "groupware/samplePage/sample_start";
+	}
+		
+	
 	// 메인
 	@GetMapping("/groupware/samplePage/sample_main")
 	public String sample_main() {
@@ -70,6 +78,21 @@ public class SampleController {
 		// http://localhost/topaz/groupware/samplePage/sample_modal
 		return "groupware/samplePage/sample_modal";
 	}
+	
+	// Box (틀)
+	@GetMapping("/groupware/samplePage/sample_box")
+	public String sample_box() {
+		// http://localhost/topaz/groupware/samplePage/sample_box
+		return "groupware/samplePage/sample_box";
+	}
+	
+	// Tab탭
+	@GetMapping("/groupware/samplePage/sample_tab")
+	public String sample_tab() {
+		// http://localhost/topaz/groupware/samplePage/sample_tab
+		return "groupware/samplePage/sample_tab";
+	}
+		
 	
 	
 	
