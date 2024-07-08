@@ -17,6 +17,7 @@ public interface NoticeMapper {
 	/*  분류 번호: #10 - 공지 사항 수정 페이지 */
 	int updateNotice(Notice n); 
 	
+	/*  분류 번호: #10 - 공지 사항 등록 페이지 */
 	int insertNotice(Notice n);
 	
 	/*  분류 번호: #10 - 공지 사항 상세 페이지 */

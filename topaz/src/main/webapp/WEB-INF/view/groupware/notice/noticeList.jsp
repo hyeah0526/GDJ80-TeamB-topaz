@@ -12,11 +12,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<style>
-		.topNotice{
-			background-color: #F5F8FE;
-		} 
-	</style>
 </head>	
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
@@ -53,11 +48,11 @@
 						<form action="/topaz/groupware/notice/noticeList" method="get">
 							<br>
 							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
-							<button type="submit">검색</button>
+							<button type="submit" class="btn btn-primary">검색</button>
 						</form>
 						<br>
 						<form action="/topaz/groupware/notice/noticeAdd" method="get">
-							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit">작성</button>
+							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit" class="btn btn-primary">작성</button>
 						</form>
 						<table class="table" id="noticeTable">
 							<thead>

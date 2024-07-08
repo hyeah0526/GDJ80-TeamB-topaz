@@ -25,10 +25,76 @@
         </ol>
       </nav>
 	</div><!-- Title 종료 -->
-
+	<!-- http://localhost/topaz/groupware/approvalTemplateList -->
 	<!-- section 시작 -->
     <section class="section">
-    
+    <div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						
+						<!-- Table with stripped rows -->
+						<form action="/topaz/groupware/notice/noticeList" method="get">
+							<br>
+							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
+							<button type="submit" class="btn btn-primary">검색</button>
+						</form>
+						<br>
+						<form action="/topaz/groupware/notice/noticeAdd" method="get">
+							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit" class="btn btn-primary">작성</button>
+						</form>
+						<table class="table" id="noticeTable">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>생성 일자</th>
+									<th>수정 일자</th>
+								</tr>
+							</thead>
+							<!-- 상단 노출 공지사항 -->
+							<tbody class="topNotices">
+								<c:forEach var="t" items="">
+									<tr>
+										<td></td>
+										<td>
+											<a href="">
+											</a>
+										</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						<div>
+							<span>
+								<c:if test="${currentPage > 1 }">
+									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
+										이전
+									</a>
+								</c:if>
+							</span>
+							<span>
+								<c:if test="${currentPage > 0 }">
+									${currentPage } / ${lastPage }
+								</c:if>
+							</span>
+							<span>
+								<c:if test="${currentPage < lastPage }">
+									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage + 1}">
+										다음
+									</a>
+								</c:if>	
+							</span>
+						</div>
+						<!-- End Table with stripped rows -->
+					</div>
+				</div>
+			</div>
+		</div>
     
     
     

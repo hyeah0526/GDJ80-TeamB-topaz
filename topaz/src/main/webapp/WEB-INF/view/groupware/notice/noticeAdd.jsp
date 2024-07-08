@@ -13,8 +13,8 @@
 		<script src="/topaz/js/jihoon.js"></script>
 		<!-- naver smart edior -->
 		<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
+		<script type="text/javascript">
+ 			document.addEventListener('DOMContentLoaded', function() {
 				
 				let oEditors = [];
 		
@@ -22,7 +22,7 @@
 				function editorLoading(title, contents) {
 					nhn.husky.EZCreator.createInIFrame({
 						oAppRef : oEditors,
-						elPlaceHolder : "noticeContent", // html editor가 들어갈 textarea의 id입니다.
+						elPlaceHolder : "addContent", // html editor가 들어갈 textarea의 id입니다.
 						sSkinURI : "/topaz/smarteditor/SmartEditor2Skin.html", // html editor가 skin url 입니다.
 						htParams : {
 							// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
@@ -38,7 +38,7 @@
 								// 수정 모드를 구현할 때 사용할 부분입니다.
 								// 로딩이 끝난 후 값이 체워지게 하는 구현을 합니다.
 								if (contents) {
-									oEditors.getById["noticeContent"].exec(
+									oEditors.getById["addContent"].exec(
 											"PASTE_HTML", [ contents ]);
 								}
 							},
@@ -46,9 +46,15 @@
 						}
 					});
 				}
-				// 에디터 로딩 함수 호출 (함수명 수정)
-				editorLoading("", "");
-			});
+				const addContent = "${addContent.content}";
+				editorLoading(addContent);
+				
+				// form 전송 시 에디터의 내용을 textarea에 반영
+				function submitContents(form) {
+					oEditors.getById["addContent"].exec("UPDATE_CONTENTS_FIELD", []);
+					return true;
+				}
+			}); 
 		</script>
 	</head>
 	<!-- ======= header <Head> 부분 ======= -->
@@ -74,28 +80,28 @@
 						<div class="card">
 							<div class="card-body">
 								<h5 class="card-title">공지 사항 작성</h5>
-								<form action="/groupware/notice/noticeAdd" method="post">
+								<form action="${pageContext.request.contextPath}/groupware/notice/noticeAdd" method="post" onsubmit="return submitContents(this);" enctype="multipart/form-data">
 								
 									<div class="row mb-3">
-										<label for="noticeTitle" class="col-sm-2 col-form-label">제목</label>
+										<label for="addTitle" class="col-sm-2 col-form-label">제목</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="noticeTitle" name="title">
+											<input type="text" class="form-control" id="addTitle" name="title">
 										</div>
 									</div>
 									<fieldset class="row mb-3">
 										<legend class="col-form-label col-sm-2 pt-0">등급</legend>
 										<div class="col-sm-10">
 											<div class="form-check">
-												<input class="form-check-input" type="radio"
-													name="grade" id="noticeGradeOne" value="1">
-												<label class="form-check-label" for="noticeGradeOne">
-													직원 </label>
+												<input class="form-check-input addGrade" type="radio" name="grade" id="addGrade1" value="1">
+												<label class="form-check-label" for="addGrade">
+													직원 
+												</label>
 											</div>
 											<div class="form-check">
-												<input class="form-check-input" type="radio"
-													name="grade" id="noticeGradeTwo" value="2">
+												<input class="form-check-input addGrade" type="radio" name="grade" id="addGrade2" value="2">
 												<label class="form-check-label" for="noticeGradeTwo">
-													외주 업체 </label>
+													외주 업체 
+												</label>
 											</div>
 										</div>
 									</fieldset>
@@ -104,19 +110,20 @@
 										<legend class="col-form-label col-sm-2 pt-0">종류</legend>
 										<div class="col-sm-10">
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="category" id="noticeCategory" value="1">
-												<label class="form-check-label" for="noticeCategory">
-													필독 </label>
+												<input class="form-check-input addCategory" type="radio" name="category" id="addCategory1" value="1">
+												<label class="form-check-label" for="addCategory">
+													필독 
+												</label>
 											</div>
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="category" id="noticeCategory" value="2">
-												<label class="form-check-label" for="noticeCategory">
+												<input class="form-check-input addCategory" type="radio" name="category" id="addCategory2" value="2">
+												<label class="form-check-label" for="addCategory">
 													일반
 												</label>
 											</div>
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="category" id="noticeCategory" value="3">
-												<label class="form-check-label" for="noticeCategory">
+												<input class="form-check-input addCategory" type="radio" name="category" id="addCategory3" value="3">
+												<label class="form-check-label" for="addCategory">
 													이벤트 
 												</label>
 											</div>
@@ -124,34 +131,39 @@
 									</fieldset>
 									<!-- start date -->
 									<div class="row mb-3">
-										<label for="noticeStart" class="col-sm-2 col-form-label">게시 시작일</label>
+										<label for="noticeStart" class="col-sm-2 col-form-label">
+											게시 시작일
+										</label>
 										<div class="col-sm-4">
-											<input type="date" class="form-control" id="noticeStart" name="startDate">
+											<input type="date" class="form-control" id="addNoticeStart" name="startDate">
 										</div>
 									</div>
 									<!-- end date-->
 									<div class="row mb-3">
-										<label for="noticeEnd" class="col-sm-2 col-form-label">게시 종료일</label>
+										<label for="noticeEnd" class="col-sm-2 col-form-label">
+											게시 종료일
+										</label>
 										<div class="col-sm-4">
-											<input type="date" class="form-control" id="noticeEnd" name="endDate">
+											<input type="date" class="form-control" id="addNoticeEnd" name="endDate">
 										</div>
 									</div>
 									
 									<div class="row mb-3">
-										<label for="noticeContent" class="col-sm-2 col-form-label">내용</label>
-										<div class="col-sm-10">
-											<textarea class="form-control" style="height: 100px"
-												name="content" id="noticeContent"></textarea>
-										</div>
-									</div>
-								<!-- 	<div class="row mb-3">
-										<label for="noticeFile" class="col-sm-2 col-form-label">
-											첨부 파일
+										<label for="noticeContent" class="col-sm-2 col-form-label">
+											내용
 										</label>
 										<div class="col-sm-10">
-											<input class="form-control" type="file" id="noticeFile">
+											<textarea class="form-control" style="height: 100px" name="content" id="addContent"></textarea>
 										</div>
-									</div> -->
+									</div>
+								<div class="row mb-3">
+									<label for="noticeFile" class="col-sm-2 col-form-label">
+										첨부 파일
+									</label>
+									<div class="col-sm-10">
+										<input class="form-control" type="file" id="noticeFile" name="uploadFile">
+									</div>
+								</div>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>	
 								<button type="submit" class="btn btn-primary">등록하기</button>
 								</form>

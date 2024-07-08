@@ -15,9 +15,10 @@ public class Notice {
 	private String category;
 	private String startDate;
 	private String endDate;
+	private String views;
 	private String regTime;
-	private String regId;
 	private String modTime;
+	private String regId;
 	private String modId;
 	private String useYn;
 }

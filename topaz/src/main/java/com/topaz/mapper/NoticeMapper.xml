@@ -12,27 +12,42 @@
 	WHERE 
 		news_no = #{newsNo};
 	</delete>	
-	<update id="updateNotice" parameterType="int">
+	<update id="updateNotice" parameterType="com.topaz.dto.Notice">
 	UPDATE news_notice
 	SET 
 		title = #{title},
 		content = #{content},
 		grade = #{grade},
 		category = #{category},
-		start_date = #{start_date},
-		end_date = #{end_date},
+		start_date = #{startDate},
+		end_date = #{endDate},
 		mod_id = 'C3de4f5gh',
 		mod_time = NOW()
 	WHERE 
 		news_no = #{newsNo};	
 	</update>
 	<insert id="insertNotice" parameterType="com.topaz.dto.Notice">
-		INSERT INTO news_notice(
-			news_no, title, content, grade, category, start_date, end_date, views, reg_time, mod_time, reg_id, mod_id, use_yn
-		) VALUES (
-			#{CURRENT_TIMESTAMP(5)}, #{title}, #{content}, #{grade}, #{category}, #{start_date}, #{end_date}, NULL, NOW(), NOW(), 'C3de4f5gh', 'C3de4f5gh', 'Y'
-		)
-	</insert>
+	INSERT INTO news_notice(
+		news_no, title, content, grade, category, start_date, end_date, views,
+		reg_time, mod_time, reg_id, mod_id, use_yn
+	) VALUES (
+		CURRENT_TIMESTAMP(5), #{title}, #{content},
+		CASE
+		WHEN #{grade} != '1' OR #{category} != '3' THEN '1'
+		ELSE #{grade}
+		END,
+		#{category},
+		CASE
+		WHEN #{grade} != '1' OR #{category} != '3' THEN NOW()
+		ELSE DATE_ADD(#{startDate}, INTERVAL 0 SECOND)
+		END,
+		CASE
+		WHEN #{grade} != '1' OR #{category} != '3' THEN '2099-12-31 23:59:59'
+		ELSE DATE_SUB(DATE_ADD(#{endDate}, INTERVAL 1 DAY), INTERVAL 1 SECOND)
+		END,
+		NULL, NOW(), NOW(), 'C3de4f5gh', 'C3de4f5gh', 'Y'
+	);
+</insert>
 	<!-- 분류 번호: #10 - 공지 사항 상세 페이지 -->
 	<!-- 작성자 이름을 위한 news_notice-employee 테이블 간 JOIN -->
 	<!-- datetime 소수점 첫째까지 출력돼서 포맷 변환 -->
