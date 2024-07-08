@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.GuestMapper">
+	<!-- 분류번호: #7 - 입주자 리스트 전체 조회 -->
+	<select id="selectResidentAll" parameterType="map" resultType="map">
+		SELECT 
+			g.gst_name gstName, 
+			r.room_dong roomDong, 
+			r.room_ho roomHo 
+		FROM 
+			guest g 
+		INNER JOIN 
+			room r 
+		ON 
+			g.room_no = r.room_no
+		LIMIT
+			#{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 분류번호: #7 - 입주자 리스트 전체 개수-->
+	<select id="selectResidentCount" resultType="int">
+		SELECT COUNT(*) FROM guest
+	</select>
+
+	
+	<!-- 분류번호: #7 - 동, 타입, 호수에 따른 입주자 조회 -->
+    <!-- 입주자가 있는 객실만 조회 -->
+    <select id="filterResidentList" resultType="map">
+        SELECT 
+        	g.gst_name gstName, 
+        	r.room_dong dong, 
+        	r.room_type type,
+        	r.room_ho ho
+        FROM 
+        	guest g
+        INNER JOIN 
+        	room r 
+        ON 
+        	g.room_no = r.room_no
+        WHERE 
+        	g.room_no IS NOT NULL
+        <if test="dong != null and dong != ''">
+            AND r.room_dong = #{dong}
+        </if>
+        <if test="type != null and type != ''">
+            AND r.room_type = #{type}
+        </if>
+        <if test="ho != null and ho != ''">
+            AND r.room_ho = #{ho}
+        </if>
+        LIMIT #{beginRow}, #{rowPerPage}
+    </select>
+</mapper>
