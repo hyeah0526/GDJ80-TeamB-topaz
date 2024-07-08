@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!--
-   분류번호: #7 - 입주자 리스트 조회
+   분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회
    시작 날짜: 2024-07-08
    담당자: 박수지
 -->
@@ -12,6 +12,9 @@
 <html lang="en">
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
+	
+	<!-- ======= css ======= -->
+	<link rel="stylesheet" href="/topaz/css/suji.css" rel="stylesheet"> 
 	
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
@@ -25,7 +28,7 @@
 	
 	<!-- Title 시작 -->
 	<div class="pagetitle">
-      <h1>residentList.jsp</h1>
+      <h1>입주자 관리</h1>
 	</div><!-- Title 종료 -->
 
 	<!-- section 시작 -->
@@ -43,7 +46,7 @@
  	<div class="col-lg-12">
 		<div class="card">
 			<div class="card-body">
-		    	<h5 class="card-title">Table with stripped rows</h5>
+		    	<h5 class="card-title"></h5>
 		    	<div class="container">
     <div class="row mb-3">
         <div class="col-md-1">
@@ -71,62 +74,69 @@
             </select>
         </div>
     </div>
-</div>
-		    	
+				</div>
+
+	<div class="search-container">
+		<form method="get" action="/topaz/groupware/resident/residentList">	
 			<div class="search-bar">
 				<form class="search-form d-flex align-items-center" method="POST" action="#">
-					<input type="text" name="query" placeholder="Search..." title="Enter search keyword">
+					<input type="text" name="searchWord" placeholder="Search..." title="Enter search keyword">
 					<button type="submit" title="Search"><i class="bi bi-search"></i></button>
 		    	</form>
 		   	</div><!-- End Search Bar -->
-		<nav class="header-nav ms-auto">
-			<ul class="d-flex align-items-center">
-				<li class="nav-item d-block d-lg-none">
-					<a class="nav-link nav-icon search-bar-toggle " href="#">
-						<i class="bi bi-search"></i>
-					</a>
-				</li><!-- End Search Icon-->
-			</ul>
-		</nav>
-        <!-- Table with stripped rows -->
-        <table class="table table-striped">
-          	<thead>
-	            <tr>
-	              <th scope="col">이름</th>
-	              <th scope="col">동</th>
-	              <th scope="col">호수</th>
-	            </tr>
-	       	</thead>
-          	<tbody>
-				<c:forEach var="r" items="${residentList }">
-					<tr>
-						<td>${r.gstName}</td>
-						<td>${r.roomDong }</td>
-						<td>${r.roomHo }</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		<!-- End Table with stripped rows -->
+			<nav class="header-nav ms-auto">
+				<ul class="d-flex align-items-center">
+					<li class="nav-item d-block d-lg-none">
+						<a class="nav-link nav-icon search-bar-toggle " href="#">
+							<i class="bi bi-search"></i>
+						</a>
+					</li><!-- End Search Icon-->
+				</ul>
+			</nav>
+		</form>
+	</div>
+	<br>
+    <!-- Table with stripped rows -->
+    <table class="table table-striped">
+      	<thead>
+         <tr>
+           <th scope="col">이름</th>
+           <th scope="col">동</th>
+           <th scope="col">호수</th>
+         </tr>
+    	</thead>
+      	<tbody>
+			<c:forEach var="r" items="${residentList }">
+				<tr>
+					<td>
+						<a href="/topaz/groupware/resident/residentOne?gstId=${r.gstId }">${r.gstName}</a>
+					</td>
+					<td>${r.roomDong }</td>
+					<td>${r.roomHo }</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	<!-- End Table with stripped rows -->
+	<div class="pagination-container">
 		<nav aria-label="Page navigation example">
-          	<ul class="pagination">
+	         	<ul class="pagination">
 	            <li class="page-item"><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=1">1</a></li>
 	            <li class="page-item"><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=2">2</a></li>
 	            <li class="page-item"><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=3">3</a></li>
 	            <li class="page-item">
 	              	<a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=${lastPage }" aria-label="Next">
-	                	<span aria-hidden="true">&raquo;</span>
-	              	</a>
-	            </li>
-	        </ul>
-        </nav><!-- End Pagination with icons -->
+	               	<span aria-hidden="true">&raquo;</span>
+	             	</a>
+	           </li>
+	       </ul>
+	      </nav><!-- End Pagination with icons -->
+	       </div>
 			</div>
 		</div>
 	</div>
 	</section>
-    
-    
-    </section><!-- section 종료 -->
+   	</section><!-- section 종료 -->
 
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->

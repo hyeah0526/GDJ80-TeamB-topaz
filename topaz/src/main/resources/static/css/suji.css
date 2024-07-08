@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+/* ==========입주자 관리 페이지 - residentList.jsp========== */
+
+/* 페이지 내 검색창과 버튼을 오른쪽 정렬 */
+.search-container {
+    text-align: right;
+}
+
+/* 페이지네이션을 중앙에 위치 */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}

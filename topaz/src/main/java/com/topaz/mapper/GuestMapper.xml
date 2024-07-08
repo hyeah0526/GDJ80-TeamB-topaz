@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.GuestMapper">
-	<!-- 분류번호: #7 - 입주자 리스트 전체 조회 -->
+	<!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
 	<select id="selectResidentAll" parameterType="map" resultType="map">
 		SELECT 
+			g.gst_id gstId,
 			g.gst_name gstName, 
 			r.room_dong roomDong, 
 			r.room_ho roomHo 
@@ -13,17 +14,22 @@
 			room r 
 		ON 
 			g.room_no = r.room_no
+		WHERE 
+			g.use_yn = 'Y'
+		<if test="searchWord != null">
+			AND (g.gst_name LIKE CONCAT('%', #{searchWord}, '%'))
+		</if>
 		LIMIT
 			#{beginRow}, #{rowPerPage}
 	</select>
 	
-	<!-- 분류번호: #7 - 입주자 리스트 전체 개수-->
+	<!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
 	<select id="selectResidentCount" resultType="int">
-		SELECT COUNT(*) FROM guest
+		SELECT COUNT(*) FROM guest WHERE use_yn = 'Y'
 	</select>
 
 	
-	<!-- 분류번호: #7 - 동, 타입, 호수에 따른 입주자 조회 -->
+	<!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
     <!-- 입주자가 있는 객실만 조회 -->
     <select id="filterResidentList" resultType="map">
         SELECT 
@@ -39,6 +45,9 @@
         	g.room_no = r.room_no
         WHERE 
         	g.room_no IS NOT NULL
+        AND
+        	g.use_yn = 'Y'
+        	
         <if test="dong != null and dong != ''">
             AND r.room_dong = #{dong}
         </if>
