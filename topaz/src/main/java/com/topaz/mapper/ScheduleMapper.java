@@ -19,5 +19,12 @@ public interface ScheduleMapper {
 	/* 분류 번호: #6 - 사내 일정 관리 페이지 :: 사내일정 등록 */
 	int insertSchedule(Schedule schedule); 
 	
+	/* 분류 번호: #6 - 사내 일정 상세보기 페이지 :: 상세조회 */
+	Schedule selectScheduleOne(String scheduleNo);
+	
+	/* 분류 번호: #6 - 사내 일정 상세보기 페이지 :: 사내일정 수정 */
+	int updateSchedule(Schedule schedule);
+	
+	
 
 }

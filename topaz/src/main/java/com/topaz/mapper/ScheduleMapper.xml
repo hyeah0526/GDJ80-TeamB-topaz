@@ -62,5 +62,38 @@
 		);
 	</insert>
 	
+	<!-- 분류 번호: #6 - 사내 일정 상세보기 페이지 :: 상세조회 -->
+	<select id="selectScheduleOne" parameterType="String" resultType="com.topaz.dto.Schedule">
+		SELECT 
+			s.schedule_no scheduleNo
+			, s.title title
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'M001' AND cd = type) type
+			, s.content content
+			, DATE_FORMAT(s.start_date, '%Y-%m-%dT%H:%i:%s') startDate
+			, DATE_FORMAT(s.end_date, '%Y-%m-%dT%H:%i:%s') endDate
+			, (SELECT emp_name FROM employee WHERE emp_no = s.reg_id) regId
+			, (SELECT emp_name FROM employee WHERE emp_no = s.mod_id) modId
+		FROM schedules s
+		WHERE s.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		AND s.schedule_no = #{scheduleNo}
+	</select>
+	
+	
+	<!-- 분류 번호: #6 - 사내 일정 상세보기 페이지 :: 수정 -->
+	<update id="updateSchedule" parameterType="com.topaz.dto.Schedule">
+		UPDATE 
+			schedules
+		SET
+			title = #{title}
+			, type = #{type}
+			, content = #{content}
+			, start_date = #{startDate}
+			, end_date = #{endDate}
+			, mod_id = #{modId}
+			, mod_time = NOW()
+		WHERE 
+			schedule_no = #{scheduleNo}
+	</update>
+	
 	
 </mapper>

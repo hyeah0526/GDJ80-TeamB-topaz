@@ -66,8 +66,47 @@ public class ScheduleService {
 		// 사내일정 추가
 		int insertRow = scheduleMapper.insertSchedule(schedule);
 		
+		if(insertRow == 1) {
+			log.debug(Debug.PHA + "setSchedule Service 등록 성공!-> " + insertRow + Debug.END);
+		}
 		
-		return 0;
+		
+		return insertRow;
+	}
+	
+
+	/*
+	 * 분류번호: #6 - 사내 일정 관리 페이지(ScheduleDetail.jsp) :: 사내일정 상세보기
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 박혜아
+	*/
+	public Schedule getScheduleDetail(String scheduleNo) {
+		log.debug(Debug.PHA + "getScheduleDetail Service 받아온 값--> " + scheduleNo + Debug.END);
+		
+		Schedule schedule = scheduleMapper.selectScheduleOne(scheduleNo);
+		//log.debug(Debug.PHA + "getScheduleDetail schedule-> " + schedule + Debug.END);
+		
+		
+		return schedule;
+	}
+	
+	
+	/*
+	 * 분류번호: #6 - 사내 일정 관리 페이지(ScheduleDetail.jsp) :: 사내일정 수정
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 박혜아
+	*/
+	public int modSchedule(Schedule schedule) {
+		//log.debug(Debug.PHA + "modSchedule Service 받아온 값--> " + schedule + Debug.END);
+		
+		int updateRow = scheduleMapper.updateSchedule(schedule);
+		
+		if(updateRow == 1) {
+			log.debug(Debug.PHA + "modSchedule Service 수정성공!-> " + updateRow + Debug.END);
+		}
+		
+		
+		return updateRow;
 	}
 
 }
