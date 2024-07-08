@@ -36,12 +36,18 @@
                 </div>
             
                 <!-- 메인 -->
-                 <div class="mainContent">
+                <div class="mainContent">
                     
                     <!-- 내용저장 -->
-                    <div>
-                
+                	<div>
+                	
                         <form class="signupForm" action="" method="post" enctype="multipart/form-data">
+                            
+                        	<div style="margin-bottom: 20px;">
+	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myInfo'">내 정보 조회</button>
+	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myPwModify?empNo=${empDetail.empNo}'">비밀번호 수정</button>
+	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">휴가 조회</button>
+	                    	</div>
                             
                             <div class="imageNameDiv">
                                 <!-- 이미지 -->
@@ -139,8 +145,7 @@
                              
                              <!-- 버튼 -->
                              <div class="formBtn">
-                                <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/empMain'">뒤로가기</button>    
-                                <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupwar/myPwModify?empNo=${empDetail.empNo}'">비밀번호 수정</button>
+                                <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/empMain'">뒤로가기</button>
                              </div>
                         </form>
                     </div>

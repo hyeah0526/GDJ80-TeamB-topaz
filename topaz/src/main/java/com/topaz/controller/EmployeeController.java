@@ -309,4 +309,40 @@ public class EmployeeController {
 		return "groupware/myPage/myInfo";
 	}
 	
+	/*
+	 * 서비스명: #2 - 비밀번호 수정 뷰  
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myPwModify")
+	public String myPwModify(
+			Model model,
+			@RequestParam(name = "empNo") String empNo) {
+		
+		//내 정보 리스트 가져오기
+	    Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
+	    log.debug(Debug.KIS + "controller / empDetail / empDetail : " + empDetail);
+	  
+	    //모델 객체에 데이터 추가
+	    model.addAttribute("empDetail", empDetail);
+	  
+		
+		return "groupware/myPage/myPwModify";
+	}
+	
+	/*
+	 * 서비스명: #2 - 비밀번호 수정
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	@PostMapping("/groupware/emp/myPwModify")
+	public String myPwModify(@RequestParam Map<String, Object> paramMap) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / myPwModify / paramMap : " + paramMap);
+		
+		
+		return "redirect:/groupware/myPage/myInfo?empNo="+paramMap.get("empNo");
+	}
+	
 }
