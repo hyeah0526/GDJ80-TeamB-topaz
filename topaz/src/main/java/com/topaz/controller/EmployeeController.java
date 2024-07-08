@@ -17,6 +17,8 @@ import com.topaz.dto.EmployeeRequest;
 import com.topaz.service.EmployeeService;
 import com.topaz.utill.Debug;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -25,6 +27,9 @@ public class EmployeeController {
 	
 	@Autowired
 	EmployeeService employeeService; // employeeService 의존성 주입
+	
+	
+	//========== 직원
 	
 	/*
 	 * 서비스명: #4 - 직원등록 뷰 
@@ -270,4 +275,38 @@ public class EmployeeController {
 		
 		return "groupware/emp/empLeave";
 	}
+	
+	//========== 직원 개인 정보
+
+	/*
+	 * 서비스명: #2 - 내 정보 보기
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myInfo")
+	public String myinfo(Model model, 
+			HttpServletRequest  httpServletRequest ) {
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / myinfo / httpServletRequest : " + httpServletRequest);
+		
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = httpServletRequest.getSession();
+		log.debug(Debug.KIS + "controller / myinfo / session : " + session);
+		
+		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / myinfo / empId : " + empNo);
+		
+		
+	    //내 정보 리스트 가져오기
+	    Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
+	    log.debug(Debug.KIS + "controller / empDetail / empDetail : " + empDetail);
+	  
+	    //모델 객체에 데이터 추가
+	    model.addAttribute("empDetail", empDetail);
+	    
+		return "groupware/myPage/myInfo";
+	}
+	
 }
