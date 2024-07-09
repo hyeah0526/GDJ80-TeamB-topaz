@@ -42,5 +42,8 @@ public interface EmpMapper {
 	/* 분류 번호 :  #2 - 이전 비밀번호 저장 */
 	public int insertNewPw(Map<String, Object> paramMap);
 	
+	/* 분류 번호 :  #4 - 전체 직원조회(조직도) */
+	public  List<Map<String, Object>> selectEmpAllInChart();
+	
 	
 }

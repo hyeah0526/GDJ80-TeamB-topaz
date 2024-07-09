@@ -220,4 +220,20 @@ public class EmployeeService {
 		
 		return changePw;
 	}
+	
+
+	/*
+	 * 분류번호: #4 - 전체 직원조회(조직도)
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 김인수
+	*/
+	public List<Map<String, Object>> selectEmpAllInChart() {
+		
+	    //전체 직원 리스트 가져오기
+	    List<Map<String, Object>> empList = empMapper.selectEmpAllInChart();
+	    log.debug(Debug.KIS + "service / selectEmpAllInChart / empList : " + empList);
+		
+		return empList;
+	} 
+	
 }

@@ -278,5 +278,22 @@
 			)
 	</insert>
 	
+	<!-- 분류 번호 :  #4 - 전체 직원조회(조직도) -->
+	<select id="selectEmpAllInChart" resultType="Map">
+		SELECT 
+		 emp_name empName, dept_code.cd_nm empDept, grade_code.cd_nm empGrade, file_name
+		FROM 
+			employee AS e
+		LEFT JOIN
+			common_code AS grade_code
+		ON 
+			e.emp_grade = grade_code.cd
+			AND grade_code.crp_cd = 'E002'
+		LEFT JOIN
+			common_code AS dept_code
+		ON 
+			e.emp_dept = dept_code.cd
+			AND dept_code.crp_cd = 'E001'
+	</select>
 	
 </mapper>

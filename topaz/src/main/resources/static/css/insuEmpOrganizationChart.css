@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+/*
+	fill : 색상
+	stroke : 외곽선
+	
+*/
+
+
+[data-n-id] rect  {
+   fill: #ffffff;
+   stroke-width : 1;
+   filter: none;
+}
+
+[data-n-id] text  { /*글자*/
+   fill: black; 
+}
+
+.field_0 {
+    font-family: Impact;
+    text-transform: uppercase;
+    fill: #000000;
+}
+
+[data-ctrl-ec-id] circle {
+    fill: #0080ff !important;
+    stroke : white;
+}
+
+.boc-edit-form.active {
+    background-color: #add8e6; 
+}
+
+[data-n-id] rect:hover {
+    filter: drop-shadow( 4px 5px 5px #aeaeae);
+}
+
+

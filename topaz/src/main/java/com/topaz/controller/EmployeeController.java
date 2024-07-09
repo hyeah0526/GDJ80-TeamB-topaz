@@ -347,4 +347,31 @@ public class EmployeeController {
 		return "redirect:/groupware/login";
 	}
 	
+	//========== 조직도
+	
+	/*
+	 * 서비스명: #4 - 조직도 뷰 
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/empOrganizationChart")
+	public String empOrganizationChart() {
+		return "groupware/emp/empOrganizationChart";
+	}
+	
+	/*
+	 * 서비스명: #4 - 조직도 Rest API 통신
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 김인수
+	*/
+	@ResponseBody
+	@GetMapping("/groupware/emp/empAllChart")
+	public List<Map<String, Object>> empAllChart() {
+		
+		List<Map<String, Object>> empAllChart = employeeService.selectEmpAllInChart();
+		log.debug(Debug.KIS + "controller / empAllChart / empAllChart : " + empAllChart);
+		
+		return empAllChart;
+	
+	}
 }
