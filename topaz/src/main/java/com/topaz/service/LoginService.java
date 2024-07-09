@@ -7,6 +7,7 @@ import com.topaz.dto.Employee;
 import com.topaz.dto.Guest;
 import com.topaz.dto.Outsourcing;
 import com.topaz.mapper.LoginMapper;
+import com.topaz.utill.Debug;
 import com.topaz.utill.PasswordHash;
 
 import lombok.extern.slf4j.Slf4j;
@@ -87,7 +88,37 @@ public class LoginService {
 	}
 
 	
-	
+	/*
+	 * 분류번호: #3 - 출근 등록
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 김인수
+	*/
+	public int insertStrWork(String empNo) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "service / insertStrWork / empNo : " + empNo);
+	   
+	    int row = loginMapper.insertStrWork(empNo);
+	    log.debug(Debug.KIS + "service / insertStrWork / row : " + row);
+	    
+		return row;
+	} 
+
+	/*
+	 * 분류번호: #3 - 퇴근 등록
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 김인수
+	*/
+	public int insertEndWork(String empNo) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "service / insertEndWork / empNo : " + empNo);
+	   
+	    int row = loginMapper.insertEndWork(empNo);
+	    log.debug(Debug.KIS + "service / insertEndWork / row : " + row);
+	    
+		return row;
+	} 
 	
 	
 	

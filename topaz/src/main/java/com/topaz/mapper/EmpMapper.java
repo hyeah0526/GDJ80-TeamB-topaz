@@ -43,7 +43,6 @@ public interface EmpMapper {
 	public int insertNewPw(Map<String, Object> paramMap);
 	
 	/* 분류 번호 :  #4 - 전체 직원조회(조직도) */
-	public  List<Map<String, Object>> selectEmpAllInChart();
-	
+	public List<Map<String, Object>> selectEmpAllInChart();
 	
 }

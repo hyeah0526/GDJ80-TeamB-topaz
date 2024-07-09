@@ -27,6 +27,56 @@
 		AND gst_id = #{strId}
 	</select> 
 
-
+	<!-- 분류 번호 : #3 - 출근 등록 -->
+	<insert id="insertStrWork" >
+		INSERT INTO 
+			commute_history(
+				commute_no,
+				emp_no,
+				start_time,
+				end_time,
+				reg_time,
+				mod_time,
+				reg_id,
+				mod_id,
+				use_yn
+			)VALUES(
+				CURRENT_TIMESTAMP(5),
+				#{empNo},
+				NOW(),
+				NULL,
+				NOW(),
+				NOW(),
+				#{empNo},
+				#{empNo},
+				'Y'
+			)
+	</insert>
+	
+	<!-- 분류 번호 : #3 - 퇴근 등록 -->
+	<insert id="insertEndWork" >
+		INSERT INTO 
+			commute_history(
+				commute_no,
+				emp_no,
+				start_time,
+				end_time,
+				reg_time,
+				mod_time,
+				reg_id,
+				mod_id,
+				use_yn
+			)VALUES(
+				CURRENT_TIMESTAMP(5),
+				#{empNo},
+				NULL,
+				NOW(),
+				NOW(),
+				NOW(),
+				#{empNo},
+				#{empNo},
+				'Y'
+			)
+	</insert>	
 
 </mapper>

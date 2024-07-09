@@ -18,6 +18,10 @@ public interface LoginMapper {
 	/* 분류번호: #15 - 고객 로그인 */
 	Guest doGuestLogin(String strId);
 
+	/* 분류 번호 :  #3 - 출근 등록*/
+	public int insertStrWork(String empNo);
 	
+	/* 분류 번호 :  #3 - 퇴근 등록*/
+	public int insertEndWork(String empNo);
 
 }

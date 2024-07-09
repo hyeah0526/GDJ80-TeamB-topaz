@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.topaz.service.LoginService;
 import com.topaz.utill.Debug;
@@ -14,6 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @Slf4j
@@ -41,6 +44,39 @@ public class LoginController {
 		
 		return "/groupware/empMain";
 	}
+	
+	/*
+	 * 서비스명: #4 - 출퇴근 기록 Rest API 통신
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 김인수
+	*/
+	@ResponseBody
+	@PostMapping("/groupware/empMain")
+	public String insertStrWork(HttpServletRequest req) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / empMain / req : " + req);
+				
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		
+		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / empMain / empNo : " + empNo);
+		
+		
+		//출근 정보 저장
+		//int strWork = loginService.insertStrWork(empNo);
+		//log.debug(Debug.KIS + "controller / empMain / strWork : " + strWork);
+		
+		//퇴근 정보 저장
+		//int endWork = loginService.insertStrWork(empNo);
+		//log.debug(Debug.KIS + "controller / empMain / endWork : " + endWork);
+		
+		return "redirect:/groupware/empMain";
+	}
+	
+	
 	
 	 // 로그인
 	@PostMapping("/loginPost")
@@ -112,11 +148,6 @@ public class LoginController {
 		
 		return "redirect:/groupware/login";
 	}
-	
-	
-	
-	
-	
-	
+
 	
 }

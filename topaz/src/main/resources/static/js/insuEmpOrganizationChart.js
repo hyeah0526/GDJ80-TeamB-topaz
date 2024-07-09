@@ -1,12 +1,13 @@
 $(document).ready(function() {
+	//ajax 통신 (모든 직원 정보 가져오기)
     $.ajax({
         url: '/topaz/groupware/emp/empAllChart', // 실제 API 엔드포인트로 변경
-        method: 'GET',
+        method: 'get',
         success: function(response) {
             console.log(response); // 응답 데이터 디버깅
 
             // 대표자 노드 (admin)
-            var adminNode = {
+            let adminNode = {
                 id: 1,
                 name: '대표자',
                 department: '행정부',
@@ -16,7 +17,7 @@ $(document).ready(function() {
             };
 
             // 부서를 기준으로 데이터를 그룹화
-            var departments = {};
+            let departments = {};
             response.forEach(item => {
                 if (item.empName !== '대표자') { // 대표자는 제외
                     if (!departments[item.empDept]) {
@@ -27,18 +28,18 @@ $(document).ready(function() {
             });
 
             // 노드 배열 초기화
-            var nodes = [adminNode];
-            var currentId = 2;
+            let nodes = [adminNode];
+            let currentId = 2;
 
             // 부서별로 부장, 팀장, 대리, 사원 노드를 추가
             Object.keys(departments).forEach(dept => {
-                var deptEmployees = departments[dept];
+                let deptEmployees = departments[dept];
 
                 // 부장 노드들 추가
-                var managers = deptEmployees.filter(emp => emp.empGrade === '부장');
-                var managerIds = [];
+                let managers = deptEmployees.filter(emp => emp.empGrade === '부장');
+                let managerIds = [];
                 managers.forEach(manager => {
-                    var managerNode = {
+                    let managerNode = {
                         id: currentId,
                         name: manager.empName,
                         department: manager.empDept,
@@ -52,10 +53,10 @@ $(document).ready(function() {
                 });
 
                 // 팀장 노드들 추가
-                var teamLeaders = deptEmployees.filter(emp => emp.empGrade === '팀장');
-                var teamLeaderIds = [];
+                let teamLeaders = deptEmployees.filter(emp => emp.empGrade === '팀장');
+                let teamLeaderIds = [];
                 teamLeaders.forEach((teamLeader, index) => {
-                    var teamLeaderNode = {
+                    let teamLeaderNode = {
                         id: currentId,
                         name: teamLeader.empName,
                         department: teamLeader.empDept,
@@ -69,10 +70,10 @@ $(document).ready(function() {
                 });
 
                 // 대리 노드들 추가
-                var assistants = deptEmployees.filter(emp => emp.empGrade === '대리');
-                var assistantIds = [];
+                let assistants = deptEmployees.filter(emp => emp.empGrade === '대리');
+                let assistantIds = [];
                 assistants.forEach((assistant, index) => {
-                    var assistantNode = {
+                    let assistantNode = {
                         id: currentId,
                         name: assistant.empName,
                         department: assistant.empDept,
@@ -86,9 +87,9 @@ $(document).ready(function() {
                 });
 
                 // 사원 노드들 추가
-                var employees = deptEmployees.filter(emp => emp.empGrade === '사원');
+                let employees = deptEmployees.filter(emp => emp.empGrade === '사원');
                 employees.forEach((employee, index) => {
-                    var employeeNode = {
+                    let employeeNode = {
                         id: currentId,
                         name: employee.empName,
                         department: employee.empDept,
@@ -102,7 +103,7 @@ $(document).ready(function() {
             });
 
             // OrgChart 초기화
-            var chart = new OrgChart($("#tree")[0], {
+            let chart = new OrgChart($("#tree")[0], {
                 template: "olivia",
                 searchDisplayField: 'name',
                 toolbar: { // toolbar

@@ -44,7 +44,7 @@ public class EmployeeController {
 	}
 	
 	/*
-	 * 서비스명: #4 - 직원번호 중복 확인
+	 * 서비스명: #4 - 직원번호 중복 확인 Rest API 통신
 	 * 시작 날짜: 2024-07-06
 	 * 담당자: 김인수
 	*/
@@ -295,7 +295,7 @@ public class EmployeeController {
 		
 		// 세션에서 strId(직원아이디)라는 속성 가져오기
 		String empNo = (String)session.getAttribute("strId");
-		log.debug(Debug.KIS + "controller / myinfo / empId : " + empNo);
+		log.debug(Debug.KIS + "controller / myinfo / empNo : " + empNo);
 		
 		
 	    //내 정보 리스트 가져오기
