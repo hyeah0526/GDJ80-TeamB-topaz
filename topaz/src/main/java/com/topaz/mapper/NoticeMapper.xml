@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.NoticeMapper">
 
-	
+	<!-- 분류 번호: #10 - 공지 사항 삭제 -->
 	<delete id="deleteNotice" parameterType="String">
 	UPDATE news_notice
 	SET 
@@ -11,7 +11,8 @@
 		mod_time = NOW()
 	WHERE 
 		news_no = #{newsNo};
-	</delete>	
+	</delete>
+	<!-- 분류 번호: #10 - 공지 사항 수정 -->
 	<update id="updateNotice" parameterType="com.topaz.dto.Notice">
 	UPDATE news_notice
 	SET 
@@ -26,7 +27,13 @@
 	WHERE 
 		news_no = #{newsNo};	
 	</update>
+	
+	<!-- 분류 번호: #10 - 공지 사항 등록 -->
 	<insert id="insertNotice" parameterType="com.topaz.dto.Notice">
+	
+	<selectKey resultType="String" order="AFTER" keyProperty="newsNo">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
 	INSERT INTO news_notice(
 		news_no, title, content, grade, category, start_date, end_date, views,
 		reg_time, mod_time, reg_id, mod_id, use_yn

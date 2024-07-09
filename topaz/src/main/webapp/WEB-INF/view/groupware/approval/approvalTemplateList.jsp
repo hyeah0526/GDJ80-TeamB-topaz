@@ -17,7 +17,7 @@
 	
 	<!-- Title 시작 -->
 	<div class="pagetitle">
-      <h1>approvalTemplateList.jsp</h1>
+      <h1>서식 목록</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">중제목</a></li>
@@ -34,42 +34,40 @@
 					<div class="card-body">
 						
 						<!-- Table with stripped rows -->
-						<form action="/topaz/groupware/notice/noticeList" method="get">
+						<!-- <form action="/topaz/groupware/notice/noticeList" method="get">
 							<br>
 							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
 							<button type="submit" class="btn btn-primary">검색</button>
-						</form>
+						</form> -->
 						<br>
-						<form action="/topaz/groupware/notice/noticeAdd" method="get">
+						<form action="/topaz/groupware/notice/approvalTemplateeAdd" method="get">
 							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit" class="btn btn-primary">작성</button>
 						</form>
-						<table class="table" id="noticeTable">
+						<table class="table" id="templateTable">
 							<thead>
 								<tr>
 									<th>No</th>
-									<th>제목</th>
-									<th>작성자</th>
-									<th>생성 일자</th>
-									<th>수정 일자</th>
+									<th>regId</th>
+									<th>regTime</th>
+									<th>modId</th>
+									<th>modTime</th>
+									<th>useYn</th>
 								</tr>
 							</thead>
 							<!-- 상단 노출 공지사항 -->
-							<tbody class="topNotices">
-								<c:forEach var="t" items="">
+							<tbody class="">
+								<c:forEach var="t" items="${approvalTemplateList}">
 									<tr>
-										<td></td>
-										<td>
-											<a href="">
-											</a>
-										</td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<td>${t.templateNo}</td>
+										<td>${t.regId}"</td>
+										<td>${t.regiTime}</td>
+										<td>${t.modId}"</td>
+										<td>${t.modTime}"</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-						<div>
+			<%-- 			<div>
 							<span>
 								<c:if test="${currentPage > 1 }">
 									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
@@ -89,7 +87,7 @@
 									</a>
 								</c:if>	
 							</span>
-						</div>
+						</div> --%>
 						<!-- End Table with stripped rows -->
 					</div>
 				</div>

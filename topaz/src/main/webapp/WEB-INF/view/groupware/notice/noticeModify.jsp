@@ -8,57 +8,57 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>공지 사항 작성</title>
-<!-- CSS / JS -->
-<link href="/topaz/css/jihoon.css" rel="stylesheet">
-<script src="/topaz/js/jihoon.js"></script>
-<!-- naver smart editor -->
-<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-	
-	let oEditors = [];
-
-	// 에디터 로딩 함수 정의 (함수명 수정)
-	function editorLoading(title, contents) {
-		nhn.husky.EZCreator.createInIFrame({
-			oAppRef : oEditors,
-			elPlaceHolder : "modifyContent", // html editor가 들어갈 textarea의 id입니다.
-			sSkinURI : "/topaz/smarteditor/SmartEditor2Skin.html", // html editor가 skin url 입니다.
-			htParams : {
-				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseToolbar : true,
-				// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseVerticalResizer : true,
-				// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-				bUseModeChanger : true,
-				fOnBeforeUnload : function() {
-					// 페이지를 떠날 때 처리할 로직
-				},
-				fOnAppLoad : function() {
-					// 수정 모드를 구현할 때 사용할 부분입니다.
-					// 로딩이 끝난 후 값이 체워지게 하는 구현을 합니다.
-					if (contents) {
-						oEditors.getById["modifyContent"].exec(
-								"PASTE_HTML", [ contents ]);
+	<head>
+	<meta charset="UTF-8">
+	<title>공지 사항 작성</title>
+	<!-- CSS / JS -->
+	<link href="/topaz/css/jihoon.css" rel="stylesheet">
+	<script src="/topaz/js/jihoonNoticeModify.js"></script>
+	<!-- naver smart editor -->
+	<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+<!-- 	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			
+			let oEditors = [];
+		
+			// 에디터 로딩 함수 정의 (함수명 수정)
+			function editorLoading(title, contents) {
+				nhn.husky.EZCreator.createInIFrame({
+					oAppRef : oEditors,
+					elPlaceHolder : "content", // html editor가 들어갈 textarea의 id입니다.
+					sSkinURI : "/topaz/smarteditor/SmartEditor2Skin.html", // html editor가 skin url 입니다.
+					htParams : {
+						// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+						bUseToolbar : true,
+						// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+						bUseVerticalResizer : true,
+						// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+						bUseModeChanger : true,
+						fOnBeforeUnload : function() {
+							// 페이지를 떠날 때 처리할 로직
+						},
+						fOnAppLoad : function() {
+							// 수정 모드를 구현할 때 사용할 부분입니다.
+							// 로딩이 끝난 후 값이 체워지게 하는 구현을 합니다.
+							if (contents) {
+								oEditors.getById["content"].exec(
+										"PASTE_HTML", [ contents ]);
+							}
+						},
+						fCreator : "createSEditor2"
 					}
-				},
-				fCreator : "createSEditor2"
+				});
 			}
-		});
-	}
-	const modifyContent = "${addContent.content}";
-	editorLoading(modifyContent);
-	
-	// form 전송 시 에디터의 내용을 textarea에 반영
-	function submitContents(form) {
-		oEditors.getById["modifyContent"].exec("UPDATE_CONTENTS_FIELD", []);
-		return true;
-	}
-}); 
-</script>
+			const content = "${noticeDetail.content}";
+			editorLoading(content);
+			
+			// form 전송 시 에디터의 내용을 textarea에 반영
+			function submitContents(form) {
+				oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+				return true;
+			}
+		}); 
+	</script> -->
 
 </head>
 <!-- ======= header <Head> 부분 ======= -->
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
 										제목
 									</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" id="modifyTitle" name="title" value="${noticeDetail.title}">
+										<input type="text" class="form-control" id="title" name="title" value="${noticeDetail.title}">
 									</div>
 								</div>
 								<fieldset class="row mb-3">
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
 									<label for="modifyNoticeStart" class="col-sm-2 col-form-label">게시 시작일
 									</label>
 									<div class="col-sm-4">
-										<input type="date" class="form-control" id="modifyNoticeStart" name="startDate" value="${noticeDetail.startDate.toString().substring(0, 10)}">
+										<input type="date" class="form-control" id="startDate" name="startDate" value="${noticeDetail.startDate.toString().substring(0, 10)}">
 									</div>
 								</div>
 								<!-- end date-->
@@ -149,14 +149,14 @@ document.addEventListener('DOMContentLoaded', function() {
 										게시 종료일
 									</label>
 									<div class="col-sm-4">
-										<input type="date" class="form-control" id="modifyNoticeEnd" name="endDate" value="${noticeDetail.endDate.toString().substring(0, 10)}">
+										<input type="date" class="form-control" id="endDate" name="endDate" value="${noticeDetail.endDate.toString().substring(0, 10)}">
 									</div>
 								</div>
 
 								<div class="row mb-3">
-									<label for="modifyContent" class="col-sm-2 col-form-label">내용</label>
+									<label for="content" class="col-sm-2 col-form-label">내용</label>
 									<div class="col-sm-10">
-										<textarea class="form-control" style="height: 100px" name="content" id="modifyContent">${noticeDetail.content}</textarea>
+										<textarea class="form-control" style="height: 100px" name="content" id="content">${noticeDetail.content}</textarea>
 									</div>
 								</div>
 

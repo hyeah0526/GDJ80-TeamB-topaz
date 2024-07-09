@@ -58,12 +58,12 @@ public class NoticeService {
 		log.debug(Debug.KJH + "/ service / addNotice noticeRequest: " + noticeRequest);
 		
 		// 파일 업로드 테스트용
-	    String empNo = "C3de4f5gh"; // 예제용 사용자 ID
-	    noticeRequest.setRegId(empNo);
-	    noticeRequest.setModId(empNo);
 	    
 		// 공지 사항 DTO에 데이터 바인딩
 		Notice notice = noticeRequest.toNotice();
+		String referenceNo = notice.getNewsNo(); // 예제용 사용자 ID
+		noticeRequest.setRegId(referenceNo);
+		noticeRequest.setModId(referenceNo);
 		// 공지 사항 정보를 저장
 		int row = noticeMapper.insertNotice(notice);
 		
@@ -121,7 +121,7 @@ public class NoticeService {
 		
 		List<Map<String, Object>> noticeList = noticeMapper.selectNoticeList(paramMap);
 		
-		log.debug("noticeList.toString: " + noticeList.toString());
+		log.debug(Debug.KJH + "/ service / getNoticeList " + noticeList.toString());
 		
 		return noticeList;
 	}

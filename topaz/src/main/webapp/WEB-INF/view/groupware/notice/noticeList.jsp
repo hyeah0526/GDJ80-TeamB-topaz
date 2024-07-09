@@ -65,7 +65,7 @@
 								</tr>
 							</thead>
 							<!-- 상단 노출 공지사항 -->
-							<tbody class="topNotices">
+							<tbody class="topNotice">
 								<c:forEach var="n" items="${noticeList}">
 									<fmt:formatDate var="changedCurrentTime" value="${currentTime}" pattern="yyyy-MM-dd HH:mm:ss" />
 									<c:if test="${n.grade == '1' && (n.category == '1' || (n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate))}">
@@ -95,7 +95,7 @@
 								</c:forEach>
 							</tbody>
 							<!-- 전체 공지사항 (상단 노출 포함) -->
-							<tbody id="normallNotices">
+							<tbody id="normallNotice">
 								<c:forEach var="n" items="${noticeList}">
 									<tr>
 										<td>${n.no}</td>
