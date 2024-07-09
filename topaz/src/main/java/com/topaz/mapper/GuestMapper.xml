@@ -33,6 +33,7 @@
     <!-- 입주자가 있는 객실만 조회 -->
     <select id="filterResidentList" resultType="map">
         SELECT 
+        	g.gst_id gstId,
         	g.gst_name gstName, 
         	r.room_dong dong, 
         	r.room_type type,
@@ -59,4 +60,27 @@
         </if>
         LIMIT #{beginRow}, #{rowPerPage}
     </select>
+    
+    <!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 상세 조회 -->
+    <select id="selectResidentOne" parameterType="String" resultType="map">
+    	SELECT 
+	    	g.gst_id gstId, g.gst_name gstName, g.gst_email gstEmail, 
+	    	g.gst_gender gstGender, g.gst_birth gstBirth, 
+			g.gst_phone gstPhone, DATE_FORMAT(g.contract_start, '%Y-%m-%d') contractStart, 
+			DATE_FORMAT(g.contract_end, '%Y-%m-%d') contractEnd, g.room_amenity roomAmenity, 
+			g.resident_note residentNote, g.protector_name protectorName, 
+			g.protector_phone protectorPhone, g.protector_relation protectorRelation, g.reg_id regId, g.mod_id modId, 
+			r.room_no roomNo, r.room_type roomType, r.room_dong roomDong, r.room_ho roomHo
+		FROM 
+			guest g
+		INNER JOIN 
+			room r
+		ON 
+			g.room_no = r.room_no
+		WHERE 
+			g.gst_id = #{gstId}
+		AND 
+			g.use_yn = 'Y';
+    </select>
+    
 </mapper>

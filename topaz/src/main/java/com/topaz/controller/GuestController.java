@@ -47,4 +47,24 @@ public class GuestController {
 		
 	}
 	
+	/*
+	 * 서비스명: getResidentList
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 박수지
+	*/
+	
+	@GetMapping("/groupware/resident/residentDetail")
+	public String residentDetail(Model model, 
+								@RequestParam(name="gstId") String gstId) throws Exception {
+		
+		// 입주자 상세조회
+		Map<String, Object> residentOne = guestService.getResidentOne(gstId);
+		log.debug(Debug.PSJ + "residentOne controller==>" + residentOne.toString() + Debug.END);
+		
+		// model에 넣기
+		model.addAttribute("resident",residentOne);
+		
+		return "groupware/resident/residentDetail";
+	}
+	
 }

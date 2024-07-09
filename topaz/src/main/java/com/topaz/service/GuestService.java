@@ -49,6 +49,10 @@ public class GuestService {
 	*/
 	
 	public List<Map<String,Object>> getResidentList(int currentPage, int rowPerPage, String searchWord){
+		log.debug(Debug.PSJ + "resiCurrentPage service==>" + currentPage + Debug.END);
+		log.debug(Debug.PSJ + "resiRowPerPage service==>" + rowPerPage + Debug.END);
+		log.debug(Debug.PSJ + "resiSearchWord service==>" + searchWord + Debug.END);
+		
 		Map<String,Object> paramMap = new HashMap<>();
 		
 		paramMap.put("rowPerPage", rowPerPage);
@@ -57,8 +61,24 @@ public class GuestService {
 		
 		List<Map<String,Object>> list = guestMapper.selectResidentAll(paramMap);
 		
-		log.debug(Debug.PSJ + "list==>" + list.toString() + Debug.END);
+		log.debug(Debug.PSJ + "list service==>" + list.toString() + Debug.END);
 		
 		return list;
+	}
+	
+	/*
+	 * 분류번호: #7 - 입주자 관리 페이지 : 입주자 상세 조회
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 박수지
+	*/
+	
+	public Map<String,Object> getResidentOne(String gstId){
+		log.debug(Debug.PSJ + "resiGstId service==>" + gstId + Debug.END);
+		
+		Map<String,Object> residentMap = guestMapper.selectResidentOne(gstId);
+		
+		log.debug(Debug.PSJ + "residentone service==>" + residentMap.toString() + Debug.END);
+		
+		return residentMap;
 	}
 }

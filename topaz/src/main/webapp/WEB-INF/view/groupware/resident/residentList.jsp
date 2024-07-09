@@ -14,7 +14,7 @@
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
 	
 	<!-- ======= css ======= -->
-	<link rel="stylesheet" href="/topaz/css/suji.css" rel="stylesheet"> 
+	<link rel="stylesheet" href="/topaz/css/suji.css"> 
 	
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
@@ -36,8 +36,8 @@
     	<div class="pagetitle">
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">중제목</a></li>
-          <li class="breadcrumb-item active">소제목</li>
+          <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">HOME</a></li>
+          <li class="breadcrumb-item active">Resident List</li>
         </ol>
       </nav>
 	</div><!-- End Page Title -->
@@ -48,32 +48,32 @@
 			<div class="card-body">
 		    	<h5 class="card-title"></h5>
 		    	<div class="container">
-    <div class="row mb-3">
-        <div class="col-md-1">
-            <label for="dong" class="form-label">동</label>
-        </div>
-        <div class="col-md-2">
-            <select id="dong" class="form-select" aria-label="Select dong">
-				<option value = "">동을 선택하세요 </option>
-            </select>
-        </div>
-        <div class="col-md-1">
-            <label for="type" class="form-label">타입</label>
-        </div>
-        <div class="col-md-2">
-            <select id="type" class="form-select" aria-label="Select ho number">
-				<option value ="">타입을 선택하세요</option>
-            </select>
-        </div>
-        <div class="col-md-1">
-            <label for="ho" class="form-label">호수</label>
-        </div>
-        <div class="col-md-2">
-            <select id="ho" class="form-select" aria-label="Select second ho number">
-                <option value ="">호수를 선택하세요</option>
-            </select>
-        </div>
-    </div>
+				    <div class="row mb-3">
+				        <div class="col-md-1">
+				            <label for="dong" class="form-label">동</label>
+				        </div>
+				        <div class="col-md-2">
+				            <select id="dong" class="form-select" aria-label="Select dong">
+								<option value = "">동을 선택하세요 </option>
+				            </select>
+				        </div>
+				        <div class="col-md-1">
+				            <label for="type" class="form-label">타입</label>
+				        </div>
+				        <div class="col-md-2">
+				            <select id="type" class="form-select" aria-label="Select ho number">
+								<option value ="">타입을 선택하세요</option>
+				            </select>
+				        </div>
+				        <div class="col-md-1">
+				            <label for="ho" class="form-label">호수</label>
+				        </div>
+				        <div class="col-md-2">
+				            <select id="ho" class="form-select" aria-label="Select second ho number">
+				                <option value ="">호수를 선택하세요</option>
+				            </select>
+				        </div>
+				    </div>
 				</div>
 
 	<div class="search-container">
@@ -97,7 +97,7 @@
 	</div>
 	<br>
     <!-- Table with stripped rows -->
-    <table class="table table-striped">
+    <table class="table table-hover">
       	<thead>
          <tr>
            <th scope="col">이름</th>
@@ -106,15 +106,14 @@
          </tr>
     	</thead>
       	<tbody>
-			<c:forEach var="r" items="${residentList }">
-				<tr>
-					<td>
-						<a href="/topaz/groupware/resident/residentOne?gstId=${r.gstId }">${r.gstName}</a>
-					</td>
-					<td>${r.roomDong }</td>
-					<td>${r.roomHo }</td>
-				</tr>
-			</c:forEach>
+	<c:forEach var="r" items="${residentList}">
+        <tr onclick="window.location.href='/topaz/groupware/resident/residentDetail?gstId=${r.gstId}'" style="cursor:pointer;">
+            <td>${r.gstName}</td>
+            <td>${r.roomDong}</td>
+            <td>${r.roomHo}</td>
+        </tr>
+    </c:forEach>
+
 		</tbody>
 	</table>
 	<!-- End Table with stripped rows -->
@@ -123,7 +122,7 @@
 	         	<ul class="pagination">
 	            <li class="page-item"><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=1">1</a></li>
 	            <li class="page-item"><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=2">2</a></li>
-	            <li class="page-item"><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=3">3</a></li>
+	            <li class="page-item "><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=3">3</a></li>
 	            <li class="page-item">
 	              	<a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=${lastPage }" aria-label="Next">
 	               	<span aria-hidden="true">&raquo;</span>
@@ -217,19 +216,25 @@
 	            method: 'POST',
 	            data: {dong: dong, type: type, ho: ho},
 	            success: function(data) {
-	                var tbody = $('table.table-striped tbody');
+	            	console.log("Received data: ", data); // 확인용 로그
+	                var tbody = $('table.table-hover tbody');
 	                tbody.empty();
 	                data.forEach(function(item){
-	                    var row = '<tr>';
+	                	var row = '<tr data-href="/topaz/groupware/resident/residentDetail?gstId=' + item.gstId + '">';
 	                    row += '<td>' + item.gstName + '</td>';
 	                    row += '<td>' + item.dong + '</td>';
 	                    row += '<td>' + item.ho + '</td>';
 	                    row += '</tr>';
 	                    tbody.append(row);
 	                });
+	                $('table.table-hover tbody tr').on('click', function() {
+		                window.location = $(this).data('href');
+		            });
 	            }
 	        });
 	    });
+		
+	
 	</script>
 	
 </body>

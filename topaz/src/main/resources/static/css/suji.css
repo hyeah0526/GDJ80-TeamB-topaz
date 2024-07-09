@@ -12,3 +12,73 @@
     display: flex;
     justify-content: center;
 }
+
+
+/* ==========입주자 상세보기 페이지 - residentDetail.jsp========== */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+}
+
+/* 프로필 이미지 스타일 */
+.profile-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+/* 탭 스타일 */
+.nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-bottom: none;
+    margin-right: 5px;
+    padding: 10px 20px;
+}
+
+.nav-tabs .nav-link.active {
+    color: #495057;
+    background-color: #fff;
+    border-color: #ddd #ddd #fff;
+}
+
+/* 프로필 디테일 스타일 */
+.profile-overview .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile-overview .row > div {
+    flex: 1 1 50%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.profile-overview .info-item {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    padding: 10px 0;
+    border-bottom: 1px solid #dedede;
+}
+
+.profile-overview .info-item:last-child {
+    border-bottom: none;
+}
+
+.profile-overview .info-item .label {
+    font-weight: bold;
+    color: #333;
+    width: 150px; /* 라벨의 고정 너비 설정 */
+    text-align: center;
+}
+
+.profile-overview .info-item .value {
+    color: #555;
+    flex-grow: 1;
+    text-align: left; /* 값을 왼쪽 정렬 */
+}
+

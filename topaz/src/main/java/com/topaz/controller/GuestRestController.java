@@ -66,6 +66,12 @@ public class GuestRestController {
 	                                                    @RequestParam(name="currentPage", defaultValue = "1")int currentPage,
 	                                                    @RequestParam(name="rowPerPage", defaultValue = "5")int rowPerPage) {
 		int beginRow = (currentPage-1)*rowPerPage;
+		
+		// 로깅 추가
+	    System.out.println("Received Params - dong: " + dong + ", type: " + type + ", ho: " + ho);
+	    System.out.println("Pagination Params - currentPage: " + currentPage + ", rowPerPage: " + rowPerPage);
+
+
 	    return guestMapper.filterResidentList(dong, type, ho, beginRow, rowPerPage);
 	}
 }
