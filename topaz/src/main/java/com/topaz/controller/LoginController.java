@@ -67,7 +67,6 @@ public class LoginController {
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
                 return "redirect:/groupware/empMain";
             }
-          
         } else if ("outsourcing".equals(strUserType)) {
         // 외주업체 로그인
             errMsg = loginService.doOutsourcingLogin(strId, strPw);
@@ -77,7 +76,16 @@ public class LoginController {
                 session.setAttribute("strId", strId);
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
                 return "redirect:/groupware/bpo/bpoMain";
-
+            }
+        } else if("guest".equals(strUserType)) {
+        // 고객 로그인
+        	errMsg = loginService.doGuestLogin(strId, strPw);
+        	
+        	if (errMsg == null) { // 로그인 성공
+                HttpSession session = req.getSession();
+                session.setAttribute("strId", strId);
+                log.debug(Debug.HEH + "session : " + session + Debug.END);
+                return "redirect:/customer/gstMain";
             }
         } else if (strUserType == null || strUserType.isEmpty()) {
         // 선택을 안 했을 경우

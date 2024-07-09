@@ -17,10 +17,15 @@
 		FROM outsourcing 
 		WHERE use_yn = 'Y'
 		AND outsourcing_no = #{strId}
-
 	</select> 
 
-
+	<!-- #15 - 고객 로그인 -->
+	<select id="doGuestLogin" resultType="com.topaz.dto.Guest">
+		SELECT gst_id gstId, gst_pw gstPw, gst_name gstName
+		FROM guest
+		WHERE use_yn = 'Y'
+		AND gst_id = #{strId}
+	</select> 
 
 
 

@@ -70,8 +70,11 @@
 
         <div class="row justify-content-center">
 	          <div class="col-lg-4 ">
-	            <form action="" method="post" role="form" class="php-email-form">
-		              <div class="row mb-3 mt-5">
+	            <form action="${pageContext.request.contextPath}/loginPost" method="post" class="php-email-form">
+		            <div class="row mb-3 mt-5">
+		              	<div class="text-center justify-content-center" style="color: red;">
+							<span>${errMsg }</span>
+						</div>
 		              	  <div class="form-group mt-3">
 		                	<label for="id" class="form-label">ID</label>
 		                 	<input type="text" name="id" class="form-control" id="id">
@@ -82,9 +85,11 @@
 			                <input type="password" class="form-control" name="pw" id="pw">
 			              </div>
 		              </div>
+		              <div>
+		              	<input type="hidden" name="userType" value="guest">
+		              </div>
 		              <div class="text-center mb-3 mt-3"><button type="submit">Login</button></div>
-	            </form>
-	            
+				</form>
 	            <div class="row php-email-form mb-5">
 	            	<div class="col"><button type="button">비밀번호 찾기</button></div>
 	            	<div class="col mb-5"><button type="button">회원가입</button></div>
