@@ -31,4 +31,45 @@
 		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 		AND outsourcing_type = (SELECT cd FROM common_code WHERE crp_cd = 'W002' AND cd = '2')
 	</select>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 예약받는 외주업체 영업상태 -->
+	<select id="selectBpoState" resultType="map">
+		SELECT 
+			o.outsourcing_no outsourcingNo
+			,o.outsourcing_name outsourcingName
+			,o.incharge_name inchargeName
+			,CONCAT(SUBSTRING(o.contact_no from 1 for 3), '-'
+					, SUBSTRING(o.contact_no from 4 for 4), '-'
+					, SUBSTRING(o.contact_no from 8 for 4)) contactNo
+			,(SELECT cd_nm FROM common_code WHERE crp_cd = 'W001' AND cd = o.outsourcing_state) outsourcingState
+		FROM outsourcing o
+		WHERE o.outsourcing_type 
+				= (SELECT cd FROM common_code WHERE crp_cd = 'W002' AND cd = '2')
+		AND o.use_yn
+				= (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		ORDER BY outsourcingState DESC
+	</select>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 오늘의 예약 조회 -->
+	<select id="selectBpoRsvnToday" resultType="map">
+		SELECT 
+	        os.rsvn_no rsvnNo
+	        , o.outsourcing_name outsourcingName
+	        , o.outsourcing_no outsourcingNo
+	        , SUBSTRING(os.rsvn_title, 1, 6) rsvnTitle
+	        , (SELECT cd_nm FROM common_code WHERE crp_cd = 'W006' AND cd = os.rsvn_state) rsvnState
+	        , os.rsvn_content rsvnContent
+	        , DATE_FORMAT(os.rsvn_start, '%H:%i') rsvnStart
+	        , DATE_FORMAT(os.rsvn_end, '%H:%i') rsvnEnd
+	    FROM 
+	        outsourcing_rsvn os
+	        INNER JOIN outsourcing o ON os.outsourcing_no = o.outsourcing_no
+	    WHERE os.use_yn 
+	    		= (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		AND (CURDATE() BETWEEN DATE(os.rsvn_start) AND DATE(os.rsvn_end) 
+				OR (CURDATE() = DATE(os.rsvn_start) AND CURDATE() = DATE(os.rsvn_end)));
+	</select>
+	
 </mapper>

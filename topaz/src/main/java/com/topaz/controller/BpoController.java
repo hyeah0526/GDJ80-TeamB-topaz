@@ -20,7 +20,7 @@ public class BpoController {
 	@Autowired BpoService bpoService;
 	
 	/*
-	 * 서비스명: -
+	 * 서비스명: getBpoCategory
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 박혜아
 	*/
@@ -29,13 +29,23 @@ public class BpoController {
 		
 		// 외주업체 전체 카테고리 목록
 		List<Map<String, Object>> bpoCategory = bpoService.getBpoCategory();
-		model.addAttribute("bpoCategory", bpoCategory);
 		log.debug(Debug.PHA + "bpoMainIn Controller bpoCategory--> " + bpoCategory + Debug.END);
+		
+		// '예약'받는 모든 외주업체 영업상태 확인
+		List<Map<String, Object>> bpoStateChk = bpoService.getBpoState();
+		log.debug(Debug.PHA + "bpoMainIn Controller bpoStateChk--> " + bpoStateChk + Debug.END);
+		
+		// 오늘의 일정 목록
+		List<Map<String, Object>> bpoRsvnToday = bpoService.getBpoRsvnToday();
+		log.debug(Debug.PHA + "bpoMainIn Controller bpoRsvnToday--> " + bpoRsvnToday + Debug.END);
+		
+		// model담기
+		model.addAttribute("bpoCategory", bpoCategory);
+		model.addAttribute("bpoStateChk", bpoStateChk);
+		model.addAttribute("bpoRsvnToday", bpoRsvnToday);
 		
 		return "groupware/bpo/bpoMainIn";
 	}
-	
-	
 	
 	
 	

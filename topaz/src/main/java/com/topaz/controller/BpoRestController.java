@@ -27,6 +27,7 @@ public class BpoRestController {
 	public List<Map<String, Object>> bpoRsvnCalList(String inputState) {
 		log.debug(Debug.PHA + "bpoMainIn controller inputState--> " + inputState + Debug.END);
 		
+		// 캐린더 전체 목록 조회
 		List<Map<String, Object>> list = bpoService.getBpoRsvnList(inputState);
 		log.debug(Debug.PHA + "bpoMainIn controller list--> " + list + Debug.END);
 		

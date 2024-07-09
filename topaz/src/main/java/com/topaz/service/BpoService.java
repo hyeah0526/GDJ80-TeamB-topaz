@@ -52,5 +52,39 @@ public class BpoService {
 	}
 	
 	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 예약일정 관리 페이지(bpoMainIn.jsp) :: 예약받는 외주업체 영업상태(영업중, 영업종료)
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getBpoState(){
+		
+		// outsourcing_type이 W002-2(예약)인 모든 외주업체들의 영업상태
+		List<Map<String, Object>> bpoStateChk = bpoMapper.selectBpoState();
+		log.debug(Debug.PHA + "getBpoState Service--> " + bpoStateChk + Debug.END);
+		
+		
+		return bpoStateChk;
+	}
+	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 예약일정 관리 페이지(bpoMainIn.jsp) :: 오늘의 예약 일정
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getBpoRsvnToday(){
+		
+		// 오늘의 예약 일정 리스트
+		List<Map<String, Object>> bpoRsvnToday = bpoMapper.selectBpoRsvnToday();
+		log.debug(Debug.PHA + "getBpoState Service--> " + bpoRsvnToday + Debug.END);
+		
+		
+		return bpoRsvnToday;
+	}
+	
+	
 
 }

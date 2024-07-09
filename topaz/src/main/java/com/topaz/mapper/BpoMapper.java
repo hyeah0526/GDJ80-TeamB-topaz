@@ -12,5 +12,11 @@ public interface BpoMapper {
 	
 	/* 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 외주업체 카테고리 가져오기 */
 	List<Map<String, Object>> selectBpoCategory();
+	
+	/* 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 예약받는 외주업체 영업상태 */
+	List<Map<String, Object>> selectBpoState();
+	
+	/* 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 오늘의 예약 조회 */
+	List<Map<String, Object>> selectBpoRsvnToday();
 
 }

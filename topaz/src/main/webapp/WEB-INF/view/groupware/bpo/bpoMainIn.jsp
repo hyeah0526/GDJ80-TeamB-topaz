@@ -67,7 +67,7 @@
 							title: response[i].rsvnTitle, // 제목
 							start: response[i].rsvnStart, // 시작날짜
 							end: response[i].rsvnEnd, // 종료날짜
-							url: '/topaz/groupware/bpo/scheduleDetail?scheduleNo='+response[i].scheduleNo, // 상세보기 이동
+							//url: '/topaz/groupware/bpo/scheduleDetail?scheduleNo='+response[i].scheduleNo, // 상세보기 이동
 							backgroundColor: getRsvnColor(response[i].rsvnState), // 타입별 색상 분류
 							borderColor: getRsvnColor(response[i].rsvnState), // 타입별 색상분류
 						})
@@ -139,21 +139,21 @@
 				<!-- 오른쪽 세션 -->
 				<div class="col-lg-4">
 					<div class="card"><div class="card-body">
-						<h5 class="card-title">오늘의 예약 확인?</h5>
-							<c:forEach var="s" items="${todayList}">
+						<h5 class="card-title">오늘의 예약</h5>
+							<c:forEach var="r" items="${bpoRsvnToday}">
 								 <div class="todayDiv">
 								 	<c:choose>
-								 		<c:when test="${s.type eq '회의'}">
-								 			<span class="badge rounded-pill typeMeeting" id="typeEvent">${s.type}</span>
+								 		<c:when test="${r.rsvnState eq '대기'}">
+								 			<span class="badge rounded-pill rsvnInfoWait" id="typeEvent">${r.rsvnState}</span>
 								 		</c:when>
-								 		<c:when test="${s.type eq '점검'}">
-								 			<span class="badge rounded-pill typeInspection" id="typeEvent">${s.type}</span>
+								 		<c:when test="${r.rsvnState eq '확정'}">
+								 			<span class="badge rounded-pill rsvnInfoConfirm" id="typeEvent">${r.rsvnState}</span>
 								 		</c:when>
-								 		<c:when test="${s.type eq '행사'}">
-								 			<span class="badge rounded-pill typeFestival" id="typeEvent">${s.type}</span>
+								 		<c:when test="${r.rsvnState eq '취소'}">
+								 			<span class="badge rounded-pill rsvnInfoCxl" id="typeEvent">${r.rsvnState}</span>
 								 		</c:when>
 								 	</c:choose>
-								 	${s.startTime} - ${s.endTime} ::  ${s.title}
+								 	${r.rsvnStart} - ${r.rsvnEnd} ::  ${r.rsvnTitle}...
 								 	<!-- <button id="todayDetailSpan"><span class="badge rounded-pill bg-primary">상세보기</span></button> -->
 								 	<a href="/topaz/groupware/schedule/scheduleDetail?scheduleNo=${s.scheduleNo}">
 								 		<span class="badge rounded-pill bg-primary">상세보기</span>
@@ -162,8 +162,19 @@
 							</c:forEach>
 					</div></div>
 					<div class="card"><div class="card-body">
-						<h5 class="card-title">외주업체 영업상태확인</h5>
-						<div>표시부분</div>
+						<h5 class="card-title">영업 상태</h5>
+						<c:forEach var="state" items="${bpoStateChk}">
+							<div>
+								<c:if test="${state.outsourcingState eq '영업중'}">
+									<span class="badge rounded-pill bpoStateOn">${state.outsourcingState}</span>
+								</c:if>
+								<c:if test="${state.outsourcingState eq '영업종료'}">
+									<span class="badge rounded-pill bpoStateOff">${state.outsourcingState}</span>
+								</c:if>
+								${state.outsourcingName}
+								${state.inchargeName} (${state.contactNo})
+							</div>
+						</c:forEach>
 					</div></div>
 				</div>
 				
@@ -183,22 +194,27 @@
 				<form id="addRsvnForm" action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
 					<div class="modal-body">
 						<div class="row mb-5">
-							<label for="inputEmail" class="col-sm-4 col-form-label">시작날짜</label>
+							<label for="inputEmail" class="col-sm-4 col-form-label">시작 날짜</label>
 							<div class="col-sm-8 scheduleModalDiv">
 								<input type="datetime-local" class="form-control" id="addStartDate" name="startDate">
 							</div>
 							
-							<label for="inputEmail" class="col-sm-4 col-form-label">종료날짜</label>
+							<label for="inputEmail" class="col-sm-4 col-form-label">종료 날짜</label>
 							<div class="col-sm-8 scheduleModalDiv">
 								<input type="datetime-local" class="form-control" id="addEndDate" name="endDate">
 							</div>
 							
-							<label for="inputEmail" class="col-sm-4 col-form-label">예약업체</label>
+							<label for="inputEmail" class="col-sm-4 col-form-label">예약 업체</label>
 							<div class="col-sm-8 scheduleModalDiv">
 								<input type="text" class="form-control" id="addTitle" name="title">
 							</div>
 							
-							<label for="inputEmail" class="col-sm-4 col-form-label">예약제목</label>
+							<label for="inputEmail" class="col-sm-4 col-form-label">예약 고객</label>
+							<div class="col-sm-8 scheduleModalDiv">
+								<input type="text" class="form-control" id="addTitle" name="title">
+							</div>
+							
+							<label for="inputEmail" class="col-sm-4 col-form-label">예약 제목</label>
 							<div class="col-sm-8 scheduleModalDiv">
 							<label for="meetingRadio">
 								<input class="form-check-input" type="radio" name="type" value="1" id="meetingRadio" checked> 회의
@@ -211,7 +227,7 @@
 							</label>
 							</div>
 							
-							<label for="inputEmail" class="col-sm-4 col-form-label">예약내용</label>
+							<label for="inputEmail" class="col-sm-4 col-form-label">예약 내용</label>
 							<div class="col-sm-8">
 								<textarea rows="3" maxlength="100" class="col-sm-12" id="addContent" name="content" placeholder="100자 이하 작성" style="height: 150px"></textarea>
 								(<span id="chatHelper">0</span>/100)
