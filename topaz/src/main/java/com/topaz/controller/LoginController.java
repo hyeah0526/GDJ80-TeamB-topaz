@@ -75,7 +75,7 @@ public class LoginController {
                 HttpSession session = req.getSession();
                 session.setAttribute("strId", strId);
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
-                return "redirect:/groupware/bpo/bpoMain";
+                return "redirect:/groupware/bpo/bpoMainOut";
             }
         } else if("guest".equals(strUserType)) {
         // 고객 로그인
@@ -96,8 +96,22 @@ public class LoginController {
         return "/groupware/login";
     }
 
-	
-	
+	/*
+	 * 서비스명: LoginService
+	 * 시작 날짜 : 2024-07-09
+	 * 담당자: 한은혜
+	 */
+
+	// 로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		if(session != null){
+	            session.invalidate();
+	    }
+		
+		return "redirect:/groupware/login";
+	}
 	
 	
 	
