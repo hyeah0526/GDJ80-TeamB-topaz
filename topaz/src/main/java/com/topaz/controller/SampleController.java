@@ -92,7 +92,13 @@ public class SampleController {
 		// http://localhost/topaz/groupware/samplePage/sample_tab
 		return "groupware/samplePage/sample_tab";
 	}
-		
+	
+	// 프로필2
+	@GetMapping("/groupware/samplePage/sample_profile2")
+	public String sample_profile2() {
+		// http://localhost/topaz/groupware/samplePage/sample_profile2
+		return "groupware/samplePage/sample_profile2";
+	}		
 	
 	
 	

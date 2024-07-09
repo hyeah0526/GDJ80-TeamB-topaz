@@ -103,10 +103,14 @@
 }
 
 
+/* ==========외주업체 목록 - bpoList.jsp========== */
+.bpoListPage{
+	--bs-pagination-color: #4154f1;
+}
 
-
-
-
+.searchSpan{
+	font-weight: bolder;
+}
 
 
 
