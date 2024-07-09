@@ -19,6 +19,7 @@ public class Employee {
 	private String empPhoneNumber;
 	private String postNo;
 	private String address;
+	private String fileName;
 	private String empHireDate;
 	private String regTime;
 	private String modTime;

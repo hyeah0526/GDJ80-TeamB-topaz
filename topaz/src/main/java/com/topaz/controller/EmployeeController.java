@@ -67,9 +67,6 @@ public class EmployeeController {
 		return "1";
 	}
 	
-	
-	
-	
 	/*
 	 * 서비스명: #4 - 직원등록 기능
 	 * 시작 날짜: 2024-07-05
@@ -89,7 +86,9 @@ public class EmployeeController {
 		leaveMap.put("empNo", employeeRequest.getEmpNo());
 		leaveMap.put("empGrade", employeeRequest.getEmpGrade());
 		leaveMap.put("yearCnt", ' ');
-		 
+		log.debug(Debug.KIS + "controller / empAdd / leaveMap : " + leaveMap);
+		
+		
 		//서비스 레이어로 휴가정보 이동
 		employeeService.insertLeave(leaveMap);
 		

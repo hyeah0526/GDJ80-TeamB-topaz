@@ -21,6 +21,7 @@ public class EmployeeRequest {
 	private String empPhoneNumber;
 	private String postNo;
 	private String address;
+	private String fileName;
 	private String empHireDate;
 	private String regTime;
 	private String modTime;
@@ -43,6 +44,7 @@ public class EmployeeRequest {
 		employee.setEmpPhoneNumber(this.empPhoneNumber);
 		employee.setPostNo(this.postNo);
 		employee.setAddress(this.address);
+		employee.setFileName(this.fileName);
 		employee.setEmpHireDate(this.empHireDate);
 		employee.setRegTime(this.regTime);
 		employee.setModTime(this.modTime);
@@ -58,7 +60,7 @@ public class EmployeeRequest {
 		UploadFile uploadFile = new UploadFile();
 		uploadFile.setReferenceNo(this.empNo);
 		uploadFile.setOriginalFileName(this.uploadFile.getOriginalFilename());
-		uploadFile.setFileName(this.uploadFile.getName());
+		uploadFile.setFileName(this.fileName);
 		uploadFile.setFileSize(this.uploadFile.getSize());
 		uploadFile.setFileType(this.uploadFile.getContentType());
 		uploadFile.setRegTime(this.regTime);

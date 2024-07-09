@@ -1,8 +1,10 @@
 package com.topaz.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.topaz.dto.Employee;
 import com.topaz.dto.EmployeeRequest;
+import com.topaz.dto.UploadFile;
 import com.topaz.mapper.EmpMapper;
+import com.topaz.mapper.UploadFileMapper;
 import com.topaz.utill.Debug;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +28,9 @@ public class EmployeeService {
 	EmpMapper empMapper; // empMapper 클래스 의존성 주입
 	
 	@Autowired
+	UploadFileMapper uploadFileMapper; 
+	
+	@Autowired
 	UploadFileService uploadFileService;
 	
 	/*
@@ -33,31 +40,54 @@ public class EmployeeService {
 	*/
 	public int insertEmp(EmployeeRequest employeeRequest) {
 
-		//매개변수 디버깅
-		log.debug(Debug.KIS + "service / insertEmp / employeeRequest : " + employeeRequest);
-		
-		//직원 DTO에 view 데이터 바인딩
-		Employee employee = employeeRequest.toEmployee();
-		
-		//직원 정보 저장 
-		int row = empMapper.insertEmp(employee);
-		
+		// 매개변수 디버깅
+	    log.debug(Debug.KIS + "service / insertEmp / employeeRequest : " + employeeRequest);
 
-        // uploadFile이 있는지 확인하여 분기 처리
-        if (!employeeRequest.getUploadFile().isEmpty()) {
-        	//파일 저장
-            uploadFileService.insertFile(employeeRequest);
-        }
-		
-        //직원 정보 저장 확인 디버깅
-		log.debug(Debug.KIS + "service / insertEmp / row : " + row);
-		
-		if(row != 1) {
-			throw new RuntimeException();
-		}
-		
-		
-		return row;
+	    // 파일 저장 경로
+	    String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
+
+	    // 업로드 파일 처리
+	    if (!employeeRequest.getUploadFile().isEmpty()) {
+	        // 저장될 파일 이름을 UUID를 사용해서 설정
+	        String prefix = UUID.randomUUID().toString().replace("-", "");
+	        int p = employeeRequest.getUploadFile().getOriginalFilename().lastIndexOf(".");
+	        String suffix = employeeRequest.getUploadFile().getOriginalFilename().substring(p);
+	        String fileName = prefix + suffix;
+
+	        // EmployeeRequest 객체에 파일 이름 설정
+	        employeeRequest.setFileName(fileName);
+
+	        // UploadFile 객체 생성 및 저장
+	        UploadFile file = employeeRequest.toUploadFile();
+	        file.setFileName(fileName);
+	        int rowOne = uploadFileMapper.insertUploadFile(file);
+
+	        if (rowOne != 1) {
+	            throw new RuntimeException("File upload failed");
+	        }
+
+	        // 파일을 실제 경로에 저장
+	        File emptyFile = new File(imagePath + fileName);
+	        try {
+	            employeeRequest.getUploadFile().transferTo(emptyFile);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            throw new RuntimeException();
+	        }
+	    }
+
+	    // 직원 DTO에 view 데이터 바인딩
+	    Employee employee = employeeRequest.toEmployee();
+
+	    // 직원 정보 저장
+	    int row = empMapper.insertEmp(employee);
+	    log.debug(Debug.KIS + "service / insertEmp / row : " + row);
+
+	    if (row != 1) {
+	        throw new RuntimeException();
+	    }
+
+	    return row;
 	}
 	
 	/*

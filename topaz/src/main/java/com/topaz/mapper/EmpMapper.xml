@@ -16,6 +16,7 @@
 				emp_phonenumber,
 				post_no,
 				address,
+				file_name,
 				emp_hiredate,
 				reg_time,
 				mod_time,
@@ -33,6 +34,7 @@
 				#{empPhoneNumber},
 				#{postNo},
 				#{address},
+				#{fileName},
 				#{empHireDate},
 				NOW(),
 				NOW(),
@@ -169,7 +171,7 @@
 			file_upload AS upload
 		ON	
 			e.emp_no = upload.reference_no
-			AND upload.file_type = 'image/png'
+			AND upload.file_name = e.file_name
 		WHERE
 			e.emp_no = #{empNo};
 	</select>
