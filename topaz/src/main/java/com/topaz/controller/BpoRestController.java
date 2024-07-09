@@ -28,7 +28,8 @@ public class BpoRestController {
 		log.debug(Debug.PHA + "bpoMainIn controller inputState--> " + inputState + Debug.END);
 		
 		List<Map<String, Object>> list = bpoService.getBpoRsvnList(inputState);
-
+		log.debug(Debug.PHA + "bpoMainIn controller list--> " + list + Debug.END);
+		
 		return list;
 	}
 }

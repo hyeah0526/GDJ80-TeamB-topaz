@@ -39,11 +39,11 @@
 	      }, 
 	      customButtons: {
 			addEventButton: { // 추가한 이벤트 버튼 설정
-				text : "신규일정추가",  // 버튼 내용
+				text : "신규예약생성",  // 버튼 내용
 				click : function(){ // 버튼클릭 시 이벤트 추가
 					
 					// 모달 창 띄워서 신규 일정 추가
-					$("#addSchedule").modal("show");
+					$("#addRsvn").modal("show");
 							
                   }
               }
@@ -57,19 +57,19 @@
 			$.ajax({
 				type: "GET",
 				data: {"inputState" : $('#inputState').val()},
-				url: "/topaz/schedule/scheduleCalList",
+				url: "/topaz/bpo/bpoRsvnCalList",
 				success: function (response){
 	    			  
 					console.log("response", response);
 					for(i=0; i<response.length; i++){
 						// title, start, end 설정
 						calendar.addEvent({
-							title: response[i].title, // 제목
-							start: response[i].startDate, // 시작날짜
-							end: response[i].endDate, // 종료날짜
-							url: '/topaz/groupware/schedule/scheduleDetail?scheduleNo='+response[i].scheduleNo, // 상세보기 이동
-							backgroundColor: getScheduleColor(response[i].type), // 타입별 색상 분류
-							borderColor: getScheduleColor(response[i].type), // 타입별 색상분류
+							title: response[i].rsvnTitle, // 제목
+							start: response[i].rsvnStart, // 시작날짜
+							end: response[i].rsvnEnd, // 종료날짜
+							url: '/topaz/groupware/bpo/scheduleDetail?scheduleNo='+response[i].scheduleNo, // 상세보기 이동
+							backgroundColor: getRsvnColor(response[i].rsvnState), // 타입별 색상 분류
+							borderColor: getRsvnColor(response[i].rsvnState), // 타입별 색상분류
 						})
 					}
 				}
@@ -79,14 +79,14 @@
 	    calendar.render();
 	    
 	    // 일정 배경 색상 설정
-	    function getScheduleColor(type){
-	    	switch(type){
-	    	case '회의':
+	    function getRsvnColor(rsvnState){
+	    	switch(rsvnState){
+	    	case '대기':
 	    		return '#81bbb2';
-	    	case '행사':
-	    		return '#af92e2';
-	    	case '점검':
-	    		return '#ffbb57';
+	    	case '확정':
+	    		return '#f6bf26';
+	    	case '취소':
+	    		return '#d50000';
 	    	default: 
 	    		return '#ffffff';
 	    	}
@@ -121,11 +121,14 @@
 				<!-- 왼쪽 세션 -->
 				<div class="col-lg-8"><div class="card"><div class="card-body">
 					<h5 class="card-title col-md-4">
+					<span class="rsvnInfoWait">&nbsp;&nbsp;대 기&nbsp;&nbsp;</span>
+						<span class="rsvnInfoConfirm">&nbsp;&nbsp;확 정&nbsp;&nbsp;</span>
+						<span class="rsvnInfoCxl">&nbsp;&nbsp;취 소&nbsp;&nbsp;</span>
 						<select id="inputState" name="inputState" class="form-select">
                     			<option value="">전체</option>
-							<c:forEach var="c" items="${bpoCategory}">
-								<option value="${c.outsourcingNo}">${c.outsourcingName}</option>
-							</c:forEach>
+								<c:forEach var="c" items="${bpoCategory}">
+									<option value="${c.outsourcingNo}">${c.outsourcingName}</option>
+								</c:forEach>
                   		</select>
 					</h5>
 					<!-- 캘린더 출력 -->
@@ -136,7 +139,7 @@
 				<!-- 오른쪽 세션 -->
 				<div class="col-lg-4">
 					<div class="card"><div class="card-body">
-						<h5 class="card-title">오늘의 일정</h5>
+						<h5 class="card-title">오늘의 예약 확인?</h5>
 							<c:forEach var="s" items="${todayList}">
 								 <div class="todayDiv">
 								 	<c:choose>
@@ -159,25 +162,25 @@
 							</c:forEach>
 					</div></div>
 					<div class="card"><div class="card-body">
-						<h5 class="card-title">통계</h5>
-						<div>차트 상세</div>
+						<h5 class="card-title">외주업체 영업상태확인</h5>
+						<div>표시부분</div>
 					</div></div>
 				</div>
 				
 			</div>	
 	    </section>
 		<!-- Modal -->
-		<!-- addSchedule 모달창 :: 일정 등록 -->
-		<div class="modal fade" id="addSchedule" tabindex="-1">
+		<!-- addRsvn 모달창 :: 예약생성 -->
+		<div class="modal fade" id="addRsvn" tabindex="-1">
 			<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
 				<!-- 모달 제목 -->
 				<div class="modal-header">
-					<h5 class="modal-title">신규 사내일정 추가</h5>
+					<h5 class="modal-title">신규 예약 생성</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				
-				<!-- 모달 일정 등록폼 -->
-				<form id="addScheduleForm" action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
+				<!-- 모달 신규 예약 생성폼 -->
+				<form id="addRsvnForm" action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
 					<div class="modal-body">
 						<div class="row mb-5">
 							<label for="inputEmail" class="col-sm-4 col-form-label">시작날짜</label>
@@ -190,12 +193,12 @@
 								<input type="datetime-local" class="form-control" id="addEndDate" name="endDate">
 							</div>
 							
-							<label for="inputEmail" class="col-sm-4 col-form-label">일정제목</label>
+							<label for="inputEmail" class="col-sm-4 col-form-label">예약업체</label>
 							<div class="col-sm-8 scheduleModalDiv">
 								<input type="text" class="form-control" id="addTitle" name="title">
 							</div>
 							
-							<label for="inputEmail" class="col-sm-4 col-form-label">일정종류</label>
+							<label for="inputEmail" class="col-sm-4 col-form-label">예약제목</label>
 							<div class="col-sm-8 scheduleModalDiv">
 							<label for="meetingRadio">
 								<input class="form-check-input" type="radio" name="type" value="1" id="meetingRadio" checked> 회의
@@ -208,7 +211,7 @@
 							</label>
 							</div>
 							
-							<label for="inputEmail" class="col-sm-4 col-form-label">일정내용</label>
+							<label for="inputEmail" class="col-sm-4 col-form-label">예약내용</label>
 							<div class="col-sm-8">
 								<textarea rows="3" maxlength="100" class="col-sm-12" id="addContent" name="content" placeholder="100자 이하 작성" style="height: 150px"></textarea>
 								(<span id="chatHelper">0</span>/100)
@@ -219,11 +222,11 @@
 					<!-- 모달 일정 취소/등록버튼 -->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button id="addScheduleBtn" type="submit" class="btn btn-primary">Save</button>
+						<button id="addRsvnBtn" type="submit" class="btn btn-primary">Save</button>
 					</div>
 				</form>
 			</div></div>
-		</div><!-- End addSchedule Modal-->
+		</div><!-- End addRsvn Modal-->
 		
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->

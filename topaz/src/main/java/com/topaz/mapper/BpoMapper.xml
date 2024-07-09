@@ -4,22 +4,25 @@
 
 	<!-- 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 예약일정 전체조회 -->
 	<select id="selectBpoRsvnList" parameterType="String" resultType="map">
-		SELECT 
-			os.rsvn_no rsvnNo
-			, o.outsourcing_name outsourcingName
-			, o.outsourcing_no outsourcingNo
-			, os.title title
-			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'W006' AND cd = os.state) state
-			, os.content content
-			, DATE_FORMAT(rsvn_start, '%Y-%m-%dT%H:%i:%s') rsvnStart
-			, DATE_FORMAT(rsvn_end, '%Y-%m-%dT%H:%i:%s') rsvnEnd
-		FROM outsourcing_rsvn os
-			INNER JOIN outsourcing o 
-				ON os.outsourcing_no = o.outsourcing_no
-		WHERE os.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
-		AND (SELECT cd_nm FROM common_code WHERE crp_cd = 'W006' AND cd = os.state) LIKE CONCAT('%','','%')
-		AND os.outsourcing_no = #{inputState}
+	    SELECT 
+	        os.rsvn_no rsvnNo,
+	        o.outsourcing_name outsourcingName,
+	        o.outsourcing_no outsourcingNo,
+	        os.rsvn_title rsvnTitle,
+	        (SELECT cd_nm FROM common_code WHERE crp_cd = 'W006' AND cd = os.rsvn_state) rsvnState,
+	        os.rsvn_content rsvnContent,
+	        DATE_FORMAT(os.rsvn_start, '%Y-%m-%dT%H:%i:%s') rsvnStart,
+	        DATE_FORMAT(os.rsvn_end, '%Y-%m-%dT%H:%i:%s') rsvnEnd
+	    FROM 
+	        outsourcing_rsvn os
+	        INNER JOIN outsourcing o ON os.outsourcing_no = o.outsourcing_no
+	    WHERE os.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+	    AND (SELECT cd_nm FROM common_code WHERE crp_cd = 'W006' AND cd = os.rsvn_state) LIKE CONCAT('%', '', '%')
+	    <if test="inputState != null and inputState != ''">
+	     	AND os.outsourcing_no = #{inputState}
+		</if>
 	</select>
+
 	
 	<!-- 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 외주업체 카테고리 가져오기 -->
 	<select id="selectBpoCategory" resultType="map">

@@ -14,6 +14,8 @@ import com.topaz.dto.Schedule;
 import com.topaz.service.ScheduleService;
 import com.topaz.utill.Debug;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -46,10 +48,15 @@ public class ScheduleController {
 	 * 담당자: 박혜아
 	*/
 	@PostMapping("/groupware/schedule/scheduleList")
-	public String ScheduleAdd(Schedule schedule) {
+	public String ScheduleAdd(Schedule schedule, HttpServletRequest  httpServletRequest) {
+		// 세션가져오기
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.PHA + "ScheduleAdd controller empNo--> " + empNo + Debug.END);
+		
 		// 추후 로그인 구현 완료되면 아이디값 세팅
-		schedule.setRegId("testReg");
-		schedule.setModId("testMod");
+		schedule.setRegId(empNo);
+		schedule.setModId(empNo);
 		//log.debug(Debug.PHA + "ScheduleAdd controller--> " + schedule + Debug.END);
 		
 		// 일정 추가
@@ -86,9 +93,11 @@ public class ScheduleController {
 	 * 담당자: 박혜아
 	*/
 	@PostMapping("/groupware/schedule/scheduleDetail")
-	public String scheduleModify(Schedule schedule) {
-		// 추후 로그인 구현 완료되면 수정자 아이디값 세팅
-		schedule.setModId("testMod");
+	public String scheduleModify(Schedule schedule, HttpServletRequest  httpServletRequest) {
+		//세션 아이디값 적용
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		schedule.setModId(empNo);
 		log.debug(Debug.PHA + "scheduleModify controller schedule--> " + schedule + Debug.END);
 		
 		// redirect용 scheduleNo
@@ -107,9 +116,11 @@ public class ScheduleController {
 	 * 담당자: 박혜아
 	*/
 	@GetMapping("/groupware/schedule/scheduleRemove")
-	public String scheduleRemove(Schedule schedule) {
-		// 추후 로그인 구현 완료되면 수정자 아이디값 세팅
-		schedule.setModId("testMod"); // 세션 로그인 한 아이디
+	public String scheduleRemove(Schedule schedule, HttpServletRequest  httpServletRequest) {
+		// 세션 아이디값 적용
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		schedule.setModId(empNo); // 세션 로그인 한 아이디
 		log.debug(Debug.PHA + "scheduleRemove controller scheduleNo--> " + schedule.getScheduleNo() + Debug.END);
 		log.debug(Debug.PHA + "scheduleRemove controller getModId--> " + schedule.getModId() + Debug.END);
 		

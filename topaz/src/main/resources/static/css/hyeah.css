@@ -59,8 +59,32 @@
 
 
 
+/* ==========외주업체 예약일정 - bpoMainIn.jsp========== */
+.card-title span{
+	font-family: "Nunito", sans-serif;
+	color: #f7f7f7;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
 
+.card-title select{
+	margin-top: 15px;
+}
 
+.rsvnInfoWait{
+	background-color: #81bbb2;
+}
+
+.rsvnInfoConfirm{
+	background-color: #f6bf26;
+}
+
+.rsvnInfoCxl{
+	background-color: #d50000;
+}
 
 
 

@@ -52,5 +52,11 @@ public class BpoController {
 
 		return "groupware/bpo/bpoAdd";
 	}
+	
+	@GetMapping("/groupware/bpo/bpoMainOut")
+	public String bpoMainOut() {
+
+		return "groupware/bpo/bpoMainOut";
+	}
 
 }
