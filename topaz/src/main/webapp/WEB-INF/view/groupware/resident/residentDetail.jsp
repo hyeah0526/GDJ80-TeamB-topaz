@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!--
+   분류번호: #7 - 입주자 관리 페이지 : 입주자 상세보기/입주자 수정
+   시작 날짜: 2024-07-09
+   담당자: 박수지
+-->
+
 <!DOCTYPE html>
 <html lang="en">
    <!-- ======= header <Head> 부분 ======= -->
    <jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
    
    	<!-- ======= css ======= -->
-	<link rel="stylesheet" href="/topaz/css/suji.css" rel="stylesheet"> 
+	<link rel="stylesheet" href="/topaz/css/suji.css"> 
    
 <body>
    <!-- ======= header <Body> 부분 ======= -->
@@ -24,7 +31,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">HOME</a></li>
-          <li class="breadcrumb-item">Resident List</li>
+          <li class="breadcrumb-item"><a href="/topaz/groupware/resident/residentList">Resident List</a></li>
           <li class="breadcrumb-item active">Resident Detail</li>
         </ol>
       </nav>

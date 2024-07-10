@@ -149,4 +149,53 @@
 	    AND 
 	    	gst_type = 'R'
     </update>
+    
+    <!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 등록 -->
+    <select id="selectResidentByGuest" resultType = "map">
+    	SELECT gst_id gstId FROM guest WHERE gst_type = 'C';
+    </select>
+    
+    <!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 등록 -->
+    <update id="insertResident" parameterType="com.topaz.dto.Guest">
+    	UPDATE guest
+	    <set>
+	        <if test="gstPhone != null and gstPhone != ''">
+	            gst_phone = #{gstPhone},
+	        </if>
+	        <if test="gstEmail != null and gstEmail != ''">
+	            gst_email = #{gstEmail},
+	        </if>
+	        <if test="residentNote != null and residentNote != ''">
+	            resident_note = #{residentNote},
+	        </if>
+	        <if test="contractStart != null and contractStart != ''">
+	            contract_start = #{contractStart},
+	        </if>
+	        <if test="contractEnd != null and contractEnd != ''">
+	            contract_end = #{contractEnd},
+	        </if>
+	        <if test="roomNo != null and roomNo != ''">
+	            room_no = #{roomNo},
+	        </if>
+	        
+	        gst_type = 'R',
+			room_amenity = #{roomAmenity},
+	        protector_name = #{protectorName},
+	        protector_phone = #{protectorPhone},
+	        protector_relation = #{protectorRelation},
+			
+			reg_time = NOW(),
+	        mod_time = NOW(),
+	        reg_id = #{regId},
+	        mod_id = #{modId}
+	    </set>
+	    WHERE 
+	        gst_id = #{gstId} 
+	    AND 
+	        use_yn = 'Y'
+	    AND 
+	    	gst_type = 'C'
+    
+    </update>
+   
 </mapper>

@@ -82,6 +82,10 @@
 				<form class="search-form d-flex align-items-center" method="POST" action="#">
 					<input type="text" name="searchWord" placeholder="Search..." title="Enter search keyword">
 					<button type="submit" title="Search"><i class="bi bi-search"></i></button>
+					
+					<!-- 등록 버튼 -->
+					<a href="/topaz/groupware/resident/residentAdd" class="ml-2 btn btn-primary" title="Add New">Add New</a>
+					
 		    	</form>
 		   	</div><!-- End Search Bar -->
 			<nav class="header-nav ms-auto">

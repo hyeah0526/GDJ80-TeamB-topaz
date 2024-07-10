@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.topaz.dto.Guest;
 import com.topaz.service.GuestService;
+import com.topaz.service.RoomService;
 import com.topaz.utill.Debug;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,10 +22,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
+
 public class GuestController {
 	@Autowired
 	GuestService guestService;
-	
+	@Autowired
+	RoomService roomService;
 	/*
 	 * 서비스명: getResidentList
 	 * 시작 날짜: 2024-07-08
@@ -100,4 +104,59 @@ public class GuestController {
 		
 		return "redirect:/groupware/resident/residentDetail?gstId="+gstId;
 	}
+	
+	
+	/*
+	 * 서비스명: insertResident
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 박수지
+	*/
+	
+	@GetMapping("/groupware/resident/residentAdd")
+	public String addResident(Model model) throws Exception {
+		
+		// 객실 조회
+		List<Map<String,Object>> room = roomService.selectRoom();
+		log.debug(Debug.PSJ + "resiAdd controller==>" + room.toString() + Debug.END);
+		model.addAttribute("room",room);
+		
+		// 고객 조회
+		List<Map<String,Object>> gst = guestService.selectResidentByGuest();
+		log.debug(Debug.PSJ + "resiAdd controller==>" + gst.toString() + Debug.END);
+		model.addAttribute("gstOne",gst);
+		
+		
+		log.debug(Debug.PSJ + "resiAdd controller==>" + model.toString() + Debug.END);
+
+		return "groupware/resident/residentAdd";
+	}
+	
+	/*
+	 * 서비스명: insertResident
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 박수지
+	*/
+	@PostMapping("/groupware/resident/residentAdd")
+	public String addResident(Model model,
+							Guest guest, HttpServletRequest httpServletRequest) throws Exception{
+		
+		log.debug(Debug.PSJ + "resiAdd controller guest==> " + guest.toString() + Debug.END);
+		
+		//세션 가져오기
+		HttpSession session = httpServletRequest.getSession();
+		String empId = (String)session.getAttribute("strId");
+		//modId를 세션으로 
+		guest.setModId(empId);
+		guest.setRegId(empId);
+		
+		
+		
+		// 입주자 등록
+		int row = guestService.insertResident(guest);
+		log.debug(Debug.PSJ + "resiAdd controller==>" + row + Debug.END);
+		
+		return "redirect:/groupware/resident/residentList";
+		
+	}
+	
 }

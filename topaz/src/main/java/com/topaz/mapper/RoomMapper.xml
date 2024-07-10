@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.RoomMapper">
-	<!-- 분류번호: #8 - 객실 동 조회 -->
+	<!-- 분류번호: #7 - 객실 동 조회 -->
 	<select id="selectDong" resultType="String">
 		SELECT DISTINCT 
 			room_dong dong 
@@ -9,7 +9,7 @@
 			room
 	</select>
 	
-	<!-- 분류번호: #8 - 객실 타입 조회 -->
+	<!-- 분류번호: #7 - 객실 타입 조회 -->
 	<select id="selectType" resultType="String" parameterType="String">
 		SELECT DISTINCT
 			room_type type
@@ -19,7 +19,7 @@
 			room_dong = #{dong}
 	</select>
 	
-	<!-- 분류번호: #8 - 객실 호수 조회 -->
+	<!-- 분류번호: #7 - 객실 호수 조회 -->
 	<select id="selectHo" resultType="String" parameterType="String">
 		SELECT 
 			room_ho ho
@@ -27,5 +27,14 @@
 			room
 		WHERE
 			room_type = #{type}
+	</select>
+	
+	<!-- 분류번호: #8 - 입주 전 객실 조회-->
+	<select id="selectRoom" resultType = "map">
+		SELECT 
+			room_no roomNo
+		FROM 
+			room
+		WHERE room_state = '2'
 	</select>
 </mapper>

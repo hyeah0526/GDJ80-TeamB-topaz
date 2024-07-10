@@ -97,4 +97,28 @@ public class GuestService {
 		
 		return guestMapper.updateResident(guest);
 	}
+	/*
+	 * 분류번호: #7 - 입주자 관리 페이지 : 입주자 등록
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 박수지
+	*/
+	
+	public List<Map<String,Object>> selectResidentByGuest(){
+		
+		return guestMapper.selectResidentByGuest();
+	}
+	
+	/*
+	 * 분류번호: #7 - 입주자 관리 페이지 : 입주자 등록
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 박수지
+	*/
+	
+	public int insertResident(Guest guest) {
+		log.debug(Debug.PSJ + "resiInsert service==>" + guest.toString() + Debug.END);
+		
+		return guestMapper.insertResident(guest);
+	}
+	
+	
 }

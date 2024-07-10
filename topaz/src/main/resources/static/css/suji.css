@@ -4,6 +4,10 @@
 
 /* 페이지 내 검색창과 버튼을 오른쪽 정렬 */
 .search-container {
+    text-align: left;
+}
+
+.add {
     text-align: right;
 }
 

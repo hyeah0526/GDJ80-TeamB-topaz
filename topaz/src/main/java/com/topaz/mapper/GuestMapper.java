@@ -37,4 +37,9 @@ public interface GuestMapper {
 	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 입주자 수정 */
 	int updateResident(Guest guest);
 	
+	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 입주자 등록 */
+	List<Map<String,Object>> selectResidentByGuest();
+	
+	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 입주자 등록 */
+	int insertResident(Guest guest);
 }
