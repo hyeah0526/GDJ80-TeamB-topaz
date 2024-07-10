@@ -26,5 +26,8 @@ public interface BpoMapper {
 	
 	/* 분류 번호: #5 - 외주업체 업체 목록 페이지 :: 외주업체 전체 조회 행의 개수 */
 	int selectBpoListTotalRow(String searchWord, String searchType);
+	
+	/* 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 고객 이름으로 현재 입주중인 고객 조회 */
+	List<Map<String, Object>> selectGstChkList(String gstName);
 
 }

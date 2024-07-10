@@ -126,5 +126,23 @@ public class BpoService {
 		
 		return lastPage;
 	}
+	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 예약일정 관리 페이지(bpoMainIn.jsp) :: 고객 이름으로 현재 입주중인 고객 조회
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getGstChk(String gstName){
+		
+		// 고객 이름으로 현재 입주중인 고객 조회
+		List<Map<String, Object>> gstChkList = bpoMapper.selectGstChkList(gstName);
+		log.debug(Debug.PHA + "getGstChk Service--> " + gstChkList + Debug.END);
+		
+		
+		return gstChkList;
+	}
+	
 
 }

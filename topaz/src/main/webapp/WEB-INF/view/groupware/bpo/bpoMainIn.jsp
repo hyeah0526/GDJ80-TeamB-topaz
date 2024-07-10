@@ -67,7 +67,7 @@
 							title: response[i].rsvnTitle, // 제목
 							start: response[i].rsvnStart, // 시작날짜
 							end: response[i].rsvnEnd, // 종료날짜
-							//url: '/topaz/groupware/bpo/scheduleDetail?scheduleNo='+response[i].scheduleNo, // 상세보기 이동
+							url: '/topaz/groupware/bpo/bpoDetail?outsourcingNo='+response[i].outsourcingNo, // 상세보기 이동
 							backgroundColor: getRsvnColor(response[i].rsvnState), // 타입별 색상 분류
 							borderColor: getRsvnColor(response[i].rsvnState), // 타입별 색상분류
 						})
@@ -191,7 +191,7 @@
 				</div>
 				
 				<!-- 모달 신규 예약 생성폼 -->
-				<form id="addRsvnForm" action="${pageContext.request.contextPath}/groupware/schedule/scheduleList" method="post">
+				<form id="addRsvnForm" action="${pageContext.request.contextPath}/groupware/bpo/bpoMainIn" method="post">
 					<div class="modal-body">
 						<div class="row mb-5">
 							<label for="inputEmail" class="col-sm-4 col-form-label">시작 날짜</label>
@@ -206,25 +206,23 @@
 							
 							<label for="inputEmail" class="col-sm-4 col-form-label">예약 업체</label>
 							<div class="col-sm-8 scheduleModalDiv">
-								<input type="text" class="form-control" id="addTitle" name="title">
+								<select id="inputState" name="outsourcingNo" class="form-select">
+									<c:forEach var="c" items="${bpoCategory}">
+										<option value="${c.outsourcingNo}">${c.outsourcingName}</option>
+									</c:forEach>
+                  				</select>
 							</div>
 							
-							<label for="inputEmail" class="col-sm-4 col-form-label">예약 고객</label>
+							<label for="inputEmail" class="col-sm-4 col-form-label">고객 이름</label>
 							<div class="col-sm-8 scheduleModalDiv">
-								<input type="text" class="form-control" id="addTitle" name="title">
+								<input type="text" class="form-control" id="addGstName" name="title">
+								<input type="hidden" class="form-control" id="addGstId" name="gstID">
+								<button type="button" class="btn btn-primary" id="gstNameChk">검색</button>
 							</div>
 							
 							<label for="inputEmail" class="col-sm-4 col-form-label">예약 제목</label>
 							<div class="col-sm-8 scheduleModalDiv">
-							<label for="meetingRadio">
-								<input class="form-check-input" type="radio" name="type" value="1" id="meetingRadio" checked> 회의
-							</label>&nbsp;&nbsp;&nbsp;
-							<label for="festivalRadio">
-								<input class="form-check-input" type="radio" name="type" value="2" id="festivalRadio"> 행사
-							</label>&nbsp;&nbsp;&nbsp;
-							<label for="inspectionRadio">
-								<input class="form-check-input" type="radio" name="type" value="3" id="inspectionRadio"> 점검
-							</label>
+								<input type="text" class="form-control" id="addTitle" name="title">
 							</div>
 							
 							<label for="inputEmail" class="col-sm-4 col-form-label">예약 내용</label>
@@ -244,11 +242,203 @@
 			</div></div>
 		</div><!-- End addRsvn Modal-->
 		
+		
+		
+		<!-- 예약고객이름 가져오는 모달 -->
+		<div class="modal fade" id="gstChk" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+				<!-- 모달 제목 -->
+				<div class="modal-header">
+					<h5 class="modal-title">고객 이름 선택</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+					<div class="modal-body">
+						<div class="row mb-5">
+							<label for="inputEmail" class="col-sm-4 col-form-label"></label>
+							<div class="col-sm-8 scheduleModalDiv" id="rsvnNameSelectDiv">
+								<!-- 고객이름 선택 -->
+							</div>
+						</div>
+					</div>
+					
+					<!-- 모달 일정 취소/등록버튼 -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button id="gstChkSaveBtn" type="submit" class="btn btn-primary">Save</button>
+					</div>
+			</div></div>
+		</div><!-- End addRsvn Modal-->
+		
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 </body>
+<script>
+	/* 고객 이름 검색 후 선택  */
+	$('#gstNameChk').click(function() {
+		console.log('고객이름 확인');
+		//console.log('고객이름 확인', $('#addGstName').val());
+		
+		if($('#addGstName').val().length < 1){
+			console.log('고객이름 검색 버튼');
+			
+			alert('고객명을 작성 후 검색해주세요.');
+			$('#addGstName').focus();
+			return false; 
+		}
+		
+		// 사용자가 입력한 이름 가져오기
+		let gstName = $('#addGstName').val();
+		console.log('고객이름 gstName', gstName);
+		
+		// 모달 내용 초기화
+		$('#rsvnNameSelectDiv').html('');
+		
+		$.ajax({
+			type: "GET",
+			url: "/topaz/bpo/bpoGstChk",
+			data: { gstName: gstName },
+			success: function(response) {
+				console.log('response--> ', response);
+				
+				for (var i = 0; i < response.length; i++) {
+					// 두번째 모달값에 검색된 데이터만큼 추가
+					$('#rsvnNameSelectDiv').append('<div class="form-check"><input type="radio" class="form-check-input" name="selectedGstId" value="' + response[i].gstId + '"><span name="selectedGstName">' + response[i].gstName +'&nbsp;(객실'+ response[i].roomNo + ')' + '</span></div>');
+				}
+				
+				$("#gstChk").modal("show");
+			}
+			
+		});
+		
+		// 두 번째 모달에서 저장 버튼 클릭 시
+		$('#gstChkSaveBtn').click(function() {
+			// 선택된 고객 아이디 가져오기
+			let selectedGstId = $('input[name="selectedGstId"]:checked').val();
+			console.log("선택된 고객 아이디selectedGstId:", selectedGstId);
+			// 선택된 고객 이름 가져오기
+			let selectedGstName = $('input[name="selectedGstId"]:checked').next('span').text(); 
+			console.log("선택된 고객 이름selectedGstName:", selectedGstName);
+			
+			// 선택된 고객 이름을 첫 번째 모달의 addGstName 필드에 설정
+			$('#addGstName').val(selectedGstName);
+			$('#addGstId').val(selectedGstId);
+			
+			// addGstName 필드를 읽기 전용으로 변경
+			$('#addGstName').prop('readonly', true);
+			
+			// 두번째 모달 닫기
+			$("#gstChk").modal("hide");
+		});
+		
+		
+	});
+	
+	
+	/* 키보드 이벤트 발생 */
+ 	$('#addContent').keyup(function() {
+		console.log('키보드 이벤트 확인');
+		
+		let cnt = $('#addContent').val().length;
+		//console.log('키보드 이벤트 확인 cnt-> ', cnt);
+		
+		// 100글자 이상일경우 문자열 자르기
+		if(cnt > 100){
+			console.log('100이상 작성으로 substr실행');
+			cnt = 100;
+			$('#addContent').val($('#addContent').val().substr(0, 100));
+		}
+		
+		// cnt수 사용자에게 보여주기
+		$('#chatHelper').html(cnt);
+		
+	});
+	
+	
+	/* 종료일이 시작일보다 먼저일 수 없게 예외처리 */
+    // 시작일 먼저 입력시 유효성검사
+    $('#addStartDate').change(function() {
+        validateDateRange();
+    });
 
+    // 종료일 먼저 입력시 유효성검사
+    $('#addEndDate').change(function() {
+        validateDateRange();
+    });
+    
+    function validateDateRange() {
+        // 시작일, 종료일 값 
+        var startDateValue = new Date($('#addStartDate').val());
+        var endDateValue = new Date($('#addEndDate').val());
+
+        // 종료일이 시작일보다 이른 경우
+        if ($('#addEndDate').val() !== '' && endDateValue < startDateValue) {
+            // 안내
+            alert('종료일은 시작일 이후여야 합니다.');
+
+            // 값 초기화
+            $('#addEndDate').val('');
+        }
+    }
+    
+	
+	/* 신규예약등록 유효성 검사 */
+	$('#addRsvnBtn').click(function() {
+		
+		// 시작 날짜 유효성 검사
+		if($('#addStartDate').val().length < 1){
+			console.log('시작날짜 유효성검사');
+			
+			alert('시작날짜를 입력해주세요');
+			$('#addStartDate').focus();
+			return false; 
+		}
+		
+		// 종료 날짜 유효성 검사
+		if($('#addEndDate').val().length < 1){
+			console.log('종료날짜 유효성검사');
+			console.log('종료날짜 유효성검사',$('#addEndDate').val());
+			
+			alert('종료날짜를 입력해주세요');
+			$('#addEndDate').focus();
+			return false; 
+		}
+		
+		
+		// 고객 선택 확인 유효성 검사
+		if($('#addGstId').val().length < 1){
+			console.log('고객 선택 유효성검사');
+			
+			alert('고객을 선택해주세요');
+			$('#addGstName').focus();
+			return false; 
+		}
+		
+		// 예약제목 유효성 검사
+		if($('#addTitle').val().length < 1){
+			console.log('예약제목 유효성검사');
+			
+			alert('예약제목을 입력해주세요');
+			$('#addTitle').focus();
+			return false; 
+		}
+		
+		
+		// 내용 유효성 검사
+		if($('#addContent').val().length < 1){
+			console.log('내용 유효성검사');
+			
+			alert('예약 내용을 입력해주세요');
+			$('#addContent').focus();
+			return false; 
+		}
+		
+		
+		// 유효성 검사 완료시 Form 보내기
+		addRsvnForm.submit();
+	});
+	</script>
 </html>

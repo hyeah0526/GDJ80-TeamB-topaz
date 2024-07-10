@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.topaz.dto.Outsourcing;
 import com.topaz.service.BpoService;
 import com.topaz.utill.Debug;
 
@@ -63,6 +61,17 @@ public class BpoController {
 	
 	
 	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/groupware/bpo/bpoDetail")
+	public String bpoDetail() {
+
+		return "groupware/bpo/bpoDetail";
+	}
+	
 	
 	
 	@GetMapping("/groupware/bpo/bpoAdd")
@@ -77,10 +86,5 @@ public class BpoController {
 		return "groupware/bpo/bpoMainOut";
 	}
 	
-	@GetMapping("/groupware/bpo/bpoDetail")
-	public String bpoDetail() {
-
-		return "groupware/bpo/bpoDetail";
-	}
 
 }
