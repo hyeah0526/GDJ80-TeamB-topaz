@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.topaz.dto.ApprovalTemplate;
 import com.topaz.mapper.ApprovalMapper;
 import com.topaz.utill.Debug;
 
@@ -20,13 +21,51 @@ public class ApprovalService {
 	@Autowired UploadFileService uploadFileService;
 	
 	/*
+	 * 분류 번호: #11 - 결재 리스트
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 김지훈
+	*/
+	
+	public List<Map<String, Object>> getApprovalList() {
+		Map<String, Object> paramMap = new HashMap<>();
+		List<Map<String, Object>> approvalList = approvalMapper.selectApprovalHistory(paramMap);
+		log.debug(Debug.KJH + " / service / getApprovalList" + approvalList.toString());
+		return approvalList;
+	}
+	
+	
+	/*
+	 * 분류 번호: #11 - 결재 리스트
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 김지훈
+	*/
+	public int addTemplate(ApprovalTemplate appTemplate) {
+		log.debug(Debug.KJH + " / service / addTemplate :" + appTemplate);
+		return approvalMapper.insertTemplate(appTemplate);
+	}
+	
+	
+	
+	/*
+	 * 분류 번호: #11 - 템플릿 상세 + 수정
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 김지훈
+	*/
+	public Map<String, Object> getTemplateDetail(String templateNo) {
+		log.debug(Debug.KJH + " / Service / getTemplateDetail tempateNo" + templateNo);
+		Map<String, Object> templateDetail = approvalMapper.selectTemplateDetail(templateNo);
+		return templateDetail;
+	}
+	
+	/*
 	 * 분류 번호: #11 - 템플릿 리스트
 	 * 시작 날짜: 2024-07-10
 	 * 담당자: 김지훈
 	*/
 	
-	public List<Map<String, Object>> getTemplate() {
-		List<Map<String, Object>> templateList = approvalMapper.selectTemplate();
+	public List<Map<String, Object>> getTemplateList() {
+		Map<String, Object> paramMap = new HashMap<>();
+		List<Map<String, Object>> templateList = approvalMapper.selectTemplateList(paramMap);
 		log.debug(Debug.KJH + " / service / getTemplate" + templateList.toString());
 		return templateList;
 	}

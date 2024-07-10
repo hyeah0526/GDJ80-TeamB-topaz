@@ -12,7 +12,7 @@
 		function initSmartEditor() {
 			nhn.husky.EZCreator.createInIFrame({
 				oAppRef: oEditor,
-				elPlaceHolder: "content", // 에디터가 삽입될 위치 == textarea의 id
+				elPlaceHolder: "templateContent", // 에디터가 삽입될 위치 == textarea의 id
 				sSkinURI: "/topaz/smarteditor/SmartEditor2Skin.html",
 				fCreator: "createSEditor2"
 			});
@@ -20,7 +20,7 @@
 		}
 		function submitContent(form) {
 			// 폼 전송 전에 에디터의 내용을 textarea에 업데이트합니다.
-			oEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+			oEditor.getById["templateContent"].exec("UPDATE_CONTENTS_FIELD", []);
 			return true; // 폼을 제출합니다.
 		}
 		
@@ -62,12 +62,12 @@
 						<div class="card">
 							<div class="card-body">
 								<h5 class="card-title">결재 서식 등록</h5>
-								<form action="<%-- ${pageContext.request.contextPath}/groupware/approval/approvalTemplateAdd" --%> method="post" enctype="multipart/form-data">
+								<form action="${pageContext.request.contextPath}/groupware/approval/approvalTemplateAdd" onsubmit="return submitContent(this);" method="post">
 								
 									<div class="row mb-3">
 										<label for="addTitle" class="col-sm-2 col-form-label">제목</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="title" name="title">
+											<input type="text" class="form-control" id="" name="">
 										</div>
 									</div>
 									
@@ -75,19 +75,19 @@
 										<legend class="col-form-label col-sm-2 pt-0">종류</legend>
 										<div class="col-sm-10">
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="category" id="addCategory1" value="1">
+												<input class="form-check-input" type="radio" name="templateCategory" id="addCategory1" value="1">
 												<label class="form-check-label" for="addCategory1">
 													휴가 
 												</label>
 											</div>
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="category" id="addCategory2" value="2">
+												<input class="form-check-input" type="radio" name="templateCategory" id="addCategory2" value="2">
 												<label class="form-check-label" for="addCategory2">
 													기획
 												</label>
 											</div>
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="category" id="addCategory3" value="3">
+												<input class="form-check-input" type="radio" name="templateCategory" id="addCategory3" value="3">
 												<label class="form-check-label" for="addCategory3">
 													경비 
 												</label>
@@ -100,7 +100,7 @@
 											서식
 										</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" style="height: 100px" name="content" id="content"></textarea>
+											<textarea class="form-control" style="height: 100px" name="templateContent" id="templateContent"></textarea>
 										</div>
 									</div>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/approval/approvalTemplateList'">목록</button>	

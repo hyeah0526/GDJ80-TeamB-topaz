@@ -26,7 +26,6 @@ public class NoticeRequest {
     private String modId;
     private String useYn;
     private MultipartFile uploadFile;
-
     // 
     public Notice toNotice() {
         Notice notice = new Notice();

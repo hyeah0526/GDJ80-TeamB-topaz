@@ -34,11 +34,11 @@
 					<div class="card-body">
 						
 						<!-- Table with stripped rows -->
-						<form action="/topaz/groupware/notice/noticeList" method="get">
+						<!-- <form action="/topaz/groupware/notice/noticeList" method="get">
 							<br>
 							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
 							<button type="submit" class="btn btn-primary">검색</button>
-						</form>
+						</form> -->
 						<br>
 						<form action="" method="get">
 							<button id="noticeWriteBtn" name="" type="submit" class="btn btn-primary">작성</button>
@@ -46,30 +46,31 @@
 						<table class="table" id="">
 							<thead>
 								<tr>
-									<th>No</th>
-									<th>제목</th>
+									<th>문서 번호</th>
+									<th>상태</th>
 									<th>작성자</th>
+									<th>결재 시작</th>
+									<th>결재 종료</th>
 									<th>생성 일자</th>
 									<th>수정 일자</th>
 								</tr>
 							</thead>
 							<!-- 상단 노출 공지사항 -->
-							<tbody class="topNotices">
-								<c:forEach var="t" items="">
+							<tbody class="">
+								<c:forEach var="ah" items="${approvalList}">
 									<tr>
-										<td></td>
-										<td>
-											<a href="">
-											</a>
-										</td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<td>${ah.approvalDocNo }</td>
+										<td>${ah.stateName }</td>
+										<td>${ah.empName }</td>
+										<td>${ah.startDate }</td>
+										<td>${ah.endDate }</td>
+										<td>${ah.regTime }</td>
+										<td>${ah.modTime }</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-						<div>
+						<%-- <div>
 							<span>
 								<c:if test="${currentPage > 1 }">
 									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
@@ -89,7 +90,7 @@
 									</a>
 								</c:if>	
 							</span>
-						</div>
+						</div> --%>
 						<!-- End Table with stripped rows -->
 					</div>
 				</div>

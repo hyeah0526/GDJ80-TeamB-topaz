@@ -12,17 +12,17 @@
 		function initSmartEditor(contentValue) {
 			nhn.husky.EZCreator.createInIFrame({
 				oAppRef: oEditor,
-				elPlaceHolder: "content", // 에디터가 삽입될 위치 == textarea의 id
+				elPlaceHolder: "templateContent", // 에디터가 삽입될 위치 == textarea의 id
 				sSkinURI: "/topaz/smarteditor/SmartEditor2Skin.html",
 				fCreator: "createSEditor2",
 				fOnAppLoad: function() {
-					oEditor.getById["content"].exec("PASTE_HTML", [contentValue]);
+					oEditor.getById["templateContent"].exec("PASTE_HTML", [contentValue]);
 				}
 			});
 		}
 		function submitContent(form) {
 			// 폼 전송 전에 에디터 내용을 textarea에 업데이트
-			oEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+			oEditor.getById["templateContent"].exec("UPDATE_CONTENTS_FIELD", []);
 			return true; // 폼을 submit
 		}
 		function decodeHTMLEntity(text) {
@@ -82,22 +82,7 @@
 										<legend class="col-form-label col-sm-2 pt-0">종류</legend>
 										<div class="col-sm-10">
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="category" id="addCategory1" value="1">
-												<label class="form-check-label" for="addCategory1">
-													휴가 
-												</label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="category" id="addCategory2" value="2">
-												<label class="form-check-label" for="addCategory2">
-													기획
-												</label>
-											</div>
-											<div class="form-check">
-												<input class="form-check-input" type="radio" name="category" id="addCategory3" value="3">
-												<label class="form-check-label" for="addCategory3">
-													경비 
-												</label>
+													${templateDetail.cdNm }
 											</div>
 										</div>
 									</fieldset>
@@ -107,7 +92,9 @@
 											서식
 										</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" style="height: 100px" name="content" id="content"></textarea>
+											<textarea class="form-control" style="height: 100px" name="templateContent" id="templateContent">
+												<c:out value="${templateDetail.templateContent}" escapeXml="false" />
+											</textarea>
 										</div>
 									</div>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/approval/approvalTemplateList'">목록</button>	

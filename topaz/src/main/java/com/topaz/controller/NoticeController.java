@@ -1,16 +1,10 @@
 package com.topaz.controller;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +16,7 @@ import com.topaz.dto.NoticeRequest;
 import com.topaz.service.NoticeService;
 import com.topaz.utill.Debug;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -38,6 +33,7 @@ public class NoticeController {
 	@GetMapping("/groupware/notice/noticeRemove")
 	public String noticeRemove(
 		@RequestParam(name = "newsNo") String newsNo) {
+		
 		log.debug(Debug.KJH + "/ Controller / noticeRemove newsNo :" + newsNo);
 		
 		int row = noticeService.removeNotice(newsNo);

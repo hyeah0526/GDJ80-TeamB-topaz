@@ -46,23 +46,27 @@
 						<table class="table" id="templateTable">
 							<thead>
 								<tr>
-									<th>NO</th>
-									<th>regId</th>
-									<th>regTime</th>
-									<th>modId</th>
-									<th>modTime</th>
-									<th>useYn</th>
+									<td>템플릿 번호</td>
+									<td>템플릿 종류</td>
+									<td>등록자</td>
+									<td>등록일</td>
+									<td>수정자</td>
+									<td>수정일</td>
 								</tr>
 							</thead>
-							<!-- 상단 노출 공지사항 -->
 							<tbody class="">
-								<c:forEach var="t" items="${approvalTemplateList}">
+								<c:forEach var="t" items="${templateList}">
 									<tr>
-										<td>${t['templateCategory']}</td>
-										<td>${t['regiId']}</td>
-										<td>${t['regTime']}</td>
-										<td>${t['modId']}</td>
-										<td>${t['modTime']}</td>
+										<td>${t.templateNo }</td>
+										<td>
+											<a href="/topaz/groupware/approval/approvalTemplateModify?templateNo=${t.templateNo}">
+												${t.cdNm }
+											</a>
+										</td>
+										<td>${t.empName }</td>
+										<td>${t.regTime }</td>
+										<td>${t.empName }</td>
+										<td>${t.modTime }</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -93,10 +97,6 @@
 				</div>
 			</div>
 		</div>
-    
-    
-    
-    
     </section><!-- section 종료 -->
 
 	</main><!-- End #main -->

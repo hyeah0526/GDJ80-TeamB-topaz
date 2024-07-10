@@ -60,25 +60,25 @@
 						<div class="card">
 							<div class="card-body">
 								<h5 class="card-title">공지 사항 작성</h5>
-								<form action="${pageContext.request.contextPath}/groupware/notice/noticeAdd" method="post" onsubmit="return submitContent(this);" enctype="multipart/form-data">
+								<form action="${pageContext.request.contextPath}/groupware/notice/noticeAdd" method="post" id="addNoticeForm" onsubmit="return submitContent(this) && submitValidation();" enctype="multipart/form-data">
 								
 									<div class="row mb-3">
 										<label for="addTitle" class="col-sm-2 col-form-label">제목</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="title" name="title">
+											<input type="text" class="form-control step" data-step="1" id="title" name="title">
 										</div>
 									</div>
 									<fieldset class="row mb-3">
 										<legend class="col-form-label col-sm-2 pt-0">등급</legend>
 										<div class="col-sm-10">
 											<div class="form-check">
-												<input class="form-check-input addGrade" type="radio" name="grade" id="addGrade1" value="1">
+												<input class="form-check-input addGrade step" data-step="2" type="radio" name="grade" id="addGrade1" value="1">
 												<label class="form-check-label" for="addGrade1">
 													직원 
 												</label>
 											</div>
 											<div class="form-check">
-												<input class="form-check-input addGrade" type="radio" name="grade" id="addGrade2" value="2">
+												<input class="form-check-input addGrade step" data-step="2" type="radio" name="grade" id="addGrade2" value="2">
 												<label class="form-check-label" for="addGrade2">
 													외주 업체 
 												</label>
@@ -90,19 +90,19 @@
 										<legend class="col-form-label col-sm-2 pt-0">종류</legend>
 										<div class="col-sm-10">
 											<div class="form-check">
-												<input class="form-check-input addCategory" type="radio" name="category" id="addCategory1" value="1">
+												<input class="form-check-input addCategory step" data-step="3" type="radio" name="category" id="addCategory1" value="1">
 												<label class="form-check-label" for="addCategory1">
 													필독 
 												</label>
 											</div>
 											<div class="form-check">
-												<input class="form-check-input addCategory" type="radio" name="category" id="addCategory2" value="2">
+												<input class="form-check-input addCategory step" data-step="3" type="radio" name="category" id="addCategory2" value="2">
 												<label class="form-check-label" for="addCategory2">
 													일반
 												</label>
 											</div>
 											<div class="form-check">
-												<input class="form-check-input addCategory" type="radio" name="category" id="addCategory3" value="3">
+												<input class="form-check-input addCategory step" data-step="3" type="radio" name="category" id="addCategory3" value="3">
 												<label class="form-check-label" for="addCategory">
 													이벤트 
 												</label>
@@ -115,7 +115,7 @@
 											게시 시작일
 										</label>
 										<div class="col-sm-4">
-											<input type="date" class="form-control" id="startDate" name="startDate">
+											<input type="date" class="form-control step" data-step="4" id="startDate" name="startDate">
 										</div>
 									</div>
 									<!-- end date-->
@@ -124,7 +124,7 @@
 											게시 종료일
 										</label>
 										<div class="col-sm-4">
-											<input type="date" class="form-control" id="endDate" name="endDate">
+											<input type="date" class="form-control step" data-step="5" id="endDate" name="endDate">
 										</div>
 									</div>
 									
@@ -133,7 +133,7 @@
 											내용
 										</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" style="height: 100px" name="content" id="content"></textarea>
+											<textarea class="form-control step" data-step="6" style="height: 100px" name="content" id="content"></textarea>
 										</div>
 									</div>
 								<div class="row mb-3">
