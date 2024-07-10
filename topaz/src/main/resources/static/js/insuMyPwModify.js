@@ -1,4 +1,5 @@
  $(document).ready(function() {
+	
 	// 입력 필드에 숫자만 입력되도록 설정
 	$('input[type="password"]').on('input', function() {
 		this.value = this.value.replace(/[^0-9]/g, '');

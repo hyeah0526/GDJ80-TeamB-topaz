@@ -30,10 +30,21 @@
             <div class="colorDiv">
 
             	<div>
-	            	<button id="checkInBtn" class="btn" >출근</button>
-	                <button id="checkOutBtn" class="btn" disabled>퇴근</button>
+            		<div>
+		            	<button id="checkInBtn" class="btn" >출근</button>
+		                <button id="checkOutBtn" class="btn" disabled>퇴근</button>
+            		</div>
+            		<div class="timeDiv">
+            			 <div class="timeBox">
+                            <span class="timeLabel">출근 시간:</span>
+                            <span class="startTime"></span>
+                        </div>
+                        <div class="timeBox">
+                            <span class="timeLabel">퇴근 시간:</span>
+                            <span class="endTime"></span>
+                        </div>
+            		</div>
             	</div>
-
             </div>
         </div>
     </main><!-- End #main -->

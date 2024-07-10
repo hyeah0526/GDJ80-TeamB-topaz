@@ -6,7 +6,7 @@
 	<select id="doEmpLogin" resultType="com.topaz.dto.Employee">
 		SELECT emp_no empNo, emp_pw empPw, emp_name empName, emp_dept empDept, emp_grade empGrade, use_yn useYN
 		FROM employee
-		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		WHERE use_yn = 'Y'
 		AND emp_no = #{strId}
 	</select>
 
@@ -15,7 +15,7 @@
 		SELECT outsourcing_no outsourcingNo, outsourcing_pw outsourcingPw, outsourcing_name outsourcingName, 
 				outsourcing_state outsourcingState, outsourcing_type outsourcingType
 		FROM outsourcing 
-		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		WHERE use_yn = 'Y'
 		AND outsourcing_no = #{strId}
 	</select> 
 
@@ -23,7 +23,7 @@
 	<select id="doGuestLogin" resultType="com.topaz.dto.Guest">
 		SELECT gst_id gstId, gst_pw gstPw, gst_name gstName
 		FROM guest
-		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		WHERE use_yn = 'Y'
 		AND gst_id = #{strId}
 	</select> 
 
@@ -54,29 +54,25 @@
 	</insert>
 	
 	<!-- 분류 번호 : #3 - 퇴근 등록 -->
-	<insert id="insertEndWork" >
-		INSERT INTO 
-			commute_history(
-				commute_no,
-				emp_no,
-				start_time,
-				end_time,
-				reg_time,
-				mod_time,
-				reg_id,
-				mod_id,
-				use_yn
-			)VALUES(
-				CURRENT_TIMESTAMP(5),
-				#{empNo},
-				NULL,
-				NOW(),
-				NOW(),
-				NOW(),
-				#{empNo},
-				#{empNo},
-				'Y'
-			)
-	</insert>	
-
+	<update id="updateEndWork" >
+		UPDATE 
+			commute_history
+		SET
+			end_time = NOW()
+		WHERE 
+			emp_no = #{empNo} AND 
+			DATE(start_time) = CURDATE() AND 
+      		end_time IS NULL
+	</update>
+	
+	<select id="selectWorkState">
+		SELECT 
+			start_time, end_time 
+		FROM
+			commute_history
+		WHERE
+			emp_no = #{empNo} AND 
+			DATE(start_time) = CURDATE()
+	</select>
+		
 </mapper>

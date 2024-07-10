@@ -1,5 +1,7 @@
 package com.topaz.mapper;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.topaz.dto.Employee;
@@ -22,6 +24,9 @@ public interface LoginMapper {
 	public int insertStrWork(String empNo);
 	
 	/* 분류 번호 :  #3 - 퇴근 등록*/
-	public int insertEndWork(String empNo);
+	public int updateEndWork(String empNo);
+	
+	/* 분류 번호 :  #3 - 출퇴근 상태 조회*/
+	public Map<String, Object> selectWorkState(String empNo);
 
 }

@@ -6,7 +6,17 @@ $(document).ready(function(){
     const secondPhonePattern = /^\d{4}$/;
     const postNoPattern = /^\d{5}$/;
     const addressPattern =  /^[a-zA-Z가-힣0-9\s!@#$%^&*()_+|<>?:{}]{1,50}$/;
-
+	
+	// 입력 필드에 숫자만 입력되도록 설정
+	$('input[type="password"]').on('input', function() {
+		this.value = this.value.replace(/[^0-9]/g, '');
+	});
+	
+	$('input[name="postNo"]').on('input', function() {
+		this.value = this.value.replace(/[^0-9]/g, '');
+	});
+	
+	
 	//필드 입력 후 다음 필드 활성화
 	$('.step').on('blur',function(event){
 		
@@ -62,72 +72,71 @@ $(document).ready(function(){
 	
 	//-------- 유효성 검사 함수 --------
 	function validation(field, value) {
-		
-            let dataStep = field.data('step');
-
-            if (dataStep === 1) { 
-                if (!namePattern.test(value)) {
-                    alert("이름은 영어와 한글만 포함하여 최대 20글자여야 합니다.");
-                    return false;
-                }
-            } else if (dataStep === 2) { 
-                if (value === "") {
-                    alert("부서를 선택하세요.");
-                    return false;
-                }
-            } else if (dataStep === 3) { 
-                if (value === "") {
-                    alert("직위를 선택하세요.");
-                    return false;
-                }
-            }  else if (dataStep === 5) { 
-                if (!pwPattern.test(value)) {
-                   alert("숫자만 입력 가능합니다.");
-                    return false;
-                }
-            } else if (dataStep === 6) { 
-                if (value === "") {
-                    alert("생일 선택하세요.");
-                    return false;
-                }
-            } else if (dataStep === 7) { 
-                if (!firstPhonePattern.test(value)) {
-                    alert("전화번호 첫 번째 부분은 3글자 숫자여야 합니다.");
-                    return false;
-                }
-            } else if (dataStep === 8) { 
-                if (!secondPhonePattern.test(value)) {
-                    alert("전화번호 두 번째 부분은 4글자 숫자여야 합니다.");
-                    return false;
-                }
-            } else if (dataStep === 9) { 
-                if (!secondPhonePattern.test(value)) {
-                    alert("전화번호 세 번째 부분은 4글자 숫자여야 합니다.");
-                    return false;
-                }
-            } else if (dataStep === 11) { 
-                if (!postNoPattern.test(value)) {
-                    alert("우편번호는 5글자 숫자여야 합니다.");
-                    return false;
-                }
-            } else if (dataStep === 12) { 
-                if (!addressPattern.test(value)) {
-                    alert("주소는 한글, 숫자, 특수문자만 포함할 수 있습니다.");
-                    return false;
-                }
-            } else if (dataStep === 14) { 
-                if (value === "") {
-                    alert("입사일을 선택하세요.");
-                    return false;
-                }
-            } else if (dataStep === 15) { 
-                if (value === "") {
-                    alert("성별을 선택해 주세요.");
-                    return false;
-                }
-            }
-            return true;
-        }	
+	    let dataStep = field.data('step');
+	
+	    if (dataStep === 1) { 
+	        if (!namePattern.test(value)) {
+	            alert("이름은 영어와 한글만 포함하여 최대 20글자여야 합니다.");
+	            return false;
+	        }
+	    } else if (dataStep === 2) { 
+	        if (value === "") {
+	            alert("부서를 선택하세요.");
+	            return false;
+	        }
+	    } else if (dataStep === 3) { 
+	        if (value === "") {
+	            alert("직위를 선택하세요.");
+	            return false;
+	        }
+	    }  else if (dataStep === 5) { 
+	        if (!pwPattern.test(value)) {
+	           alert("숫자만 입력 가능합니다.");
+	            return false;
+	        }
+	    } else if (dataStep === 6) { 
+	        if (value === "") {
+	            alert("생일 선택하세요.");
+	            return false;
+	        }
+	    } else if (dataStep === 7) { 
+	        if (!firstPhonePattern.test(value)) {
+	            alert("전화번호 첫 번째 부분은 3글자 숫자여야 합니다.");
+	            return false;
+	        }
+	    } else if (dataStep === 8) { 
+	        if (!secondPhonePattern.test(value)) {
+	            alert("전화번호 두 번째 부분은 4글자 숫자여야 합니다.");
+	            return false;
+	        }
+	    } else if (dataStep === 9) { 
+	        if (!secondPhonePattern.test(value)) {
+	            alert("전화번호 세 번째 부분은 4글자 숫자여야 합니다.");
+	            return false;
+	        }
+	    } else if (dataStep === 11) { 
+	        if (!postNoPattern.test(value)) {
+	            alert("우편번호는 5글자 숫자여야 합니다.");
+	            return false;
+	        }
+	    } else if (dataStep === 12) { 
+	        if (!addressPattern.test(value)) {
+	            alert("주소는 한글, 숫자, 특수문자만 포함할 수 있습니다.");
+	            return false;
+	        }
+	    } else if (dataStep === 14) { 
+	        if (value === "") {
+	            alert("입사일을 선택하세요.");
+	            return false;
+	        }
+	    } else if (dataStep === 15) { 
+	        if (value === "") {
+	            alert("성별을 선택해 주세요.");
+	            return false;
+	        }
+	    }
+	    return true;
+    }	
 	
 	
 	//-------- 직원 번호 생성 함수 --------

@@ -1,5 +1,7 @@
 package com.topaz.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,14 +47,15 @@ public class LoginController {
 		return "/groupware/empMain";
 	}
 	
+	
 	/*
-	 * 서비스명: #4 - 출퇴근 기록 Rest API 통신
-	 * 시작 날짜: 2024-07-09
+	 * 서비스명: #4 - 출근 퇴근 상태 확인 Rest API 통신
+	 * 시작 날짜: 2024-07-10
 	 * 담당자: 김인수
 	*/
 	@ResponseBody
-	@PostMapping("/groupware/empMain")
-	public String insertStrWork(HttpServletRequest req) {
+	@GetMapping("/groupware/checkWorkState")
+	public  Map<String, Object> checkWorkState(HttpServletRequest req) {
 		
 		//매개변수 디버깅
 		log.debug(Debug.KIS + "controller / empMain / req : " + req);
@@ -65,18 +68,67 @@ public class LoginController {
 		log.debug(Debug.KIS + "controller / empMain / empNo : " + empNo);
 		
 		
-		//출근 정보 저장
-		//int strWork = loginService.insertStrWork(empNo);
-		//log.debug(Debug.KIS + "controller / empMain / strWork : " + strWork);
+		//출퇴근 정보 가져오기
+		Map<String, Object> checkWork = loginService.selectWorkState(empNo);
+		log.debug(Debug.KIS + "controller / empMain / strWork : " + checkWork);
 		
-		//퇴근 정보 저장
-		//int endWork = loginService.insertStrWork(empNo);
-		//log.debug(Debug.KIS + "controller / empMain / endWork : " + endWork);
-		
-		return "redirect:/groupware/empMain";
+		return checkWork;
 	}
 	
 	
+	
+	/*
+	 * 서비스명: #4 - 출근 기록 Rest API 통신
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 김인수
+	*/
+	@ResponseBody
+	@PostMapping("/groupware/strWork")
+	public int insertStrWork(HttpServletRequest req) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / insertStrWork / req : " + req);
+				
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		
+		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / insertStrWork / empNo : " + empNo);
+		
+		
+		//출근 정보 저장
+		int strWork = loginService.insertStrWork(empNo);
+		log.debug(Debug.KIS + "controller / insertStrWork / strWork : " + strWork);
+		
+		return strWork;
+	}
+	
+	/*
+	 * 서비스명: #4 - 퇴근 기록 Rest API 통신
+	 * 시작 날짜: 2024-07-09
+	 * 담당자: 김인수
+	*/
+	@ResponseBody
+	@PostMapping("/groupware/endWork")
+	public int insertEndWork(HttpServletRequest req) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / insertEndWork / req : " + req);
+				
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		
+		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / insertEndWork / empNo : " + empNo);
+		
+		//퇴근 정보 저장
+		int endWork = loginService.updateEndWork(empNo);
+		log.debug(Debug.KIS + "controller / insertEndWork / endWork : " + endWork);
+		
+		return endWork;
+	}
 	
 	 // 로그인
 	@PostMapping("/loginPost")

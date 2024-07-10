@@ -1,5 +1,7 @@
 package com.topaz.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,6 +91,24 @@ public class LoginService {
 
 	
 	/*
+	 * 분류번호: #3 - 출퇴근 상태 확인
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 김인수
+	*/
+	public Map<String, Object> selectWorkState(String empNo) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "service / selectWorkState / empNo : " + empNo);
+	   
+	    //출퇴근 정보 가져오기
+	    Map<String, Object> row = loginMapper.selectWorkState(empNo);
+	    log.debug(Debug.KIS + "service / selectWorkState / row : " + row);
+	    
+		return row;
+	} 
+	
+	
+	/*
 	 * 분류번호: #3 - 출근 등록
 	 * 시작 날짜: 2024-07-09
 	 * 담당자: 김인수
@@ -98,6 +118,7 @@ public class LoginService {
 		//매개변수 디버깅
 	    log.debug(Debug.KIS + "service / insertStrWork / empNo : " + empNo);
 	   
+	    //출근 정보 저장
 	    int row = loginMapper.insertStrWork(empNo);
 	    log.debug(Debug.KIS + "service / insertStrWork / row : " + row);
 	    
@@ -109,20 +130,17 @@ public class LoginService {
 	 * 시작 날짜: 2024-07-09
 	 * 담당자: 김인수
 	*/
-	public int insertEndWork(String empNo) {
+	public int updateEndWork(String empNo) {
 		
 		//매개변수 디버깅
 	    log.debug(Debug.KIS + "service / insertEndWork / empNo : " + empNo);
 	   
-	    int row = loginMapper.insertEndWork(empNo);
+	    //퇴근 정보 저장
+	    int row = loginMapper.updateEndWork(empNo);
 	    log.debug(Debug.KIS + "service / insertEndWork / row : " + row);
 	    
 		return row;
 	} 
-	
-	
-	
-	
-	
+
 
 }
