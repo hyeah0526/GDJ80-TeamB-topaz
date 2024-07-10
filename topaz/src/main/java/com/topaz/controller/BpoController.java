@@ -56,26 +56,7 @@ public class BpoController {
 	 * 담당자: 박혜아
 	*/
 	@GetMapping("/groupware/bpo/bpoList")
-	public String bpoList(Model model
-							,@RequestParam(name="currentPage", defaultValue="1") int currentPage
-							,@RequestParam(name="rowPerPage", defaultValue="3") int rowPerPage
-							,@RequestParam(name="searchWord", defaultValue="") String searchWord
-							,@RequestParam(name="searchType", defaultValue="") String searchType) {
-		
-		// 전체 외주업체 리스트
-		List<Map<String, Object>> outsourcingList = bpoService.getBpoList(currentPage, rowPerPage, searchWord, searchType);
-		log.debug(Debug.PHA + "bpoList Controller outsourcing--> " + outsourcingList + Debug.END);
-		
-		// 전체 외주업체 리스트 총 카운트
-		int lastPage = bpoService.getBpoListLastPage(rowPerPage, searchWord, searchType);
-		
-		// model담기
-		model.addAttribute("outsourcingList", outsourcingList);
-		model.addAttribute("lastPage", lastPage); // 마지막 페이지
-		model.addAttribute("rowPerPage", rowPerPage);	// 한페이지당 보여줄 수
-		model.addAttribute("currentPage", currentPage);	// 최근 페이지
-		model.addAttribute("searchWord", searchWord);	// 검색어
-		
+	public String bpoList() {
 		
 		return "groupware/bpo/bpoList";
 	}
@@ -94,6 +75,12 @@ public class BpoController {
 	public String bpoMainOut() {
 
 		return "groupware/bpo/bpoMainOut";
+	}
+	
+	@GetMapping("/groupware/bpo/bpoDetail")
+	public String bpoDetail() {
+
+		return "groupware/bpo/bpoDetail";
 	}
 
 }
