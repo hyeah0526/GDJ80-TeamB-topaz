@@ -40,10 +40,10 @@
 							<button type="submit" class="btn btn-primary">검색</button>
 						</form>
 						<br>
-						<form action="/topaz/groupware/notice/noticeAdd" method="get">
-							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit" class="btn btn-primary">작성</button>
+						<form action="" method="get">
+							<button id="noticeWriteBtn" name="" type="submit" class="btn btn-primary">작성</button>
 						</form>
-						<table class="table" id="noticeTable">
+						<table class="table" id="">
 							<thead>
 								<tr>
 									<th>No</th>

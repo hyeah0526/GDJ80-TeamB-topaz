@@ -3,7 +3,9 @@ package com.topaz.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 /*  분류 번호: #10 - 공지 사항 */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

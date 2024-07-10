@@ -19,6 +19,12 @@ public class ApprovalService {
 	@Autowired ApprovalMapper approvalMapper;
 	@Autowired UploadFileService uploadFileService;
 	
+	/*
+	 * 분류 번호: #11 - 템플릿 리스트
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 김지훈
+	*/
+	
 	public List<Map<String, Object>> getTemplate() {
 		List<Map<String, Object>> templateList = approvalMapper.selectTemplate();
 		log.debug(Debug.KJH + " / service / getTemplate" + templateList.toString());

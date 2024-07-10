@@ -40,13 +40,13 @@
 							<button type="submit" class="btn btn-primary">검색</button>
 						</form> -->
 						<br>
-						<form action="/topaz/groupware/notice/approvalTemplateeAdd" method="get">
+						<form action="/topaz/groupware/approval/approvalTemplateAdd" method="get">
 							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit" class="btn btn-primary">작성</button>
 						</form>
 						<table class="table" id="templateTable">
 							<thead>
 								<tr>
-									<th>No</th>
+									<th>NO</th>
 									<th>regId</th>
 									<th>regTime</th>
 									<th>modId</th>
@@ -58,11 +58,11 @@
 							<tbody class="">
 								<c:forEach var="t" items="${approvalTemplateList}">
 									<tr>
-										<td>${t.templateNo}</td>
-										<td>${t.regId}"</td>
-										<td>${t.regiTime}</td>
-										<td>${t.modId}"</td>
-										<td>${t.modTime}"</td>
+										<td>${t['templateCategory']}</td>
+										<td>${t['regiId']}</td>
+										<td>${t['regTime']}</td>
+										<td>${t['modId']}</td>
+										<td>${t['modTime']}</td>
 									</tr>
 								</c:forEach>
 							</tbody>

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/*  분류 번호: #11 - 결재 */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

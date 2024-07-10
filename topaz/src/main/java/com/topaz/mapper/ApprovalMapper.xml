@@ -1,26 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.ApprovalMapper">
+	
+	
+	<!-- 분류 번호: #11 - 결재 내역 출력 -->
+	<select id="selectApprovalHistory" parameterType="map" resultType="map">
+	
+		WITH ranked_data AS (
+			SELECT 
+				ah.*,
+				ad.*,
+				emp.*,
+				at.*,
+				cc1.cd_nm AS template_category_name,
+				cc2.cd_nm AS approval_state_name,
+				ROW_NUMBER() OVER (ORDER BY ah.regi_time) AS row_num
+			FROM 
+				approval_history ah
+				LEFT JOIN
+					approval_doc ad
+					ON ah.approval_doc_no = ad.approval_doc_no
+				LEFT JOIN
+					employee emp
+					ON ad.emp_no = emp.emp_no
+				LEFT JOIN
+					approval_template at
+					ON ah.approval_doc_no = at.template_no
+				LEFT JOIN
+					common_code cc1
+					ON at.template_category = cc1.cd
+					AND cc1.crp_cd = 'S002'
+				LEFT JOIN
+					common_code cc2
+					ON ad.approval_state = cc2.cd
+					AND cc2.crp_cd = 'S001'
+				WHERE 
+				ah.approval_doc_no = #()
+				AND ah.use_yn = 'Y'
+		)
+			SELECT * 
+			FROM ranked_data
+			ORDER BY row_num;
+		
+	</select>
+	<!-- 분류 번호: #11 - 템플릿 상세 -->
 	<select id="selectTemplateDetail" parameterType="map" resultType="map">
 		SELECT 
-			t.template_no,
-			t.reg_id,
-			t.reg_time,
-			t.mod_id,
-			t.mod_time,
-			t.use_yn,
-			COALESCE(f.original_file_name, '등록된 서식이 없습니다.') AS fileStatus
+			t.template_no templateNo,
+			t.reg_id regId,
+			t.reg_time regTime,
+			t.mod_id modId,
+			t.mod_time modTime,
+			t.use_yn useYn,
+			t.template_category category,
+			c.cd_nm cdNm
 		FROM 
 			approval_template t
 			LEFT JOIN 
-				file_upload f 
-				ON t.template_no = f.reference_no 
-				AND f.use_yn = 'Y'
-		WHERE 
-			t.template_no = #{templateNo}
-			AND at.use_yn = 'Y'
+				common_code c
+			ON t.template_category = c.cd
+				AND c.use_yn = 'Y'
+				AND c.crp_cd = 'S002'
+			WHERE 
+				t.use_yn = 'Y'
+		ORDER BY t.template_category DESC; 
 	</select>
 
+	<!-- 분류 번호: #11 - 템플릿 리스트 -->
 	<select id="selectTemplate" parameterType="map" resultType="map">
 		SELECT 
 			t.template_no templateNo,
@@ -29,14 +75,17 @@
 			t.mod_id modId,
 			t.mod_time modTime,
 			t.use_yn useYn,
-			COALESCE(f.original_file_name, '등록된 서식이 없습니다.') AS fileStatus
+			t.template_category category,
+			c.cd_nm cdNm
 		FROM 
 			approval_template t
-		LEFT JOIN 
-			file_upload f 
-			ON t.template_no = f.reference_no 
-			AND f.use_yn = 'Y'
-		WHERE 
-			f.use_yn = 'Y'
+			LEFT JOIN 
+				common_code c
+			ON t.template_category = c.cd
+				AND c.use_yn = 'Y'
+				AND c.crp_cd = 'S002'
+			WHERE 
+				t.use_yn = 'Y'
+		ORDER BY t.template_category DESC; 
 	</select>
 </mapper>

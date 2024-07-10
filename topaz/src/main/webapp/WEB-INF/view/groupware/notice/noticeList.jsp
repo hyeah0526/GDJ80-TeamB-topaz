@@ -12,6 +12,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link href="/topaz/css/jihoon.css" rel="stylesheet">
+	<script>
+		function submitForm() {
+			document.getElementById("noticeForm").submit();
+		}
+	</script>
 </head>	
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
@@ -43,16 +49,17 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-body">
-						
 						<!-- Table with stripped rows -->
 						<form action="/topaz/groupware/notice/noticeList" method="get">
-							<br>
-							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
-							<button type="submit" class="btn btn-primary">검색</button>
+							<div class="searchContainer">
+								<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord" class="searchBox">
+								<button type="submit" class="btn btn-primary searchBoxBtn">검색</button>
+							</div>
 						</form>
-						<br>
 						<form action="/topaz/groupware/notice/noticeAdd" method="get">
-							<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit" class="btn btn-primary">작성</button>
+							<div class="btnContainer">
+								<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit" class="btn btn-primary addNoticeBtn">작성</button>
+							</div>
 						</form>
 						<table class="table" id="noticeTable">
 							<thead>
@@ -65,7 +72,7 @@
 								</tr>
 							</thead>
 							<!-- 상단 노출 공지사항 -->
-							<tbody class="topNotice">
+							<tbody class="topNoticeList">
 								<c:forEach var="n" items="${noticeList}">
 									<fmt:formatDate var="changedCurrentTime" value="${currentTime}" pattern="yyyy-MM-dd HH:mm:ss" />
 									<c:if test="${n.grade == '1' && (n.category == '1' || (n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate))}">
@@ -75,10 +82,10 @@
 												<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}">
 													<c:choose>
 														<c:when test="${n.grade == '1' && n.category == '1'}">
-															<c:set var="title" value="&#128227; ${n.title}" />
+															<c:set var="title" value="&#128227; [필독] ${n.title}" />
 														</c:when>
 														<c:when test="${n.grade == '1' && n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate}">
-															<c:set var="title" value="&#127881; ${n.title}" />
+															<c:set var="title" value="&#127881; [이벤트]${n.title}" />
 														</c:when>
 														<c:otherwise>
 															<c:set var="title" value="${n.title}" />
@@ -103,10 +110,10 @@
 											<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}">
 												<c:choose>
 													<c:when test="${n.grade == '1' && n.category == '1'}">
-														<c:set var="title" value="&#128227; ${n.title}" />
+														<c:set var="title" value="&#128227; [필독] ${n.title}" />
 													</c:when>
 													<c:when test="${n.grade == '1' && n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate}">
-														<c:set var="title" value="&#127881; ${n.title}" />
+														<c:set var="title" value="&#127881; [이벤트] ${n.title}" />
 													</c:when>
 													<c:otherwise>
 														<c:set var="title" value="${n.title}" />
@@ -122,26 +129,27 @@
 								</c:forEach>
 							</tbody>
 						</table>
-						<div>
-							<span>
-								<c:if test="${currentPage > 1 }">
-									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
-										이전
-									</a>
-								</c:if>
-							</span>
-							<span>
-								<c:if test="${currentPage > 0 }">
-									${currentPage } / ${lastPage }
-								</c:if>
-							</span>
-							<span>
-								<c:if test="${currentPage < lastPage }">
-									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage + 1}">
-										다음
-									</a>
-								</c:if>	
-							</span>
+						<div class="pagenationContainer">
+								<span class="pagePre">
+									<c:if test="${currentPage > 1 }">
+										<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
+											이전
+										</a>
+									</c:if>
+								</span>
+								<span class="pageCurrent">
+									<c:if test="${currentPage > 0 }">
+										${currentPage } / ${lastPage }
+									</c:if>
+								</span>
+								<span class="pageNext">
+									<c:if test="${currentPage < lastPage }">
+										<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage + 1}">
+											다음
+										</a>
+									</c:if>	
+								</span>
+							</div>
 						</div>
 						<!-- End Table with stripped rows -->
 					</div>

@@ -145,7 +145,7 @@ public class NoticeController {
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("searchWord", searchWord);
-
+		
 		return "groupware/notice/noticeList";
 
 	}

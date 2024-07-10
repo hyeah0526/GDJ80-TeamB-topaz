@@ -7,13 +7,42 @@
 -->    
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<!-- CSS / JS -->
-		<link href="/topaz/css/jihoon.css" rel="stylesheet">
-		<script src="/topaz/js/jihoon.js"></script>
-		<!-- naver smart edior -->
-		<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-	</head>
+<head>
+	<!-- CSS / JS -->
+	<link href="/topaz/css/jihoon.css" rel="stylesheet">
+	<!-- naver smart edior -->
+	<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	<script>
+		let oEditor = [];
+		function initSmartEditor(contentValue) {
+			nhn.husky.EZCreator.createInIFrame({
+				oAppRef: oEditor,
+				elPlaceHolder: "content", // 에디터가 삽입될 위치 == textarea의 id
+				sSkinURI: "/topaz/smarteditor/SmartEditor2Skin.html",
+				fCreator: "createSEditor2",
+				fOnAppLoad: function() {
+					oEditor.getById["content"].exec("PASTE_HTML", [contentValue]);
+				}
+			});
+		}
+		function submitContent(form) {
+			// 폼 전송 전에 에디터 내용을 textarea에 업데이트
+			oEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+			return true; // 폼을 submit
+		}
+		function decodeHTMLEntity(text) {
+			const doc = new DOMParser().parseFromString(text, "text/html");
+			return doc.documentElement.textContent;
+		}
+
+		// 문서 로드 후 스마트 에디터 초기화
+		document.addEventListener("DOMContentLoaded", function() {
+			const initialContentElement = document.getElementById("initialContent");
+			const contentValue = initialContentElement ? decodeHTMLEntity(initialContentElement.innerHTML) : "";
+			initSmartEditor(contentValue);
+		});
+	</script>
+</head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
 	
@@ -102,7 +131,7 @@
 									<label for="noticeContent" class="col-sm-2 col-form-label">내용</label>
 									<div class="col-sm-10">
 										<textarea class="form-control" style="height: 100px" name="content" id="content">
-											${noticeDetail.content}
+											<c:out value="${noticeDetail.content}" escapeXml="false" />
 										</textarea>
 									</div>
 								</div>

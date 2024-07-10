@@ -7,56 +7,36 @@
 -->    
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+<head>
 	<!-- CSS / JS -->
 	<link href="/topaz/css/jihoon.css" rel="stylesheet">
 	<script src="/topaz/js/jihoonNoticeAdd.js"></script>
 	<!-- naver smart edior -->
 	<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-	<!-- <script>
-		document.addEventListener('DOMContentLoaded', function() {
+	<script>
+		let oEditor = [];
+		function initSmartEditor() {
+			nhn.husky.EZCreator.createInIFrame({
+				oAppRef: oEditor,
+				elPlaceHolder: "content", // 에디터가 삽입될 위치 == textarea의 id
+				sSkinURI: "/topaz/smarteditor/SmartEditor2Skin.html",
+				fCreator: "createSEditor2"
+			});
 			
-			let oEditors = [];
+		}
+		function submitContent(form) {
+			// 폼 전송 전에 에디터의 내용을 textarea에 넣기
+			oEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+			return true; // 폼을 제출합니다.
+		}
 		
-			// 에디터 로딩 함수 정의 (함수명 수정)
-			function editorLoading(title, contents) {
-				nhn.husky.EZCreator.createInIFrame({
-					oAppRef : oEditors,
-					elPlaceHolder : "content", // html editor가 들어갈 textarea의 id입니다.
-					sSkinURI : "/topaz/smarteditor/SmartEditor2Skin.html", // html editor가 skin url 입니다.
-					htParams : {
-						// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-						bUseToolbar : true,
-						// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-						bUseVerticalResizer : true,
-						// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-						bUseModeChanger : true,
-						fOnBeforeUnload : function() {
-							// 페이지를 떠날 때 처리할 로직
-						},
-						fOnAppLoad : function() {
-							// 수정 모드를 구현할 때 사용할 부분입니다.
-							// 로딩이 끝난 후 값이 체워지게 하는 구현을 합니다.
-							if (contents) {
-								oEditors.getById["content"].exec(
-										"PASTE_HTML", [ contents ]);
-							}
-						},
-						fCreator : "createSEditor2"
-					}
-				});
-			}
-			const content = "${noticeDetail.content}";
-			editorLoading(content);
-			
-			// form 전송 시 에디터의 내용을 textarea에 반영
-			function submitContents(form) {
-				oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-				return true;
-			}
-		}); 
-	</script> -->
-	</head>
+		// 문서 로드 후 스마트 에디터 초기화
+		document.addEventListener("DOMContentLoaded", function() {
+			initSmartEditor();
+		});
+   </script>
+
+</head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
 	
@@ -80,7 +60,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h5 class="card-title">공지 사항 작성</h5>
-								<form action="${pageContext.request.contextPath}/groupware/notice/noticeAdd" method="post" onsubmit="return submitContents(this);" enctype="multipart/form-data">
+								<form action="${pageContext.request.contextPath}/groupware/notice/noticeAdd" method="post" onsubmit="return submitContent(this);" enctype="multipart/form-data">
 								
 									<div class="row mb-3">
 										<label for="addTitle" class="col-sm-2 col-form-label">제목</label>
