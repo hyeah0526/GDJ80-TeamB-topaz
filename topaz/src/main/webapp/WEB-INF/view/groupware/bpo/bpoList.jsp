@@ -66,26 +66,24 @@
          </table>
          
               
-            <!-- 페이징 -->
-            <nav aria-label="Page navigation example">
-              <ul class="pagination" id="paginationUl">
-              <li class="page-item">
-                    <a class="page-link bpoListPage" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                  
-                  <li class="page-item bpoListPage">
-                     <a class="page-link" href="">1</a>
-                  </li>
-                      
-                  <li class="page-item bpoListPage">
-                    <a class="page-link" href="#" aria-label="Next">
+		<!-- 페이징 -->
+		<nav aria-label="Page navigation example">
+			<ul class="pagination" id="paginationUl">
+               <li class="page-item">
+                   <a class="page-link bpoListPage" href="#" aria-label="Previous">
+                       <span aria-hidden="true">&laquo;</span>
+                   </a>
+               </li>
+               
+               <!-- 페이징 버튼 추가되는 자리(bpoList()) -->
+
+               <li class="page-item">
+                   <a class="page-link bpoListPage" href="#" aria-label="Next">
                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                  </li>
-              </ul>
-            </nav>
+                   </a>
+               </li>
+           </ul>
+		</nav>
 
       </div></div>
     
@@ -99,63 +97,90 @@
    
    <!-- 전체목록 JS -->
    <script>
-   /* 전체목록 조회 */
-   $(function(){
-        bpoList();
-    });
-   
-   /* Ajax 호출 함수 */
-   function bpoList(){
-      let searchType = $('#searchType').val();
-      let searchWord = $('#searchWord').val();
-       
-      $.ajax({
-         url: '/topaz/bpo/bpoList',
-         type: 'POST',
-         data: {
-               "searchWord" : searchWord,
-               "searchType" : searchType
-         },
-         success:function(result){
-            console.log("result--> ", result)
-            
-            // 리스트 불러올 tbody
-            let tbody = $('#tableBody');
-            
-            // tbody 비워주기
-            tbody.empty();
-            
-            // result 데이터만큼 tr생성
-            result.forEach(function(item) {
-               // tr추가
-               //let row = '<tr onclick="">';
-               let row = '<tr onclick="window.location.href=\'/topaz/groupware/bpo/bpoDetail?outsourcingNo=' + item.outsourcingNo + '\'">';
-                  row += '<td scope="row">' + item.outsourcingNo + '</td>';
-                  row += '<td>' + item.outsourcingName + '</td>';
-                  row += '<td>' + item.inchargeName + '</td>';
-                  row += '<td>' + item.contractStart + '</td>';
-                  row += '<td>' + item.contractEnd + '</td>';
-                  row += '<td>' + item.empName + '</td>';
-                  row += '</tr>';
-               
-               // tbody에 행 추가
-               tbody.append(row); 
-               
-               
-               
-            });
-         }
-      });
-      
-      
-   }    
-    
-    /* 검색 버튼 누를 시 */
-    $('#searchButton').click(function() {
-       // 검색 버튼 누를 시 재호출
-       bpoList();
-    });
-   </script>
+	$(document).ready(function() {
+		// 페이지 로드 시 1페이지 불러오기
+        bpoList(1);
+
+        // 검색 버튼 클릭 시 첫번째 페이지로 조회하기
+        $('#searchButton').click(function() {
+            bpoList(1);
+        });
+
+        // 페이징 버튼 클릭 시
+        $('#paginationUl').on('click', '.page-link', function(e) {
+            e.preventDefault(); // 링크 기본 동작 방지
+            let currentPage = $(this).text();
+            bpoList(currentPage); // 클릭한 페이지 번호로 조회
+        });
+	});
+
+	/* Ajax 호출 함수 */
+	function bpoList(currentPage) {
+		let searchType = $('#searchType').val();
+		console.log("searchType 결과값--> ", searchType);
+		
+        let searchWord = $('#searchWord').val();
+		console.log("searchWord 결과값--> ", searchWord);
+        
+        $.ajax({
+            url: '/topaz/bpo/bpoList',
+            type: 'GET',
+            data: {
+                "currentPage": currentPage,
+                "searchWord": searchWord,
+                "searchType": searchType
+            },
+            success: function(result) {
+                console.log("result 결과값--> ", result)
+
+                // 리스트 불러올 tbody
+                let tbody = $('#tableBody');
+                tbody.empty(); // tbody 비우기
+
+                // result 데이터만큼 tr 생성
+                result.list.forEach(function(item) {
+                    let row = '<tr onclick="window.location.href=\'/topaz/groupware/bpo/bpoDetail?outsourcingNo=' + item.outsourcingNo + '\'">';
+                    row += '<td scope="row">' + item.outsourcingNo + '</td>';
+                    row += '<td>' + item.outsourcingName + '</td>';
+                    row += '<td>' + item.inchargeName + '</td>';
+                    row += '<td>' + item.contractStart + '</td>';
+                    row += '<td>' + item.contractEnd + '</td>';
+                    row += '<td>' + item.empName + '</td>';
+                    row += '</tr>';
+
+                    // tbody에 행 추가
+                    tbody.append(row);
+                });
+
+                // 페이징 버튼 업데이트(최근 페이지번호, 마지막 페이지 번호)
+                updatePagination(result.currentPage, result.lastPage);
+            }
+        });
+        }
+
+	/* 페이징 버튼 업데이트 */
+	function updatePagination(currentPage, lastPage) {
+		// 페이지 버튼 추가해줄 ul 가져오기
+		let paginationUl = $('#paginationUl');
+		
+		// 페이징 버튼 비워주기
+       	paginationUl.empty();
+		
+		// << 버튼
+       	paginationUl.append('<li class="page-item"><a class="page-link bpoListPage" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>');
+		
+		// 마지막 페이지 수 만큼 li추가
+       	for (let i = 1; i <= lastPage; i++) {
+           	paginationUl.append('<li class="page-item bpoListPage"><a class="page-link" href="#">' + i + '</a></li>');
+       	}
+		
+       	// >> 버튼
+       	paginationUl.append('<li class="page-item"><a class="page-link bpoListPage" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>');
+
+       	// 현재 페이지 활성화
+       	paginationUl.find('li.page-item:nth-child(' + (parseInt(currentPage) + 1) + ')').addClass('active');
+	}
+    </script>
    
 </body>
 

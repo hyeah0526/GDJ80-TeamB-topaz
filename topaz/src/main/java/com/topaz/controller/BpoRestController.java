@@ -47,11 +47,10 @@ public class BpoRestController {
 	 * 담당자: 박혜아
 	*/
 	@RequestMapping("/bpo/bpoList")
-	public List<Map<String, Object>> bpoList(Model model
-											,@RequestParam(name="currentPage", defaultValue="1") int currentPage
-											,@RequestParam(name="rowPerPage", defaultValue="5") int rowPerPage
-											,@RequestParam(name="searchWord", defaultValue="") String searchWord
-											,@RequestParam(name="searchType", defaultValue="") String searchType){
+	public Map<String, Object> bpoList(@RequestParam(name="currentPage", defaultValue="1") int currentPage
+										,@RequestParam(name="rowPerPage", defaultValue="5") int rowPerPage
+										,@RequestParam(name="searchWord", defaultValue="") String searchWord
+										,@RequestParam(name="searchType", defaultValue="") String searchType){
 		// 가져온 값 디버깅
 		log.debug(Debug.PHA + "bpoList Restcontroller currentPage--> " + currentPage + Debug.END);
 		log.debug(Debug.PHA + "bpoList Restcontroller rowPerPage--> " + rowPerPage + Debug.END);
@@ -66,16 +65,25 @@ public class BpoRestController {
 		int lastPage = bpoService.getBpoListLastPage(rowPerPage, searchWord, searchType);
 		log.debug(Debug.PHA + "bpoList Restontroller lastPage--> " + lastPage + Debug.END);
 		
+		int minPage = (((currentPage - 1) / rowPerPage) * rowPerPage) + 1;
+		int maxPage = minPage + (rowPerPage - 1);
+		// 최대 페이지가 마지막페이지를 넘어가지 못하도록 제한
+		if (maxPage > lastPage) {
+			maxPage = lastPage;
+		}
+		
 		// 값 추가해주기
-		model.addAttribute("lastPage", lastPage);
-		model.addAttribute("rowPerPage", rowPerPage);
-		model.addAttribute("searchWord", searchWord);
-		model.addAttribute("searchType", searchType);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("list", list);
+		resultMap.put("currentPage", currentPage);
+		resultMap.put("lastPage", lastPage);
+		resultMap.put("minPage", minPage);
+		resultMap.put("maxPage", maxPage);
 		
-		log.debug(Debug.PHA + "bpoList Restontroller model--> " + model + Debug.END);
+		log.debug(Debug.PHA + "bpoList Restontroller resultMap--> " + resultMap + Debug.END);
 		
 		
-		return list;
+		return resultMap;
 	}
 	
 	
