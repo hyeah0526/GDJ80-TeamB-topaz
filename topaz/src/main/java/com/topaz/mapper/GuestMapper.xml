@@ -16,6 +16,8 @@
 			g.room_no = r.room_no
 		WHERE 
 			g.use_yn = 'Y'
+		AND	
+			g.gst_type = '입주자'
 		<if test="searchWord != null">
 			AND (g.gst_name LIKE CONCAT('%', #{searchWord}, '%'))
 		</if>
@@ -25,7 +27,7 @@
 	
 	<!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
 	<select id="selectResidentCount" resultType="int">
-		SELECT COUNT(*) FROM guest WHERE use_yn = 'Y'
+		SELECT COUNT(*) FROM guest WHERE use_yn = 'Y' AND gst_type='입주자'
 	</select>
 
 	
@@ -48,6 +50,8 @@
         	g.room_no IS NOT NULL
         AND
         	g.use_yn = 'Y'
+        AND 
+        	g.gst_type = '입주자'
         	
         <if test="dong != null and dong != ''">
             AND r.room_dong = #{dong}
@@ -65,11 +69,13 @@
     <select id="selectResidentOne" parameterType="String" resultType="map">
     	SELECT 
 	    	g.gst_id gstId, g.gst_name gstName, g.gst_email gstEmail, 
-	    	g.gst_gender gstGender, g.gst_birth gstBirth, 
+	    	g.gst_gender gstGender, g.gst_birth gstBirth, g.use_yn useYn,
 			g.gst_phone gstPhone, DATE_FORMAT(g.contract_start, '%Y-%m-%d') contractStart, 
 			DATE_FORMAT(g.contract_end, '%Y-%m-%d') contractEnd, g.room_amenity roomAmenity, 
-			g.resident_note residentNote, g.protector_name protectorName, 
-			g.protector_phone protectorPhone, g.protector_relation protectorRelation, g.reg_id regId, g.mod_id modId, 
+			g.resident_note residentNote, g.protector_name protectorName, g.gst_type gstType,
+			g.protector_phone protectorPhone, g.protector_relation protectorRelation, 
+			(SELECT emp_name FROM employee WHERE emp_no = g.reg_id) regId, 
+			(SELECT emp_name FROM employee WHERE emp_no = g.mod_id) modId, 
 			r.room_no roomNo, r.room_type roomType, r.room_dong roomDong, r.room_ho roomHo
 		FROM 
 			guest g
@@ -80,7 +86,43 @@
 		WHERE 
 			g.gst_id = #{gstId}
 		AND 
-			g.use_yn = 'Y';
+			g.use_yn = 'Y'
+		AND 
+			g.gst_type = '입주자'
     </select>
     
+    <!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 수정 -->
+    <update id="updateResident" parameterType="com.topaz.dto.Guest">
+    	UPDATE guest
+	    <set>
+	        <if test="gstPhone != null and gstPhone != ''">
+	            gst_phone = #{gstPhone},
+	        </if>
+	        <if test="gstEmail != null and gstEmail != ''">
+	            gst_email = #{gstEmail},
+	        </if>
+	        <if test="roomAmenity != null and roomAmenity != ''">
+	            room_amenity = #{roomAmenity},
+	        </if>
+	        <if test="residentNote != null and residentNote != ''">
+	            resident_note = #{residentNote},
+	        </if>
+	        <if test="contractEnd != null and contractEnd != ''">
+	            contract_end = #{contractEnd},
+	        </if>
+
+	        protector_name = #{protectorName},
+	        protector_phone = #{protectorPhone},
+	        protector_relation = #{protectorRelation},
+
+	        mod_time = NOW(),
+	        mod_id = #{modId}
+	    </set>
+	    WHERE 
+	        gst_id = #{gstId} 
+	    AND 
+	        use_yn = 'Y'
+	    AND 
+	    	gst_type = '입주자'
+    </update>
 </mapper>

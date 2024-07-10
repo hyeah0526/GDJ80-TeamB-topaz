@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.topaz.dto.Guest;
 import com.topaz.mapper.GuestMapper;
 import com.topaz.utill.Debug;
 
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -80,5 +84,17 @@ public class GuestService {
 		log.debug(Debug.PSJ + "residentone service==>" + residentMap.toString() + Debug.END);
 		
 		return residentMap;
+	}
+	
+	/*
+	 * 분류번호: #7 - 입주자 관리 페이지 : 입주자 정보 수정
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 박수지
+	*/
+	
+	public int updateResident(Guest guest) {
+		log.debug(Debug.PSJ + "resiUpdate service==>" + guest.toString() + Debug.END);
+		
+		return guestMapper.updateResident(guest);
 	}
 }

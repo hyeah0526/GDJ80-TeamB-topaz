@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import com.topaz.dto.Guest;
 
 @Mapper
 public interface GuestMapper {
@@ -15,7 +18,11 @@ public interface GuestMapper {
 	
 	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 전체 입주자 조회 */
 	List<Map<String, Object>> filterResidentList(String dong, String type, String ho, int beginRow, int rowPerPage );
-	
+
 	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 입주자 상세 조회 */
 	Map<String,Object> selectResidentOne(String gstId);
+	
+	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 입주자 수정 */
+	int updateResident(Guest guest);
+	
 }

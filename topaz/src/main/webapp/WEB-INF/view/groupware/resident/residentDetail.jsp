@@ -139,11 +139,11 @@
 	              
             	<!-- 수정 -->  
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-					<form>
+					<form action="/topaz/groupware/resident/residentDetail?gstId=${resident.gstId }" method="post" >
                 		<div class="row mb-3">
 	                 
 	                      <div class="col-md-8 col-lg-9">
-	                        <img src="/topaz/assets/img/profile-img.jpg" alt="Profile">
+	                        <img src="/topaz/assets/img/profile-img.jpg" alt="Profile" class="mb-3">
 	                        <div class="pt-2">
 	                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
 	                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -152,71 +152,79 @@
 	                    </div>
 						<div class="row">
 	                    	<div class="col-lg-6 col-md-6">
-	                          	<div class="info-item">
+	                          	<div class="info-item mb-3">
 									<span class="label">이름</span>
-		                            <span><input style="width: 200px; display: inline;" class="form-control" name="resiName" type="text" value="${resident.gstName}"></span>
+		                            <span><input style="width: 200px; display: inline;" class="form-control" name="resiName" type="text" value="${resident.gstName}" disabled="disabled"></span>
 	                          	</div>
-								<div class="info-item">
+								<div class="info-item mb-3">
 								    <span class="label">아이디</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" name="resiId" type="text" value="${resident.gstId}"></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" name="resiId" type="text" value="${resident.gstId}" disabled="disabled"></span>
 								</div>
-								<div class="info-item">
+								<div class="info-item mb-3">
 								    <span class="label">전화번호</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" name="resiPhone" type="text"></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" name="gstPhone" type="text" value="${resident.gstPhone}"></span>
 								</div>
-								<div class="info-item">
+								<div class="info-item mb-3">
 								    <span class="label">이메일</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" name="resiEmail" type="text"></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" name="gstEmail" type="text" value="${resident.gstEmail}"></span>
 								</div>
-								<div class="info-item">
+								<div class="info-item mb-3">
 								    <span class="label">성별</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" name="resiGender" type="text" value="${resident.gstGender}"></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" name="resiGender" type="text" value="${resident.gstGender}" disabled="disabled"></span>
 								</div>
-								<div class="info-item">
+								<div class="info-item mb-3">
 								    <span class="label">생년월일</span>
-								   	<span><input style="width: 200px; display: inline;" class="form-control" name="resiBirth" type="text" value="${resident.gstBirth}"></span>
+								   	<span><input style="width: 200px; display: inline;" class="form-control" name="resiBirth" type="text" value="${resident.gstBirth}" disabled="disabled"></span>
 								</div>
-								<div class="info-item">
+								<div class="info-item mb-3">
 								    <span class="label">내용</span>
-								    <span><textarea style="width: 200px; display: inline;" class="form-control" rows="2" cols="20" name="resiNote"></textarea></span>
+								    <span><textarea style="width: 200px; display: inline;" class="form-control" rows="2" cols="20" name="residentNote">${resident.residentNote}</textarea></span>
 								</div>
-								<div class="info-item">
+								<div class="info-item mb-3">
 								    <span class="label">등록 직원</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" name="regId" type="text" value="${resident.regId}"></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" name="regId" type="text" value="${resident.regId}" disabled="disabled"></span>
 								</div>
-								<div class="info-item">
+								<div class="info-item mb-3">
 								    <span class="label">수정 직원</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" name="modId" type="text" value="${resident.modId}"></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" name="modId" type="text" value="${resident.modId}" disabled="disabled"></span>
+								   	<span><input style="width: 200px; display: inline;" class="form-control" name="useYn" type="hidden" value="${resident.useYn}" ></span>
+									<span><input style="width: 200px; display: inline;" class="form-control" name="gstType" type="hidden" value="${resident.gstType}"></span>
+								    
 								    </div>
 								</div>
 								<div class="col-lg-6 col-md-6">
-								    <div class="info-item">
-								        <span class="label">계약기간</span>
-								        <span><input class="form-control" style="width: 160px; display: inline" name="contractStart" type="datetime">  ~  <input style="width: 160px; display: inline" class="form-control" name="contractEnd" type="datetime"></span>
+								    <div class="info-item mb-3">
+								        <span class="label ">계약기간</span>
+								        <span><input class="form-control date-input" style="width: 160px; display: inline" name="contractStart" type="datetime" value = "${resident.contractStart }" disabled="disabled"></span>  ~ 
+								        <span><input style="width: 160px; display: inline" class="form-control date-input" name="contractEnd" type="datetime" value = "${resident.contractEnd }"></span>
 									</div>
-									<div class="info-item">
+									<div class="info-item mb-3">
 									    <span class="label">객실, 타입</span>
-									    <span><input style="width: 130px; display: inline" class="form-control" name="roomNo" type="text"> 객실 <input style="width: 130px; display: inline" class="form-control" name="roomType" type="text">타입</span>
+									    <span><input style="width: 160px; display: inline" class="form-control date-input" name="roomNo" type="text" value = "${resident.roomNo }" disabled="disabled"></span> &
+									    <span><input style="width: 160px; display: inline" class="form-control date-input" name="roomType" type="text" value = "${resident.roomType }" disabled="disabled"></span>
 									</div>
-									<div class="info-item">
+									<div class="info-item mb-3">
 									    <span class="label">동, 호수</span>
-									    <span><input style="width: 160px; display: inline" class="form-control" name="roomDong" type="text"> 동 <input style="width: 160px; display: inline" class="form-control" name="roomHo" type="text">호</span>
+									    <span><input style="width: 150px; display: inline" class="form-control date-input" name="roomDong" type="text" value = "${resident.roomDong }" disabled="disabled"></span> 동 
+									    <span><input style="width: 150px; display: inline" class="form-control date-input" name="roomHo" type="text" value = "${resident.roomHo }" disabled="disabled"></span> 호
 									</div>
-									<div class="info-item">
-									    <span class="label">어메니티 여부</span>
-									    <span class="value">${resident.roomAmenity}</span>
+									<div class="info-item mb-3">
+									    <span><label class="form-check-label label" for="roomAmenity">어메니티 여부</label></span>
+    									<span><input type="hidden" name="roomAmenity" value="N"></span>
+										<span><input class="form-check-input" type="checkbox" id="roomAmenity" name="roomAmenity" ${resident.roomAmenity == 'Y' ? 'checked' : ''} value="Y" onchange="this.form.roomAmenity.value = this.checked ? 'Y' : 'N';"></span>
+
 									</div>
-									<div class="info-item">
+									<div class="info-item mb-3">
 									    <span class="label">보호자 성명</span>
-									    <span><input style="width: 200px; display: inline;" class="form-control" name="protectorName" type="text"></span>
+									    <span><input style="width: 200px; display: inline;" class="form-control" name="protectorName" value = "${resident.protectorName }"type="text"></span>
 									</div>
-									<div class="info-item">
+									<div class="info-item mb-3">
 									    <span class="label">보호자 연락처</span>
-									    <span><input style="width: 200px; display: inline;" class="form-control" name="protectorPhone" type="text"></span>
+									    <span><input style="width: 200px; display: inline;" class="form-control" name="protectorPhone" value = "${resident.protectorPhone }"type="text"></span>
 									</div>
-									<div class="info-item">
+									<div class="info-item mb-3">
 									    <span class="label">입주자와의 관계</span>
-									    <span><input style="width: 200px; display: inline;" class="form-control" name="protectorRelation" type="text"></span>
+									    <span><input style="width: 200px; display: inline;" class="form-control" name="protectorRelation" value = "${resident.protectorRelation }"type="text"></span>
 									</div>
 
 				    			</div>
@@ -234,7 +242,7 @@
 
         </div>
       </div>
-    </section>
+    </section>	
 
    </main><!-- End #main -->
    <!-- =============================== Main 메인 끝 부분 ================================ -->

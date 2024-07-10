@@ -119,18 +119,20 @@
 	<!-- End Table with stripped rows -->
 	<div class="pagination-container">
 		<nav aria-label="Page navigation example">
-	         	<ul class="pagination">
-	            <li class="page-item"><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=1">1</a></li>
-	            <li class="page-item"><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=2">2</a></li>
-	            <li class="page-item "><a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=3">3</a></li>
+         	<ul class="pagination">
+	            <c:forEach var="i" begin="1" end="${lastPage}">
+	                <li class="page-item">
+	                    <a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=${i}">${i}</a>
+	                </li>
+	            </c:forEach>
 	            <li class="page-item">
 	              	<a class="page-link" href="/topaz/groupware/resident/residentList?currentPage=${lastPage }" aria-label="Next">
-	               	<span aria-hidden="true">&raquo;</span>
+	               		<span aria-hidden="true">&raquo;</span>
 	             	</a>
-	           </li>
-	       </ul>
-	      </nav><!-- End Pagination with icons -->
-	       </div>
+           		</li>
+	        </ul>
+		</nav><!-- End Pagination with icons -->
+	</div>
 			</div>
 		</div>
 	</div>

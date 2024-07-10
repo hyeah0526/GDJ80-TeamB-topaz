@@ -82,3 +82,52 @@
     text-align: left; /* 값을 왼쪽 정렬 */
 }
 
+/* 프로필 edit 스타일 */
+.profile-edit .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile-edit .row > div {
+    flex: 1 1 50%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.profile-edit .info-item {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    padding: 10px 0;
+	
+}
+
+.profile-edit .info-item:last-child {
+    border-bottom: none;
+}
+
+.profile-edit .info-item .label {
+    font-weight: bold;
+    color: #333;
+    width: 150px; /* 라벨의 고정 너비 설정 */
+    text-align: center;
+}
+
+.profile-edit .info-item .value {
+    color: #555;
+    flex-grow: 1;
+    text-align: left; /* 값을 왼쪽 정렬 */
+}
+
+.profile-edit .date-input {
+    width: 160px;  /* 너비 조정 */
+    display: inline; /* 인라인 요소로 표시됨을 유지 */
+    margin-bottom: 7px; /* 오른쪽 마진 추가 */
+}
+
+.profile-edit .date-input:last-child {
+    margin-bottom: 0; /* 마지많 input 필드에는 마진 제거 */
+}
+
+

@@ -1,9 +1,11 @@
 package com.topaz.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,4 +76,6 @@ public class GuestRestController {
 
 	    return guestMapper.filterResidentList(dong, type, ho, beginRow, rowPerPage);
 	}
+	
+	
 }
