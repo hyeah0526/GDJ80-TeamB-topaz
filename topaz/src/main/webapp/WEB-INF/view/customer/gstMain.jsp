@@ -51,6 +51,7 @@
           <li><a href="volunteerRqAdd">봉사 신청</a></li>
           <li><a href="newsList">알림마당</a></li>
           <li><a href="gstLogin">로그인</a></li>
+          <li><a href="signUp">회원가입</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>

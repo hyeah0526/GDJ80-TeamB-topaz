@@ -91,8 +91,8 @@
 		              <div class="text-center mb-3 mt-3"><button type="submit">Login</button></div>
 				</form>
 	            <div class="row php-email-form mb-5">
-	            	<div class="col"><button type="button">비밀번호 찾기</button></div>
-	            	<div class="col mb-5"><button type="button">회원가입</button></div>
+	            	<div class="col"><button type="button"><a href="" style="color: white;">비밀번호 찾기</a></button></div>
+	            	<div class="col mb-5"><button type="button"><a href="signUp" style="color: white;">회원가입</a></button></div>
 	            </div>
 	          </div><!-- End Contact Form -->
 			</div>

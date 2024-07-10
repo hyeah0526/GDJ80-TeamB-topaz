@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.CustomerMapper">
+
+	<!-- 분류 번호: #16 - 회원가입  -->
+	<insert id="signUp" parameterType="com.topaz.dto.Guest">
+		INSERT INTO guest (
+			gst_id, 
+			gst_pw, 
+			gst_name, 
+			gst_email, 
+			gst_gender, 
+			gst_birth, 
+			gst_phone, 
+			gst_type, 
+			post_no, 
+			address, 
+			reg_time, 
+			mod_time, 
+			reg_id, 
+			mod_id, 
+			use_yn
+		)
+		VALUES(
+			#{gstId}, 
+			SHA2(#{gstPw}, 256), 
+			#{gstName}, 
+			#{gstEmail}, 
+			#{gstGender}, 
+			#{gstBirth}, 
+			#{gstPhone}, 
+			(SELECT cd_nm FROM common_code WHERE crp_cd = 'A003' AND cd = 'C'),
+			#{postNo}, 
+			#{address}, 
+			NOW(), 
+			NOW(), 
+			#{gstId}, 
+			#{gstId},
+			(SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		)
+	</insert>
+	
+	
+	
+	
+
+</mapper>
