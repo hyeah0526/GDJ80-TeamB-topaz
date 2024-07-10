@@ -385,4 +385,16 @@ public class EmployeeController {
 		return empAllChart;
 	
 	}
+	
+	//========== 근무 조회 뷰 
+	/*
+	 * 서비스명: #4 - 근무 조회 뷰 
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/empAttendance")
+	public String empAttendance() {
+		return "groupware/emp/empAttendance";
+	}
+	
 }

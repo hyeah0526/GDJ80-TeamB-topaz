@@ -44,6 +44,13 @@ $(document).ready(function() {
                             <td>${emp.useYn}</td>
                         </tr>
                     `);
+                    
+         
+                    $empListContainer.click(function(){
+						  window.location.href = `${contextPath}/groupware/emp/empDetail?empNo=${emp.empNo}`;
+					})
+                
+                   
                 });
 
                 // 페이지 정보 업데이트

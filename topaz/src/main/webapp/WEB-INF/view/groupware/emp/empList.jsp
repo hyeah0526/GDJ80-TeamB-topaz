@@ -16,6 +16,12 @@
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
     <link rel="stylesheet" href="<c:url value='/css/insuEmpList.css' />"> <!-- CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
+    
+   
+    <script type="text/javascript">
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>    
+     
 </head>
 	
 <body>
@@ -119,15 +125,16 @@
 								<th>근무 유무</th>
 							</tr>
 						</thead>
+							
 					  		<tbody id="empListContainer">
                         	</tbody>
 					</table>
 					
 					<!-- 버튼 -->
 					<div class="pagination">
-                        <a href="" id="prevPage" class="disabled">이전</a>
+                        <a href="#" id="prevPage" class="disabled">이전</a>
                         <div id="currentPage" class="currentPage">${currentPage}</div>
-                        <a href="" id="nextPage" class="disabled">다음</a>
+                        <a href="#" id="nextPage" class="disabled">다음</a>
                     </div>
 					
 			     </div>			
