@@ -201,5 +201,14 @@ public class LoginController {
 		return "redirect:/groupware/login";
 	}
 
-	
+	// 고객 로그아웃
+	@GetMapping("/gstLogout")
+	public String gstLogout(HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		if(session != null){
+	            session.invalidate();
+	    }
+		
+		return "redirect:/customer/gstLogin";
+	}
 }

@@ -31,6 +31,18 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<!-- 이메일 인증 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+		
 		<!-- Apache Commons signature-pad 라이브러리 -->
 		<dependency>
             <groupId>commons-codec</groupId>
