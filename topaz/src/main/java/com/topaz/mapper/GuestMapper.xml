@@ -17,7 +17,7 @@
 		WHERE 
 			g.use_yn = 'Y'
 		AND	
-			g.gst_type = '입주자'
+			g.gst_type = 'R'
 		<if test="searchWord != null">
 			AND (g.gst_name LIKE CONCAT('%', #{searchWord}, '%'))
 		</if>
@@ -27,12 +27,11 @@
 	
 	<!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
 	<select id="selectResidentCount" resultType="int">
-		SELECT COUNT(*) FROM guest WHERE use_yn = 'Y' AND gst_type='입주자'
+		SELECT COUNT(*) FROM guest WHERE use_yn = 'Y' AND gst_type='R'
 	</select>
-
 	
 	<!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
-    <!-- 입주자가 있는 객실만 조회 -->
+    <!-- 검색필터에 따른 입주자 조회 -->
     <select id="filterResidentList" resultType="map">
         SELECT 
         	g.gst_id gstId,
@@ -51,7 +50,7 @@
         AND
         	g.use_yn = 'Y'
         AND 
-        	g.gst_type = '입주자'
+        	g.gst_type = 'R'
         	
         <if test="dong != null and dong != ''">
             AND r.room_dong = #{dong}
@@ -64,6 +63,31 @@
         </if>
         LIMIT #{beginRow}, #{rowPerPage}
     </select>
+    
+    <!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
+	<select id="countResidents" resultType="int">
+		SELECT 
+		    count(*) 
+		FROM 
+		    guest g
+		INNER JOIN 
+		    room r 
+		ON 
+		    g.room_no = r.room_no
+		WHERE 
+		    g.room_no IS NOT NULL
+		    AND g.use_yn = 'Y'
+		    AND g.gst_type = 'R'
+		<if test="dong != null and dong != ''">
+		    AND r.room_dong = #{dong}
+		</if>
+		<if test="type != null and type != ''">
+		    AND r.room_type = #{type}
+		</if>
+		<if test="ho != null and ho != ''">
+		    AND r.room_ho = #{ho}
+		</if>
+	</select>
     
     <!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 상세 조회 -->
     <select id="selectResidentOne" parameterType="String" resultType="map">
@@ -88,7 +112,7 @@
 		AND 
 			g.use_yn = 'Y'
 		AND 
-			g.gst_type = '입주자'
+			g.gst_type = 'R'
     </select>
     
     <!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 수정 -->
@@ -123,6 +147,6 @@
 	    AND 
 	        use_yn = 'Y'
 	    AND 
-	    	gst_type = '입주자'
+	    	gst_type = 'R'
     </update>
 </mapper>

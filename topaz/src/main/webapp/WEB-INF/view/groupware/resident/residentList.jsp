@@ -145,98 +145,125 @@
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 	<!-- 동, 타입, 호수 분류 -->
+	<!-- Additional scripts -->
 	<script type="text/javascript">
 		$(document).ready(function() {
-            // 동 데이터 요청
-           	$.ajax({
-           		url:'/topaz/groupware/resident/residentList/dong',
-           		method:'POST',
-           		success: function(dongData){
-           			console.log(dongData);
-           			//동을 select에 넣어줌
-           			dongData.forEach(function(item){ // dong : String
-           				console.log(item);
-           				$('#dong').append('<option value ="'+item+'">'+item+'</option>');
-           			});
-           		}
-           	});
-           	
-           	// 동 선택 시 타입 데이터 요청
-           	$('#dong').change(function(){
-           		if($('#dong').val() == ''){
-           			return;
-           		}
-           		
-           		$('#type').empty();
-           		$('#type').append('<option value="">타입을 선택하세요</option>')
-           		
-           		$.ajax({
-           			url: '/topaz/groupware/resident/residentList/type',
-           			method: 'POST',
-           			data: {'dong' : $('#dong').val()},
-           			success:function(typeData){ // type : List
-           				console.log(typeData);
-           				typeData.forEach(function(item){
-           					$('#type').append('<option value="'+item+'">'+item+'</option>');
-           				});
-           			}
-           			
-           		});
-           	});
-           		
-       		$('#type').change(function(){
-           		if($('#type').val() == ''){
-           			return;
-           		}
-           		
-           		$('#ho').empty();
-           		$('#ho').append('<option value="">호수를 선택하세요</option>')
-           		
-           		$.ajax({
-           			url: '/topaz/groupware/resident/residentList/ho',
-           			method: 'POST',
-           			data: {'type' : $('#type').val()},
-           			success:function(hoData){ // hoData : List
-           				console.log(hoData);
-           				hoData.forEach(function(item){
-           					console.log(item);
-           					$('#ho').append('<option value="'+item+'">'+item+'</option>');
-           				});
-           			}
-           		})
-           	});
-           	
-       	});
-		
-		// 각 선택 요소에 대해 변경 사항이 생길 때마다 필터링된 목록 요청
-	    $('#dong, #type, #ho').change(function(){
-	        var dong = $('#dong').val();
-	        var type = $('#type').val();
-	        var ho = $('#ho').val();
-	        $.ajax({
-	            url: '/topaz/groupware/resident/residentList/filter',
-	            method: 'POST',
-	            data: {dong: dong, type: type, ho: ho},
-	            success: function(data) {
-	            	console.log("Received data: ", data); // 확인용 로그
-	                var tbody = $('table.table-hover tbody');
-	                tbody.empty();
-	                data.forEach(function(item){
-	                	var row = '<tr data-href="/topaz/groupware/resident/residentDetail?gstId=' + item.gstId + '">';
-	                    row += '<td>' + item.gstName + '</td>';
-	                    row += '<td>' + item.dong + '</td>';
-	                    row += '<td>' + item.ho + '</td>';
-	                    row += '</tr>';
-	                    tbody.append(row);
-	                });
-	                $('table.table-hover tbody tr').on('click', function() {
-		                window.location = $(this).data('href');
-		            });
-	            }
-	        });
-	    });
-		
-	
+			// 동 데이터 요청
+			$.ajax({
+				url: '/topaz/groupware/resident/residentList/dong',
+				method: 'POST',
+				success: function(dongData) {
+					console.log(dongData);
+					dongData.forEach(function(item){
+						console.log(item);
+						$('#dong').append('<option value ="'+item+'">'+item+'</option>');
+					});
+				}
+			});
+
+			// 동 선택 시 타입 데이터 요청
+			$('#dong').change(function(){
+				if($('#dong').val() == ''){
+					return;
+				}
+
+				$('#type').empty();
+				$('#type').append('<option value="">타입을 선택하세요</option>');
+
+				$.ajax({
+					url: '/topaz/groupware/resident/residentList/type',
+					method: 'POST',
+					data: {'dong': $('#dong').val()},
+					success: function(typeData) {
+						console.log(typeData);
+						typeData.forEach(function(item){
+							$('#type').append('<option value="'+item+'">'+item+'</option>');
+						});
+					}
+				});
+			});
+
+			$('#type').change(function(){
+				if($('#type').val() == ''){
+					return;
+				}
+
+				$('#ho').empty();
+				$('#ho').append('<option value="">호수를 선택하세요</option>');
+
+				$.ajax({
+					url: '/topaz/groupware/resident/residentList/ho',
+					method: 'POST',
+					data: {'type': $('#type').val()},
+					success: function(hoData) {
+						console.log(hoData);
+						hoData.forEach(function(item){
+							console.log(item);
+							$('#ho').append('<option value="'+item+'">'+item+'</option>');
+						});
+					}
+				});
+			});
+
+			// 필터링 및 페이징 데이터 요청
+			function loadPage(page) {
+				var dong = $('#dong').val();
+				var type = $('#type').val();
+				var ho = $('#ho').val();
+				$.ajax({
+					url: '/topaz/groupware/resident/residentList/filter',
+					method: 'POST',
+					data: {
+						dong: dong,
+						type: type,
+						ho: ho,
+						currentPage: page,
+						rowPerPage: 5
+					},
+					success: function(response) {
+						var tbody = $('table.table-hover tbody');
+						tbody.empty();
+						response.residents.forEach(function(item) {
+							var row = '<tr data-href="/topaz/groupware/resident/residentDetail?gstId=' + item.gstId + '">';
+							row += '<td>' + item.gstName + '</td>';
+							row += '<td>' + item.dong + '</td>';
+							row += '<td>' + item.ho + '</td>';
+							row += '</tr>';
+							tbody.append(row);
+						});
+						$('table.table-hover tbody tr').on('click', function() {
+							window.location = $(this).data('href');
+						});
+						updatePagination(response.totalPages, page);
+					}
+				});
+			}
+
+			function updatePagination(totalPages, currentPage) {
+				var pagination = $('.pagination');
+				pagination.empty();
+				for (var i = 1; i <= totalPages; i++) {
+					var activeClass = (i === currentPage) ? 'active' : '';
+					var pageItem = '<li class="page-item ' + activeClass + '">';
+					pageItem += '<a class="page-link" data-page="' + i + '" href="#">' + i + '</a>';
+					pageItem += '</li>';
+					pagination.append(pageItem);
+				}
+				$('.pagination .page-link').on('click', function(e) {
+					e.preventDefault();
+					var page = $(this).data('page');
+					loadPage(page);
+				});
+			}
+
+			// 초기 데이터 로드
+			loadPage(1);
+
+			// 필터 변경 시 데이터 로드
+			$('#dong, #type, #ho').change(function(){
+				loadPage(1);
+			});
+		});
 	</script>
 	
 </body>

@@ -17,8 +17,20 @@ public interface GuestMapper {
 	int selectResidentCount();
 	
 	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 전체 입주자 조회 */
-	List<Map<String, Object>> filterResidentList(String dong, String type, String ho, int beginRow, int rowPerPage );
-
+	// 검색필터에 따른 전체조회 
+	List<Map<String, Object>> filterResidentList(
+										    @Param("dong") String dong,
+										    @Param("type") String type,
+										    @Param("ho") String ho,
+										    @Param("beginRow") int beginRow,
+										    @Param("rowPerPage") int rowPerPage);
+	
+	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 전체 입주자 조회 */
+	// 검색필터에 따른 데이터 총 개수
+	int countResidents(@Param("dong") String dong, 
+					   @Param("type") String type,
+					   @Param("ho") String ho);
+	
 	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 입주자 상세 조회 */
 	Map<String,Object> selectResidentOne(String gstId);
 	
