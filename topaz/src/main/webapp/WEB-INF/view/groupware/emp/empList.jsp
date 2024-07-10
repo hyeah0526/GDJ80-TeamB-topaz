@@ -40,7 +40,7 @@
 				<!-- 메인 -->
 			     <div class="mainContent">
 			     
-			     	<form action="<c:url value='/groupware/emp/empList' />" method="get" >
+			     	<form id="searchForm" action="<c:url value='/groupware/emp/empList' />" method="post" >
 			     		<div style="margin-bottom: 20px;">
                     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
                     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
@@ -109,54 +109,26 @@
 			     	
 			     	
 			     	<table border="1">
-						<tr>
-							<th>사원번호</th>
-							<th>사원명</th>
-							<th>부서명</th>
-							<th>직위</th>
-							<th>잔여 휴가일</th>
-							<th>근무 유무</th>
-						</tr>
-						<c:forEach var="b" items="${empList}">
-							<tr onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empDetail?empNo=${b.empNo}'" style="cursor:pointer;">
-								<td>${b.empNo}</td>
-								<td>${b.empName }</td>
-								<td>${b.empDept }</td>
-								<td>${b.empGrade}</td>
-								<td>${b.yearCnt}</td>
-								<td>${b.useYn}</td>
+						<thead>
+							<tr>
+								<th>사원번호</th>
+								<th>사원명</th>
+								<th>부서명</th>
+								<th>직위</th>
+								<th>잔여 휴가일</th>
+								<th>근무 유무</th>
 							</tr>
-						</c:forEach>
+						</thead>
+					  		<tbody id="empListContainer">
+                        	</tbody>
 					</table>
 					
 					<!-- 버튼 -->
-					 <div class="pagination">
-				     	<c:choose>
-					        <c:when test="${currentPage > 1}">
-					            <a href="#" onclick="changePage(${currentPage-1})">
-					                이전
-					            </a>
-					        </c:when>
-					        <c:otherwise>
-					            <a class="disabled">
-					                이전
-					            </a>
-					        </c:otherwise>
-					    </c:choose>
-					    <div class="currentPage">${currentPage}</div>
-					    <c:choose>
-					        <c:when test="${currentPage < lastPage}">
-					            <a href="#" onclick="changePage(${currentPage+1})">
-					                다음
-					            </a>
-					        </c:when>
-					        <c:otherwise>
-					            <a class="disabled">
-					                다음
-					            </a>
-					        </c:otherwise>
-					    </c:choose>
-					</div>
+					<div class="pagination">
+                        <a href="" id="prevPage" class="disabled">이전</a>
+                        <div id="currentPage" class="currentPage">${currentPage}</div>
+                        <a href="" id="nextPage" class="disabled">다음</a>
+                    </div>
 					
 			     </div>			
 			</div>
@@ -166,24 +138,6 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
-	<script>
-		 $(document).ready(function() {
-	         $('.resetBtn').click(function() {
-	             //폼을 초기화
-	             $('form')[0].reset();
-	
-	          	//검색 조건을 제거한 기본 URL로 리다이렉트
-	             const baseUrl = window.location.href.split('?')[0];
-	             window.location.href = baseUrl;
-	         });
-	     });
-		 
-		// 페이지 이동과 동시에 URL 상태를 유지하는 함수
-         function changePage(page) {
-             const urlParams = new URLSearchParams(window.location.search);
-             urlParams.set('currentPage', page);
-             window.location.search = urlParams.toString();
-         }
-	</script>
+	<script src="<c:url value='/js/insuEmpSelectAll.js'/>"></script>
 </body>
 </html>

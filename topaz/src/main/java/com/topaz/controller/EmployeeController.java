@@ -95,16 +95,26 @@ public class EmployeeController {
 		return "redirect:/groupware/emp/empList";
 	}
 	
-
+	
+	/*
+	 * 서비스명: #4 - 직원전체 조회 뷰
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/empList")
+	public String empList() {
+		return "groupware/emp/empList";
+	
+	}
+	
 	/*
 	 * 서비스명: #4 - 전체 직원조회
 	 * 시작 날짜: 2024-07-07
 	 * 담당자: 김인수
 	*/
-	@GetMapping("/groupware/emp/empList")
-	public String empList(
-			Model model,
-			@RequestParam Map<String, Object> paramMap) {
+	@ResponseBody
+	@PostMapping("/groupware/emp/empList")
+	public Map<String, Object> empList(@RequestParam Map<String, Object> paramMap) {
 		
 		//매개변수 디버깅
 	    log.debug(Debug.KIS + "controller / empList / paramMap : " + paramMap);
@@ -135,12 +145,13 @@ public class EmployeeController {
 	    int lastPage = (int) resultMap.get("lastPage");
 		
 		
-		//모델 객체에 데이터 추가 
-		model.addAttribute("empList", empList);
-		model.addAttribute("lastPage", lastPage);
-		model.addAttribute("currentPage", currentPage);
+	    // 응답 데이터
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("empList", empList);
+	    response.put("lastPage", lastPage);
+	    response.put("currentPage", currentPage);
 		
-		return "groupware/emp/empList";
+		return response;
 	}
 	
 	
@@ -275,7 +286,8 @@ public class EmployeeController {
 		return "groupware/emp/empLeave";
 	}
 	
-	//========== 직원 개인 정보
+	
+	//========== 개인 정보
 
 	/*
 	 * 서비스명: #2 - 내 정보 보기
