@@ -7,6 +7,9 @@ import com.topaz.dto.Guest;
 public interface CustomerMapper {
 
 	/* 분류 번호 : #16 - 고객 회원가입 */
-	int signUp(Guest guest);
+	public int signUp(Guest guest);
+
+	/* 분류 번호 :  #16 - 고객 ID 중복 확인 */
+	public String selectGuestId(String gstId);
 
 }

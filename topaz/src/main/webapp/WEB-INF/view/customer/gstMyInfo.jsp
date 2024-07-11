@@ -55,7 +55,8 @@
           <li><a href="volunteerRqAdd">봉사 신청</a></li>
           <li><a href="newsList">알림마당</a></li>
           <li><a href="gstLogin" >로그인</a></li>
-          <li><a href="${pageContext.request.contextPath}/gstLogout">로그아웃</a></li>
+          <li><a href="signUp" class="active">회원가입</a></li>
+          <li><a href="signUp" class="active">회원가입</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -67,11 +68,11 @@
     <!-- Page Title -->
     <div class="page-title light-background">
       <div class="container">
-        <h1>회원가입</h1>
+        <h1>내 정보</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="gstMain.html">Home</a></li>
-            <li class="current">회원가입</li>
+            <li class="current">내 정보</li>
           </ol>
         </nav>
       </div>
@@ -87,11 +88,11 @@
             <form action="signUpPost" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="col-md-8 form-group">
-                  <input type="text" name="gstId" id="gstId" class="form-control" placeholder="ID 4자 이상 입력">
-				  <div class="id-message hide"></div>
+                  <input type="text" name="gstId" class="form-control" placeholder="ID 4자 이상 입력">
+				  <div id="id-message"></div>
                 </div>
                 <div class="col text-center">
-                	<button type="button" id="idCheck">중복확인</button>
+                	<button type="button" id="idCk">중복확인</button>
                 </div>
               </div>
               <div class="form-group mt-3">
@@ -159,7 +160,7 @@
                 <div class="sent-message">Your message has been sent. Thank you!</div>
               </div>
               <div class="row justify-content-center">
-              	<div class="col-md-6 mt-3 text-center"><button type="submit" id="signUpButton">회원가입</button></div>
+              	<div class="col-md-6 mt-3 text-center"><button type="submit">회원가입</button></div>
               </div>
             </form>
             
@@ -170,7 +171,6 @@
       </div>
 
     </section><!-- 입력 폼 끝 -->   
-   
   </main>
 
   <!-- footer -->
@@ -184,6 +184,7 @@
 
   <!-- Vendor JS Files -->
   <script src="/topaz/assets/vendorGST/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/topaz/assets/vendorGST/php-email-form/validate.js"></script>
   <script src="/topaz/assets/vendorGST/aos/aos.js"></script>
   <script src="/topaz/assets/vendorGST/swiper/swiper-bundle.min.js"></script>
   <script src="/topaz/assets/vendorGST/purecounter/purecounter_vanilla.js"></script>
@@ -191,12 +192,35 @@
   <script src="/topaz/assets/vendorGST/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="/topaz/assets/vendorGST/isotope-layout/isotope.pkgd.min.js"></script>
 
-  
-  <!-- Main JS File -->
-  <script src="/topaz/assets/js/mainGST.js"></script>
   <script src="<c:url value='/js/post.js'/>"></script>
   <script src="<c:url value='/js/eunhyeSignUp.js'/>"></script>
 
+  <!-- Main JS File -->
+  <script src="/topaz/assets/js/mainGST.js"></script>
+  <script>
+    $(document).ready(function() {
+      // 페이지 로드 후 세션 상태 확인 및 메뉴 업데이트
+      checkSession();
+
+      function checkSession() {
+        // 실제 환경에서는 서버에서 세션 정보를 받아와서 확인해야 함
+        // 여기서는 localStorage를 사용하여 세션 상태를 시뮬레이션
+        let isLoggedIn = localStorage.getItem('userId') !== null;
+
+        if (isLoggedIn) {
+          // 세션이 있는 경우
+          $('#myInfoLink').attr('href', 'gstMyInfo').text('내 정보');
+          $('#loginLink').attr('href', 'logout').text('로그아웃');
+          $('#signupLink').hide();
+        } else {
+          // 세션이 없는 경우
+          $('#myInfoLink').hide();
+          $('#loginLink').attr('href', 'gstLogin').text('로그인');
+          $('#signupLink').attr('href', 'signUp').show();
+        }
+      }
+    });
+   </script>
 </body>
 
 </html>

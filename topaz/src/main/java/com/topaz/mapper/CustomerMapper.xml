@@ -29,7 +29,7 @@
 			#{gstGender}, 
 			#{gstBirth}, 
 			#{gstPhone}, 
-			(SELECT cd_nm FROM common_code WHERE crp_cd = 'A003' AND cd = 'C'),
+			(SELECT cd FROM common_code WHERE crp_cd = 'A003' AND cd = 'C'),
 			#{postNo}, 
 			#{address}, 
 			NOW(), 
@@ -40,8 +40,19 @@
 		)
 	</insert>
 	
+	<!-- 분류 번호: #16 - 회원가입 : ID 중복 확인  -->
+	<select id="selectGuestId" parameterType="String" resultType="String">
+		SELECT gst_id gstId
+		FROM guest
+		WHERE gst_id = #{gstId}
+	</select>
 	
-	
+	<!-- 분류 번호: #16 - 회원탈퇴 : 사용여부(Y -> N)  
+	<update id="">
+		UPDATE guest 
+		SET use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'N')
+		WHERE gst_id = #{gstId}
+s	</update> -->
 	
 
 </mapper>

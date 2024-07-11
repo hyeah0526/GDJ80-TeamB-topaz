@@ -2,16 +2,17 @@ package com.topaz.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.topaz.dto.Guest;
 import com.topaz.dto.GuestRequest;
 import com.topaz.mapper.CustomerMapper;
 import com.topaz.utill.Debug;
-import com.topaz.utill.PasswordHash;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Transactional
 @Slf4j
 public class CustomerService {
 	
@@ -36,6 +37,19 @@ public class CustomerService {
 		
 		return row;
 	}
+
+	/*
+	 * 분류 번호: #16 - 회원가입 : 고객 ID 중복확인
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 한은혜
+	 */
+	public String selectGuestId(String gstId) {
+		log.debug(Debug.HEH + "service signUp gstId : " + gstId + Debug.END);
+
+		return customerMapper.selectGuestId(gstId);
+	}
+	
+	
 
 }
 
