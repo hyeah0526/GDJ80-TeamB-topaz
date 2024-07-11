@@ -30,12 +30,21 @@ public class ApprovalController {
 	
 	
 	@GetMapping("groupware/approval/approvalList")
-	public String approvalList(Model model) throws Exception {
-		List<Map<String, Object>> approvalList = approvalService.getApprovalList();
+	public String approvalList(Model model,
+		@RequestParam(name = "currentPage", defaultValue = "1") int currentPage,
+		@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage,
+		@RequestParam(name = "searchWord", defaultValue = "") String searchWord) throws Exception {
+		
+		List<Map<String, Object>> approvalList = approvalService.getApprovalList(currentPage, rowPerPage, searchWord);
 		
 		log.debug(Debug.KJH + " / Controller / approvalList: " + approvalList);
 		
+		int lastPage = approvalService.getLastPageApprovalList(rowPerPage, searchWord);
+				
 		model.addAttribute("approvalList", approvalList);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("searchWord", searchWord);
 		
 		return "groupware/approval/approvalList";
 	}

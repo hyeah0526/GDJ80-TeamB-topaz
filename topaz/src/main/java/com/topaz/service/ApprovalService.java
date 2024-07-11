@@ -20,16 +20,42 @@ public class ApprovalService {
 	@Autowired ApprovalMapper approvalMapper;
 	@Autowired UploadFileService uploadFileService;
 	
+	
+	/*
+	 * 분류 번호: #11 - 결재 리스트
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 김지훈
+	*/
+	public int getLastPageApprovalList(int rowPerPage, String searchWord) {
+		
+		log.debug(Debug.KJH + "/ service / getLastPageApprovalList rowPerPage: " + rowPerPage);
+		log.debug(Debug.KJH + "/ service / getLastPageApprovalList searchWord: " + searchWord);
+		
+		int cnt = approvalMapper.approvalListCnt();
+		int lastPage = cnt / rowPerPage;
+		if((cnt % rowPerPage) != 0) {
+			lastPage += 1;
+		}
+		return lastPage;
+	}
+	
 	/*
 	 * 분류 번호: #11 - 결재 리스트
 	 * 시작 날짜: 2024-07-10
 	 * 담당자: 김지훈
 	*/
 	
-	public List<Map<String, Object>> getApprovalList() {
+	public List<Map<String, Object>> getApprovalList(int currentPage, int rowPerPage, String searchWord) {
 		Map<String, Object> paramMap = new HashMap<>();
+		
+		paramMap.put("rowPerPage", rowPerPage);
+		paramMap.put("beginRow", (currentPage-1) * rowPerPage);
+		paramMap.put("searchWord", searchWord);
+		
 		List<Map<String, Object>> approvalList = approvalMapper.selectApprovalHistory(paramMap);
+		
 		log.debug(Debug.KJH + " / service / getApprovalList" + approvalList.toString());
+		
 		return approvalList;
 	}
 	

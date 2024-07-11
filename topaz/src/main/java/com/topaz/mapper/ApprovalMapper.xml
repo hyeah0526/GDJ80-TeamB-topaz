@@ -3,6 +3,14 @@
 <mapper namespace="com.topaz.mapper.ApprovalMapper">
 	
 	
+	<select id="approvalListCnt" resultType="int">
+		SELECT
+			COUNT(*) cnt
+		FROM
+			approval_history
+		WHERE
+			use_yn = 'Y'		
+	</select>
 	
 	
 	<!-- 분류 번호: #11 - 결재 내역 출력 -->
@@ -41,9 +49,11 @@
 				AND cc2.crp_cd = 'S001'
 			WHERE 
 				ah.use_yn = 'Y'
+				AND (ad.doc_title LIKE CONCAT('%', #{searchWord}, '%')
+				OR emp.emp_name LIKE CONCAT('%', #{searchWord}, '%'))
 		ORDER BY 
-			regTime DESC;
-	
+			regTime DESC
+		LIMIT #{beginRow}, #{rowPerPage}	
 	</select>
 	<!-- 분류 번호: #11 - 템플릿 등록 -->
 	<insert id="insertTemplate" parameterType="com.topaz.dto.ApprovalTemplate">
@@ -110,6 +120,7 @@
 				AND c.crp_cd = 'S002'
 			WHERE 
 				t.use_yn = 'Y'
+			
 		ORDER BY t.template_no DESC; 
 	</select>
 </mapper>
