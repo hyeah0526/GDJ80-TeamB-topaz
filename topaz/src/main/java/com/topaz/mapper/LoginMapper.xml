@@ -6,7 +6,7 @@
 	<select id="doEmpLogin" resultType="com.topaz.dto.Employee">
 		SELECT emp_no empNo, emp_pw empPw, emp_name empName, emp_dept empDept, emp_grade empGrade, use_yn useYN
 		FROM employee
-		WHERE use_yn = 'Y'
+		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 		AND emp_no = #{strId}
 	</select>
 
@@ -15,7 +15,7 @@
 		SELECT outsourcing_no outsourcingNo, outsourcing_pw outsourcingPw, outsourcing_name outsourcingName, 
 				outsourcing_state outsourcingState, outsourcing_type outsourcingType
 		FROM outsourcing 
-		WHERE use_yn = 'Y'
+		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 		AND outsourcing_no = #{strId}
 	</select> 
 
@@ -23,7 +23,7 @@
 	<select id="doGuestLogin" resultType="com.topaz.dto.Guest">
 		SELECT gst_id gstId, gst_pw gstPw, gst_name gstName
 		FROM guest
-		WHERE use_yn = 'Y'
+		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 		AND gst_id = #{strId}
 	</select> 
 
