@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.topaz.dto.OutsourcingRequest;
 import com.topaz.dto.OutsourcingRsvn;
 import com.topaz.service.BpoService;
 import com.topaz.utill.Debug;
@@ -129,7 +130,7 @@ public class BpoController {
 	
 	
 	/*
-	 * 서비스명: 
+	 * 서비스명: -
 	 * 시작 날짜: 2024-07-10
 	 * 담당자: 박혜아
 	*/
@@ -139,6 +140,33 @@ public class BpoController {
 		return "groupware/bpo/bpoDetail";
 	}
 	
+	
+	
+	/*
+	 * 서비스명: -
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
+	@RequestMapping("/groupware/bpo/bpoAdd")
+	public String bpoAdd() {
+		
+		return "groupware/bpo/bpoAdd";
+	}
+	
+	
+	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
+	@RequestMapping("/groupware/bpo/bpoAddPost")
+	public String bpoAddPost(OutsourcingRequest outsourcingRequest) {
+		log.debug(Debug.PHA + "bpoAddPost Controller outsourcingRequest--> " + outsourcingRequest + Debug.END);
+		
+		
+		return "redirect:/groupware/bpo/bpoList";
+	}
 	
 	
 	
