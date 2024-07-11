@@ -25,8 +25,8 @@ $(document).ready(function() {
                 
                 // JSON 데이터를 HTML로 변환하여 empListContainer에 추가
                 const empList = response.empList;
-                const $empListContainer = $('#empListContainer');
-                $empListContainer.empty();
+                const empListContainer = $('#empListContainer');
+                empListContainer.empty();
                 empList.forEach(emp => {
 					
 					//yearCnt 빈값 처리
@@ -34,8 +34,8 @@ $(document).ready(function() {
 						emp.yearCnt = " ";
 					}
 					
-                    $empListContainer.append(`
-                        <tr>
+                    empListContainer.append(`
+                        <tr onclick="window.location.href='/topaz/groupware/emp/empDetail?empNo=${emp.empNo}'" style="cursor:pointer;">
                             <td>${emp.empNo}</td>
                             <td>${emp.empName}</td>
                             <td>${emp.empDept}</td>
@@ -43,11 +43,7 @@ $(document).ready(function() {
                             <td>${emp.yearCnt}</td>
                             <td>${emp.useYn}</td>
                         </tr>
-                    `);
-                    
-                    $empListContainer.click(function(){
-						  window.location.href = `${contextPath}/groupware/emp/empDetail?empNo=${emp.empNo}`;
-					})
+                    `);                   
                 });
 
                 // 페이지 정보 업데이트
