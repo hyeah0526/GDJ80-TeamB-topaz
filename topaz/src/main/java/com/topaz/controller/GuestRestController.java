@@ -29,39 +29,6 @@ public class GuestRestController {
 	 * 담당자: 박수지
 	*/
 	
-	@PostMapping("/groupware/resident/residentList/dong")
-	public List<String> roomDong(){
-		return roomMapper.selectDong();
-	}
-	
-	/*
-	 * 서비스명: -
-	 * 시작 날짜: 2024-07-08
-	 * 담당자: 박수지
-	*/
-	
-	@PostMapping("/groupware/resident/residentList/type")
-	public List<String> roomType(@RequestParam(name="dong")String dong){
-		return roomMapper.selectType(dong);
-	}
-	
-	/*
-	 * 서비스명: -
-	 * 시작 날짜: 2024-07-08
-	 * 담당자: 박수지
-	*/
-	
-	@PostMapping("/groupware/resident/residentList/ho")
-	public List<String> roomHo(@RequestParam(name="type")String type){
-		return roomMapper.selectHo(type);
-	}
-	
-	/*
-	 * 서비스명: -
-	 * 시작 날짜: 2024-07-08
-	 * 담당자: 박수지
-	*/
-	
 	@PostMapping("/groupware/resident/residentList/filter")
 	public Map<String, Object> filterResidentList(@RequestParam(name="dong", required = false) String dong,
 	                                              @RequestParam(name="type", required = false) String type,

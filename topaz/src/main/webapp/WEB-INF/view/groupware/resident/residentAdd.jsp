@@ -27,7 +27,7 @@
    
    <!-- Title 시작 -->
    <div class="pagetitle">
-      <h1>입주자 상세조회</h1>
+      <h1>입주자 등록</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">HOME</a></li>

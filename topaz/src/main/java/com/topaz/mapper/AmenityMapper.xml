@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.AmenityMapper">
+
+	<!-- 분류 번호 :  #8 - 객실 청소 관리 페이지 : 객실 용품 조회  --> 
+	<select id="selectAmenity" resultType="map">
+		SELECT
+			amenity_no amenityNo,
+			amenity_name amenityName,
+			amenity_stock amenityStock,
+			reg_time regTime,
+			mod_time modTime,
+			reg_id regId,
+			mod_id modId,
+			use_yn useYn
+		FROM 
+			amenity 
+		WHERE use_yn = 'Y'
+	</select>
+	
+	<!-- 분류 번호 :  #8 - 객실 청소 관리 페이지 : 객실 용품 수정  --> 
+	<update id="updateAmenity" parameterType="com.topaz.dto.Amenity">
+		UPDATE amenity
+			<set>
+		        <if test="amenityStock != null and amenityStock != ''">
+		            amenity_stock = #{amenityStock},
+		        </if>
+		        mod_time = NOW(),
+		        mod_id = #{modId}
+			</set>
+			WHERE 
+				amenity_no = #{amenityNo}
+			AND 
+				use_yn = 'Y'
+	</update>
+</mapper>
