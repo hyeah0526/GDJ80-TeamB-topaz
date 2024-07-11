@@ -1,14 +1,11 @@
 package com.topaz.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.topaz.service.LoginService;
 import com.topaz.utill.Debug;
@@ -17,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -89,7 +85,7 @@ public class LoginController {
         	
         	if (errMsg == null) { // 로그인 성공
                 HttpSession session = req.getSession();
-                session.setAttribute("strId", strId);
+                session.setAttribute("gstId", strId);
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
                 return "redirect:/customer/gstMain";
             }

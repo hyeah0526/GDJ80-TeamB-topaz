@@ -137,13 +137,9 @@ public class CustomerController {
 		HttpSession session = req.getSession();
 		log.debug(Debug.HEH + "controller gstMyInfo session : " + session + Debug.END);
 
-		String gstId = (String)session.getAttribute("strId");
+		String gstId = (String)session.getAttribute("gstId");
 		log.debug(Debug.HEH + "controller gstMyInfo gstId : " + gstId + Debug.END);
 
-		if(gstId == null) {
-			return "redirect:/customer/gstLogin";
-		}
-		
 		model.addAttribute("gstId", gstId);
 		
 		return "customer/gstMyInfo";
