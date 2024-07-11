@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topaz.dto.Outsourcing;
+import com.topaz.dto.OutsourcingRsvn;
 import com.topaz.mapper.BpoMapper;
 import com.topaz.utill.Debug;
 
@@ -36,6 +37,7 @@ public class BpoService {
 		
 		return bpoRsvnList;
 	}
+	
 	
 	
 	/*
@@ -87,6 +89,7 @@ public class BpoService {
 	}
 	
 	
+	
 	/*
 	 * 분류번호: #5 - 외주업체 목록 페이지(bpoList.jsp) :: 외주업체 전체 리스트
 	 * 시작 날짜: 2024-07-09
@@ -135,14 +138,64 @@ public class BpoService {
 	 * 담당자: 박혜아
 	*/
 	public List<Map<String, Object>> getGstChk(String gstName){
+		log.debug(Debug.PHA + "getGstChk Service gstName--> " + gstName + Debug.END);
 		
 		// 고객 이름으로 현재 입주중인 고객 조회
 		List<Map<String, Object>> gstChkList = bpoMapper.selectGstChkList(gstName);
-		log.debug(Debug.PHA + "getGstChk Service--> " + gstChkList + Debug.END);
+		log.debug(Debug.PHA + "getGstChk Service gstChkList--> " + gstChkList + Debug.END);
 		
 		
 		return gstChkList;
 	}
 	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 예약일정 관리 페이지(bpoMainIn.jsp) :: 신규 예약 등록
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
+	public int setBpoRsvn(OutsourcingRsvn outsourcingRsvn) {
+		log.debug(Debug.PHA + "setBpoRsvn Service outsourcingRsvn--> " + outsourcingRsvn + Debug.END);
+		
+		// 신규 예약 등록
+		int insertRow = bpoMapper.insertBpoRsvn(outsourcingRsvn);
+		if(insertRow == 1) {
+			log.debug(Debug.PHA + "setBpoRsvn Service outsourcingRsvn--> 등록성공! " + Debug.END);
+		}
+		
+		return insertRow;
+	}
+	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 예약일정 상세 페이지(bpoRsvnDetail.jsp) :: 상세보기
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
+	public Map<String, Object> getBpoRsvnDetail(String rsvnNo){
+		
+		// 상세 예약일정 조회
+		Map<String, Object> bpoRsvnDetail = bpoMapper.selectBpoRsvnOne(rsvnNo);
+		log.debug(Debug.PHA + "getBpoRsvnDetail Service bpoRsvnDetail--> "+ bpoRsvnDetail + Debug.END);
+		
+		
+		return bpoRsvnDetail;
+		
+	}
+	
+	
+	public int modBpoRsvn(OutsourcingRsvn outsourcingRsvn) {
+		log.debug(Debug.PHA + "modBpoRsvn Service bpoRsvnDetail--> "+ outsourcingRsvn + Debug.END);
+		
+		// 예약일정 수정하기
+		int updateRow = bpoMapper.updateBpoRsvn(outsourcingRsvn);
+		if(updateRow == 1) {
+			log.debug(Debug.PHA + "modBpoRsvn Service outsourcingRsvn--> 수정성공! " + Debug.END);
+		}
+		
+		return updateRow;
+	}
 
 }

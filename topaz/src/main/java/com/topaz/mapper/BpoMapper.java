@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.topaz.dto.Outsourcing;
+import com.topaz.dto.OutsourcingRsvn;
 
 @Mapper
 public interface BpoMapper {
@@ -29,5 +30,13 @@ public interface BpoMapper {
 	
 	/* 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 고객 이름으로 현재 입주중인 고객 조회 */
 	List<Map<String, Object>> selectGstChkList(String gstName);
+	
+	/* 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 신규 예약 등록 */
+	int insertBpoRsvn(OutsourcingRsvn outsourcingRsvn);
+	
+	/* 분류 번호: #5 - 외주업체 예약일정 상세 페이지 :: 예약일정 상세보기 */
+	Map<String, Object> selectBpoRsvnOne(String rsvnNo);
 
+	/* 분류 번호: #5 - 외주업체 예약일정 상세 페이지 :: 예약일정 수정 */
+	int updateBpoRsvn(OutsourcingRsvn outsourcingRsvn);
 }

@@ -128,4 +128,81 @@
 	    		= (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 	</select>
 	
+	
+	<!-- 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 신규 예약 등록 -->
+	<insert id="insertBpoRsvn" parameterType="com.topaz.dto.OutsourcingRsvn">
+		INSERT INTO outsourcing_rsvn(
+			rsvn_no
+			,outsourcing_no
+			,gst_id
+			,rsvn_title
+			,rsvn_state
+			,rsvn_content
+			,rsvn_start
+			,rsvn_end
+			,reg_id
+			,reg_time
+			,mod_id
+			,mod_time
+			,use_yn
+		)VALUES(
+			CURRENT_TIMESTAMP(5)
+			,#{outsourcingNo}
+			,#{gstId}
+			,#{rsvnTitle}
+			,'1'
+			,#{rsvnContent}
+			,#{rsvnStart}
+			,#{rsvnEnd}
+			,#{regId}
+			,NOW()
+			,#{modId}
+			,NOW()
+			,'Y'
+		)
+	</insert>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 예약일정 상세 페이지 :: 예약일정 상세보기 -->
+	<select id="selectBpoRsvnOne" parameterType="String" resultType="map">
+		SELECT 
+			os.rsvn_no rsvnNo
+			,os.outsourcing_no outsourcingNo
+			,o.outsourcing_name outsourcingName
+			,g.gst_name gstName
+			,g.room_no roomNo
+			,(SELECT cd_nm from common_code WHERE crp_cd = 'A001' AND cd = g.gst_gender) gstGender
+			,os.rsvn_title rsvnTitle
+			,(SELECT cd_nm from common_code WHERE crp_cd = 'W006' AND cd = os.rsvn_state) rsvnState
+			,os.rsvn_content rsvnContent
+			,os.rsvn_start rsvnStart
+			,os.rsvn_end rsvnEnd
+			,(SELECT emp_name FROM employee WHERE emp_no = os.reg_id) regName
+			,(SELECT emp_name FROM employee WHERE emp_no = os.mod_id) modName
+		FROM outsourcing_rsvn os
+		INNER JOIN outsourcing o 
+			ON os.outsourcing_no = o.outsourcing_no
+		INNER JOIN guest g 
+			ON os.gst_id = g.gst_id
+		WHERE os.rsvn_no = #{rsvnNo}
+	</select>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 예약일정 상세 페이지 :: 예약일정 수정 -->
+	<update id="updateBpoRsvn">
+		UPDATE 
+			outsourcing_rsvn 
+		SET 
+			rsvn_title = #{rsvnTitle}
+			<if test="rsvnState != null and rsvnState != ''">
+				, rsvn_state = #{rsvnState}
+			</if>
+			, rsvn_content = #{rsvnContent}
+			, rsvn_start = #{rsvnStart}
+			, rsvn_end = #{rsvnEnd}
+			, mod_id = #{modId}
+			, mod_time = NOW()
+		WHERE 
+			rsvn_no = #{rsvnNo}
+	</update>
 </mapper>
