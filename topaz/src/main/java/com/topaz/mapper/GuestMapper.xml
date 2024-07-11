@@ -152,7 +152,16 @@
     
     <!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 등록 -->
     <select id="selectResidentByGuest" resultType = "map">
-    	SELECT gst_id gstId FROM guest WHERE gst_type = 'C';
+    	SELECT 
+    		gst_id gstId,
+    		gst_name gstName,
+    		gst_email gstEmail,
+    		gst_phone gstPhone,
+    		gst_gender gstGender,
+    		gst_birth gstBirth
+    	FROM 
+    		guest 
+    	WHERE gst_type = 'C';
     </select>
     
     <!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 등록 -->

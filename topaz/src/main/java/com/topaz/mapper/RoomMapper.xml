@@ -32,7 +32,10 @@
 	<!-- 분류번호: #8 - 입주 전 객실 조회-->
 	<select id="selectRoom" resultType = "map">
 		SELECT 
-			room_no roomNo
+			room_no roomNo,
+			room_dong roomDong,
+			room_ho roomHo,
+			room_type roomType
 		FROM 
 			room
 		WHERE room_state = '2'
