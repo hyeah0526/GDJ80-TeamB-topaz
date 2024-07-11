@@ -253,7 +253,7 @@ public class EmployeeService {
 	
 
 	/*
-	 * 분류번호: #4 - 전체 직원조회(조직도)
+	 * 분류번호: #4 - 전체 직원 조회(조직도)
 	 * 시작 날짜: 2024-07-09
 	 * 담당자: 김인수
 	*/
@@ -264,6 +264,39 @@ public class EmployeeService {
 	    log.debug(Debug.KIS + "service / selectEmpAllInChart / empList : " + empList);
 		
 		return empList;
+	} 
+	
+	/*
+	 * 분류번호: #4 - 전체 직원 근무 조회
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 김인수
+	*/
+	public Map<String, Object> selectEmpAttendance(Map<String, Object> paramMap) {
+
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectEmpAttendance / paramMap : " + paramMap);
+		
+		//전체 근무수 가져오기
+	    int totalCount = empMapper.selectEmpAttendanceAllCnt(paramMap);
+	    log.debug(Debug.KIS + "service / selectEmpAttendance / totalCount : " + totalCount);
+
+	    //마지막 페이지 계산
+	    int rowPerPage = (int) paramMap.get("rowPerPage");
+	    int lastPage =  (totalCount + rowPerPage - 1) / rowPerPage;
+	    log.debug(Debug.KIS + "service / selectEmpAttendance / lastPage : " + lastPage);
+	    
+
+	    //전체 직원 리스트 가져오기
+	    List<Map<String, Object>> empList = empMapper.selectEmpAttendance(paramMap);
+	    log.debug(Debug.KIS + "service / selectEmpAttendance / empList : " + empList);
+
+	    //결과를 맵에 담아서 반환
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("empList", empList);
+	    resultMap.put("lastPage", lastPage);
+		
+		return resultMap;
 	} 
 	
 }

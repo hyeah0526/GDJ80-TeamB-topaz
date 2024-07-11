@@ -298,4 +298,59 @@
 			AND dept_code.crp_cd = 'E001'
 	</select>
 	
+	<!-- 분류 번호 :  #4 - 전체 직원 근무 조회 -->
+	<select id="selectEmpAttendance" resultType="Map">
+		SELECT
+			ROW_NUMBER() OVER (ORDER BY ch.reg_time DESC) AS no, 
+			DATE(ch.start_time) date, 
+			em.emp_name empName, 
+			ch.emp_no empNo, 
+			DATE_FORMAT(ch.start_time, '%H:%i:%s') strTime, 
+			DATE_FORMAT(ch.end_time, '%H:%i:%s') endTime
+		FROM
+			commute_history AS ch
+		LEFT JOIN
+			employee em
+		ON
+			ch.emp_no = em.emp_no
+		WHERE
+        1=1
+        <if test="startDate != null and startDate != ''">
+            AND ch.start_time &gt;= #{startDate}
+        </if>
+        <if test="empNo != null and empNo != ''">
+            AND em.emp_no = #{empNo}
+        </if>
+        <if test="empName != null and empName != ''">
+            AND em.emp_Name = #{empName}
+        </if>
+        LIMIT #{currentPage}, #{rowPerPage};
+	</select>
+	
+	<!-- 분류 번호 :  #4 - 전체 직원 근무수 조회 -->
+	<select id="selectEmpAttendanceAllCnt" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			commute_history AS ch
+		LEFT JOIN
+			employee em
+		ON
+			ch.emp_no = em.emp_no
+		WHERE
+        1=1
+        <if test="startDate != null and startDate != ''">
+            AND em.emp_hiredate &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            AND em.emp_hiredate &lt;= #{endDate}
+        </if>
+        <if test="empNo != null and empNo != ''">
+            AND em.emp_no = #{empNo}
+        </if>
+        <if test="empNo != null and empName != ''">
+            AND em.emp_no = #{empNo}
+        </if>
+	</select>
+	
 </mapper>

@@ -17,7 +17,7 @@ $(document).ready(function() {
     function loadEmpList(page) {
         const formData = $('#searchForm').serialize() + `&currentPage=${page}`;
         $.ajax({
-            url: '/topaz/groupware/emp/empList',
+            url: '/topaz/groupware/emp/empAttendance',
             method: 'post',
             data: formData,
             success: function(response) {
@@ -28,19 +28,21 @@ $(document).ready(function() {
                 const empListContainer = $('#empListContainer');
                 empListContainer.empty();
                 empList.forEach(emp => {
-                    // yearCnt 빈값 처리
-                    if (emp.yearCnt == undefined) {
-                        emp.yearCnt = " ";
+					
+                    // strTime, endTime 빈값 처리
+                    if (emp.strTime == undefined) {
+                        emp.strTime = " ";
                     }
-
+                    if (emp.endTime == undefined) {
+                        emp.endTime = " ";
+                    }
                     empListContainer.append(`
                         <tr onclick="window.location.href='/topaz/groupware/emp/empDetail?empNo=${emp.empNo}'" style="cursor:pointer;">
-                            <td>${emp.empNo}</td>
+                            <td>${emp.date}</td>
                             <td>${emp.empName}</td>
-                            <td>${emp.empDept}</td>
-                            <td>${emp.empGrade}</td>
-                            <td>${emp.yearCnt}</td>
-                            <td>${emp.useYn}</td>
+                            <td>${emp.empNo}</td>
+                            <td>${emp.strTime}</td>
+                            <td>${emp.endTime}</td>
                         </tr>
                     `);
                 });

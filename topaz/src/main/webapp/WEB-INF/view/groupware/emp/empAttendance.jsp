@@ -14,7 +14,7 @@
 <head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-    <link rel="stylesheet" href="<c:url value='/css/insuEmpList.css' />"> <!-- CSS -->
+    <link rel="stylesheet" href="/topaz/css/insuEmpList.css"> <!-- CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
 </head>
 	
@@ -40,11 +40,11 @@
 				<!-- 메인 -->
 			     <div class="mainContent">
 			     
-			     	<form action="<c:url value='/groupware/emp/empLeave' />" method="get" >
+			     	<form id="searchForm" action="/topaz/groupware/emp/empAttendance" method="post" >
 			     		<div style="margin-bottom: 20px;">
                     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
                     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
-                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근태조회</button>
+                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근무조회</button>
                     	</div>
 				     	<!-- 입사년도 -->
 				     	<div class="hireDateDiv">
@@ -79,54 +79,27 @@
 			     	
 			     	
 			     	<table border="1">
-						<tr>
-							<th>사원번호</th>
-							<th>사원명</th>
-							<th>부서명</th>
-							<th>직위</th>
-							<th>잔여 휴가일</th>
-							<th>근무 유무</th>
-						</tr>
-						<c:forEach var="b" items="${empList}">
-							<tr onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empDetail?empNo=${b.empNo}'" style="cursor:pointer;">
-								<td>${b.empNo}</td>
-								<td>${b.empName }</td>
-								<td>${b.empDept }</td>
-								<td>${b.empGrade}</td>
-								<td>${b.yearCnt}</td>
-								<td>${b.useYn}</td>
+			     		<thead>
+							<tr>
+								<th>날짜</th>
+								<th>사원 이름</th>
+								<th>사원 번호</th>
+								<th>출근시간</th>
+								<th>퇴근시간</th>
 							</tr>
-						</c:forEach>
+						</thead>
+						
+						<tbody id="empListContainer">
+                       	</tbody>
+                       	
 					</table>
 					
-					<!-- 버튼 -->
-					 <div class="pagination">
-				     	<c:choose>
-					        <c:when test="${currentPage > 1}">
-					            <a href="#" onclick="changePage(${currentPage-1})">
-					                이전
-					            </a>
-					        </c:when>
-					        <c:otherwise>
-					            <a class="disabled">
-					                이전
-					            </a>
-					        </c:otherwise>
-					    </c:choose>
-					    <div class="currentPage">${currentPage}</div>
-					    <c:choose>
-					        <c:when test="${currentPage < lastPage}">
-					            <a href="#" onclick="changePage(${currentPage+1})">
-					                다음
-					            </a>
-					        </c:when>
-					        <c:otherwise>
-					            <a class="disabled">
-					                다음
-					            </a>
-					        </c:otherwise>
-					    </c:choose>
-					</div>
+					
+					<!-- 페이징 -->
+					<nav aria-label="Page navigation example">
+						<ul class="pagination" id="paginationUl">
+			           </ul>
+					</nav>
 					
 			     </div>			
 			</div>
@@ -155,5 +128,6 @@
              window.location.search = urlParams.toString();
          }
 	</script>
+	<script src="/topaz/js/insuEmpAttendance.js"></script>
 </body>
 </html>

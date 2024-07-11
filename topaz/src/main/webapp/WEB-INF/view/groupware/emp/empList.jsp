@@ -14,7 +14,11 @@
 <head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-    <link rel="stylesheet" href="<c:url value='/css/insuEmpList.css' />"> <!-- CSS -->
+    <link rel="stylesheet" href="/topaz/css/insuEmpList.css"> <!-- CSS -->
+    <!--  
+    
+    <link href="/topaz/css/hyeah.css" rel="stylesheet">
+    -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
 </head>
 	
@@ -40,11 +44,11 @@
 				<!-- 메인 -->
 			     <div class="mainContent">
 			     
-			     	<form id="searchForm" action="<c:url value='/groupware/emp/empList' />" method="post" >
+			     	<form id="searchForm" action="/topaz/groupware/emp/empList' />" method="post" >
 			     		<div style="margin-bottom: 20px;">
                     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
                     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
-                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근태조회</button>
+                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근무조회</button>
                     	</div>
 				     	<!-- 입사년도 -->
 				     	<div class="hireDateDiv">
@@ -119,18 +123,18 @@
 								<th>근무 유무</th>
 							</tr>
 						</thead>
-							
-					  		<tbody id="empListContainer">
-                        	</tbody>
+						
+				  		<tbody id="empListContainer">
+                       	</tbody>
+                       	
 					</table>
 					
-					<!-- 버튼 -->
-					<div class="pagination">
-                        <a href="#" id="prevPage" class="disabled">이전</a>
-                        <div id="currentPage" class="currentPage">${currentPage}</div>
-                        <a href="#" id="nextPage" class="disabled">다음</a>
-                    </div>
-					
+					<!-- 페이징 -->
+					<nav aria-label="Page navigation example">
+						<ul class="pagination" id="paginationUl">
+			           </ul>
+					</nav>
+                 
 			     </div>			
 			</div>
 		</div>
@@ -139,6 +143,6 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
-	<script src="<c:url value='/js/insuEmpSelectAll.js'/>"></script>
+	<script src="/topaz/js/insuEmpSelectAll.js"></script>
 </body>
 </html>

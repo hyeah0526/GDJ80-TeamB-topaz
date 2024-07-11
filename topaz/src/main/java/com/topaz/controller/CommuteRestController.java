@@ -77,7 +77,7 @@ public class CommuteRestController {
 	}
 	
 	/*
-	 * 서비스명: #4 - updateEndWork ( 퇴근 등록 )
+	 * 서비스명: updateEndWork ( 퇴근 등록 )
 	 * 시작 날짜: 2024-07-09
 	 * 담당자: 김인수
 	*/
