@@ -45,12 +45,9 @@ $(document).ready(function() {
                         </tr>
                     `);
                     
-         
                     $empListContainer.click(function(){
 						  window.location.href = `${contextPath}/groupware/emp/empDetail?empNo=${emp.empNo}`;
 					})
-                
-                   
                 });
 
                 // 페이지 정보 업데이트
@@ -81,5 +78,4 @@ $(document).ready(function() {
 
 	// 직원 리스트 로드
     loadEmpList(1);
-
 });

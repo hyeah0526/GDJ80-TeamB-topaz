@@ -32,7 +32,7 @@ public class EmployeeController {
 	//========== 직원
 	
 	/*
-	 * 서비스명: #4 - 직원등록 뷰 
+	 * 서비스명: empAdd.jsp ( 직원등록 뷰 )
 	 * 시작 날짜: 2024-07-05
 	 * 담당자: 김인수
 	*/
@@ -43,32 +43,9 @@ public class EmployeeController {
 	
 	}
 	
-	/*
-	 * 서비스명: #4 - 직원번호 중복 확인 Rest API 통신
-	 * 시작 날짜: 2024-07-06
-	 * 담당자: 김인수
-	*/
-	@ResponseBody
-	@GetMapping("/groupware/emp/selectEmpNo")
-	public String selectEmpNo(@RequestParam("empNo") String empNo) {
-		
-		//매개변수 디버깅
-		log.debug(Debug.KIS + "controller / selectEmpNo / empNo : " + empNo);
-		
-		String resultEmpNo = employeeService.selectEmpNo(empNo);
-	
-		//resultEmpNo 디버깅
-		log.debug(Debug.KIS + "controller / selectEmpNo / resultEmpNo : " + resultEmpNo);
-		
-		if(resultEmpNo == null) {			
-			return "0";
-		}
-		
-		return "1";
-	}
 	
 	/*
-	 * 서비스명: #4 - 직원등록 기능
+	 * 서비스명:  insertEmp ( 직원등록 기능 )
 	 * 시작 날짜: 2024-07-05
 	 * 담당자: 김인수
 	*/
@@ -97,7 +74,7 @@ public class EmployeeController {
 	
 	
 	/*
-	 * 서비스명: #4 - 직원전체 조회 뷰
+	 * 서비스명: empList.jsp ( 직원 전체 조회 뷰 )
 	 * 시작 날짜: 2024-07-10
 	 * 담당자: 김인수
 	*/
@@ -108,55 +85,7 @@ public class EmployeeController {
 	}
 	
 	/*
-	 * 서비스명: #4 - 전체 직원조회
-	 * 시작 날짜: 2024-07-07
-	 * 담당자: 김인수
-	*/
-	@ResponseBody
-	@PostMapping("/groupware/emp/empList")
-	public Map<String, Object> empList(@RequestParam Map<String, Object> paramMap) {
-		
-		//매개변수 디버깅
-	    log.debug(Debug.KIS + "controller / empList / paramMap : " + paramMap);
-		
-		
-	    //기본 값 설정
-	    int currentPage = 1;
-	    int rowPerPage = 10;
-	    
-	    
-	    //페이징과 관련된 파라미터 설정
-	    if (paramMap.get("currentPage") != null) {
-	        currentPage = Integer.parseInt((String) paramMap.get("currentPage"));
-	    }
-
-	    if (paramMap.get("rowPerPage") != null) {
-	        rowPerPage = Integer.parseInt((String) paramMap.get("rowPerPage"));
-	    }
-	    
-	    //페이징 처리를 위한 설정
-	    paramMap.put("currentPage", (currentPage - 1) * rowPerPage);
-	    paramMap.put("rowPerPage", rowPerPage);
-		
-		
-		//전체직원 정보 가져오기
-	    Map<String, Object> resultMap = employeeService.selectEmpAll(paramMap);
-	    List<Map<String, Object>> empList = (List<Map<String, Object>>) resultMap.get("empList");
-	    int lastPage = (int) resultMap.get("lastPage");
-		
-		
-	    // 응답 데이터
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("empList", empList);
-	    response.put("lastPage", lastPage);
-	    response.put("currentPage", currentPage);
-		
-		return response;
-	}
-	
-	
-	/*
-	 * 서비스명: #4 - 직원 상세보기
+	 * 서비스명: selectEmpOne ( 직원 상세보기 )
 	 * 시작 날짜: 2024-07-07
 	 * 담당자: 김인수
 	*/
@@ -181,7 +110,7 @@ public class EmployeeController {
 	
 
 	/*
-	 * 서비스명: #4 - 직원 정보 수정 뷰 
+	 * 서비스명: empModify.jsp ( 직원 정보 수정 뷰 ) 
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
@@ -203,7 +132,7 @@ public class EmployeeController {
 	
 	
 	/*
-	 * 서비스명: #4 - 직원 정보 수정
+	 * 서비스명: modifyEmpOne ( 직원 정보 수정 )
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
@@ -220,7 +149,7 @@ public class EmployeeController {
 	}
 	
 	/*
-	 * 서비스명: #4 - 직원 정보 삭제
+	 * 서비스명: deleteEmpOne ( 직원 정보 삭제 ) 
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
@@ -290,7 +219,7 @@ public class EmployeeController {
 	//========== 개인 정보
 
 	/*
-	 * 서비스명: #2 - 내 정보 보기
+	 * 서비스명: selectEmpOne ( 내 정보 보기 )
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
@@ -321,7 +250,7 @@ public class EmployeeController {
 	}
 	
 	/*
-	 * 서비스명: #2 - 비밀번호 수정 뷰  
+	 * 서비스명: myPwModify ( 비밀번호 수정 뷰 )  
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
@@ -342,7 +271,7 @@ public class EmployeeController {
 	}
 	
 	/*
-	 * 서비스명: #2 - 비밀번호 수정
+	 * 서비스명: modifyMyPw ( 비밀번호 수정 )
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
@@ -361,7 +290,7 @@ public class EmployeeController {
 	//========== 조직도
 	
 	/*
-	 * 서비스명: #4 - 조직도 뷰 
+	 * 서비스명: empOrganizationChart.jsp ( 조직도 뷰 ) 
 	 * 시작 날짜: 2024-07-09
 	 * 담당자: 김인수
 	*/
@@ -370,25 +299,9 @@ public class EmployeeController {
 		return "groupware/emp/empOrganizationChart";
 	}
 	
-	/*
-	 * 서비스명: #4 - 조직도 Rest API 통신
-	 * 시작 날짜: 2024-07-09
-	 * 담당자: 김인수
-	*/
-	@ResponseBody
-	@GetMapping("/groupware/emp/empAllChart")
-	public List<Map<String, Object>> empAllChart() {
-		
-		List<Map<String, Object>> empAllChart = employeeService.selectEmpAllInChart();
-		log.debug(Debug.KIS + "controller / empAllChart / empAllChart : " + empAllChart);
-		
-		return empAllChart;
-	
-	}
-	
 	//========== 근무 조회 뷰 
 	/*
-	 * 서비스명: #4 - 근무 조회 뷰 
+	 * 서비스명: empAttendance.jsp ( 근무 조회 뷰 ) 
 	 * 시작 날짜: 2024-07-10
 	 * 담당자: 김인수
 	*/
