@@ -161,8 +161,18 @@ public class BpoController {
 	 * 담당자: 박혜아
 	*/
 	@RequestMapping("/groupware/bpo/bpoAddPost")
-	public String bpoAddPost(OutsourcingRequest outsourcingRequest) {
-		log.debug(Debug.PHA + "bpoAddPost Controller outsourcingRequest--> " + outsourcingRequest + Debug.END);
+	public String bpoAddPost(OutsourcingRequest oscRq
+								, HttpServletRequest  httpServletRequest) {
+		
+		// 세션에서 아이디 값 가져오기
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		oscRq.setRegId(empNo);
+		oscRq.setModId(empNo);
+		log.debug(Debug.PHA + "bpoAddPost Controller oscRq--> " + oscRq + Debug.END);
+		
+		// 등록하기
+		bpoService.setBpo(oscRq);
 		
 		
 		return "redirect:/groupware/bpo/bpoList";

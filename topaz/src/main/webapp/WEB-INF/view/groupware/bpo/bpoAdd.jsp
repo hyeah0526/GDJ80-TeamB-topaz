@@ -4,6 +4,8 @@
 <html lang="en">
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
+	<!-- 다음 주소 API -->
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/hearderBody.jsp"></jsp:include>
@@ -44,7 +46,7 @@
 						<label for="inputText" class="col-sm-4 col-form-label">업체종류</label>
 						<div class="col-sm-8">
 							<label for="typeAll">
-								<input class="form-check-input" type="radio" name="outsourcingType" value="1" id="typeAll" checked> 상시
+								<input class="form-check-input" type="radio" name="outsourcingType" value="1" id="typeAll"> 상시
 							</label>
 							&nbsp;&nbsp;&nbsp;
 							<label for="typeRsvn">
@@ -63,7 +65,7 @@
 					<div class="row mb-3">
 						<label for="inputEmail" class="col-sm-4 col-form-label">아이디</label>
 						<div class="col-sm-4">
-	                    	<input type="text" name="outsourcingNo" class="form-control">
+	                    	<input type="text" id="outsourcingNo" name="outsourcingNo" class="form-control">
 						</div>
 						<div class="col-sm-4">
 							<button type="button" id="chkId" class="btn btn-primary">중복검사</button>
@@ -87,7 +89,8 @@
 	                <div class="row mb-3">
 						<label for="inputDate" class="col-sm-4 col-form-label">사내 담당자</label>
 						<div class="col-sm-4">
-	                    	<input type="text" id="empNoInput" name="empNo" class="form-control">
+	                    	<input type="text" id="empNameInput" class="form-control">
+	                    	<input type="hidden" id="empNoInput" name="empNo" class="form-control">
 						</div>
 						<div class="col-sm-4">
 	                    	<button type="button" id="chkEmp" class="btn btn-primary">직원검색</button>
@@ -112,13 +115,13 @@
 						<label for="inputNumber" class="col-sm-4 col-form-label">주소</label>
 						<div class="col-sm-4">
 	                    	<input name="postNo" class="form-control" data-step="11" placeholder="우편번호" maxlength="5" readonly>
-							<input name="firstAddress" class="step form-control" data-step="12" placeholder="주소" readonly>
+							<input name="firstAddress" id="firstAddress" class="step form-control" data-step="12" placeholder="주소" readonly>
 						</div>
 						<div class="col-sm-4">
 							<button class="step btn btn-primary" type="button" data-step="10" onclick="openPostcode('postNo','firstAddress')">우편번호찾기</button><br>
-							<input name="addressDetail" class="step form-control" data-step="13" placeholder="상세 주소">
+							<input name="addressDetail" id="addressDetail" class="step form-control" data-step="13" placeholder="상세 주소">
 							
-							<input type="hidden" name="address">
+							<input type="hidden" name="address" id="address">
 						</div>
 	                </div>
 	                
@@ -143,6 +146,30 @@
 		
 		
 		<!-- 직원검색 모달 -->
+		<div class="modal fade" id="empModal" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+				<!-- 모달 제목 -->
+				<div class="modal-header">
+					<h5 class="modal-title">담당 직원 선택</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				
+					<div class="modal-body">
+						<div class="row mb-5">
+							<label for="inputEmail" class="col-sm-4 col-form-label"></label>
+							<div class="col-sm-8 scheduleModalDiv" id="empNameSelectDiv">
+								<!-- 직원 출력되는 곳 -->
+							</div>
+						</div>
+					</div>
+					
+					<!-- 모달 일정 취소/등록버튼 -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button id="empChkSaveBtn" type="submit" class="btn btn-primary">Save</button>
+					</div>
+			</div></div>
+		</div><!-- End 직원검색 Modal-->
 		
 		
 		<!-- 아이디 중복검사 모달 -->

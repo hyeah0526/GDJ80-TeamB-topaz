@@ -205,4 +205,89 @@
 		WHERE 
 			rsvn_no = #{rsvnNo}
 	</update>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 등록 페이지 :: 직원 이름 조회 -->
+	<select id="selectEmpChkList" parameterType="String" resultType="map">
+		SELECT 
+			emp_no empNo
+			, emp_name empName
+			,(SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = emp_dept) empDept
+		FROM 
+			employee 
+		WHERE 
+			emp_name LIKE CONCAT('%',#{empName},'%');
+	</select>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 등록 페이지 :: 아이디 사용 가능여부 조회 -->
+	<select id="selectBpoIdChk" parameterType="String" resultType="boolean">
+		SELECT 
+			COUNT(*)
+		FROM 
+			outsourcing 
+		WHERE 
+			outsourcing_no = #{OutsourcingIdAll}
+	</select>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 등록 페이지 :: 외주업체 등록 -->
+	<insert id="insertBpo" parameterType="com.topaz.dto.Outsourcing">
+		<!-- 파일 등록을 위해 _no저장 -->
+		<selectKey order="AFTER" keyProperty="outsourcingNo" resultType="String">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		
+			INSERT INTO outsourcing(
+				outsourcing_no
+				,outsourcing_pw
+				,outsourcing_name
+				,outsourcing_state
+				,outsourcing_type
+				,incharge_name
+				,contract_start
+				,contract_end
+				,emp_no
+				,contact_no
+				,post_no
+				,address
+				,reg_id
+				,reg_time
+				,mod_id
+				,mod_time
+				,use_yn
+			)VALUES(
+				#{outsourcingNo}
+				,#{outsourcingPw}
+				,#{outsourcingName}
+				,'3'
+				,#{outsourcingType}
+				,#{inchargeName}
+				,#{contractStart}
+				,#{contractEnd}
+				,#{empNo}
+				,#{contactNo}
+				,#{postNo}
+				,#{address}
+				,#{regId}
+				,NOW()
+				,#{modId}
+				,NOW()
+				,'Y'
+			);
+	</insert>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 등록 페이지 :: 외주업체 파일등록 -->
+	<insert id="insertBpoFile" parameterType="com.topaz.dto.UploadFile">
+		INSERT INTO file_upload(
+			file_no, reference_no, original_file_name
+			, file_name, file_size, file_type
+			, reg_time, mod_time, reg_id, mod_id, use_yn
+		)VALUES(
+			CURRENT_TIMESTAMP(5), #{referenceNo}, #{OriginalFileName}
+			, #{fileName}, #{fileSize}, #{fileType}
+			, NOW(), NOW(), #{regId}, #{modId}, #{useYN}
+		)
+	</insert>
 </mapper>

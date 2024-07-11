@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.topaz.dto.Outsourcing;
 import com.topaz.dto.OutsourcingRsvn;
+import com.topaz.dto.UploadFile;
 
 @Mapper
 public interface BpoMapper {
@@ -39,4 +40,16 @@ public interface BpoMapper {
 
 	/* 분류 번호: #5 - 외주업체 예약일정 상세 페이지 :: 예약일정 수정 */
 	int updateBpoRsvn(OutsourcingRsvn outsourcingRsvn);
+	
+	/* 분류 번호: #5 - 외주업체 등록 페이지 :: 직원 이름 조회 */
+	List<Map<String, Object>> selectEmpChkList(String empName);
+	
+	/* 분류 번호: #5 - 외주업체 등록 페이지 :: 아이디 사용 가능여부 조회 */
+	boolean selectBpoIdChk(String OutsourcingIdAll);
+	
+	/* 분류 번호: #5 - 외주업체 등록 페이지 :: 외주업체 등록 */
+	int insertBpo(Outsourcing outsourcing);
+	
+	/* 분류 번호: #5 - 외주업체 등록 페이지 :: 외주업체 파일등록 */
+	int insertBpoFile(UploadFile file);
 }

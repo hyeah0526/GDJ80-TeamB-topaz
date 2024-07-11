@@ -104,6 +104,42 @@ public class BpoRestController {
 	
 	
 	
+	/*
+	 * 서비스명: getEmpChk
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
+	@RequestMapping("/bpo/bpoEmpChk")
+	public List<Map<String, Object>> bpoEmpChk(String empName){
+		log.debug(Debug.PHA + "bpoEmpChk Restcontroller gstName--> " + empName + Debug.END);
+		
+		// 직원 이름으로 검색
+		List<Map<String, Object>> list = bpoService.getEmpChk(empName);
+		
+		return list;
+	}
+	
+	
+	
+	/*
+	 * 서비스명: getBpoIdChk
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
+	@RequestMapping("/bpo/bpoIdChk")
+	public boolean bpoIdChk(String OutsourcingIdAll){
+		log.debug(Debug.PHA + "bpoIdChk Restcontroller gstName--> " + OutsourcingIdAll + Debug.END);
+		
+		// 외주업체 아이디 사용가능여부 확인
+		boolean idChk = bpoService.getBpoIdChk(OutsourcingIdAll);
+		log.debug(Debug.PHA + "bpoIdChk Restcontroller idChk--> " + idChk + Debug.END);
+		
+		// false 사용가능, true 사용불가능
+		return idChk;
+	}
+	
+	
+	
 	
 	/*
 	 * 서비스명: getBpoListLastPage

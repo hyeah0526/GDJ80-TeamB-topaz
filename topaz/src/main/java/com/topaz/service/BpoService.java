@@ -1,15 +1,20 @@
 package com.topaz.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.topaz.dto.Outsourcing;
+import com.topaz.dto.OutsourcingRequest;
 import com.topaz.dto.OutsourcingRsvn;
+import com.topaz.dto.UploadFile;
 import com.topaz.mapper.BpoMapper;
 import com.topaz.utill.Debug;
 
@@ -186,6 +191,12 @@ public class BpoService {
 	}
 	
 	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 예약일정 상세 페이지(bpoRsvnDetail.jsp) :: 수정
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
 	public int modBpoRsvn(OutsourcingRsvn outsourcingRsvn) {
 		log.debug(Debug.PHA + "modBpoRsvn Service bpoRsvnDetail--> "+ outsourcingRsvn + Debug.END);
 		
@@ -196,6 +207,135 @@ public class BpoService {
 		}
 		
 		return updateRow;
+	}
+	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 등록 페이지(bpoAdd.jsp) :: 직원 이름으로 검색 조회
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getEmpChk(String empName){
+		log.debug(Debug.PHA + "getEmpChk Service empName--> " + empName + Debug.END);
+		
+		// 고객 이름으로 현재 입주중인 고객 조회
+		List<Map<String, Object>> gstEmpList = bpoMapper.selectEmpChkList(empName);
+		log.debug(Debug.PHA + "getEmpChk Service gstChkList--> " + gstEmpList + Debug.END);
+		
+		
+		return gstEmpList;
+	}
+	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 등록 페이지(bpoAdd.jsp) :: 아이디 사용 가능 여부 확인
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
+	public boolean getBpoIdChk(String OutsourcingIdAll){
+		log.debug(Debug.PHA + "getBpoIdChk Service empName--> " + OutsourcingIdAll + Debug.END);
+		
+		boolean idChk = bpoMapper.selectBpoIdChk(OutsourcingIdAll);
+		log.debug(Debug.PHA + "getBpoIdChk Service idChk--> " + idChk + Debug.END);
+		
+		return idChk;
+	}
+	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 등록 페이지(bpoAdd.jsp) :: 등록하기
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜아
+	*/
+	public void setBpo(OutsourcingRequest oscRq){
+		log.debug(Debug.PHA + "bpoAddPost Service oscRq--> " + oscRq + Debug.END);
+		
+		// 1. outsourcing 테이블 등록(insert)
+		// 외주업체 outsourcing 테이블 DTO값 세팅
+		Outsourcing outsourcing = new Outsourcing();
+		outsourcing.setOutsourcingNo(oscRq.getOutsourcingNo());
+		outsourcing.setOutsourcingPw(oscRq.getOutsourcingPw());
+		outsourcing.setOutsourcingName(oscRq.getOutsourcingName());
+		
+		if(oscRq.getOutsourcingType().equals("1")) {
+			// 타입이 상시일경우 '상시'코드 삽입
+			outsourcing.setOutsourcingState("1");
+			
+		}else if(oscRq.getOutsourcingType().equals("2")) {
+			// 타입이 예약일경우 '영업종료'코드 삽입
+			outsourcing.setOutsourcingState("2");
+		}
+		outsourcing.setOutsourcingType(oscRq.getOutsourcingType());
+		outsourcing.setInchargeName(oscRq.getInchargeName());
+		outsourcing.setContractStart(oscRq.getContractStart());
+		outsourcing.setContractEnd(oscRq.getContractEnd());
+		outsourcing.setEmpNo(oscRq.getEmpNo());
+		outsourcing.setContactNo(oscRq.getContactNo());
+		outsourcing.setPostNo(oscRq.getPostNo());
+		outsourcing.setAddress(oscRq.getAddress());
+		outsourcing.setRegId(oscRq.getRegId());
+		outsourcing.setModId(oscRq.getModId());
+		log.debug(Debug.PHA + "bpoAddPost Service outsourcing--> " + outsourcing + Debug.END);
+		
+		// outsourcing테이블 insert
+		int insertBpo = bpoMapper.insertBpo(outsourcing);
+		if(insertBpo != 1) {
+			// 등록 실패시 예외 발생시키기
+			log.debug(Debug.PHA + "bpoAddPost에서 RuntimeException 발생! " + Debug.END);
+			throw new RuntimeException();
+		}
+		
+		// outsourcing_no 들어갔는지 확인
+		log.debug(Debug.PHA + "outsourcing_no가져오기 -> " + outsourcing.getOutsourcingNo()+ Debug.END);
+		
+		
+		// 2. outsourcing_no를 가지고 file_upload 테이블 등록(insert)
+		// 사용자가 업로드한 파일 가져오기
+		MultipartFile mf = oscRq.getUploadFile();
+		// file_upload테이블 DTO에 값 저장
+		UploadFile file = new UploadFile();
+		file.setReferenceNo(outsourcing.getOutsourcingNo());
+		file.setOriginalFileName(mf.getOriginalFilename());
+		file.setFileType(mf.getContentType());
+		file.setFileSize(mf.getSize());
+		file.setRegId(oscRq.getRegId());
+		file.setModId(oscRq.getModId());
+		file.setUseYN("Y");
+		
+		// file uuid세팅
+		String prefix = UUID.randomUUID().toString().replace("-", ""); //랜덤 uuid 생성 / 하이픈(-)은 제거
+		int p = mf.getOriginalFilename().lastIndexOf("."); // 파일타입전(.의 위치)까지 길이 담기
+		String suffix = mf.getOriginalFilename().substring(p); //.의 위치부터 자른 후 담아주기
+		// 세팅한 uuid 담아주기
+		file.setFileName(prefix + suffix);
+		
+		// file_upload테이블 insert
+		int insertBpoFile = bpoMapper.insertBpoFile(file);
+		if(insertBpoFile != 1) {
+			// 등록 실패시 예외 발생시키기
+			log.debug(Debug.PHA + "insertBpoFile에서 RuntimeException 발생! " + Debug.END);
+			throw new RuntimeException();
+		}
+		
+		// 파일 upload폴더에 저장하기
+		File emptyFile = new File(System.getProperty("user.dir") 
+									+ "/src/main/resources/static/upload/" 
+									+ file.getFileName());
+		
+		try {
+			// mf안에 있는 getinputStream을 가져와서 비어있는 emptyFile로 복사를 함 
+			mf.transferTo(emptyFile);
+		} catch (Exception e) {
+			log.debug(Debug.PHA + "emptyFile 파일저장에서 Exception 발생! " + Debug.END);
+			e.printStackTrace(); // 예외나면 전부 취소
+			throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 insert명령도 전부 취소
+		}
+		
+		
+		
 	}
 
 }
