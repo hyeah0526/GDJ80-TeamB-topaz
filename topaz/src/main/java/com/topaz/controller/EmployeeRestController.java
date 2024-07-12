@@ -104,7 +104,7 @@ public class EmployeeRestController {
 	public Map<String, Object> empAttendanceList(@RequestParam Map<String, Object> paramMap) {
 		
 		//매개변수 디버깅
-	    log.debug(Debug.KIS + "controller / empAttendance / paramMap : " + paramMap);
+	    log.debug(Debug.KIS + "controller / empAttendanceList / paramMap : " + paramMap);
 
 	    //기본 값 설정
 	    int currentPage = 1;
