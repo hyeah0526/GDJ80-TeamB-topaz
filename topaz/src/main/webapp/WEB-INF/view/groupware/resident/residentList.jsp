@@ -77,27 +77,17 @@
 				</div>
 
 	<div class="search-container">
-		<form method="get" action="/topaz/groupware/resident/residentList">	
 			<div class="search-bar">
-				<form class="search-form d-flex align-items-center" method="POST" action="#">
+				<form class="search-form d-flex align-items-center" method="get" action="/topaz/groupware/resident/residentList">
 					<input type="text" name="searchWord" placeholder="Search..." title="Enter search keyword">
 					<button type="submit" title="Search"><i class="bi bi-search"></i></button>
 					
 					<!-- 등록 버튼 -->
-					<a href="/topaz/groupware/resident/residentAdd" class="ml-2 btn btn-primary" title="Add New">Add New</a>
+					<a href="/topaz/groupware/resident/residentAdd" class="ml-2 btn btn-primary" title="Add New">입주자 등록</a>
 					
 		    	</form>
 		   	</div><!-- End Search Bar -->
-			<nav class="header-nav ms-auto">
-				<ul class="d-flex align-items-center">
-					<li class="nav-item d-block d-lg-none">
-						<a class="nav-link nav-icon search-bar-toggle " href="#">
-							<i class="bi bi-search"></i>
-						</a>
-					</li><!-- End Search Icon-->
-				</ul>
-			</nav>
-		</form>
+			
 	</div>
 	<br>
     <!-- Table with stripped rows -->

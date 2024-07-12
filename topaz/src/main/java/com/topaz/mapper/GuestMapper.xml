@@ -76,8 +76,8 @@
 		    g.room_no = r.room_no
 		WHERE 
 		    g.room_no IS NOT NULL
-		    AND g.use_yn = 'Y'
-		    AND g.gst_type = 'R'
+	    AND g.use_yn = 'Y'
+	    AND g.gst_type = 'R'
 		<if test="dong != null and dong != ''">
 		    AND r.room_dong = #{dong}
 		</if>

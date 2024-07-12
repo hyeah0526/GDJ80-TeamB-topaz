@@ -109,6 +109,8 @@
 								<div class="info-item mb-3">
 								   	<span><input style="width: 200px; display: inline;" class="form-control" name="useYn" type="hidden" value="${resident.useYn}" ></span>
 									<span><input style="width: 200px; display: inline;" class="form-control" name="gstType" type="hidden" value="${resident.gstType}"></span>
+									<span><input style="width: 200px; display: inline;" class="form-control" name="roomState" id="roomState" type="hidden" ></span>
+									<span><input style="width: 200px; display: inline;" class="form-control" name="roomUse" id="roomUse" type="hidden" ></span>
 								</div>
 								</div>
 								<div class="col-lg-6 col-md-6">
@@ -123,7 +125,9 @@
 								        <select name="roomNo" class="form-control" style="width: 200px; display: inline;" onchange="updateRoom()">
 								            <c:forEach items="${room}" var="c">
 								                <option value="${c.roomNo}" data-type="${c.roomType }"
-								                		data-dong = "${c.roomDong }" data-ho = "${c.roomHo }">${c.roomType} - ${c.roomDong}동 ${c.roomHo}호
+								                		data-dong = "${c.roomDong }" data-ho = "${c.roomHo }"
+								                		data-state = "${c.roomState }" data-use = "${c.roomUse }"
+								                		>${c.roomType} - ${c.roomDong}동 ${c.roomHo}호
 								                </option>
 								            </c:forEach>
 								        </select>
@@ -136,10 +140,13 @@
 									</div>
 									<div class="info-item mb-3">
 									    <span><label class="form-check-label label" for="roomAmenity">어메니티 여부</label></span>
-    									<span><input type="hidden" name="roomAmenity" value="N"></span>
-										<span><input class="form-check-input" type="checkbox" id="roomAmenity" name="roomAmenity" ${resident.roomAmenity == 'Y' ? 'checked' : ''} value="Y" onchange="this.form.roomAmenity.value = this.checked ? 'Y' : 'N';"></span>
-
+									    <span><input type="hidden" id="hiddenRoomAmenity" name="roomAmenity" value="${resident.roomAmenity == 'Y' ? 'Y' : 'N'}"></span>
+									    <span>
+									        <input class="form-check-input" type="checkbox" id="roomAmenityCheckbox" ${resident.roomAmenity == 'Y' ? 'checked' : ''} 
+									               onchange="document.getElementById('hiddenRoomAmenity').value = this.checked ? 'Y' : 'N';">
+									    </span>
 									</div>
+
 									<div class="info-item mb-3">
 									    <span class="label">보호자 성명</span>
 									    <span><input style="width: 200px; display: inline;" class="form-control" name="protectorName" ></span>
@@ -193,9 +200,13 @@
 	    	var selectedRoomType = selectRoom.options[selectRoom.selectedIndex].getAttribute('data-type');
 	    	var selectedRoomDong = selectRoom.options[selectRoom.selectedIndex].getAttribute('data-dong');
 	    	var selectedRoomHo = selectRoom.options[selectRoom.selectedIndex].getAttribute('data-ho');
+	    	var selectedRoomState = selectRoom.options[selectRoom.selectedIndex].getAttribute('data-state');
+	    	var selectedUse = selectRoom.options[selectRoom.selectedIndex].getAttribute('data-use');
 	    	document.getElementById('roomType').value = selectedRoomType;
 	    	document.getElementById('roomDong').value = selectedRoomDong;
 	    	document.getElementById('roomHo').value = selectedRoomHo;
+	    	document.getElementById('roomState').value = selectedRoomState;
+	    	document.getElementById('roomUse').value = selectedUse;
 	    }
     </script>
    <!-- ======= footer 부분 ======= -->

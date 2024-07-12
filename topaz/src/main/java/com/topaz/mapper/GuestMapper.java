@@ -22,6 +22,7 @@ public interface GuestMapper {
 										    @Param("dong") String dong,
 										    @Param("type") String type,
 										    @Param("ho") String ho,
+										    @Param("searchWord") String searchWord,
 										    @Param("beginRow") int beginRow,
 										    @Param("rowPerPage") int rowPerPage);
 	

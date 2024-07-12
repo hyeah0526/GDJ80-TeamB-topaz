@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.topaz.dto.Guest;
+import com.topaz.dto.Room;
 import com.topaz.service.GuestService;
 import com.topaz.service.RoomService;
 import com.topaz.utill.Debug;
@@ -39,6 +40,11 @@ public class GuestController {
 							@RequestParam(name="currentPage", defaultValue = "1") int currentPage,
 							@RequestParam(name="rowPerPage", defaultValue = "5") int rowPerPage,
 							@RequestParam(name="searchWord", defaultValue = "") String searchWord) throws Exception {
+		
+		log.debug(Debug.PSJ + "residentList controller rowPerPage==>" + rowPerPage + Debug.END);
+		log.debug(Debug.PSJ + "residentList controller searchWord==>" + searchWord + Debug.END);
+
+		
 		// 입주자 조회
 		List<Map<String,Object>> residentList = guestService.getResidentList(currentPage, rowPerPage, searchWord);
 		log.debug(Debug.PSJ + "residentList controller==>" + residentList.toString() + Debug.END);
@@ -50,6 +56,7 @@ public class GuestController {
 		model.addAttribute("residentList", residentList);
 		model.addAttribute("lastPage",lastPage);
 		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("searchWord",searchWord);
 		
 		return "groupware/resident/residentList";
 		
@@ -138,23 +145,31 @@ public class GuestController {
 	*/
 	@PostMapping("/groupware/resident/residentAdd")
 	public String addResident(Model model,
-							Guest guest, HttpServletRequest httpServletRequest) throws Exception{
+							Guest guest, 
+							Room room,
+							@RequestParam(name="roomAmenity") String roomAmenity,
+							HttpServletRequest httpServletRequest) throws Exception{
 		
 		log.debug(Debug.PSJ + "resiAdd controller guest==> " + guest.toString() + Debug.END);
-		
+		log.debug(Debug.PSJ + "resiAdd controller roomAmenity==> " + roomAmenity + Debug.END);
+
 		//세션 가져오기
 		HttpSession session = httpServletRequest.getSession();
 		String empId = (String)session.getAttribute("strId");
 		//modId를 세션으로 
 		guest.setModId(empId);
 		guest.setRegId(empId);
-		
+		room.setModId(empId);
 		
 		
 		// 입주자 등록
 		int row = guestService.insertResident(guest);
 		log.debug(Debug.PSJ + "resiAdd controller==>" + row + Debug.END);
 		
+		// 방 등록
+		int row1 = roomService.insertResident(room);
+		log.debug(Debug.PSJ + "resiAdd controller==>" + row1 + Debug.END);
+
 		return "redirect:/groupware/resident/residentList";
 		
 	}
