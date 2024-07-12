@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.RoomMapper">
-	<!-- 분류번호: #7 - 객실 동 조회 -->
+	<!-- 분류번호: #7 - 입주자 관리 페이지 : 객실 동 조회 -->
 	<select id="selectDong" resultType="String">
 		SELECT DISTINCT 
 			room_dong dong 
@@ -9,7 +9,7 @@
 			room
 	</select>
 	
-	<!-- 분류번호: #7 - 객실 타입 조회 -->
+	<!-- 분류번호: #7 - 입주자 관리 페이지 : 객실 타입 조회 -->
 	<select id="selectType" resultType="String" parameterType="String">
 		SELECT DISTINCT
 			room_type type
@@ -19,7 +19,7 @@
 			room_dong = #{dong}
 	</select>
 	
-	<!-- 분류번호: #7 - 객실 호수 조회 -->
+	<!-- 분류번호: #7 - 입주자 관리 페이지 : 객실 호수 조회 -->
 	<select id="selectHo" resultType="String" parameterType="String">
 		SELECT 
 			room_ho ho
@@ -29,15 +29,102 @@
 			room_type = #{type}
 	</select>
 	
-	<!-- 분류번호: #8 - 입주 전 객실 조회-->
+	<!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 등록 -->
+	<update id="insertResident" parameterType="com.topaz.dto.Room" >
+		UPDATE room r 
+		JOIN guest g ON g.room_no = r.room_no
+		<set>
+			<if test = "roomState != null and roomState !=''">
+				room_state = '1',
+			</if>
+			r.mod_time = NOW(),
+			r.mod_id = #{modId}
+		</set>
+		WHERE 
+			r.room_no= #{roomNo}
+		AND 
+			r.use_yn = 'Y'
+	</update>
+	
+	<!-- 분류번호: #8 - 객실 관리 페이지 : 입주 전 객실 조회-->
 	<select id="selectRoom" resultType = "map">
 		SELECT 
 			room_no roomNo,
 			room_dong roomDong,
 			room_ho roomHo,
-			room_type roomType
+			room_type roomType,
+			room_state roomState,
+			use_yn useYn
 		FROM 
 			room
 		WHERE room_state = '2'
+		AND use_yn = 'Y'
 	</select>
+	
+	<!-- 분류번호: #8 - 객실 관리 페이지 : 객실 상태 조회 -->
+	<select id="selectRoomState" resultType="String">
+		SELECT DISTINCT 
+			room_state roomState
+		FROM 
+			room
+	</select>
+	
+	<!-- 분류번호: #8 - 객실 관리 페이지 : 객실 조회 -->
+	<!-- 검색필터에 따른 객실 조회 -->
+	<select id="filterRoomList" resultType="map">
+		SELECT 
+			room_no roomNo,
+			room_type roomType,
+			room_dong roomDong,
+			room_ho roomHo,
+			room_state roomState,
+			room_price roomPrice,
+			mod_time modTime,
+			mod_id modId,
+			use_yn useYn
+		FROM 
+			room
+		WHERE 
+			use_yn = 'Y'
+			
+			<if test="roomState != null and roomState != ''">
+		    	AND room_state = #{roomState}
+			</if>
+			<if test="roomDong != null and roomDong != ''">
+			    AND room_dong = #{roomDong}
+			</if>
+			<if test="roomType != null and roomType != ''">
+			    AND room_type = #{roomType}
+			</if>
+			<if test="roomHo != null and roomHo != ''">
+			    AND room_ho = #{roomHo}
+			</if>
+
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 분류번호: #8 - 객실 관리 페이지 : 객실 조회 -->
+	<select id="filterCountRoom" resultType="int">
+		SELECT
+			count(*)
+		FROM 
+			room 
+		WHERE 
+			use_yn = 'Y'
+
+		<if test="roomState != null and roomState != ''">
+	    	AND room_state = #{roomState}
+		</if>
+		<if test="roomDong != null and roomDong != ''">
+		    AND room_dong = #{roomDong}
+		</if>
+		<if test="roomType != null and roomType != ''">
+		    AND room_type = #{roomType}
+		</if>
+		<if test="roomHo != null and roomHo != ''">
+		    AND room_ho = #{roomHo}
+		</if>
+			
+	</select>
+	
 </mapper>
