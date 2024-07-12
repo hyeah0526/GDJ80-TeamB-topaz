@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+/* 일반 태그 */
+form {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+form button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    width: auto; 
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+button[type="button"]:not(.resetBtn) {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    width: auto; 
+}
+
+button[type="button"]:not(.resetBtn):hover {
+    background-color: #0056b3;
+}
+
+table tr:hover {
+    background-color: #d3eafc; 
+    cursor: pointer; 
+}
+
+#paginationUl {
+    display: flex;
+    justify-content: center;    
+}
