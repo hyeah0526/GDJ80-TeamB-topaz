@@ -13,7 +13,7 @@
 <head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-    <link rel="stylesheet" href="<c:url value='/css/insuEmpDetail.css' />"> <!-- CSS -->
+    <link rel="stylesheet" href="/topaz/css/insuEmpDetail.css"> <!-- CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
 </head>
 <body>

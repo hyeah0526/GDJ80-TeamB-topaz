@@ -12,7 +12,7 @@
 <html lang="en">
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-    <link rel="stylesheet" href="<c:url value='/css/insuEmpMain.css' />"> <!-- CSS -->
+    <link rel="stylesheet" href="/topaz/css/insuEmpMain.css"> <!-- CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
 	
 <body>
@@ -24,6 +24,17 @@
 
 	<!-- =============================== Main 메인 시작 부분 ================================ -->
 	<main id="main" class="main">
+    
+    	<!-- Title 시작 -->
+		<div class="pagetitle">
+		   <h1>메인</h1>
+		   <nav>
+		     <ol class="breadcrumb">
+		       <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+		       <li class="breadcrumb-item active">Main</li>
+		     </ol>
+		   </nav>
+		</div><!-- Title 종료 -->
     
         <div class="container">
         

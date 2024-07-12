@@ -2,7 +2,11 @@ $(document).ready(function() {
     $('.resetBtn').click(function() {
         // 폼을 초기화
         $('#searchForm')[0].reset();
-
+		
+		// 숨겨진 필드 초기화
+        $('input[name="startDateHidden"]').val('');
+        $('input[name="endDateHidden"]').val('');
+	
         // 기본 리스트 로드
         loadEmpList(1);
     });
@@ -10,6 +14,27 @@ $(document).ready(function() {
     // 폼 서밋 막기 및 AJAX를 통해 데이터 로드 
     $('#searchForm').submit(function(event) {
         event.preventDefault(); // 폼의 기본 제출 동작 방지
+        
+        //날짜 값 고정
+        let startDate = $('input[name="startDate"]').val();
+        let endDate = $('input[name="endDate"]').val();
+
+		console.log(startDate);
+		console.log(endDate);
+
+       // 숨겨진 필드에 시간 포함한 값 설정
+        if (startDate) {
+            $('input[name="startDateHidden"]').val(startDate + ' 00:00:00');
+        }
+
+        if (endDate) {
+            $('input[name="endDateHidden"]').val(endDate + ' 23:59:59');
+        }
+        
+        console.log('startDateHidden:', $('input[name="startDateHidden"]').val());
+        console.log('endDateHidden:', $('input[name="endDateHidden"]').val());
+        
+        
         loadEmpList(1); // ajax 요청을 통해 필요한 부분만 갱신
     });
 
@@ -97,6 +122,7 @@ $(document).ready(function() {
     window.changePage = function(page) {
         event.preventDefault();
         loadEmpList(page);
+       
     }
 
     //직원 리스트 로드

@@ -44,7 +44,7 @@
 				CURRENT_TIMESTAMP(5),
 				#{empNo},
 				NOW(),
-				NULL,
+				CONCAT(DATE(NOW()), ' 00:00:00'),
 				NOW(),
 				NOW(),
 				#{empNo},
@@ -61,10 +61,13 @@
 			end_time = NOW()
 		WHERE 
 			emp_no = #{empNo} AND 
-			DATE(start_time) = CURDATE() AND 
-      		end_time IS NULL
+			DATE(start_time) = CURDATE() AND
+			HOUR(end_time) = 0 AND
+	       MINUTE(end_time) = 0 AND
+	       SECOND(end_time) = 0
 	</update>
 	
+	<!-- 분류 번호 :  #3 - 출퇴근 상태 조회 -->
 	<select id="selectWorkState">
 		SELECT 
 			start_time, end_time 

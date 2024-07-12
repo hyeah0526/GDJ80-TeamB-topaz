@@ -59,6 +59,8 @@
 	                                <input type="date" name="startDate">
 	                                <span>~</span>
 	                                <input type="date" name="endDate">
+                               		<input type="hidden" name="startDateHidden">
+   								 	<input type="hidden" name="endDateHidden">
 	                            </div>
 					     	</div>
 					     	
@@ -116,25 +118,6 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
-	<script>
-		 $(document).ready(function() {
-	         $('.resetBtn').click(function() {
-	             //폼을 초기화
-	             $('form')[0].reset();
-	
-	          	//검색 조건을 제거한 기본 URL로 리다이렉트
-	             const baseUrl = window.location.href.split('?')[0];
-	             window.location.href = baseUrl;
-	         });
-	     });
-		 
-		// 페이지 이동과 동시에 URL 상태를 유지하는 함수
-         function changePage(page) {
-             const urlParams = new URLSearchParams(window.location.search);
-             urlParams.set('currentPage', page);
-             window.location.search = urlParams.toString();
-         }
-	</script>
 	<script src="/topaz/js/insuEmpAttendance.js"></script>
 </body>
 </html>

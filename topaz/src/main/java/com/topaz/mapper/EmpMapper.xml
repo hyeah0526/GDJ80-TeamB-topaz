@@ -173,7 +173,7 @@
 			e.emp_no = upload.reference_no
 			AND upload.file_name = e.file_name
 		WHERE
-			e.emp_no = #{empNo};
+			e.emp_no = #{empNo}
 	</select>
 	 
 	 <!-- 분류 번호 :  #4 - 직원 정보 수정 -->
@@ -301,7 +301,7 @@
 	<!-- 분류 번호 :  #4 - 전체 직원 근무 조회 -->
 	<select id="selectEmpAttendance" resultType="Map">
 		SELECT
-			ROW_NUMBER() OVER (ORDER BY ch.reg_time DESC) AS no, 
+			ROW_NUMBER() OVER (ORDER BY ch.reg_time DESC) AS NO, 
 			DATE(ch.start_time) date, 
 			em.emp_name empName, 
 			ch.emp_no empNo, 
@@ -315,16 +315,19 @@
 			ch.emp_no = em.emp_no
 		WHERE
         1=1
-        <if test="startDate != null and startDate != ''">
-            AND ch.start_time &gt;= #{startDate}
-        </if>
+       	<if test="startDateHidden  != null and startDateHidden  != ''">
+		    AND ch.start_time &gt;= #{startDateHidden }
+		</if>
+		<if test="endDateHidden  != null and endDateHidden  != ''">
+		    AND ch.end_time &lt;= #{endDateHidden} 
+		</if>
         <if test="empNo != null and empNo != ''">
-            AND em.emp_no = #{empNo}
+            AND ch.emp_no = #{empNo}
         </if>
         <if test="empName != null and empName != ''">
             AND em.emp_Name = #{empName}
         </if>
-        LIMIT #{currentPage}, #{rowPerPage};
+        LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 	
 	<!-- 분류 번호 :  #4 - 전체 직원 근무수 조회 -->
@@ -339,17 +342,17 @@
 			ch.emp_no = em.emp_no
 		WHERE
         1=1
-        <if test="startDate != null and startDate != ''">
-            AND em.emp_hiredate &gt;= #{startDate}
-        </if>
-        <if test="endDate != null and endDate != ''">
-            AND em.emp_hiredate &lt;= #{endDate}
-        </if>
+      	<if test="startDateHidden  != null and startDateHidden  != ''">
+		    AND ch.start_time &gt;= #{startDateHidden }
+		</if>
+		<if test="endDateHidden  != null and endDateHidden  != ''">
+		    AND ch.end_time &lt;= #{endDateHidden}
+		</if>
         <if test="empNo != null and empNo != ''">
             AND em.emp_no = #{empNo}
         </if>
-        <if test="empNo != null and empName != ''">
-            AND em.emp_no = #{empNo}
+        <if test="empName != null and empName != ''">
+            AND em.emp_name = #{empName}
         </if>
 	</select>
 	
