@@ -317,9 +317,9 @@ public class EmployeeController {
 	 * 시작 날짜: 2024-07-12
 	 * 담당자: 김인수
 	*/
-	@GetMapping("/groupware/myPage/myNoteList")
+	@GetMapping("/groupware/myPage/myReciveNote")
 	public String myNoteList() {
-		return "groupware/myPage/myNoteList";
+		return "groupware/myPage/myReciveNote";
 	}
 	
 }
