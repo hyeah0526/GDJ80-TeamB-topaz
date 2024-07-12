@@ -39,7 +39,7 @@ public class EmpInfoInterceptor implements HandlerInterceptor {
         	//직원정보 조회
             Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
             req.setAttribute("empDetail", empDetail);
-            log.debug(Debug.KIS + "Interceptor / preHandle / empDetail : " + empDetail);
+            //log.debug(Debug.KIS + "Interceptor / preHandle / empDetail : " + empDetail);
         }
         
         return true; 

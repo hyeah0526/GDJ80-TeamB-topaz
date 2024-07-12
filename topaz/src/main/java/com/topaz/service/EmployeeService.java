@@ -166,11 +166,11 @@ public class EmployeeService {
 	public Map<String, Object> selectEmpOne(String empNo) {
 
 		//매개변수 디버깅
-		log.debug(Debug.KIS + "service / selectEmpOne / empNo : " + empNo);
+		//log.debug(Debug.KIS + "service / selectEmpOne / empNo : " + empNo);
 		
 		//직원 리스트 가져오기
 		Map<String, Object> empOneList = empMapper.selectEmpOne(empNo);
-		log.debug(Debug.KIS + "service / selectEmpOne / empOneList : " + empOneList);
+		//log.debug(Debug.KIS + "service / selectEmpOne / empOneList : " + empOneList);
 	  
 		return empOneList;
 	} 

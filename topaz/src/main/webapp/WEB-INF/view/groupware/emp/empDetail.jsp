@@ -26,13 +26,23 @@
 	<!-- =============================== Main 메인 시작 부분 ================================ -->
 	<main id="main" class="main">
     
+    	<!-- Title 시작 -->
+		<div class="pagetitle">
+		   <h1>직원 정보 상세</h1>
+		   <nav>
+		     <ol class="breadcrumb">
+		       <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+		       <li class="breadcrumb-item active">Employee Detail</li>
+		     </ol>
+		   </nav>
+		</div><!-- Title 종료 -->
+    
         <div class="container">
-        
             <div class="colorDiv">
             
                 <!-- 제목 -->
                 <div class="title">
-                    <h1 class="titleH1">직원상세</h1>
+                    <h1 class="titleH1">정보 상세</h1>
                 </div>
             
                 <!-- 메인 -->

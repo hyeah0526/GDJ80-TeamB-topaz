@@ -26,14 +26,19 @@
 	<!-- =============================== Main 메인 시작 부분 ================================ -->
 	<main id="main" class="main">
     
+    	<!-- Title 시작 -->
+		<div class="pagetitle">
+		   <h1>비밀번호 수정</h1>
+		   <nav>
+		     <ol class="breadcrumb">
+		       <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+		       <li class="breadcrumb-item active">Modify Password</li>
+		     </ol>
+		   </nav>
+		</div><!-- Title 종료 -->
+    	
         <div class="container">
-        
             <div class="colorDiv">
-            
-                <!-- 제목 -->
-                <div class="title">
-                    <h1 class="titleH1">비밀번호 수정</h1>
-                </div>
             
                 <!-- 메인 -->
                 <div class="mainContent">

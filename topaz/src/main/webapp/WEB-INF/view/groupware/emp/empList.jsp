@@ -15,10 +15,6 @@
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
     <link rel="stylesheet" href="/topaz/css/insuEmpList.css"> <!-- CSS -->
-    <!--  
-    
-    <link href="/topaz/css/hyeah.css" rel="stylesheet">
-    -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
 </head>
 	
@@ -32,18 +28,21 @@
 	<!-- =============================== Main 메인 시작 부분 ================================ -->
 	<main id="main" class="main">
 	
-		<div class="container">
+		<!-- Title 시작 -->
+		<div class="pagetitle">
+		   <h1>전체 직원 목록</h1>
+		   <nav>
+		     <ol class="breadcrumb">
+		       <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+		       <li class="breadcrumb-item active">Employee List</li>
+		     </ol>
+		   </nav>
+		</div><!-- Title 종료 -->
 		
-			<div class="colorDiv">
-			
-				<!-- 제목 -->
-				<div class="title">
-      				<h1 class="titleH1">직원리스트</h1>
-				</div>
-			
-				<!-- 메인 -->
-			     <div class="mainContent">
-			     
+		<section class="section">
+			<div class="card">
+				<div class="card-body">
+
 			     	<form id="searchForm" action="/topaz/groupware/emp/empList' />" method="post" >
 			     		<div style="margin-bottom: 20px;">
                     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
@@ -134,10 +133,9 @@
 						<ul class="pagination" id="paginationUl">
 			           </ul>
 					</nav>
-                 
-			     </div>			
+				</div>	
 			</div>
-		</div>
+		</section>
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->
 	

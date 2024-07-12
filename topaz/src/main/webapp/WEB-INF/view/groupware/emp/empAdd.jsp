@@ -13,7 +13,7 @@
 <head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-    <link rel="stylesheet" href="<c:url value='/css/insuEmpAdd.css' />"> <!-- CSS -->
+    <link rel="stylesheet" href="/topaz/css/insuEmpAdd.css"> <!-- CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- 다음 주소 API -->
 </head>
@@ -26,14 +26,24 @@
 
 	<!-- =============================== Main 메인 시작 부분 ================================ -->
 	<main id="main" class="main">
-	
-		<div class="container">
 		
+		<!-- Title 시작 -->
+		<div class="pagetitle">
+		   <h1>직원 등록</h1>
+		   <nav>
+		     <ol class="breadcrumb">
+		       <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+		       <li class="breadcrumb-item active">Employee Add</li>
+		     </ol>
+		   </nav>
+		</div><!-- Title 종료 -->
+		
+		<div class="container">
 			<div class="colorDiv">
 			
 				<!-- 제목 -->
 				<div class="title">
-      				<h1 class="titleH1">직원등록</h1>
+      				<h1 class="titleH1">직원 등록</h1>
 				</div>
 			
 				<!-- 메인 -->
@@ -131,7 +141,7 @@
 			     </div>			
 			</div>
 		</div>
-	</main>><!-- End #main -->
+	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->
 	
 	<!-- ======= footer 부분 ======= -->

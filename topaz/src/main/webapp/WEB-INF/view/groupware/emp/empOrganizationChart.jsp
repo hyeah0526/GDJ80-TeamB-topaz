@@ -25,6 +25,17 @@
 
 	<!-- =============================== Main 메인 시작 부분 ================================ -->
 	<main id="main" class="main">
+		<!-- Title 시작 -->
+		<div class="pagetitle">
+		   <h1>조직도</h1>
+		   <nav>
+		     <ol class="breadcrumb">
+		       <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+		       <li class="breadcrumb-item active">Employee Organization Chart</li>
+		     </ol>
+		   </nav>
+		</div><!-- Title 종료 -->
+		
 		<div id="tree"></div>
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->

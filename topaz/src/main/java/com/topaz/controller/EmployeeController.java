@@ -300,7 +300,7 @@ public class EmployeeController {
 		return "groupware/emp/empOrganizationChart";
 	}
 	
-	//========== 근무 조회 뷰 
+	//========== 근무 조회 
 	/*
 	 * 서비스명: empAttendance.jsp ( 근무 조회 뷰 ) 
 	 * 시작 날짜: 2024-07-10
@@ -309,6 +309,17 @@ public class EmployeeController {
 	@GetMapping("/groupware/emp/empAttendance")
 	public String empAttendance() {
 		return "groupware/emp/empAttendance";
+	}
+	
+	//========== 쪽지 
+	/*
+	 * 서비스명: myNoteList.jsp ( 받은 메세지 뷰 ) 
+	 * 시작 날짜: 2024-07-12
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myNoteList")
+	public String myNoteList() {
+		return "groupware/myPage/myNoteList";
 	}
 	
 }
