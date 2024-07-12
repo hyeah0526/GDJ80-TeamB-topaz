@@ -69,7 +69,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h5 class="card-title">결재 서식 등록</h5>
-								<form action="<%-- ${pageContext.request.contextPath}/groupware/approval/approvalTemplateModify --%>" method="post">
+								<form action="${pageContext.request.contextPath}/groupware/approval/approvalTemplateModify" method="post">
 								
 									<div class="row mb-3">
 										<label for="addTitle" class="col-sm-2 col-form-label">제목</label>

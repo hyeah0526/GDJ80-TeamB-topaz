@@ -12,7 +12,7 @@ $(document).ready(function() {
         loadApprovalList(1); // ajax 요청을 통해 필요한 부분만 갱신
     });
     	
-    	// 템플릿 리스트를 가져오는 함수
+    	// 결재 리스트를 가져오는 함수
         function loadApprovalList(page) {
         const formData = $('#searchForm').serialize() + `&currentPage=${page}`;
         $.ajax({
@@ -32,12 +32,11 @@ $(document).ready(function() {
                     approvalListContainer.append(`
                         <tr onclick="window.location.href='/topaz/groupware/approval/approvalDetail?approvalDocNo=${app.approvalDocNo}'" style="cursor:pointer;">
                             <td>${app.approvalDocNo}</td>
+                            <td>${app.docTitle}</td>
                             <td>${app.empName}</td>
                             <td>${app.stateName}</td>
                             <td>${app.startDate}</td>
                             <td>${app.endDate}</td>
-                            <td>${app.regTime}</td>
-                            <td>${app.modTime}</td>
                         </tr>
                     `);
                 });
@@ -93,6 +92,6 @@ $(document).ready(function() {
         loadApprovalList(page);
     }
 
-    //템플릿 리스트 로드
+    //결재 리스트 로드
     loadApprovalList(1);
 });

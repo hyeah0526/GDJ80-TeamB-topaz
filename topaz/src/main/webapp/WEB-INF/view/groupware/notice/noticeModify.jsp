@@ -71,7 +71,7 @@
 					<div class="card">
 						<div class="card-body">
 							<h5 class="card-title">공지 사항 작성</h5>
-							<form action="${pageContext.request.contextPath}/groupware/notice/noticeModify" method="post" onsubmit="return submitContent(this); && submitValidation();" enctype="multipart/form-data">
+							<form action="${pageContext.request.contextPath}/groupware/notice/noticeModify" method="post" id="modifyNoticeForm" onsubmit="return submitContent(this);" enctype="multipart/form-data">
 								<input type="hidden" name="newsNo" value="${noticeDetail.newsNo}">
 								<input type="hidden" name="modId" value="">
 								<!-- notice title -->
@@ -152,7 +152,14 @@
 										</textarea>
 									</div>
 								</div>
-
+								<div class="row mb-3">
+									<label for="noticeFile" class="col-sm-2 col-form-label">
+										첨부 파일
+									</label>
+									<div class="col-sm-10">
+										<input class="form-control" type="file" id="uploadFile" name="uploadFile" multiple>
+									</div>
+								</div>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeRemove?newsNo=${noticeDetail.newsNo}'">삭제</button>
 								<button type="submit" id="noticeModifyBtn" class="btn btn-primary">수정하기</button>

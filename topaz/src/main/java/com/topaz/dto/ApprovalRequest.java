@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApprovalRequest {
+	
+
 	private String templateNo;
 	private String regId;
 	private String regTime;

@@ -74,60 +74,9 @@
 							</thead>
 							<!-- 상단 노출 공지사항 -->
 							<tbody class="topNoticeContainer" id="topNoticeContainer">
-								<c:forEach var="n" items="${noticeList}">
-									<fmt:formatDate var="changedCurrentTime" value="${currentTime}" pattern="yyyy-MM-dd HH:mm:ss" />
-									<c:if test="${n.grade == '1' && (n.category == '1' || (n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate))}">
-										<tr>
-											<td>${n.no}</td>
-											<td>
-												<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}">
-													<c:choose>
-														<c:when test="${n.grade == '1' && n.category == '1'}">
-															<c:set var="title" value="&#128227; [필독] ${n.title}" />
-														</c:when>
-														<c:when test="${n.grade == '1' && n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate}">
-															<c:set var="title" value="&#127881; [이벤트]${n.title}" />
-														</c:when>
-														<c:otherwise>
-															<c:set var="title" value="${n.title}" />
-														</c:otherwise>
-													</c:choose>
-													<c:out value="${title}" escapeXml="false" />
-												</a>
-											</td>
-											<td>${n.empName}</td>
-											<td>${n.regTime}</td>
-											<td>${n.modTime}</td>
-										</tr>
-									</c:if>
-								</c:forEach>
 							</tbody>
 							<!-- 전체 공지사항 (상단 노출 포함) -->
 							<tbody name="normalNoticeContainer" id="normalNoticeContainer">
-								<c:forEach var="n" items="${noticeList}">
-									<tr>
-										<td>${n.no}</td>
-										<td>
-											<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}">
-												<c:choose>
-													<c:when test="${n.grade == '1' && n.category == '1'}">
-														<c:set var="title" value="&#128227; [필독] ${n.title}" />
-													</c:when>
-													<c:when test="${n.grade == '1' && n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate}">
-														<c:set var="title" value="&#127881; [이벤트] ${n.title}" />
-													</c:when>
-													<c:otherwise>
-														<c:set var="title" value="${n.title}" />
-													</c:otherwise>
-												</c:choose>
-												<c:out value="${title}" escapeXml="false" />
-											</a>
-										</td>
-										<td>${n.empName}</td>
-										<td>${n.regTime}</td>
-										<td>${n.modTime}</td>
-									</tr>
-								</c:forEach>
 							</tbody>
 						</table>
 						<nav aria-label="Page navigation example">

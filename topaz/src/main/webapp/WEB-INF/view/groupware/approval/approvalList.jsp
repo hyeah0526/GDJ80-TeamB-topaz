@@ -4,7 +4,59 @@
 <html lang="en">
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
+<!--	<script src="/topaz/javascriptSignature/js/signature_pad.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="/topaz/javascriptSignature/css/css.css">
+     <script>
+        let canvas = $("#signature-pad canvas")[0];
+        let sign = new SignaturePad(canvas, {
+            minWidth: 1, // 초기값 5
+            maxWidth: 3, // 초기값 10
+            penColor: "rgb(0, 0, 0)" // 서명 색상
+        });
+        
+        $("[data-action]").on("click", function(){
+            if ( $(this).data("action")=="clear" ){
+                sign.clear();
+            }
+            else if ( $(this).data("action")=="save" ){
+                if (sign.isEmpty()) {
+                    alert("서명을 작성해 주세요.");
+                } else {
+                    $.ajax({
+                        url : "signSave.jsp",
+                        method : "post",
+                        dataType : "json",
+                        data : {
+                            sign : sign.toDataURL()
+                        },
+                        success : function(r){
+                            alert("저장 완료 : " + r.filename);
+                            sign.clear();
+                        },
+                        error : function(res){
+                            console.log(res);
+                        }
+                    });
+                }
+            }
+        });
+        
+        
+        function resizeCanvas(){
+            let canvas = $("#signature-pad canvas")[0];
+    
+            let ratio =  Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+        }
+        
+        $(window).on("resize", function(){
+            resizeCanvas();
+        });
+
+        resizeCanvas();
+    </script> -->
      <style>
         .hiddenBtn {
             display: none;
@@ -39,6 +91,28 @@
 					<div class="card-body">
 						
 						<!-- Table with stripped rows -->
+						<form action="" method="post" id="approvalStateBtn" class="approvalStateBtn" name="selectApprovalState">
+							<button type="button" class="btn btn-primary" value="all">전체</button>
+							<button type="button" class="btn btn-primary" value="4">승인</button>
+							<button type="button" class="btn btn-primary" value="4">진행</button>
+							<button type="button" class="btn btn-primary" value="3">대기</button>
+							<button type="button" class="btn btn-primary" value="1,2">취소 / 반려</button>
+						</form>
+						<form>
+							
+						</form>
+					<%-- 	<form action="/topaz/groupware/approval/approvalSign">
+							<div id="signature-pad" class="m-signature-pad">
+								<div class="m-signature-pad--body">
+									<canvas></canvas>
+								</div>
+								<div class="m-signature-pad--footer">
+									<div class="description">서명해 주세요</div>
+									<button type="button" class="button clear" data-action="clear">초기화</button>
+									<button type="button" class="button save" data-action="save">저장</button>
+								</div>
+							</div>
+						</form> --%>
 						<form action="/topaz/groupware/approval/approvalList" id="searchForm" method="get">
 							<br>
 							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
@@ -53,14 +127,12 @@
 							<thead>
 								<tr>
 									<th>문서 번호</th>
-									<th>상태</th>
+									<th>제목</th>
 									<th>작성자</th>
+									<th>상태</th>
 									<th>결재 시작</th>
 									<th>결재 종료</th>
-									<th>생성 일자</th>
-									<th>수정 일자</th>
-								</tr>
-							</thead>
+								</tr>	
 							<!-- 상단 노출 공지사항 -->
 							<tbody id="approvalListContainer">
 							</tbody>

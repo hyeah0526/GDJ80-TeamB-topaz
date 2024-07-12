@@ -61,9 +61,6 @@ public class NoticeService {
 	    
 		// 공지 사항 DTO에 데이터 바인딩
 		Notice notice = noticeRequest.toNotice();
-		String referenceNo = notice.getNewsNo(); // 예제용 사용자 ID
-		noticeRequest.setRegId(referenceNo);
-		noticeRequest.setModId(referenceNo);
 		// 공지 사항 정보를 저장
 		int row = noticeMapper.insertNotice(notice);
 		

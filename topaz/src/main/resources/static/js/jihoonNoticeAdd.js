@@ -92,3 +92,83 @@ document.addEventListener('DOMContentLoaded', function() {
 		endDate.disabled = false;
 	}
 });
+
+		
+function formSubmit(event) {
+	event.preventDefault();
+	
+    const oEditor = nhn.husky.EZCreator.getEditor('content'); // 에디터 객체 가져오기
+    const content = oEditor.getIR().trim(); // 에디터의 내용 가져오기
+	
+	
+	const title = $('#title').val().trim();
+	const grade = document.querySelector('[name="grade"]:checked');
+	const category = document.querySelector('[name="category"]:checked');
+	const uploadFile = document.getElementById('uploadFile').files;
+	
+	if(!title) {
+		alert("제목을 입력하세요.")
+		$("#title").focus();
+		return false;
+	}
+	
+	if(!content) {
+		alert("내용을 입력하세요.")
+		$("#content").focus();
+		return false;
+	}
+	if(!grade) {
+		alert("등급을 선택하세요.")
+		return false;
+	}
+	if(grade.value == '1' && !category) {
+		alert("종류를 입력하세요.")
+		return false;
+	}
+	
+	if(grade.value === '1' && category.value === '3') {
+		const startDate = $("#startDate").val().trim();
+		const endDate = $("#endDate").val().trim();
+		
+		if(!startDate || !endDate) {
+			alert("게시 기간을 입력하세요.")
+			return false;
+		}
+		if(new Date(startDate) > new Date(endDate)) {
+			alert("시작 날짜는 종료 날짜 이전이어야 합니다.");
+			return false;
+		}
+	}
+	console.log("AJAX 요청 시작")
+	
+    let formdata = new FormData($("#addNoticeForm")[0]);
+    // uploadFile이 정의되어 있다면 FormData에 추가
+    if (uploadFile) {
+          if (uploadFile.length > 0) {
+            for (let i = 0; i < uploadFile.length; i++) {
+                formdata.append('uploadFile', uploadFile[i]);
+            }
+        }
+    }    
+	$.ajax({
+		url: '${pageContext.request.contextPath}/groupware/notice/noticeAdd',
+		type: 'POST',
+		data: formdata,
+		processData: false,
+		contentType: false,
+		success: function (result){
+			console.log("요청 성공")
+			if(result) {
+			alert("공지 사항이 등록되었습니다.");
+			$("#addNoticeForm")[0].reset();
+		} else {
+			alert("공지 사항 등록에 실패하였습니다.");
+			console.log("등록 실패")
+		}
+	 },
+        error: function (xhr, status, error) {
+            alert("다시 시도해 주세요.");
+            console.log("error: ", error);
+        }
+    });
+}

@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.ApprovalMapper">
+
+	<!-- 분류 번호: #11 - 직원 사인 조회 -->
+	<!-- 등록된 사인이 없을 시 사인 등록 화면 출력 -->
+	<select id="selectSign" parameterType="String" resultType="String">
+		SELECT 
+			*
+		FROM
+			approval_sign s
+			LEFT JOIN
+				file_upload fu
+			ON 
+				s.sign_no = fu.reference_no		
+		WHERE 
+			s.use_yn = 'Y' 
+			AND fu.use_yn = 'Y';
+			AND s.emp_no = #{empNo}	
+	</select>
 	
+	<!-- 분류 번호: #11 - 결재 템플릿의 개수 -->
 	<select id="approvalTemplateListCnt" resultType="int">
 		SELECT
 			COUNT(*) cnt
@@ -11,6 +29,8 @@
 			use_yn = 'Y'		
 	</select>
 	
+	
+	<!-- 분류 번호: #11 - 결재 내역의 개수 -->
 	<select id="approvalListCnt" resultType="int">
 		SELECT
 			COUNT(*) cnt
@@ -23,8 +43,6 @@
 	
 	<!-- 분류 번호: #11 - 결재 내역 출력 -->
 	<select id="selectApprovalHistory" parameterType="map" resultType="map">
-	
-	<!-- 검색 페이징 추가해야 함. -->
 		SELECT 
 			ah.approval_doc_no approvalDocNo, ah.approval_state approvalState,
 			DATE_FORMAT(ah.reg_time, '%Y-%m-%d %H:%i:%s') regTime, 
@@ -55,10 +73,13 @@
 				common_code cc2
 				ON ad.approval_state = cc2.cd
 				AND cc2.crp_cd = 'S001'
-			WHERE 
+			<where>
 				ah.use_yn = 'Y'
-				AND (ad.doc_title LIKE CONCAT('%', #{searchWord}, '%')
-				OR emp.emp_name LIKE CONCAT('%', #{searchWord}, '%'))
+				<if test="searchWord != null || searchWord != ''">
+					AND (ad.doc_title LIKE CONCAT('%', #{searchWord}, '%')
+					OR emp.emp_name LIKE CONCAT('%', #{searchWord}, '%'))
+				</if>				
+			</where> 
 		ORDER BY 
 			regTime DESC
 		LIMIT #{currentPage}, #{rowPerPage}	

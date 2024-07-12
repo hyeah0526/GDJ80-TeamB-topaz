@@ -2,6 +2,8 @@ package com.topaz.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +15,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NoticeRequest {
     private String newsNo;
+    
+	@NotBlank(message = "제목을 입력하세요.")
+	@Size(max = 100, message = "제목은 100자 이내로 입력하세요.")
+	@Size(min = 20, message = "제목은 10자 이상 입력하세요.")
     private String title;
-    private String content;
+	
+	@NotBlank(message = "내용을 입력하세요.")
+	@Size(min = 100, message = "내용은 100자 이상 입력하세요.")
+	private String content;
+	
+	@NotBlank(message = "등급을 선택하세요.")
     private String grade;
+	
+	@NotBlank(message = "종류를 선택하세요.")
     private String category;
+	
     private String startDate;
     private String endDate;
     private String views;
