@@ -42,7 +42,7 @@
 	            </a>
 	          </li>
 	          <li>
-	            <a href="/topaz/groupware/myPage/myReciveNote" class="nav-click sideMyNote">
+	            <a href="/topaz/groupware/myPage/myNoteRecived" class="nav-click sideMyNote">
 	              <i class="bi bi-circle"></i><span>나의 쪽지 목록</span>
 	            </a>
 	          </li>

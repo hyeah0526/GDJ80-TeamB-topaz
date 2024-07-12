@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- 
+	 * 분류 번호 :  #2 - 수신 쪽지함 페이지
+	 * 시작 날짜 : 2024-07-12
+	 * 담당자 : 김인수
+ -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<!-- ======= header <Head> 부분 ======= -->
