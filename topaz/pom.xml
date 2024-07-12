@@ -44,12 +44,18 @@
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
 		
+		<!-- JavaMail 의존성 -->
+	    <dependency>
+	        <groupId>com.sun.mail</groupId>
+	        <artifactId>jakarta.mail</artifactId>
+	        <version>2.0.1</version> 
+	    </dependency>
+	    
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.5.4</version>
 		</dependency>
-		
 		<!-- Apache Commons signature-pad 라이브러리 -->
 		<dependency>
             <groupId>commons-codec</groupId>

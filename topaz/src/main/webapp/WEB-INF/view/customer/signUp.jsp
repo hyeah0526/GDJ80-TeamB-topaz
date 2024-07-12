@@ -91,7 +91,7 @@
 				  <div class="id-message hide"></div>
                 </div>
                 <div class="col text-center">
-                	<button type="button" id="idCheck">중복확인</button>
+                	<button type="button" id="idCheck_btn">중복확인</button>
                 </div>
               </div>
               <div class="form-group mt-3">
@@ -106,18 +106,20 @@
               
               <div class="row mt-3">
                 <div class="col-md-8 form-group">
-                  <input type="text" name="gstEmail" class="form-control" placeholder="Email">
+                  <input type="text" name="gstEmail" id="gstEmail" class="form-control" placeholder="Email">
+                  <div class="mailCheck-message hide"></div>
                 </div>
                 <div class="col text-center">
-                	<button type="button" name="mailCk">인증번호 보내기</button>
+                	<button type="button" id="mailCheck_btn" name="mailCheck_btn">인증번호 보내기</button>
                 </div>
               </div>
               
        		  <div class="row mt-3">
                 <div class="col-md-8 form-group">
-                  <input type="text" name="checkNumber" class="form-control" placeholder="인증번호">
+                  <input type="text" name="checkNumber" id="checkNumber" class="form-control" placeholder="인증번호">
+                  <div class="check-message hide"></div>
                 </div>
-                <div class="col text-center"><button type="button">확인</button></div>
+                <div class="col text-center"><button type="button" id="chk_btn" name="chk_btn">확인</button></div>
               </div>
        		
        		  <div class="form-group mt-3">

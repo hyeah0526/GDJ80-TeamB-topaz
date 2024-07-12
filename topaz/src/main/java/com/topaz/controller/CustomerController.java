@@ -77,13 +77,6 @@ public class CustomerController {
 		return "/customer/volunteerRqAdd";
 	}
 	
-//	@GetMapping("/customer/gstMyInfo")
-//	public String gstMyInfo() {
-//		
-//		return "/customer/gstMyInfo";
-//	}
-	
-	
 	@GetMapping("/customer/signUp")
 	public String signUp() {
 		
@@ -105,25 +98,6 @@ public class CustomerController {
 		return "/customer/gstLogin";
 	}
 	
-	/*
-	 * 서비스명: idCheck
-	 * 시작 날짜: 2024-07-10
-	 * 담당자: 한은혜
-	 */
-	@ResponseBody
-	@PostMapping("/customer/idCheck")
-	public String idCheck(@RequestParam(name = "gstId") String gstId) {
-		log.debug(Debug.HEH + "controller idCheck gstId : " + gstId + Debug.END);
-
-		String result = customerService.selectGuestId(gstId);
-		log.debug(Debug.HEH + "controller idCheck result : " + result + Debug.END);
-
-		if(result == null) {
-			return "0";
-		}
-		
-		return "1";
-	}
 	
 	/*
 	 * 서비스명: -
@@ -142,7 +116,7 @@ public class CustomerController {
 
 		model.addAttribute("gstId", gstId);
 		
-		return "customer/gstMyInfo";
+		return "/customer/gstMyInfo";
 			
 	}
 	
