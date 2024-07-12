@@ -152,9 +152,9 @@
 			e.emp_birth empBirth, 
 			e.emp_phonenumber empPhoneNumber, 
 			e.post_no postNo, 
-			e.address, 
+			e.address address, 
 			e.emp_hiredate empHireDate,
-			upload.file_name fileName
+			e.file_name fileName
 		FROM 
 			employee e
 		LEFT JOIN
