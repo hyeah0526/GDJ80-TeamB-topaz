@@ -224,7 +224,8 @@ public class EmployeeController {
 	 * 담당자: 김인수
 	*/
 	@GetMapping("/groupware/myPage/myInfo")
-	public String myinfo(Model model, 
+	public String myinfo(
+			Model model, 
 			HttpServletRequest  httpServletRequest ) {
 
 		//매개변수 디버깅
