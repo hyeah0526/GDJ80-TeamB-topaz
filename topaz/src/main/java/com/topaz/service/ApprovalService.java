@@ -26,37 +26,31 @@ public class ApprovalService {
 	 * 시작 날짜: 2024-07-10
 	 * 담당자: 김지훈
 	*/
-	public int getLastPageApprovalList(int rowPerPage, String searchWord) {
-		
-		log.debug(Debug.KJH + "/ service / getLastPageApprovalList rowPerPage: " + rowPerPage);
-		log.debug(Debug.KJH + "/ service / getLastPageApprovalList searchWord: " + searchWord);
-		
-		int cnt = approvalMapper.approvalListCnt();
-		int lastPage = cnt / rowPerPage;
-		if((cnt % rowPerPage) != 0) {
-			lastPage += 1;
-		}
-		return lastPage;
-	}
 	
-	/*
-	 * 분류 번호: #11 - 결재 리스트
-	 * 시작 날짜: 2024-07-10
-	 * 담당자: 김지훈
-	*/
-	
-	public List<Map<String, Object>> getApprovalList(int currentPage, int rowPerPage, String searchWord) {
-		Map<String, Object> paramMap = new HashMap<>();
+	public Map<String, Object> getApprovalList(Map<String, Object> paramMap) {
+		// paramMap 디버깅
+		log.debug(Debug.KJH + " / Service / getApprovalList / paramMap: " + paramMap);
 		
-		paramMap.put("rowPerPage", rowPerPage);
-		paramMap.put("beginRow", (currentPage-1) * rowPerPage);
-		paramMap.put("searchWord", searchWord);
+		// template의 개수
+		int approvalCnt = approvalMapper.approvalListCnt(paramMap);
+		log.debug(Debug.KIS + " / Service / getApprovalList / approvalListCnt : " + approvalCnt);
 		
+		// 마지막 페이지 계산하기
+		int rowPerPage = (int) paramMap.get("rowPerPage");
+		int lastPage = (approvalCnt + rowPerPage - 1 ) / rowPerPage;
+		log.debug(Debug.KJH + " / Service / getApprovalList / lastPage: " + lastPage);
+		
+		// 템플릿 리스트
 		List<Map<String, Object>> approvalList = approvalMapper.selectApprovalHistory(paramMap);
+		log.debug(Debug.KJH + " / service / getApprovalList" + approvalList);
 		
-		log.debug(Debug.KJH + " / service / getApprovalList" + approvalList.toString());
+		// 결과 맵에 담기
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("approvalList", approvalList);
+		resultMap.put("lastPage", lastPage);
 		
-		return approvalList;
+		return resultMap;
+	
 	}
 	
 	
@@ -89,10 +83,28 @@ public class ApprovalService {
 	 * 담당자: 김지훈
 	*/
 	
-	public List<Map<String, Object>> getTemplateList() {
-		Map<String, Object> paramMap = new HashMap<>();
+	public Map<String, Object> getTemplateList(Map<String, Object> paramMap) {
+		// paramMap 디버깅
+		log.debug(Debug.KJH + " / Service / getTemplateList / paramMap: " + paramMap);
+		
+		// template의 개수
+		int templateCnt = approvalMapper.approvalTemplateListCnt(paramMap);
+		log.debug(Debug.KIS + " / Service / getTemplateList / templateCnt : " + templateCnt);
+		
+		// 마지막 페이지 계산하기
+		int rowPerPage = (int) paramMap.get("rowPerPage");
+		int lastPage = (templateCnt + rowPerPage - 1 ) / rowPerPage;
+		log.debug(Debug.KJH + " / Service / getTemplateList / lastPage: " + lastPage);
+		
+		// 템플릿 리스트
 		List<Map<String, Object>> templateList = approvalMapper.selectTemplateList(paramMap);
-		log.debug(Debug.KJH + " / service / getTemplate" + templateList.toString());
-		return templateList;
+		log.debug(Debug.KJH + " / service / getTemplate" + templateList);
+		
+		// 결과 맵에 담기
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("templateList", templateList);
+		resultMap.put("lastPage", lastPage);
+		
+		return resultMap;
 	}
 }

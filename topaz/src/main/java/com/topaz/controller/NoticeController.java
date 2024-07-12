@@ -121,28 +121,7 @@ public class NoticeController {
 
 	// http://localhost/topaz/groupware/notice/noticeList
 	@GetMapping("/groupware/notice/noticeList")
-	public String noticeList(Model model, 
-			@RequestParam(name = "currentPage", defaultValue = "1") int currentPage,
-			@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage,
-			@RequestParam(name = "searchWord", defaultValue = "") String searchWord) throws Exception {
-		List<Map<String, Object>> noticeList = noticeService.getNoticeList(currentPage, rowPerPage, searchWord);
-
-		//
-		log.debug(Debug.KJH + "/ Controller / noticeList: " + noticeList.toString());
-
-		int lastPage = noticeService.getLastPage(rowPerPage, searchWord);
-
-		//
-		log.debug(Debug.KJH + "/ Controller / noticeList lastPage: " + lastPage);
-
-		Date currentTime = new Date();
-		model.addAttribute("currentTime", currentTime);
-		model.addAttribute("noticeList", noticeList);
-		model.addAttribute("lastPage", lastPage);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("searchWord", searchWord);
-		
+	public String noticeList() throws Exception {
 		return "groupware/notice/noticeList";
-
 	}
 }

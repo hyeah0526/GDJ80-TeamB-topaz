@@ -61,7 +61,8 @@
 							<div class="card-body">
 								<h5 class="card-title">공지 사항 작성</h5>
 								<form action="${pageContext.request.contextPath}/groupware/notice/noticeAdd" method="post" id="addNoticeForm" onsubmit="return submitContent(this) && submitValidation();" enctype="multipart/form-data">
-								
+								<input type="hidden" name="regId" value="">
+								<input type="hidden" name="modId" value="">
 									<div class="row mb-3">
 										<label for="addTitle" class="col-sm-2 col-form-label">제목</label>
 										<div class="col-sm-10">
@@ -131,6 +132,7 @@
 									<div class="row mb-3">
 										<label for="content" class="col-sm-2 col-form-label">
 											내용
+								
 										</label>
 										<div class="col-sm-10">
 											<textarea class="form-control step" data-step="6" style="height: 100px" name="content" id="content"></textarea>
@@ -141,7 +143,7 @@
 										첨부 파일
 									</label>
 									<div class="col-sm-10">
-										<input class="form-control" type="file" id="uploadFile" name="uploadFile">
+										<input class="form-control" type="file" id="uploadFile" name="uploadFile" multiple>
 									</div>
 								</div>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>	

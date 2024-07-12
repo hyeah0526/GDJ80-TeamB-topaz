@@ -4,7 +4,12 @@
 <html lang="en">
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
+     <style>
+        .hiddenBtn {
+            display: none;
+        }
+    </style>
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/hearderBody.jsp"></jsp:include>
@@ -34,16 +39,17 @@
 					<div class="card-body">
 						
 						<!-- Table with stripped rows -->
-						<!-- <form action="/topaz/groupware/notice/noticeList" method="get">
+						<form action="/topaz/groupware/approval/approvalList" id="searchForm" method="get">
 							<br>
 							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
+							<button type="button" class="resetBtn hiddenBtn">초기화</button>
 							<button type="submit" class="btn btn-primary">검색</button>
-						</form> -->
+						</form>
 						<br>
 						<form action="" method="get">
-							<button id="noticeWriteBtn" name="" type="submit" class="btn btn-primary">작성</button>
+							<button type="submit" class="btn btn-primary">작성</button>
 						</form>
-						<table class="table" id="">
+						<table class="table">
 							<thead>
 								<tr>
 									<th>문서 번호</th>
@@ -56,41 +62,15 @@
 								</tr>
 							</thead>
 							<!-- 상단 노출 공지사항 -->
-							<tbody class="">
-								<c:forEach var="ah" items="${approvalList}">
-									<tr>
-										<td>${ah.approvalDocNo }</td>
-										<td>${ah.stateName }</td>
-										<td>${ah.empName }</td>
-										<td>${ah.startDate }</td>
-										<td>${ah.endDate }</td>
-										<td>${ah.regTime }</td>
-										<td>${ah.modTime }</td>
-									</tr>
-								</c:forEach>
+							<tbody id="approvalListContainer">
 							</tbody>
 						</table>
-						<%-- <div>
-							<span>
-								<c:if test="${currentPage > 1 }">
-									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
-										이전
-									</a>
-								</c:if>
-							</span>
-							<span>
-								<c:if test="${currentPage > 0 }">
-									${currentPage } / ${lastPage }
-								</c:if>
-							</span>
-							<span>
-								<c:if test="${currentPage < lastPage }">
-									<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage + 1}">
-										다음
-									</a>
-								</c:if>	
-							</span>
-						</div> --%>
+						
+					<nav aria-label="Page navigation example">
+						<ul class="pagination" id="paginationUl">
+						
+			           </ul>
+					</nav>				
 						<!-- End Table with stripped rows -->
 					</div>
 				</div>
@@ -107,6 +87,7 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	<script src="/topaz/js/jihoonApprovalListSelect.js"></script>
 </body>
 
 </html>

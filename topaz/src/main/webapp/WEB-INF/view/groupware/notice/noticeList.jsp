@@ -13,11 +13,11 @@
 <html lang="en">
 <head>
 	<link href="/topaz/css/jihoon.css" rel="stylesheet">
-	<script>
-		function submitForm() {
-			document.getElementById("noticeForm").submit();
-		}
-	</script>
+     <style>
+        .hiddenBtn {
+            display: none;
+        }
+    </style>
 </head>	
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
@@ -53,6 +53,7 @@
 						<form action="/topaz/groupware/notice/noticeList" method="get">
 							<div class="searchContainer">
 								<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord" class="searchBox">
+								<button type="button" class="resetBtn hiddenBtn"></button>
 								<button type="submit" class="btn btn-primary searchBoxBtn">검색</button>
 							</div>
 						</form>
@@ -72,7 +73,7 @@
 								</tr>
 							</thead>
 							<!-- 상단 노출 공지사항 -->
-							<tbody class="topNoticeList">
+							<tbody class="topNoticeContainer" id="topNoticeContainer">
 								<c:forEach var="n" items="${noticeList}">
 									<fmt:formatDate var="changedCurrentTime" value="${currentTime}" pattern="yyyy-MM-dd HH:mm:ss" />
 									<c:if test="${n.grade == '1' && (n.category == '1' || (n.category == '3' && changedCurrentTime >= n.startDate && changedCurrentTime <= n.endDate))}">
@@ -102,7 +103,7 @@
 								</c:forEach>
 							</tbody>
 							<!-- 전체 공지사항 (상단 노출 포함) -->
-							<tbody id="normallNotice">
+							<tbody name="normalNoticeContainer" id="normalNoticeContainer">
 								<c:forEach var="n" items="${noticeList}">
 									<tr>
 										<td>${n.no}</td>
@@ -129,27 +130,11 @@
 								</c:forEach>
 							</tbody>
 						</table>
-						<div class="pagenationContainer">
-								<span class="pagePre">
-									<c:if test="${currentPage > 1 }">
-										<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage -1}">
-											이전
-										</a>
-									</c:if>
-								</span>
-								<span class="pageCurrent">
-									<c:if test="${currentPage > 0 }">
-										${currentPage } / ${lastPage }
-									</c:if>
-								</span>
-								<span class="pageNext">
-									<c:if test="${currentPage < lastPage }">
-										<a href="/topaz/groupware/notice/noticeList?currentPage=${currentPage + 1}">
-											다음
-										</a>
-									</c:if>	
-								</span>
-							</div>
+						<nav aria-label="Page navigation example">
+							<ul class="pagination" id="paginationUl">
+							
+				           </ul>
+						</nav>				
 						</div>
 						<!-- End Table with stripped rows -->
 					</div>
@@ -163,5 +148,6 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	<script src="/topaz/js/jihoonNoticeListSelect.js"></script>
 </body>
 </html>

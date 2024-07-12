@@ -119,6 +119,6 @@
 		</where>
 		ORDER BY 
 			nn.news_no DESC
-		LIMIT #{beginRow}, #{rowPerPage}
+		LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 </mapper>

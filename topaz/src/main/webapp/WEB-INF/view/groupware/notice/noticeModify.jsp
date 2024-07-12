@@ -17,6 +17,7 @@
 	<!-- naver smart editor -->
 	<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 	<script>
+
 		let oEditor = [];
 		function initSmartEditor(contentValue) {
 			nhn.husky.EZCreator.createInIFrame({
@@ -70,15 +71,16 @@
 					<div class="card">
 						<div class="card-body">
 							<h5 class="card-title">공지 사항 작성</h5>
-							<form action="${pageContext.request.contextPath}/groupware/notice/noticeModify" method="post" onsubmit="return submitContent(this);" enctype="multipart/form-data">
+							<form action="${pageContext.request.contextPath}/groupware/notice/noticeModify" method="post" onsubmit="return submitContent(this); && submitValidation();" enctype="multipart/form-data">
 								<input type="hidden" name="newsNo" value="${noticeDetail.newsNo}">
+								<input type="hidden" name="modId" value="">
 								<!-- notice title -->
 								<div class="row mb-3">
 									<label for="modifyTitle" class="col-sm-2 col-form-label">
 										제목
 									</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control" id="title" name="title" value="${noticeDetail.title}">
+										<input type="text" class="form-control step" data-step="1" id="title" name="title" value="${noticeDetail.title}">
 									</div>
 								</div>
 								<!-- notice grade -->
@@ -86,13 +88,13 @@
 									<legend class="col-form-label col-sm-2 pt-0">등급</legend>
 									<div class="col-sm-10">
 										<div class="form-check">
-											<input class="form-check-input modifyGrade" type="radio" name="grade" id="modifyGrade1" value="1" ${noticeDetail.grade == 1 ? 'checked' : ''}> 
+											<input class="form-check-input modifyGrade step" data-step="2" type="radio" name="grade" id="modifyGrade1" value="1" ${noticeDetail.grade == 1 ? 'checked' : ''}> 
 											<label class="form-check-label" for="modifyGrade"> 
 												직원 
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input modifyGrade" type="radio" name="grade" id="modifyGrade2" value="2" ${noticeDetail.grade == 2 ? 'checked' : ''}> 
+											<input class="form-check-input modifyGrade step" data-step="2"type="radio" name="grade" id="modifyGrade2" value="2" ${noticeDetail.grade == 2 ? 'checked' : ''}> 
 											<label class="form-check-label" for="modifyGrade"> 
 												외주 업체 
 											</label>
@@ -104,19 +106,19 @@
 									<legend class="col-form-label col-sm-2 pt-0">종류</legend>
 									<div class="col-sm-10">
 										<div class="form-check">
-											<input class="form-check-input modifyCategory" type="radio" name="category" id="modifyCategory1" value="1" ${noticeDetail.category == 1 ? 'checked' : ''}> 
+											<input class="form-check-input modifyCategory step" data-step="3" type="radio" name="category" id="modifyCategory1" value="1" ${noticeDetail.category == 1 ? 'checked' : ''}> 
 											<label class="form-check-label" for="modifyCategory"> 
 												필독
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input modifyCategory" type="radio" name="category" id="modifyCategory2" value="2" ${noticeDetail.category == 2 ? 'checked' : ''}> 
+											<input class="form-check-input modifyCategory step" data-step="3" type="radio" name="category" id="modifyCategory2" value="2" ${noticeDetail.category == 2 ? 'checked' : ''}> 
 											<label class="form-check-label" for="noticeCategory2"> 
 												일반
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input modifyCategory" type="radio" name="category" id="modifyCategory3" value="3" ${noticeDetail.category == 3 ? 'checked' : ''}> 
+											<input class="form-check-input modifyCategory step" data-step="3" type="radio" name="category" id="modifyCategory3" value="3" ${noticeDetail.category == 3 ? 'checked' : ''}> 
 											<label class="form-check-label" for="noticeCategory3"> 
 												이벤트
 											</label>
@@ -128,7 +130,7 @@
 									<label for="modifyNoticeStart" class="col-sm-2 col-form-label">게시 시작일
 									</label>
 									<div class="col-sm-4">
-										<input type="date" class="form-control" id="startDate" name="startDate" value="${noticeDetail.startDate.toString().substring(0, 10)}">
+										<input type="date" class="form-control step" data-step="4" id="startDate" name="startDate" value="${noticeDetail.startDate.toString().substring(0, 10)}">
 									</div>
 								</div>
 								<!-- end date-->
@@ -137,7 +139,7 @@
 										게시 종료일
 									</label>
 									<div class="col-sm-4">
-										<input type="date" class="form-control" id="endDate" name="endDate" value="${noticeDetail.endDate.toString().substring(0, 10)}">
+										<input type="date" class="form-control step" data-step="5" id="endDate" name="endDate" value="${noticeDetail.endDate.toString().substring(0, 10)}">
 									</div>
 								</div>
 								<!-- content -->
@@ -145,7 +147,7 @@
 									<label for="content" class="col-sm-2 col-form-label">내용</label>
 									<div class="col-sm-10">
 										<!-- c:out 이용하여 입력된 서식 깨지지 않게 출력 -->
-										<textarea class="form-control" style="height: 100px" name="content" id="content">
+										<textarea class="form-control step" data-step="6" style="height: 100px" name="content" id="content">
 											<c:out value="${noticeDetail.content}" escapeXml="false" />
 										</textarea>
 									</div>

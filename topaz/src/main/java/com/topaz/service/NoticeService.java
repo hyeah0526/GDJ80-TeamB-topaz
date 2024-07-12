@@ -87,42 +87,34 @@ public class NoticeService {
 		return noticeDetail;
 	}
 	
-	/*
-	 * 분류 번호: #10 - 공지 사항 목록 페이지
-	 * 시작 날짜: 2024-07-05
-	 * 담당자: 김지훈
-	*/
-	
-	public int getLastPage(int rowPerPage, String searchWord) {
-		
-		log.debug(Debug.KJH + "/ service / getLastPage rowPerPage: " + rowPerPage);
-		log.debug(Debug.KJH + "/ service / getLastPage searchWord: " + searchWord);
-		
-		int cnt = noticeMapper.noticeCnt();
-		int lastPage = cnt / rowPerPage;
-		if((cnt % rowPerPage) != 0) {
-			lastPage += 1;
-		}
-		return lastPage;
-	}
-	
 	
 	/*
 	 * 분류 번호: #10 - 공지 사항 목록 페이지
 	 * 시작 날짜: 2024-07-05
 	 * 담당자: 김지훈
 	*/
-	public List<Map<String, Object>> getNoticeList(int currentPage, int rowPerPage, String searchWord) {
-		Map<String, Object> paramMap = new HashMap<>();
+	public Map<String, Object> getNoticeList(Map<String, Object> paramMap) {
+		// paramMap 디버깅
+		log.debug(Debug.KJH + " / Service / getNoticeList / paramMap: " + paramMap);
 		
-		paramMap.put("rowPerPage", rowPerPage);
-		paramMap.put("beginRow", (currentPage-1) * rowPerPage);
-		paramMap.put("searchWord", searchWord);
+		// notice의 개수
+		int noticeCnt = noticeMapper.noticeCnt(paramMap);
+		log.debug(Debug.KIS + " / Service / getNoticeList / noticeCnt : " + noticeCnt);
 		
+		// 마지막 페이지 계산하기
+		int rowPerPage = (int) paramMap.get("rowPerPage");
+		int lastPage = (noticeCnt + rowPerPage - 1 ) / rowPerPage;
+		log.debug(Debug.KJH + " / Service / getNoticeList / lastPage: " + lastPage);
+		
+		// 공지 사항 리스트
 		List<Map<String, Object>> noticeList = noticeMapper.selectNoticeList(paramMap);
+		log.debug(Debug.KJH + " / service / getNoticeList" + noticeList);
 		
-		log.debug(Debug.KJH + "/ service / getNoticeList " + noticeList.toString());
-		
-		return noticeList;
+		// 결과 맵에 담기
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("noticeList", noticeList);
+		resultMap.put("lastPage", lastPage);
+
+		return resultMap;
 	}
 }

@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.ApprovalMapper">
 	
+	<select id="approvalTemplateListCnt" resultType="int">
+		SELECT
+			COUNT(*) cnt
+		FROM
+			approval_template
+		WHERE
+			use_yn = 'Y'		
+	</select>
 	
 	<select id="approvalListCnt" resultType="int">
 		SELECT
@@ -53,7 +61,7 @@
 				OR emp.emp_name LIKE CONCAT('%', #{searchWord}, '%'))
 		ORDER BY 
 			regTime DESC
-		LIMIT #{beginRow}, #{rowPerPage}	
+		LIMIT #{currentPage}, #{rowPerPage}	
 	</select>
 	<!-- 분류 번호: #11 - 템플릿 등록 -->
 	<insert id="insertTemplate" parameterType="com.topaz.dto.ApprovalTemplate">
@@ -121,6 +129,7 @@
 			WHERE 
 				t.use_yn = 'Y'
 			
-		ORDER BY t.template_no DESC; 
+		ORDER BY t.template_no DESC
+		LIMIT #{currentPage}, #{rowPerPage}; 
 	</select>
 </mapper>

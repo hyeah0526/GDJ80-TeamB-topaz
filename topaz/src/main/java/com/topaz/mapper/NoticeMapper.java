@@ -24,8 +24,8 @@ public interface NoticeMapper {
 	Map<String, Object> selectNoticeDetail(String newsNo);
 	
 	/*  분류 번호: #10 - 공지 사항 목록 페이지 - 리스트 */
-	List<Map<String, Object>> selectNoticeList(Map<String, Object> paramMap);
+	List<Map<String, Object>> selectNoticeList(Map<String, Object> noticeList);
 	
 	/*  분류 번호: #10 - 공지 사항 목록 페이지 - 페이징 */
-	int noticeCnt();
+	int noticeCnt(Map<String, Object> paramMap);
 }

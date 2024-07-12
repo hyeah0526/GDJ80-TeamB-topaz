@@ -14,6 +14,7 @@ import com.topaz.dto.ApprovalTemplate;
 import com.topaz.service.ApprovalService;
 import com.topaz.utill.Debug;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -28,27 +29,10 @@ public class ApprovalController {
 	 */
 	
 	
-	
-	@GetMapping("groupware/approval/approvalList")
-	public String approvalList(Model model,
-		@RequestParam(name = "currentPage", defaultValue = "1") int currentPage,
-		@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage,
-		@RequestParam(name = "searchWord", defaultValue = "") String searchWord) throws Exception {
-		
-		List<Map<String, Object>> approvalList = approvalService.getApprovalList(currentPage, rowPerPage, searchWord);
-		
-		log.debug(Debug.KJH + " / Controller / approvalList: " + approvalList);
-		
-		int lastPage = approvalService.getLastPageApprovalList(rowPerPage, searchWord);
-				
-		model.addAttribute("approvalList", approvalList);
-		model.addAttribute("lastPage", lastPage);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("searchWord", searchWord);
-		
-		return "groupware/approval/approvalList";
-	}
-	
+	 @GetMapping("groupware/approval/approvalList") 
+	 public String approvalList() {
+	 return "groupware/approval/approvalList"; 
+	 }
 	
 
 	@GetMapping("groupware/approval/approvalTemplateModify")
@@ -88,15 +72,10 @@ public class ApprovalController {
 	 * 서비스명: getNoticeList() 담당자: 김지훈
 	 */
 	
-	@GetMapping("/groupware/approval/approvalTemplateList")
-	public String approvalTemplateList(Model model) throws Exception {
-		
-		List<Map<String, Object>> templateList = approvalService.getTemplateList();
-		
-		log.debug(Debug.KJH + " / Controller / approvalTemplateList: " + templateList);
-		
-		model.addAttribute("templateList", templateList);
-		return "groupware/approval/approvalTemplateList";
-	}
 	
+	@GetMapping("/groupware/approval/approvalTemplateList") 
+	public String approvalTemplateList() throws Exception {
+	  
+			return "groupware/approval/approvalTemplateList";
+	}
 }
