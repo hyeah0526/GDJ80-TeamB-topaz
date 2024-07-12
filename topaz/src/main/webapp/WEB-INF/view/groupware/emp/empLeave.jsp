@@ -78,7 +78,7 @@
 			     	</form>
 			     	
 			     	
-			     	<table border="1">
+			     	<table class="table table-hover">
 						<tr>
 							<th>사원번호</th>
 							<th>사원명</th>
@@ -89,12 +89,12 @@
 						</tr>
 						<c:forEach var="b" items="${empList}">
 							<tr onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empDetail?empNo=${b.empNo}'" style="cursor:pointer;">
-								<td>${b.empNo}</td>
-								<td>${b.empName }</td>
-								<td>${b.empDept }</td>
-								<td>${b.empGrade}</td>
-								<td>${b.yearCnt}</td>
-								<td>${b.useYn}</td>
+								<td scope="col">${b.empNo}</td>
+								<td scope="col">${b.empName }</td>
+								<td scope="col">${b.empDept }</td>
+								<td scope="col">${b.empGrade}</td>
+								<td scope="col">${b.yearCnt}</td>
+								<td scope="col">${b.useYn}</td>
 							</tr>
 						</c:forEach>
 					</table>

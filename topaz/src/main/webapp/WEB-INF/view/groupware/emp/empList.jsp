@@ -112,15 +112,15 @@
 			     	</form>
 			     	
 			     	
-			     	<table border="1">
+			     	<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>사원번호</th>
-								<th>사원명</th>
-								<th>부서명</th>
-								<th>직위</th>
-								<th>잔여 휴가일</th>
-								<th>근무 유무</th>
+								<th scope="col">사원번호</th>
+								<th scope="col">사원명</th>
+								<th scope="col">부서명</th>
+								<th scope="col">직위</th>
+								<th scope="col">잔여 휴가일</th>
+								<th scope="col">근무 유무</th>
 							</tr>
 						</thead>
 						

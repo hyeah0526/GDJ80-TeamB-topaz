@@ -78,14 +78,14 @@
 			     	</form>
 			     	
 			     	
-			     	<table border="1">
+			     	<table class="table table-hover">
 			     		<thead>
 							<tr>
-								<th>날짜</th>
-								<th>사원 이름</th>
-								<th>사원 번호</th>
-								<th>출근시간</th>
-								<th>퇴근시간</th>
+								<th scope="col">날짜</th>
+								<th scope="col">사원 이름</th>
+								<th scope="col">사원 번호</th>
+								<th scope="col">출근시간</th>
+								<th scope="col">퇴근시간</th>
 							</tr>
 						</thead>
 						

@@ -46,16 +46,4 @@ public class EmpInfoInterceptor implements HandlerInterceptor {
         
 	}
 	
-	@Override // 컨트롤러가 요청을 처리한 후에 호출된다.
-    public void postHandle(HttpServletRequest req, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-		 
-		// modelAndView 객체가 null이 아닐 경우에만 modelAndView 객체에 추가
-        if (modelAndView != null) {
-        	
-        	//직원정보 가져오기
-            Map<String, Object> empDetail = (Map<String, Object>) req.getAttribute("empDetail");
-            modelAndView.addObject("empDetail", empDetail);
-        }
-    }
-
 }
