@@ -139,20 +139,54 @@ $('#chkId').click(function() {
 
 
 
+/* 종료일이 시작일보다 먼저일 수 없게 예외처리 */
+// 시작일 먼저 입력시 유효성검사
+$('#contractStart').change(function() {
+    validateDateRange();
+});
+
+// 종료일 먼저 입력시 유효성검사
+$('#contractEnd').change(function() {
+    validateDateRange();
+});
+
+function validateDateRange() {
+    // 시작일, 종료일 값 
+    var startDateValue = new Date($('#contractStart').val());
+    var endDateValue = new Date($('#contractEnd').val());
+
+    // 종료일이 시작일보다 이른 경우
+    if ($('#contractEnd').val() !== '' && endDateValue < startDateValue) {
+        // 안내
+        alert('종료일은 시작일 이후여야 합니다.');
+
+        // 값 초기화
+        $('#contractEnd').val('');
+    }
+}
+
+
 
 /* submit 등록폼 전송 버튼 */
 $('#addBpoBtn').click(function() {
 	console.log('등록폼 submit버튼 클릭');
 	
-	// 주소와 상세주소 하나로 합치기
+	// 주소 address에 값 담기
 	let firstAddress = $('#firstAddress').val();
-	console.log('firstAddress--> ', firstAddress);
-	let addressDetail = $('#addressDetail').val();
-	console.log('addressDetail--> ', addressDetail);
+	$('#address').val(firstAddress);
+	console.log('address잘들어갔는지 check--> ', $('#address').val());
 	
-	let addressAll = firstAddress +' ' + addressDetail;
-	console.log('addressAll--> ', addressAll);
-	$('#address').val(addressAll);
+	// 파일이 선택되었는지 확인(유효성 검사에 실패할경우 파일은 무조건 재등록 해야함)
+    let fileInput = $('#formFile');
+    if (fileInput.get(0).files.length === 0) {
+        alert('파일을 선택해주세요.');
+        return false; // 폼 제출 중단
+    }
 	
 	return true;
 });
+
+
+
+
+

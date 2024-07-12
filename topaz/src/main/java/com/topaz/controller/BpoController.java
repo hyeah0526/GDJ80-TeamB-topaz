@@ -6,8 +6,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,6 +19,7 @@ import com.topaz.utill.Debug;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -148,21 +150,50 @@ public class BpoController {
 	 * 담당자: 박혜아
 	*/
 	@RequestMapping("/groupware/bpo/bpoAdd")
-	public String bpoAdd() {
-		
+	public String bpoAdd(Model model
+						,@RequestParam(name="empNameInput", defaultValue="") String empNameInput) {
+		// 유효성 검사 후 다시 폼으로 되돌아 갈 경우 작성한 값들 그대로 가져가기 
+		model.addAttribute("oscRq", new OutsourcingRequest());
+		model.addAttribute("empNameInput",empNameInput);
 		return "groupware/bpo/bpoAdd";
 	}
 	
 	
 	
 	/*
-	 * 서비스명: 
+	 * 서비스명: setBpo
 	 * 시작 날짜: 2024-07-11
 	 * 담당자: 박혜아
 	*/
 	@RequestMapping("/groupware/bpo/bpoAddPost")
-	public String bpoAddPost(OutsourcingRequest oscRq
+	public String bpoAddPost(@Valid OutsourcingRequest oscRq
+								, Errors errors
+								, Model model
 								, HttpServletRequest  httpServletRequest) {
+		
+		log.debug(Debug.PHA + "bpoAddPost Controller validation 테스트--> " + oscRq.getAddress() + Debug.END);
+		log.debug(Debug.PHA + "bpoAddPost Controller validation 테스트--> " + oscRq.getEmpNo() + Debug.END);
+		// 에러 발생시 true
+		log.debug(Debug.PHA + "bpoAddPost Controller hassErrors여부 --> " + errors.hasErrors()  + Debug.END);
+		// 에러 갯수확인
+		//log.debug(Debug.PHA + "bpoAddPost Controller 에러갯수 --> " + errors  + Debug.END);
+		// 에러 있으면 폼으로 다시 보내기
+		if(errors.hasErrors()) {
+			// 파일 유효성 검사
+			if(oscRq.getUploadFile() == null || oscRq.getUploadFile().isEmpty()) {
+				// 유효성 검사 실패 메세지 담기
+				model.addAttribute("uploadFileMsg", "업로드파일 선택해주세요");
+			}
+			
+			// 그 외 유효성 검사
+			for(FieldError e : errors.getFieldErrors()) {
+				log.debug(Debug.PHA + "bpoAddPost 에러메세지--> " + e.getDefaultMessage() + Debug.END);
+				// 유효성 검사 실패 메세지 담기
+				model.addAttribute(e.getField() +"Msg", e.getDefaultMessage());
+			}
+			
+			return "groupware/bpo/bpoAdd";
+		}
 		
 		// 세션에서 아이디 값 가져오기
 		HttpSession session = httpServletRequest.getSession();
@@ -173,7 +204,6 @@ public class BpoController {
 		
 		// 등록하기
 		bpoService.setBpo(oscRq);
-		
 		
 		return "redirect:/groupware/bpo/bpoList";
 	}
