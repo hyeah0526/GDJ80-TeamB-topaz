@@ -78,6 +78,13 @@ $('#chkId').click(function() {
 		return false; 
 	}
 	
+	// 대문자만 허용
+    if (!/^[A-Z]+$/.test($('#outsourcingNo').val())) {
+        alert('아이디는 영어 대문자로만 입력해주세요');
+        $('#outsourcingNo').focus();
+        return false;
+    }
+	
 	
 	// 상시 / 운영 선택여부 검사
 	let selectedRadio = $("input[name='outsourcingType']:checked").val();

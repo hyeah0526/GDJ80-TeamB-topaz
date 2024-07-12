@@ -15,6 +15,7 @@ public class Outsourcing {
 	private String outsourcingNo;
 	private String outsourcingPw;
 	private String outsourcingName;
+	private String outsourcingAbout;
 	private String outsourcingState;
 	private String outsourcingType;
 	private String inchargeName;

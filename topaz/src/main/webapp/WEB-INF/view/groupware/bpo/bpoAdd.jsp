@@ -48,6 +48,14 @@
 					</div>
 					
 					<div class="row mb-3">
+						<label for="inputText" class="col-sm-4 col-form-label">업체 소개</label>
+						<div class="col-sm-8">
+							<textarea name="outsourcingAbout" class="form-control">${empty param.outsourcingAbout ? '' : param.outsourcingAbout}</textarea>
+							<div class="validMsg">${outsourcingAboutMsg}</div>
+						</div>
+					</div>
+					
+					<div class="row mb-3">
 						<label for="inputText" class="col-sm-4 col-form-label">업체종류</label>
 						<div class="col-sm-8">
 							<label for="typeAll">
@@ -62,7 +70,7 @@
 	                </div>
 	                
 					<div class="row mb-3">
-						<label for="inputNumber" class="col-sm-4 col-form-label">업체로고</label>
+						<label for="inputNumber" class="col-sm-4 col-form-label">업체 사진</label>
 						<div class="col-sm-8">
 	                    	<input class="form-control" type="file" id="formFile" name="uploadFile">
 	                    	<div class="validMsg">${uploadFileMsg}</div>
@@ -129,7 +137,7 @@
 						<div class="col-sm-5">
 	                    	<input name="postNo" class="form-control" data-step="11" placeholder="우편번호" maxlength="5" value="${empty param.postNo ? '' : param.postNo}" readonly>
 							<input name="firstAddress" id="firstAddress" class="step form-control" data-step="12" placeholder="주소" value="${empty param.address ? '' : param.address}">
-							<div class="validMsg">${postNoMsg}</div>
+							<div class="validMsg">${addressMsg}</div>
 						</div>
 						<div class="col-sm-3">
 							<button class="step btn btn-primary" type="button" data-step="10" onclick="openPostcode('postNo','firstAddress')">우편번호찾기</button><br>

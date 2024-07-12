@@ -259,6 +259,7 @@ public class BpoService {
 		outsourcing.setOutsourcingNo(oscRq.getOutsourcingNo());
 		outsourcing.setOutsourcingPw(oscRq.getOutsourcingPw());
 		outsourcing.setOutsourcingName(oscRq.getOutsourcingName());
+		outsourcing.setOutsourcingAbout(oscRq.getOutsourcingAbout());
 		
 		if(oscRq.getOutsourcingType().equals("1")) {
 			// 타입이 상시일경우 '상시'코드 삽입
@@ -297,7 +298,7 @@ public class BpoService {
 		MultipartFile mf = oscRq.getUploadFile();
 		// file_upload테이블 DTO에 값 저장
 		UploadFile file = new UploadFile();
-		file.setReferenceNo(outsourcing.getOutsourcingNo());
+		file.setReferenceNo(oscRq.getOutsourcingNo());
 		file.setOriginalFileName(mf.getOriginalFilename());
 		file.setFileType(mf.getContentType());
 		file.setFileSize(mf.getSize());
@@ -322,7 +323,7 @@ public class BpoService {
 		
 		// 파일 upload폴더에 저장하기
 		File emptyFile = new File(System.getProperty("user.dir") 
-									+ "/src/main/resources/static/upload/" 
+									+ "/src/main/resources/static/assets/img/bpo/" 
 									+ file.getFileName());
 		
 		try {
@@ -333,9 +334,23 @@ public class BpoService {
 			e.printStackTrace(); // 예외나면 전부 취소
 			throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 insert명령도 전부 취소
 		}
+	}
+	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 상세 페이지(bpoDetail.jsp) :: 상세보기
+	 * 시작 날짜: 2024-07-12
+	 * 담당자: 박혜아
+	*/
+	public Map<String, Object> getBpoDetail(String outsourcingNo) {
+		log.debug(Debug.PHA + "getBpoDetail Service outsourcingNo--> " + outsourcingNo + Debug.END);
 		
+		// 상세보기
+		Map<String, Object> bpoOne = bpoMapper.selectBpoOne(outsourcingNo);
+		log.debug(Debug.PHA + "getBpoDetail Service outsourcingNo--> " + outsourcingNo + Debug.END);
 		
-		
+		return bpoOne;
 	}
 
 }

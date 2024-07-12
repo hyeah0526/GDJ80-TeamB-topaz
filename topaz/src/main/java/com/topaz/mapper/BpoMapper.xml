@@ -233,48 +233,45 @@
 	
 	<!-- 분류 번호: #5 - 외주업체 등록 페이지 :: 외주업체 등록 -->
 	<insert id="insertBpo" parameterType="com.topaz.dto.Outsourcing">
-		<!-- 파일 등록을 위해 _no저장 -->
-		<selectKey order="AFTER" keyProperty="outsourcingNo" resultType="String">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-		
-			INSERT INTO outsourcing(
-				outsourcing_no
-				,outsourcing_pw
-				,outsourcing_name
-				,outsourcing_state
-				,outsourcing_type
-				,incharge_name
-				,contract_start
-				,contract_end
-				,emp_no
-				,contact_no
-				,post_no
-				,address
-				,reg_id
-				,reg_time
-				,mod_id
-				,mod_time
-				,use_yn
-			)VALUES(
-				#{outsourcingNo}
-				,#{outsourcingPw}
-				,#{outsourcingName}
-				,'3'
-				,#{outsourcingType}
-				,#{inchargeName}
-				,#{contractStart}
-				,#{contractEnd}
-				,#{empNo}
-				,#{contactNo}
-				,#{postNo}
-				,#{address}
-				,#{regId}
-				,NOW()
-				,#{modId}
-				,NOW()
-				,'Y'
-			);
+		INSERT INTO outsourcing(
+			outsourcing_no
+			,outsourcing_pw
+			,outsourcing_name
+			,outsourcing_about
+			,outsourcing_state
+			,outsourcing_type
+			,incharge_name
+			,contract_start
+			,contract_end
+			,emp_no
+			,contact_no
+			,post_no
+			,address
+			,reg_id
+			,reg_time
+			,mod_id
+			,mod_time
+			,use_yn
+		)VALUES(
+			#{outsourcingNo}
+			,#{outsourcingPw}
+			,#{outsourcingName}
+			,#{outsourcingAbout}
+			,'3'
+			,#{outsourcingType}
+			,#{inchargeName}
+			,#{contractStart}
+			,#{contractEnd}
+			,#{empNo}
+			,#{contactNo}
+			,#{postNo}
+			,#{address}
+			,#{regId}
+			,NOW()
+			,#{modId}
+			,NOW()
+			,'Y'
+		)
 	</insert>
 	
 	
@@ -290,4 +287,34 @@
 			, NOW(), NOW(), #{regId}, #{modId}, #{useYN}
 		)
 	</insert>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 상세 페이지 :: 상세보기 -->
+	<select id="selectBpoOne" parameterType="String" resultType="map">
+		SELECT 
+			o.outsourcing_no outsourcingNo
+			, o.outsourcing_name outsourcingName
+			, o.outsourcing_about outsourcingAbout
+			, (SELECT cd_nm from common_code WHERE crp_cd = 'W001' AND cd = o.outsourcing_state) outsourcingState
+			, (SELECT cd_nm from common_code WHERE crp_cd = 'W002' AND cd = o.outsourcing_type) outsourcingType
+			, o.incharge_name inchargeName
+			, DATE_FORMAT(o.contract_start, '%Y%M%d') contractStart
+			, DATE_FORMAT(o.contract_end, '%Y%M%d') contractEnd
+			, (SELECT emp_name FROM employee WHERE emp_no = o.emp_no) empNo
+			, CONCAT(SUBSTRING(o.contact_no from 1 for 3), '-'
+						, SUBSTRING(o.contact_no from 4 for 4), '-'
+						, SUBSTRING(o.contact_no from 8 for 4)) contactNo
+			, o.post_no postNo
+			, o.address address
+			, (SELECT emp_name FROM employee WHERE emp_no = o.reg_id) regId
+			, (SELECT emp_name FROM employee WHERE emp_no = o.mod_id) modId
+			, f.file_no fileNo
+			, f.file_name fileName
+		FROM 
+			outsourcing o
+		INNER JOIN file_upload f 
+			ON o.outsourcing_no = f.reference_no
+		WHERE 
+			o.outsourcing_no = #{outsourcingNo}
+	</select>
 </mapper>

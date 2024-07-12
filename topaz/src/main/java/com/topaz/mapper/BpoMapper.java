@@ -52,4 +52,7 @@ public interface BpoMapper {
 	
 	/* 분류 번호: #5 - 외주업체 등록 페이지 :: 외주업체 파일등록 */
 	int insertBpoFile(UploadFile file);
+	
+	/* 분류 번호: #5 - 외주업체 상세 페이지 :: 상세보기 */
+	Map<String, Object> selectBpoOne(String outsourcingNo);
 }
