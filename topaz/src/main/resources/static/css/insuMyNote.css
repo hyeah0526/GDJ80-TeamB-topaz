@@ -44,6 +44,46 @@ table tr:hover {
     cursor: pointer; 
 }
 
+.btnDiv {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+}
+
+.btnDiv button{
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    width: auto; 
+}
+.noteDetailContainer {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    width: 90%;
+    height: 300px;
+}
+
+.noteHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+	border-bottom: 3px solid black;
+}
+
+.noteContent{
+	margin-top: 20px;
+}
+
 #paginationUl {
     display: flex;
     justify-content: center;    

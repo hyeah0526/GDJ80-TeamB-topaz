@@ -50,7 +50,7 @@
                     
                     <!-- 내용저장 -->
                     <div>
-                        <form class="signupForm" action="" method="post" enctype="multipart/form-data">
+                        <form class="signupForm" >
                             
                             <div class="imageNameDiv">
                                 <!-- 이미지 -->

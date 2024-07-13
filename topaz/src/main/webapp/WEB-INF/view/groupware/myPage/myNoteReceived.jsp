@@ -6,8 +6,7 @@
 	 * 시작 날짜 : 2024-07-12
 	 * 담당자 : 김인수
  -->
-
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,7 +90,6 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
-	<script src="/topaz/js/insuMyNoteList.js"></script>
+	<script src="/topaz/js/insuMyNoteRecList.js"></script>
 </body>
-
 </html>

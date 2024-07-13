@@ -369,6 +369,7 @@
 		WHERE
 			receiver_id = #{empNo} AND
 			use_yn = 'Y'
+		LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 	
 	<!--  분류 번호 :  #2 - 수신 쪽지수 조회  -->
@@ -395,5 +396,18 @@
 		</foreach>
 	</update>
 	
+	<!-- 분류 번호 :  #2 -  쪽지 상세 보기 -->
+	<select id="selectNoteDetail" resultType="Map" >		
+		SELECT 
+			note_id noteId,
+			sender_id senderId,
+			receive_time receiveTime,
+			note_content noteContent
+		FROM
+			note_history
+		WHERE
+			note_id = #{noteId} AND
+			use_yn = 'Y'
+	</select>
 	
 </mapper>

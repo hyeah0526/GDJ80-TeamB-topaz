@@ -347,10 +347,23 @@ public class EmployeeService {
 	    //여러 개의 noteId를 업데이트
 	    int result = empMapper.deleteNote(noteIds);
 	        
-		
 		return result;
 	} 
 	
-	
+	/*
+	 * 분류 번호 :  #2 - 쪽지 상세 보기
+	 * 시작 날짜: 2024-07-13
+	 * 담당자: 김인수
+	*/
+	public Map<String, Object> selectNoteDetail(String noteId) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectNoteDetail / noteId : " + noteId);
+
+		//쪽지 상세 정보 가져오기
+		Map<String, Object> noteDetail =  empMapper.selectNoteDetail(noteId);
+		
+		return noteDetail;
+	} 
 	
 }

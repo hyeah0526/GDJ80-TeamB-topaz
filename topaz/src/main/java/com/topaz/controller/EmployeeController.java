@@ -38,9 +38,7 @@ public class EmployeeController {
 	*/
 	@GetMapping("/groupware/emp/empAdd")
 	public String empAdd() {
-		
 		return "groupware/emp/empAdd";
-	
 	}
 	
 	
@@ -260,6 +258,9 @@ public class EmployeeController {
 			Model model,
 			@RequestParam(name = "empNo") String empNo) {
 		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / myPwModify / empNo : " + empNo);
+		
 		//내 정보 리스트 가져오기
 	    Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
 	    log.debug(Debug.KIS + "controller / empDetail / empDetail : " + empDetail);
@@ -312,6 +313,7 @@ public class EmployeeController {
 	}
 	
 	//========== 쪽지 
+	
 	/*
 	 * 서비스명: myNoteReceived.jsp ( 받은 메세지 뷰 ) 
 	 * 시작 날짜: 2024-07-12
@@ -322,4 +324,23 @@ public class EmployeeController {
 		return "groupware/myPage/myNoteReceived";
 	}
 	
+	/*
+	 * 서비스명: myNoteDetail.jsp ( 쪽지 상세 ) 
+	 * 시작 날짜: 2024-07-13
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myNoteDetail")
+	public String  myNoteDetail(
+			Model model,
+			@RequestParam(name = "noteId") String noteId) {
+		
+		//내 정보 리스트 가져오기
+	    Map<String, Object> noteDetail = employeeService.selectNoteDetail(noteId);
+	    log.debug(Debug.KIS + "controller / myNoteDetail / noteDetail : " + noteDetail);
+	  
+	    //모델 객체에 데이터 추가
+	    model.addAttribute("noteDetail", noteDetail);
+		
+		return "groupware/myPage/myNoteDetail";
+	}
 }

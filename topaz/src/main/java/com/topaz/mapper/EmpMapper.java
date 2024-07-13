@@ -78,4 +78,8 @@ public interface EmpMapper {
 	/* 분류 번호 :  #2 -  쪽지 삭제 */
 	public int deleteNote(List<String> noteIds);
 	
+	/* 분류 번호 :  #2 -  쪽지 상세 보기 */
+	public Map<String, Object> selectNoteDetail(String noteId);
+	
+	
 }
