@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- 
-	 * 분류 번호 :  #2 - 수신 쪽지함 페이지
-	 * 시작 날짜 : 2024-07-13
+	 * 분류 번호 :  #2 - 휴지통 쪽지함 페이지
+	 * 시작 날짜 : 2024-07-14
 	 * 담당자 : 김인수
  -->
  
@@ -28,11 +28,11 @@
 	
 	<!-- Title 시작 -->
 	<div class="pagetitle">
-      <h1>수신 쪽지함</h1>
+      <h1>휴지통 쪽지함</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
-	      <li class="breadcrumb-item active">My Recive Note List</li>
+	      <li class="breadcrumb-item active">My Trash Note List</li>
         </ol>
       </nav>
 	</div><!-- Title 종료 -->
@@ -54,8 +54,7 @@
                     	</div>
 				     	
 				     	<div style="margin-bottom: 20px;">
-				     		<button type="button" id="deleteButton">삭제</button>
-				     		<button>답장</button>
+				     		<button type="button" id="returnButton">복구</button>
 				     	</div>
 				     	
 				     	<table class="table table-hover">
@@ -90,6 +89,7 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
-	<script src="/topaz/js/insuMyNoteRecList.js"></script>
+	<script src="/topaz/js/insuMyNoteTrash.js"></script>	
+	
 </body>
 </html>

@@ -164,54 +164,6 @@ public class EmployeeController {
 	}
 	
 
-	/*
-	 * 서비스명: #4 - 전체 휴가 조회
-	 * 시작 날짜: 2024-07-08
-	 * 담당자: 김인수
-	*/
-	@GetMapping("/groupware/emp/empLeave")
-	public String empLeave(
-			Model model,
-			@RequestParam Map<String, Object> paramMap) {
-		
-		//매개변수 디버깅
-	    log.debug(Debug.KIS + "controller / empLeave / paramMap : " + paramMap);
-		
-		
-	    //기본 값 설정
-	    int currentPage = 1;
-	    int rowPerPage = 10;
-	    
-	    
-	    //페이징과 관련된 파라미터 설정
-	    if (paramMap.get("currentPage") != null) {
-	        currentPage = Integer.parseInt((String) paramMap.get("currentPage"));
-	    }
-
-	    if (paramMap.get("rowPerPage") != null) {
-	        rowPerPage = Integer.parseInt((String) paramMap.get("rowPerPage"));
-	    }
-	    
-	    //페이징 처리를 위한 설정
-	    paramMap.put("currentPage", (currentPage - 1) * rowPerPage);
-	    paramMap.put("rowPerPage", rowPerPage);
-		
-		
-	    //********* 결재 진행 시 함께 진행할 예정 *********
-	    // controller만 구현 / service, mapper, xml, jsp 구현 예정
-	    
-		//전체직원 정보 가져오기
-	    //Map<String, Object> resultMap = employeeService.selectEmpAll(paramMap);
-	    //List<Map<String, Object>> empList = (List<Map<String, Object>>) resultMap.get("empList");
-	    //int lastPage = (int) resultMap.get("lastPage");
-		
-		//모델 객체에 데이터 추가 
-		//model.addAttribute("empList", empList);
-		//model.addAttribute("lastPage", lastPage);
-		//model.addAttribute("currentPage", currentPage);
-		
-		return "groupware/emp/empLeave";
-	}
 	
 	
 	//========== 개인 정보
@@ -342,5 +294,28 @@ public class EmployeeController {
 	    model.addAttribute("noteDetail", noteDetail);
 		
 		return "groupware/myPage/myNoteDetail";
+	}
+	
+
+	/*
+	 * 서비스명: myNoteTrash.jsp ( 휴지통 쪽지함 뷰) 
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myNoteTrash")
+	public String myNoteTrash() {
+		return "groupware/myPage/myNoteTrash";
+	}
+	
+	
+
+	/*
+	 * 서비스명: myNoteList.jsp ( 발신 쪽지함 뷰) 
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myNoteList")
+	public String myNoteList() {
+		return "groupware/myPage/myNoteList";
 	}
 }

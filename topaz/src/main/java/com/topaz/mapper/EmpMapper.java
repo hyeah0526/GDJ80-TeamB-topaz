@@ -75,11 +75,13 @@ public interface EmpMapper {
 	/* 분류 번호 :  #2 -  휴지통 쪽지수 조회 */
 	public int selectNoteTrashCnt(Map<String, Object> paramMap);
 	
+	/* 분류 번호 :  #2 -  쪽지 복구 */
+	public int restorationNote(List<String> noteIds);
+	
 	/* 분류 번호 :  #2 -  쪽지 삭제 */
 	public int deleteNote(List<String> noteIds);
 	
 	/* 분류 번호 :  #2 -  쪽지 상세 보기 */
 	public Map<String, Object> selectNoteDetail(String noteId);
-	
 	
 }

@@ -379,7 +379,8 @@
 		FROM 
 			note_history
 		WHERE
-			receiver_id = #{empNo}
+			receiver_id = #{empNo} AND
+			use_yn = 'Y'
 	</select>
 	
 	<!-- 분류 번호 :  #2 -  쪽지 삭제 -->
@@ -406,7 +407,76 @@
 		FROM
 			note_history
 		WHERE
-			note_id = #{noteId} AND
+			note_id = #{noteId}
+	</select>
+	
+	<!--  분류 번호 :  #2 - 휴지통 쪽지 조회 -->
+	<select id="selectNoteTrash" parameterType="Map" resultType="Map">
+		SELECT 
+			 ROW_NUMBER() OVER (ORDER BY send_time DESC) AS no,
+			 note_id noteId,
+			 sender_id sendId, 
+			 note_content noteContent, 
+			 DATE_FORMAT(send_time, '%Y-%m-%d %H:%i:%s') sendTime
+		FROM 
+			note_history
+		WHERE
+			(receiver_id = #{empNo} OR sender_id = #{empNo}) AND
+			use_yn = 'N'
+		LIMIT #{currentPage}, #{rowPerPage}
+	</select>
+	
+	<!--  분류 번호 :  #2 - 휴지통 쪽지수 조회  -->
+	<select id="selectNoteTrashCnt" parameterType="Map" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			note_history
+		WHERE
+			receiver_id = #{empNo} AND
+			use_yn = 'N'
+	</select>
+	
+	
+	<!-- 분류 번호 :  #2 -  쪽지 복구 -->
+	<update id="restorationNote" >
+		UPDATE
+			note_history
+		SET 
+			use_yn = 'Y',
+			mod_time = NOW()
+		WHERE
+			note_id IN
+		<foreach item="noteId" collection="noteIds" open="(" separator="," close=")">
+			#{noteId}
+		</foreach>
+	</update>
+	
+	
+	<!--  분류 번호 :  #2 - 발신 쪽지 조회 -->
+	<select id="selectNoteList" parameterType="Map" resultType="Map">
+		SELECT 
+			 ROW_NUMBER() OVER (ORDER BY send_time DESC) AS no,
+			 note_id noteId,
+			 receiver_id receiverId, 
+			 note_content noteContent, 
+			 DATE_FORMAT(receive_time, '%Y-%m-%d %H:%i:%s') receiveTime
+		FROM 
+			note_history
+		WHERE
+			sender_id = #{empNo} AND
+			use_yn = 'Y'
+		LIMIT #{currentPage}, #{rowPerPage}
+	</select>
+	
+	<!--  분류 번호 :  #2 - 발신 쪽지수 조회  -->
+	<select id="selectNoteListCnt" parameterType="Map" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			note_history
+		WHERE
+			sender_id = #{empNo} AND
 			use_yn = 'Y'
 	</select>
 	

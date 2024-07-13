@@ -366,4 +366,87 @@ public class EmployeeService {
 		return noteDetail;
 	} 
 	
+	
+	/*
+	 * 분류 번호 :  #2 - 휴지통 쪽지 조회
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	public Map<String, Object> selectNoteTrash(Map<String, Object> paramMap) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectNoteTrash / paramMap : " + paramMap);
+		
+		//수신 쪽지수 가져오기
+	    int totalCount = empMapper.selectNoteTrashCnt(paramMap);
+	    log.debug(Debug.KIS + "service / selectNoteTrash / totalCount : " + totalCount);
+
+	    //마지막 페이지 계산
+	    int rowPerPage = (int) paramMap.get("rowPerPage");
+	    int lastPage =  (totalCount + rowPerPage - 1) / rowPerPage;
+	    log.debug(Debug.KIS + "service / selectNoteTrash / lastPage : " + lastPage);
+	    
+
+	    //수신 쪽지 리스트 가져오기
+	    List<Map<String, Object>> noteList = empMapper.selectNoteTrash(paramMap);
+	    log.debug(Debug.KIS + "service / selectNoteTrash / empList : " + noteList);
+
+	    //결과를 맵에 담아서 반환
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("noteList", noteList);
+	    resultMap.put("lastPage", lastPage);
+		
+		return resultMap;
+	}
+	
+	/*
+	 * 분류 번호 :  #2 - 쪽지 복구
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	public int restorationNote(Map<String, Object> noteList) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / restorationNote / noteList : " + noteList);
+
+		List<String> noteIds = (List<String>) noteList.get("noteIds");
+
+	    //여러 개의 noteId를 업데이트
+	    int result = empMapper.restorationNote(noteIds);
+	        
+		return result;
+	} 
+	
+	
+	/*
+	 * 분류 번호 :  #2 - 발신 쪽지 조회
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	public Map<String, Object> selectNoteList(Map<String, Object> paramMap) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectNoteList / paramMap : " + paramMap);
+		
+		//발신 쪽지수 가져오기
+	    int totalCount = empMapper.selectNoteListCnt(paramMap);
+	    log.debug(Debug.KIS + "service / selectNoteList / totalCount : " + totalCount);
+
+	    //마지막 페이지 계산
+	    int rowPerPage = (int) paramMap.get("rowPerPage");
+	    int lastPage =  (totalCount + rowPerPage - 1) / rowPerPage;
+	    log.debug(Debug.KIS + "service / selectNoteList / lastPage : " + lastPage);
+	    
+
+	    //발신 쪽지 리스트 가져오기
+	    List<Map<String, Object>> noteList = empMapper.selectNoteList(paramMap);
+	    log.debug(Debug.KIS + "service / selectNoteList / empList : " + noteList);
+
+	    //결과를 맵에 담아서 반환
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("noteList", noteList);
+	    resultMap.put("lastPage", lastPage);
+		
+		return resultMap;
+	} 
 }

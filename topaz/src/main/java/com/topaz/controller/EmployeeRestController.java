@@ -145,6 +145,56 @@ public class EmployeeRestController {
 	}
 	
 	
+
+	/*
+	 * 서비스명: #4 - 전체 휴가 조회
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/empLeave")
+	public String empLeave(
+			Model model,
+			@RequestParam Map<String, Object> paramMap) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "controller / empLeave / paramMap : " + paramMap);
+		
+		
+	    //기본 값 설정
+	    int currentPage = 1;
+	    int rowPerPage = 10;
+	    
+	    
+	    //페이징과 관련된 파라미터 설정
+	    if (paramMap.get("currentPage") != null) {
+	        currentPage = Integer.parseInt((String) paramMap.get("currentPage"));
+	    }
+
+	    if (paramMap.get("rowPerPage") != null) {
+	        rowPerPage = Integer.parseInt((String) paramMap.get("rowPerPage"));
+	    }
+	    
+	    //페이징 처리를 위한 설정
+	    paramMap.put("currentPage", (currentPage - 1) * rowPerPage);
+	    paramMap.put("rowPerPage", rowPerPage);
+		
+		
+	    //********* 결재 진행 시 함께 진행할 예정 *********
+	    // controller만 구현 / service, mapper, xml, jsp 구현 예정
+	    
+		//전체직원 정보 가져오기
+	    //Map<String, Object> resultMap = employeeService.selectEmpAll(paramMap);
+	    //List<Map<String, Object>> empList = (List<Map<String, Object>>) resultMap.get("empList");
+	    //int lastPage = (int) resultMap.get("lastPage");
+		
+		//모델 객체에 데이터 추가 
+		//model.addAttribute("empList", empList);
+		//model.addAttribute("lastPage", lastPage);
+		//model.addAttribute("currentPage", currentPage);
+		
+		return "groupware/emp/empLeave";
+	}
+	
 	//========== 조직도
 	
 	/*
@@ -242,4 +292,142 @@ public class EmployeeRestController {
 		return result;
 	}
 	
+	
+	/*
+	 * 서비스명: selectNoteTrash ( 휴지통 쪽지 조회 ) 
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	@PostMapping("/groupware/myPage/myNoteTrash")
+	public Map<String, Object> myNoteTrash(
+			@RequestParam Map<String, Object> paramMap,
+			HttpServletRequest req) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "controller / myNoteReceived / paramMap : " + paramMap);
+	    log.debug(Debug.KIS + "controller / myNoteReceived / req : " + req);
+         
+		
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		
+		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / myNoteReceived / empNo : " + empNo);
+	    
+		//empNo를 paramMap에 추가
+	    paramMap.put("empNo", empNo);
+	    
+	    //기본 값 설정
+	    int currentPage = 1;
+	    int rowPerPage = 10;
+	    
+	    
+	    //페이징과 관련된 파라미터 설정
+	    if (paramMap.get("currentPage") != null) {
+	        currentPage = Integer.parseInt((String) paramMap.get("currentPage"));
+	    }
+
+	    if (paramMap.get("rowPerPage") != null) {
+	        rowPerPage = Integer.parseInt((String) paramMap.get("rowPerPage"));
+	    }
+	    
+	    //페이징 처리를 위한 설정
+	    paramMap.put("currentPage", (currentPage - 1) * rowPerPage);
+	    paramMap.put("rowPerPage", rowPerPage);
+		
+		
+		//전체직원 정보 가져오기
+	    Map<String, Object> resultMap = employeeService.selectNoteTrash(paramMap);
+	    List<Map<String, Object>> noteList = (List<Map<String, Object>>) resultMap.get("noteList");
+	    int lastPage = (int) resultMap.get("lastPage");
+		
+		
+	    // 응답 데이터
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("noteList", noteList);
+	    response.put("lastPage", lastPage);
+	    response.put("currentPage", currentPage);
+	   
+		
+		return response;
+	}
+	
+	
+	/*
+	 * 서비스명: deleteNote ( 쪽지 삭제 ) 
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	@PostMapping("/groupware/myPage/restorationNote")
+	public int restorationNote(@RequestBody  Map<String, Object> noteList) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "controller / restorationNote / noteList : " + noteList);
+	    
+	    List<String> noteIds = (List<String>)noteList.get("noteIds");
+	    int result = employeeService.restorationNote(noteList);
+		
+		return result;
+	}
+	
+	/*
+	 * 서비스명: selectNoteReceived ( 받은 쪽지 ) 
+	 * 시작 날짜: 2024-07-12
+	 * 담당자: 김인수
+	*/
+	@PostMapping("/groupware/myPage/selectNoteList")
+	public Map<String, Object> selectNoteList(
+			@RequestParam Map<String, Object> paramMap,
+			HttpServletRequest req) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "controller / selectNoteList / paramMap : " + paramMap);
+	    log.debug(Debug.KIS + "controller / selectNoteList / req : " + req);
+         
+		
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		
+		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / selectNoteList / empNo : " + empNo);
+	    
+		//empNo를 paramMap에 추가
+	    paramMap.put("empNo", empNo);
+	    
+	    //기본 값 설정
+	    int currentPage = 1;
+	    int rowPerPage = 10;
+	    
+	    
+	    //페이징과 관련된 파라미터 설정
+	    if (paramMap.get("currentPage") != null) {
+	        currentPage = Integer.parseInt((String) paramMap.get("currentPage"));
+	    }
+
+	    if (paramMap.get("rowPerPage") != null) {
+	        rowPerPage = Integer.parseInt((String) paramMap.get("rowPerPage"));
+	    }
+	    
+	    //페이징 처리를 위한 설정
+	    paramMap.put("currentPage", (currentPage - 1) * rowPerPage);
+	    paramMap.put("rowPerPage", rowPerPage);
+		
+		
+		//전체직원 정보 가져오기
+	    Map<String, Object> resultMap = employeeService.selectNoteList(paramMap);
+	    List<Map<String, Object>> noteList = (List<Map<String, Object>>) resultMap.get("noteList");
+	    int lastPage = (int) resultMap.get("lastPage");
+		
+		
+	    // 응답 데이터
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("noteList", noteList);
+	    response.put("lastPage", lastPage);
+	    response.put("currentPage", currentPage);
+	   
+		
+		return response;
+	}
 }
