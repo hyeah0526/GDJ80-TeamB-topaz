@@ -79,7 +79,7 @@
 						     	</div>				     	
 					     	</div>
 					     	
-					     	<div class="btn">
+					     	<div class="btnDiv">
 						     	<button type="submit">검색</button>
 						     	<button type="button" class="resetBtn">초기화</button>
 					     	</div>

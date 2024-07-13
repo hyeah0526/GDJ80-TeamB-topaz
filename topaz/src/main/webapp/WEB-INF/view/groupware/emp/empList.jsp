@@ -43,7 +43,7 @@
 			<div class="card">
 				<div class="card-body">
 
-			     	<form id="searchForm" action="/topaz/groupware/emp/empList' />" method="post" >
+			     	<form id="searchForm" action="/topaz/groupware/emp/empList" method="post" >
 			     		<div style="margin-bottom: 20px;">
                     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
                     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
@@ -103,7 +103,7 @@
 					     	</div>				     	
 				     	</div>
 				     	
-				     	<div class="btn">
+				     	<div class="btnDiv">
 					     	<button type="submit">검색</button>
 					     	<button type="button" class="resetBtn">초기화</button>
 					     	<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAdd'">직원등록</button>

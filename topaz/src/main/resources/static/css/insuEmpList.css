@@ -108,7 +108,7 @@ h1.titleH1 {
     width: 48%;
 }
 
-.btn {
+.btnDiv {
     display: flex;
     justify-content: flex-end;
     gap: 10px; 

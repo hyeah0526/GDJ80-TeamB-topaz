@@ -283,7 +283,7 @@
 	<!-- 분류 번호 :  #4 - 전체 직원조회(조직도) -->
 	<select id="selectEmpAllInChart" resultType="Map">
 		SELECT 
-		 emp_name empName, dept_code.cd_nm empDept, grade_code.cd_nm empGrade, file_name
+			emp_name empName, dept_code.cd_nm empDept, grade_code.cd_nm empGrade, file_name
 		FROM 
 			employee AS e
 		LEFT JOIN
@@ -355,5 +355,45 @@
             AND em.emp_name = #{empName}
         </if>
 	</select>
+	
+	<!--  분류 번호 :  #2 - 수신 쪽지 조회 -->
+	<select id="selectNoteReceived" parameterType="Map" resultType="Map">
+		SELECT 
+			 ROW_NUMBER() OVER (ORDER BY send_time DESC) AS no,
+			 note_id noteId,
+			 sender_id sendId, 
+			 note_content noteContent, 
+			 DATE_FORMAT(send_time, '%Y-%m-%d %H:%i:%s') sendTime
+		FROM 
+			note_history
+		WHERE
+			receiver_id = #{empNo} AND
+			use_yn = 'Y'
+	</select>
+	
+	<!--  분류 번호 :  #2 - 수신 쪽지수 조회  -->
+	<select id="selectNoteReceivedCnt" parameterType="Map" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			note_history
+		WHERE
+			receiver_id = #{empNo}
+	</select>
+	
+	<!-- 분류 번호 :  #2 -  쪽지 삭제 -->
+	<update id="deleteNote" >
+		UPDATE
+			note_history
+		SET 
+			use_yn = 'N',
+			mod_time = NOW()
+		WHERE
+			note_id IN
+		<foreach item="noteId" collection="noteIds" open="(" separator="," close=")">
+			#{noteId}
+		</foreach>
+	</update>
+	
 	
 </mapper>

@@ -9,6 +9,9 @@ import com.topaz.dto.Employee;
 
 @Mapper
 public interface EmpMapper {
+	
+	/* ==== 직원 === */
+	
 	/* 분류 번호 :  #4 - 직원등록 */
 	public int insertEmp(Employee employee);
 	
@@ -50,5 +53,29 @@ public interface EmpMapper {
 	
 	/* 분류 번호 :  #4 - 전체 근무수 조회 */
 	public  int selectEmpAttendanceAllCnt(Map<String, Object> paramMap);
+	
+	
+	/* ==== 쪽지 === */
+	
+	/* 분류 번호 :  #2 - 수신 쪽지 조회 */
+	public  List<Map<String, Object>> selectNoteReceived(Map<String, Object> noteList);
+	
+	/* 분류 번호 :  #2 - 수신 쪽지수 조회 */
+	public int selectNoteReceivedCnt(Map<String, Object> paramMap);
+	
+	/* 분류 번호 :  #2 - 발신 쪽지 조회 */
+	public  List<Map<String, Object>> selectNoteList(Map<String, Object> noteList);
+	
+	/* 분류 번호 :  #2 - 발신 쪽지수 조회 */
+	public int selectNoteListCnt(Map<String, Object> paramMap);
+	
+	/* 분류 번호 :  #2 - 휴지통 쪽지 조회 */
+	public  List<Map<String, Object>> selectNoteTrash(Map<String, Object> noteList);
+	
+	/* 분류 번호 :  #2 -  휴지통 쪽지수 조회 */
+	public int selectNoteTrashCnt(Map<String, Object> paramMap);
+	
+	/* 분류 번호 :  #2 -  쪽지 삭제 */
+	public int deleteNote(List<String> noteIds);
 	
 }

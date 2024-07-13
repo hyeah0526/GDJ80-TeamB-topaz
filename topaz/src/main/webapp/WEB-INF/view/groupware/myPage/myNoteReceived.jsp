@@ -46,29 +46,30 @@
 				<!-- 메인 -->
 		     	<div class="mainContent">
 			     
-   					<form id="searchForm" action="/topaz/groupware/emp/empAttendance" method="post" >
+   					<form id="searchForm">
 			     		<div style="margin-bottom: 20px;">
-                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/myNoteAdd'">쪽지쓰기</button>
-                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/myNoteList'">발신 쪽지함</button>
-                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/myNoteReceived'">수신 쪽지함</button>
-                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/myNoteTrash'">휴지통 쪽지함</button>
+                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myNoteAdd'">쪽지쓰기</button>
+                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myNoteList'">발신 쪽지함</button>
+                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myNoteReceived'">수신 쪽지함</button>
+                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myNoteTrash'">휴지통 쪽지함</button>
                     	</div>
 				     	
-				     	<div>
-				     		<button>삭제</button>
+				     	<div style="margin-bottom: 20px;">
+				     		<button type="button" id="deleteButton">삭제</button>
 				     		<button>답장</button>
 				     	</div>
 				     	
 				     	<table class="table table-hover">
 				     		<thead>
 								<tr>
-									<th scope="col">보내는 사람</th>
+									<th scope="col"><input type="checkbox" id="selectAll"></th>
+									<th scope="col">보낸 사람</th>
 									<th scope="col">내용</th>
 									<th scope="col">날짜</th>
 								</tr>
 							</thead>
 							
-							<tbody id="empListContainer">
+							<tbody id="noteListContainer">
 	                       	</tbody>
 						</table>
 			     	</form>
@@ -90,6 +91,7 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	<script src="/topaz/js/insuMyNoteList.js"></script>
 </body>
 
 </html>

@@ -86,7 +86,7 @@ $(document).ready(function() {
         //페이지 버튼 추가해줄 ul 가져오기
         let paginationUl = $('#paginationUl');
         
-        //한 번에 표시할 페이지 수
+        //한번에 표시할 페이지 수
         const RANGE = 10;
         
         //페이징 버튼 비워주기
@@ -94,11 +94,11 @@ $(document).ready(function() {
         
         // << 버튼 (이전 RANGE로 이동)
         const prevRangePage = Math.max(1, currentPage - RANGE);
-        paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${prevRangePage})" aria-label="Previous Range"><span aria-hidden="true">&laquo;</span></a></li>`);
+        paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(event, ${prevRangePage})" aria-label="Previous Range"><span aria-hidden="true">&laquo;</span></a></li>`);
         
         // < 버튼 (이전 페이지로 이동)
         const prevPage = Math.max(1, currentPage - 1);
-        paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${prevPage})" aria-label="Previous"><span aria-hidden="true">&lt;</span></a></li>`);
+        paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(event, ${prevPage})" aria-label="Previous"><span aria-hidden="true">&lt;</span></a></li>`);
         
         //페이지 번호
         const startPage = Math.floor((currentPage - 1) / RANGE) * RANGE + 1;
@@ -106,20 +106,20 @@ $(document).ready(function() {
         
         //페이지 번호 버튼 만들기
         for (let i = startPage; i <= endPage; i++) {
-            paginationUl.append(`<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="changePage(${i})">${i}</a></li>`);
+            paginationUl.append(`<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="changePage(event, ${i})">${i}</a></li>`);
         }
         
         // > 버튼 (다음 페이지로 이동)
         const nextPage = Math.min(lastPage, currentPage + 1);
-        paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${nextPage})" aria-label="Next"><span aria-hidden="true">&gt;</span></a></li>`);
+        paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(event, ${nextPage})" aria-label="Next"><span aria-hidden="true">&gt;</span></a></li>`);
         
         // >> 버튼 (다음 RANGE로 이동)
         const nextRangePage = Math.min(lastPage, currentPage + RANGE);
-        paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${nextRangePage})" aria-label="Next Range"><span aria-hidden="true">&raquo;</span></a></li>`);
+        paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(event, ${nextRangePage})" aria-label="Next Range"><span aria-hidden="true">&raquo;</span></a></li>`);
     }
     
     //페이지 변경 함수
-    window.changePage = function(page) {
+    window.changePage = function(event,page) {
         event.preventDefault();
         loadEmpList(page);
        

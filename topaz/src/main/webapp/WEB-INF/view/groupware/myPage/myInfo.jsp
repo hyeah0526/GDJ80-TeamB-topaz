@@ -47,7 +47,7 @@
 	                    <!-- 내용저장 -->
 	                	<div>
 	                	
-	                        <form class="signupForm" action="" method="post" enctype="multipart/form-data">
+	                        <form class="signupForm">
 	                            
 	                        	<div style="margin-bottom: 20px;">
 		                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myInfo'">내 정보 조회</button>
