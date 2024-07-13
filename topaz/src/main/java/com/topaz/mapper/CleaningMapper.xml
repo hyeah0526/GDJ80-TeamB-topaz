@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.CleaningMapper">
+
+<!-- 분류번호: #8 - 객실 관리 페이지 : 객실 청소상태 수정 -->
+	<update id="updateStatus" parameterType="com.topaz.dto.Cleaning">
+	UPDATE 
+		cleaning 
+	<set>
+		<if test="roomStatus != null and roomStatus != ''">
+			room_status	= 'C',
+		</if>
+		mod_time = NOW(),
+		mod_id = #{modId}
+	</set> 
+	WHERE 
+		room_no = #{roomNo}
+	AND 
+		use_yn = 'Y' 
+	</update>
+</mapper>

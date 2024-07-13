@@ -20,7 +20,7 @@ public interface RoomMapper {
 	/* 분류 번호 :  #7 - 입주자 관리 페이지 - 객실(호수)조회 */
 	List<String> selectHo(@Param("type") String type);
 	
-	/* 분류 번호 :  #7 - 입주자 관리 페이지 - 객실(호수)조회 */
+	/* 분류 번호 :  #7 - 입주자 관리 페이지 - 입주자 등록 */
 	int insertResident(Room room);
 	
 	/* 분류 번호 :  #8 - 객실 관리 페이지 - 입주 전 객실 조회 */
@@ -44,5 +44,6 @@ public interface RoomMapper {
 						@Param("roomDong") String roomDong,
 					    @Param("roomType") String roomType,
 						@Param("roomHo") String roomHo); 
+	
 
 }

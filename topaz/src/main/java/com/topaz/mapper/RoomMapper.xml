@@ -63,8 +63,8 @@
 	
 	<!-- 분류번호: #8 - 객실 관리 페이지 : 객실 상태 조회 -->
 	<select id="selectRoomState" resultType="String">
-		SELECT DISTINCT 
-			room_state roomState
+		SELECT DISTINCT
+			(SELECT cd_nm FROM common_code WHERE crp_cd = 'C003' AND cd = room_state) roomState
 		FROM 
 			room
 	</select>
@@ -73,22 +73,27 @@
 	<!-- 검색필터에 따른 객실 조회 -->
 	<select id="filterRoomList" resultType="map">
 		SELECT 
-			room_no roomNo,
-			room_type roomType,
-			room_dong roomDong,
-			room_ho roomHo,
-			room_state roomState,
-			room_price roomPrice,
-			mod_time modTime,
-			mod_id modId,
-			use_yn useYn
+			r.room_no roomNo,
+			r.room_type roomType,
+			r.room_dong roomDong,
+			r.room_ho roomHo,
+			(SELECT cd_nm FROM common_code WHERE crp_cd = 'C003' AND cd = r.room_state) roomState,
+			r.use_yn useYn,
+			g.gst_id gstId,
+			g.gst_name gstName,
+			(SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) roomStatus,
+			DATE_FORMAT(c.cleaning_schedule, '%Y-%m-%d %h:%m') schedule,
+			(SELECT emp_name FROM employee WHERE emp_no = c.mod_id) scheModId,
+			c.mod_time scheModTime
 		FROM 
-			room
+			room r
+		LEFT JOIN guest g ON r.room_no = g.room_no AND g.use_yn = 'Y'
+		LEFT JOIN cleaning c ON r.room_no = c.room_no
 		WHERE 
-			use_yn = 'Y'
+			r.use_yn = 'Y'
 			
 			<if test="roomState != null and roomState != ''">
-		    	AND room_state = #{roomState}
+		    	AND (SELECT cd_nm FROM common_code WHERE crp_cd = 'C003' AND cd = r.room_state) = #{roomState}
 			</if>
 			<if test="roomDong != null and roomDong != ''">
 			    AND room_dong = #{roomDong}
@@ -113,7 +118,7 @@
 			use_yn = 'Y'
 
 		<if test="roomState != null and roomState != ''">
-	    	AND room_state = #{roomState}
+	    	AND (SELECT cd_nm FROM common_code WHERE crp_cd = 'C003' AND cd = room_state) = #{roomState}
 		</if>
 		<if test="roomDong != null and roomDong != ''">
 		    AND room_dong = #{roomDong}
@@ -126,5 +131,6 @@
 		</if>
 			
 	</select>
+	
 	
 </mapper>
