@@ -18,4 +18,18 @@
 	AND 
 		use_yn = 'Y' 
 	</update>
+	
+<!-- 분류번호: #8 - 객실 관리 페이지 : 객실 처어소율 조회 -->
+	<select id="selectCleaningRate" resultType="map">
+	SELECT 
+    	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) = 'CLEAN' THEN 1 END) cleanRoom,
+    	COUNT(*) totalRoom,
+    	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) = 'CLEAN' THEN 1 END) * 100.0 / COUNT(*) cleanRate
+	FROM 
+	    cleaning c
+	JOIN 
+	    room r ON c.room_no = r.room_no
+	WHERE 
+	    r.use_yn = 'Y';
+	</select>
 </mapper>

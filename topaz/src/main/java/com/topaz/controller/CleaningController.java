@@ -1,5 +1,7 @@
 package com.topaz.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,5 +50,17 @@ public class CleaningController {
 		log.debug(Debug.PSJ + "upStatus controller row ==> " + row + Debug.END);
 		
 		return "groupware/room/roomList";
+	}
+	
+	/*
+	 * 서비스명: -
+	 * 시작 날짜: 2024-07-13
+	 * 담당자: 박수지
+	*/
+	
+	@GetMapping("/groupware/room/roomMakeUpChk")
+	public String selectCleaningRate(Model model) {
+	    
+		return "groupware/room/roomMakeUpChk";
 	}
 }
