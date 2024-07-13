@@ -4,6 +4,10 @@
 <html lang="en">
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
+	<head>
+	<!-- hyeah CSS / JS -->
+	<link rel="stylesheet" href="<c:url value='/css/hyeah.css' />">
+	</head>
 	
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
@@ -31,10 +35,10 @@
     <section class="section">
 		<!-- 외주업체 상세보기 -->
 		<c:set var="b" value="${bpoDetail}"></c:set>
-		<div class="row">
+		<div class="row bpoLabel">
 			<div class="col-xl-4"><div class="card">
 				<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-	              	<img src="/topaz/assets/img/bpo/${b.fileName}" class="rounded-circle" width="250px">
+	              	<img src="/topaz/assets/img/bpo/${b.fileName}" class="rounded-circle bpoPic" width="250px">
 	             	<h2>${b.outsourcingName}</h2>
 	            </div>
 			</div></div>
@@ -58,13 +62,13 @@
               
               <div class="tab-content pt-2">
 
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                <div class="tab-pane fade show active profile-overview bpoDetailsAll" id="profile-overview">
                   <h5 class="card-title">About</h5>
                   <p class="small fst-italic">${b.outsourcingAbout}</p>
                   <h5 class="card-title">Outsourcing Details</h5>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">업체명</div>
+                    <div class="col-lg-3 col-md-4 label">업체명</div>
                     <div class="col-lg-9 col-md-8">${b.outsourcingName}</div>
                   </div>
 
@@ -105,98 +109,94 @@
 
                 </div>
 
-                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                <div class="tab-pane fade profile-edit pt-3 bpoDetails" id="profile-edit">
 
                   <!-- Edit Outsourcing Form -->
                   <form>
                     <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">File Image</label>
+                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">업체 사진</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
+                        <input class="form-control" type="file" id="" name="">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Outsourcing Name</label>
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">업체 이름</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="fullName" type="text" class="form-control" id="fullName" value="${b.outsourcingName}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                      <label for="about" class="col-md-4 col-lg-3 col-form-label">업체 소개</label>
                       <div class="col-md-8 col-lg-9">
                         <textarea name="about" class="form-control" id="about" style="height: 100px">${b.outsourcingAbout}</textarea>
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
+                      <label for="company" class="col-md-4 col-lg-3 col-form-label">업체 아이디</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
+                        <input type="text" id="outsourcingNo" name="outsourcingNo" class="form-control" value="${b.outsourcingNo}" style="background-color: #d9dce1;" readonly>
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">외주업체 담당자</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
+                        <input name="" type="text" class="form-control" value="${b.inchargeName}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">사내 담당자</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
+                        <input name="" type="text" class="form-control" value="${b.empNo}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">계약시작</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
+                        <input name="" type="date" class="form-control" id="" value="${b.contractStart}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
+                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">계약종료</label>
+                      <div class="col-md-8 col-lg-5">
+                        <input name="" type="date" class="form-control" id="" value="${b.contractEnd}">
+                      </div>
+                      <div class="col-md-8 col-lg-4">
+                      	<a class="btn btn-primary">비활성화 처리</a>
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">주소</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                        <input name="" type="text" class="form-control" id="" value="${b.address}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
+                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
+                        <input name="" type="text" class="form-control" id="" value="${b.contactNo}">
                       </div>
                     </div>
-
+                    
                     <div class="row mb-3">
-                      <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
+                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">작성자</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
+                        <input name="" type="text" class="form-control" id="" value="${b.regId}" style="background-color: #d9dce1;" readonly>
                       </div>
                     </div>
-
+                    
                     <div class="row mb-3">
-                      <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
+                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">최종수정자</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                        <input name="" type="text" class="form-control" id="" value="${b.modId}" style="background-color: #d9dce1;" readonly>
                       </div>
                     </div>
 
@@ -210,14 +210,6 @@
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
                   <form>
-
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
-                      </div>
-                    </div>
-
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                       <div class="col-md-8 col-lg-9">
@@ -238,7 +230,6 @@
                   </form><!-- End Change Password Form -->
 
                 </div>
-
               </div><!-- End Bordered Tabs -->
 			</div></div>
 		</div></div>

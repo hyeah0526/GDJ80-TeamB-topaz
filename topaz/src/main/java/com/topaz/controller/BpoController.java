@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,7 +35,7 @@ public class BpoController {
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 박혜아
 	*/
-	@GetMapping("/groupware/bpo/bpoMainIn")
+	@RequestMapping("/groupware/bpo/bpoMainIn")
 	public String bpoMainIn(Model model) {
 		
 		// 외주업체 전체 카테고리 목록
@@ -64,7 +65,7 @@ public class BpoController {
 	 * 시작 날짜: 2024-07-11
 	 * 담당자: 박혜아
 	*/
-	@RequestMapping("/groupware/bpo/bpoMainIn")
+	@PostMapping("/groupware/bpo/bpoMainIn")
 	public String bpoRsvnAdd(OutsourcingRsvn outsourcingRsvn, HttpServletRequest  httpServletRequest) {
 		// 세션가져와서 empNo세팅
 		HttpSession session = httpServletRequest.getSession();
@@ -124,7 +125,7 @@ public class BpoController {
 	 * 시작 날짜: 2024-07-09
 	 * 담당자: 박혜아
 	*/
-	@GetMapping("/groupware/bpo/bpoList")
+	@RequestMapping("/groupware/bpo/bpoList")
 	public String bpoList() {
 		
 		return "groupware/bpo/bpoList";
@@ -155,18 +156,21 @@ public class BpoController {
 	*/
 	@RequestMapping("/groupware/bpo/bpoAddPost")
 	public String bpoAddPost(@Valid OutsourcingRequest oscRq
-								, Errors errors
+								, Errors errors // errors유효성검사
 								, Model model
 								, HttpServletRequest  httpServletRequest) {
 		
-		log.debug(Debug.PHA + "bpoAddPost Controller validation 테스트--> " + oscRq.getAddress() + Debug.END);
-		log.debug(Debug.PHA + "bpoAddPost Controller validation 테스트--> " + oscRq.getEmpNo() + Debug.END);
+		//log.debug(Debug.PHA + "bpoAddPost Controller validation 테스트--> " + oscRq.getAddress() + Debug.END);
+		//log.debug(Debug.PHA + "bpoAddPost Controller validation 테스트--> " + oscRq.getEmpNo() + Debug.END);
+		
 		// 에러 발생시 true
 		log.debug(Debug.PHA + "bpoAddPost Controller hassErrors여부 --> " + errors.hasErrors()  + Debug.END);
 		// 에러 갯수확인
 		//log.debug(Debug.PHA + "bpoAddPost Controller 에러갯수 --> " + errors  + Debug.END);
+		
 		// 에러 있으면 폼으로 다시 보내기
 		if(errors.hasErrors()) {
+			
 			// 파일 유효성 검사
 			if(oscRq.getUploadFile() == null || oscRq.getUploadFile().isEmpty()) {
 				// 유효성 검사 실패 메세지 담기
@@ -180,9 +184,11 @@ public class BpoController {
 				model.addAttribute(e.getField() +"Msg", e.getDefaultMessage());
 			}
 			
+			// 에러 메시지 담은 후 return
 			return "groupware/bpo/bpoAdd";
 		}
 		
+		// 유효성검사 통과시 등록 실행
 		// 세션에서 아이디 값 가져오기
 		HttpSession session = httpServletRequest.getSession();
 		String empNo = (String)session.getAttribute("strId");
@@ -203,7 +209,7 @@ public class BpoController {
 	 * 시작 날짜: 2024-07-12
 	 * 담당자: 박혜아
 	*/
-	@GetMapping("/groupware/bpo/bpoDetail")
+	@RequestMapping("/groupware/bpo/bpoDetail")
 	public String bpoDetail(Model model
 							,@RequestParam(name="outsourcingNo") String outsourcingNo) {
 		log.debug(Debug.PHA + "bpoDetail Controller outsourcingNo--> " + outsourcingNo + Debug.END);
@@ -212,9 +218,28 @@ public class BpoController {
 		Map<String, Object> bpoDetail = bpoService.getBpoDetail(outsourcingNo);
 		log.debug(Debug.PHA + "bpoDetail Controller bpoDetail--> " + bpoDetail + Debug.END);
 		
+		// 모델 담기
 		model.addAttribute("bpoDetail", bpoDetail);
 		
 		return "groupware/bpo/bpoDetail";
+	}
+	
+	
+	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-07-13
+	 * 담당자: 박혜아
+	*/
+	@RequestMapping("/groupware/bpo/bpoModify")
+	public String bpoModify(@Valid OutsourcingRequest oscRq
+							, Errors errors // errors유효성검사
+							, Model model
+							, HttpServletRequest  httpServletRequest) {
+		
+		bpoService.modBpo(oscRq);
+		
+		return "redirect:/groupware/bpo/bpoDetail?outsourcingNo="+oscRq.getOutsourcingNo();
 	}
 	
 	

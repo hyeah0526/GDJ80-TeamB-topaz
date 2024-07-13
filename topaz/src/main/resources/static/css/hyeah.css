@@ -121,3 +121,25 @@
 }
 
 
+
+/* ==========외주업체 상세 - bpoDetail.jsp========== */
+.bpoPic{
+	margin-bottom: 20px;
+}
+
+.bpoLabel label{
+	font-weight: bolder;
+}
+
+.profile-overview > div >.label{
+	font-weight: bolder;
+}
+
+.bpoDetailsAll{
+    font-size: 18px;
+}
+
+.bpoDetailsAll > .row{
+	margin: 20px;
+}
+

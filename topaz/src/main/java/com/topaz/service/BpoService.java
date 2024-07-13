@@ -261,6 +261,9 @@ public class BpoService {
 		outsourcing.setOutsourcingName(oscRq.getOutsourcingName());
 		outsourcing.setOutsourcingAbout(oscRq.getOutsourcingAbout());
 		
+		// type이 1.상시 2.예약
+		// state가 1.영업중 2.영업종료 3.상시
+		
 		if(oscRq.getOutsourcingType().equals("1")) {
 			// 타입이 상시일경우 '상시'코드 삽입
 			outsourcing.setOutsourcingState("1");
@@ -351,6 +354,23 @@ public class BpoService {
 		log.debug(Debug.PHA + "getBpoDetail Service outsourcingNo--> " + outsourcingNo + Debug.END);
 		
 		return bpoOne;
+	}
+	
+	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 상세 페이지(bpoDetail.jsp) :: 수정하기
+	 * 시작 날짜: 2024-07-11
+	 * 담당자: 박혜3
+	*/
+	public void modBpo(OutsourcingRequest oscRq){
+		
+		log.debug(Debug.PHA + "modBpo Service oscRq--> " + oscRq + Debug.END);
+
+		
+		
+		
 	}
 
 }

@@ -254,10 +254,10 @@
 			,use_yn
 		)VALUES(
 			#{outsourcingNo}
-			,#{outsourcingPw}
+			,SHA2(#{outsourcingPw}, 256)
 			,#{outsourcingName}
 			,#{outsourcingAbout}
-			,'3'
+			,#{outsourcingState}
 			,#{outsourcingType}
 			,#{inchargeName}
 			,#{contractStart}
@@ -298,8 +298,8 @@
 			, (SELECT cd_nm from common_code WHERE crp_cd = 'W001' AND cd = o.outsourcing_state) outsourcingState
 			, (SELECT cd_nm from common_code WHERE crp_cd = 'W002' AND cd = o.outsourcing_type) outsourcingType
 			, o.incharge_name inchargeName
-			, DATE_FORMAT(o.contract_start, '%Y%M%d') contractStart
-			, DATE_FORMAT(o.contract_end, '%Y%M%d') contractEnd
+			, DATE(o.contract_start) contractStart
+			, DATE(o.contract_end) contractEnd
 			, (SELECT emp_name FROM employee WHERE emp_no = o.emp_no) empNo
 			, CONCAT(SUBSTRING(o.contact_no from 1 for 3), '-'
 						, SUBSTRING(o.contact_no from 4 for 4), '-'
