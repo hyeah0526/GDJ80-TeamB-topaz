@@ -98,7 +98,6 @@
 				AND o.outsourcing_type LIKE CONCAT('%',#{searchType},'%')
 			</if>
 		</where>
-		ORDER BY contractStart DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
