@@ -18,11 +18,11 @@ public class NoticeRequest {
     
 	@NotBlank(message = "제목을 입력하세요.")
 	@Size(max = 100, message = "제목은 100자 이내로 입력하세요.")
-	@Size(min = 20, message = "제목은 10자 이상 입력하세요.")
+	@Size(min = 10, message = "제목은 10자 이상 입력하세요.")
     private String title;
 	
 	@NotBlank(message = "내용을 입력하세요.")
-	@Size(min = 100, message = "내용은 100자 이상 입력하세요.")
+	@Size(min = 20, message = "내용은 20자 이상 입력하세요.")
 	private String content;
 	
 	@NotBlank(message = "등급을 선택하세요.")
@@ -39,8 +39,10 @@ public class NoticeRequest {
     private String regId;
     private String modId;
     private String useYn;
+    private String fileName;
+    
     private MultipartFile uploadFile;
-    // 
+
     public Notice toNotice() {
         Notice notice = new Notice();
         notice.setNewsNo(this.newsNo);
@@ -56,7 +58,9 @@ public class NoticeRequest {
         notice.setRegId(this.regId);
         notice.setModId(this.modId);
         notice.setUseYn(this.useYn);
+        notice.setFileName(this.fileName);
         return notice;
+        
     }
     
     //
@@ -64,7 +68,7 @@ public class NoticeRequest {
     	UploadFile uploadFile = new UploadFile();
     	uploadFile.setReferenceNo(this.newsNo);
 		uploadFile.setOriginalFileName(this.uploadFile.getOriginalFilename());
-		uploadFile.setFileName(this.uploadFile.getName());
+		uploadFile.setFileName(this.fileName);
 		uploadFile.setFileSize(this.uploadFile.getSize());
 		uploadFile.setFileType(this.uploadFile.getContentType());
 		uploadFile.setRegTime(this.regTime);

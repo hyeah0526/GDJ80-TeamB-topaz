@@ -23,4 +23,5 @@ public class Notice {
 	private String regId;
 	private String modId;
 	private String useYn;
+	private String fileName;
 }

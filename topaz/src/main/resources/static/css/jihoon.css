@@ -26,11 +26,7 @@
 	height: 50px;
 }
 
-.pagenationContainer {
+.pagenation {
     display: flex;
     justify-content: center;
-}
-.pageCurrent {
-	margin-left: 10px;
-	margin-right: 10px;
 }

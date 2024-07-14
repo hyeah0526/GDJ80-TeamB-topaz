@@ -13,6 +13,10 @@
 	<script src="/topaz/js/jihoonNoticeAdd.js"></script>
 	<!-- naver smart edior -->
 	<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	 <script>
+        // JSP에서 contextPath 값을 JavaScript로 넘김
+        const contextPath = '<%= request.getContextPath() %>';
+    </script>
 	<script>
 		let oEditor = [];
 		function initSmartEditor() {
@@ -30,7 +34,7 @@
             
          	// 에디터에서 내용 가져오기
             const content = oEditor.getById["content"].getIR();
-            console.log("#content: ", content);
+            	console.log("#content: ", content);
             
             if (!content.trim()) {
                 alert("내용을 입력해 주세요.");
@@ -42,9 +46,9 @@
 		// 문서 로드 후 스마트 에디터 초기화
 		document.addEventListener("DOMContentLoaded", function() {
 			initSmartEditor();
+			console.log("스마트 에디터 초기화");
 		});
-   </script>
-
+	</script>
 </head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
@@ -69,9 +73,7 @@
 						<div class="card">
 							<div class="card-body">
 								<h5 class="card-title">공지 사항 작성</h5>
-								<form action="${pageContext.request.contextPath}/groupware/notice/noticeAdd" method="post" id="addNoticeForm" onsubmit="return submitContent(this);" enctype="multipart/form-data">
-								<input type="hidden" name="regId" value="">
-								<input type="hidden" name="modId" value="">
+								<form action="<c:url value="${contextPath}/groupware/notice/noticeAdd" />" method="post" id="addNoticeForm" onsubmit="return submitContent(this);" enctype="multipart/form-data">
 									<div class="row mb-3">
 										<label for="addTitle" class="col-sm-2 col-form-label">제목</label>
 										<div class="col-sm-10">
@@ -95,6 +97,7 @@
 												</label>
 											</div>
 										</div>
+										<span>${gradeMsg }</span>
 									</fieldset>
 									
 									<fieldset class="row mb-3">
@@ -119,6 +122,7 @@
 												</label>
 											</div>
 										</div>
+										<span>${categoryMsg }</span>
 									</fieldset>
 									<!-- start date -->
 									<div class="row mb-3">
@@ -147,15 +151,15 @@
 										<div class="col-sm-10">
 											<textarea class="form-control" style="height: 100px" name="content" id="content"></textarea>
 										</div>
+										<span>${contentMsg }</span>
 									</div>
-								<div class="row mb-3">
-									<label for="noticeFile" class="col-sm-2 col-form-label">
-										첨부 파일
-									</label>
-									<div class="col-sm-10">
-										<input class="form-control" type="file" id="uploadFile" name="uploadFile" multiple>
-									</div>
-								</div>
+									<div class="row mb-3">
+										<input type="file" name="uploadFile" id="uploadFile">
+									    <div id="previewContainer" class="imagePreviewContainer" style="display:none;">
+									        <img id="preview">
+									        <span id="removeImage" class="removeImage">&times;</span>
+									    </div>
+							    	</div>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>	
 								<button type="submit" class="btn btn-primary" onclick="formSubmit(event)">등록하기</button>
 								</form>
@@ -172,5 +176,6 @@
 		
 		<!-- ======= footer 부분 ======= -->
 		<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+		<script src="/topaz/js/profileValidation.js"></script>
 	</body>
 </html>

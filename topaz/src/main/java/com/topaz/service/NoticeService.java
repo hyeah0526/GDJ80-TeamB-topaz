@@ -1,8 +1,10 @@
 package com.topaz.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.topaz.dto.Notice;
 import com.topaz.dto.NoticeRequest;
+import com.topaz.dto.UploadFile;
 import com.topaz.mapper.NoticeMapper;
+import com.topaz.mapper.UploadFileMapper;
 import com.topaz.utill.Debug;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 public class NoticeService {
 	
 	@Autowired NoticeMapper noticeMapper;
+	
+	@Autowired UploadFileMapper uploadFilemapper;
 	
 	@Autowired UploadFileService uploadFileService;
 	
@@ -41,9 +47,7 @@ public class NoticeService {
 	*/
 	public int modifyNotice(NoticeRequest noticeRequest) {
 		log.debug(Debug.KJH + "/ service / modifyNotice Notice: " + noticeRequest);
-		
 		Notice notice = noticeRequest.toNotice();
-		
 		return noticeMapper.updateNotice(notice);
 	}
 	
@@ -57,18 +61,48 @@ public class NoticeService {
 		// notice 디버깅
 		log.debug(Debug.KJH + "/ service / addNotice noticeRequest: " + noticeRequest);
 		
-		// 파일 업로드 테스트용
+		// 파일 업로드 경로
+		String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
 	    
+		// 업로드 파일 처리
+		if(!noticeRequest.getUploadFile().isEmpty()) {
+			// 파일의 이름을 UUID를 사용하여 설정
+			String prefix = UUID.randomUUID().toString().replace("-", "");
+			int p = noticeRequest.getUploadFile().getOriginalFilename().lastIndexOf(".");
+			String suffix = noticeRequest.getUploadFile().getOriginalFilename().substring(p);
+			String fileName = prefix + suffix;
+			
+			// noticeRequest 객체 생성 및 저장
+			noticeRequest.setFileName(fileName);
+			
+			// uploadFile 객체 생성 및 저장
+			UploadFile file = noticeRequest.toUploadFile();
+			file.setFileName(fileName);
+			
+			int fileRow = uploadFilemapper.insertUploadFile(file);
+			
+			if (fileRow != 1) {
+				throw new RuntimeException("파일 업로드 실패");
+			}
+			
+			File emptyFile = new File(imagePath + fileName);
+			try {
+				noticeRequest.getUploadFile().transferTo(emptyFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException();
+			}
+		}
+		
 		// 공지 사항 DTO에 데이터 바인딩
 		Notice notice = noticeRequest.toNotice();
+
 		// 공지 사항 정보를 저장
 		int row = noticeMapper.insertNotice(notice);
 		
-		// 공지 사항 등록 시 uploadFile이 있는지 확인
-		 if(noticeRequest.getUploadFile() != null && !noticeRequest.getUploadFile().isEmpty()) {
-		 uploadFileService.insertNoticeFile(noticeRequest); }
 		 log.debug(Debug.KJH + "/ service / addNotice / row :" + row); 
-		return row;
+		
+		 return row;
 	}
 	
 	/*

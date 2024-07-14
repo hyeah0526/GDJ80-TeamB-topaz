@@ -13,6 +13,10 @@
 	<!-- naver smart edior -->
 	<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 	<script>
+        // JSP에서 contextPath 값을 JavaScript로 넘김
+        const contextPath = '<%= request.getContextPath() %>';
+    </script>
+	<script>
 		let oEditor = [];
 		function initSmartEditor(contentValue) {
 			nhn.husky.EZCreator.createInIFrame({
@@ -65,7 +69,7 @@
 					<div class="card">
 						<div class="card-body">
 							<h5 class="card-title">공지 사항 상세</h5>
-							<form action="/noticeModify" method="post">
+							<form action="<c:url value="${contextPath}/groupware/notice/noticeModify" />" method="get">
 
 
 								<div class="row mb-3">
@@ -116,14 +120,14 @@
 								<div class="row mb-3">
 									<label for="noticeStart" class="col-sm-2 col-form-label">게시 시작일</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="startDate" name="startDate" value="${noticeDetail.startDate.toString().substring(0, 10)}" readonly>
+										<input type="text" class="form-control" id="startDate" name="startDate" value='${noticeDetail.startDate}' readonly>
 									</div>
 								</div>
 
 								<div class="row mb-3">
 									<label for="noticeEnd" class="col-sm-2 col-form-label">게시 종료일</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="endDate" name="endDate" value="${noticeDetail.endDate.toString().substring(0, 10)}" readonly>
+										<input type="text" class="form-control" id="endDate" name="endDate" value='${noticeDetail.endDate}' readonly>
 									</div>
 								</div>
 
@@ -136,14 +140,12 @@
 									</div>
 								</div>
 								<div class="row mb-3">
-									<label for="noticeFile" class="col-sm-2 col-form-label">
-										첨부 파일
-									</label>
-									<div class="col-sm-10">
-										<input class="form-control" type="file" name="uploadFile" id="uploadFile" disabled>
-									</div>
-								</div>
-								
+										<input type="file" name="uploadFile" id="uploadFile">
+									    <div id="previewContainer" class="imagePreviewContainer" style="display:none;">
+									        <img id="preview">
+									        <span id="removeImage" class="removeImage">&times;</span>
+									    </div>
+						    	</div>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeModify?newsNo=${noticeDetail.newsNo}'">수정</button>
 							</form>
@@ -160,6 +162,7 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	<script src="/topaz/js/profileValidation.js"></script>
 </body>
 
 </html>

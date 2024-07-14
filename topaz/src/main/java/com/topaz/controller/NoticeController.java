@@ -10,13 +10,14 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.topaz.dto.Notice;
 import com.topaz.dto.NoticeRequest;
 import com.topaz.service.NoticeService;
 import com.topaz.utill.Debug;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,7 +34,15 @@ public class NoticeController {
 
 	@GetMapping("/groupware/notice/noticeRemove")
 	public String noticeRemove(
-		@RequestParam(name = "newsNo") String newsNo) {
+		@RequestParam(name = "newsNo") String newsNo,
+		HttpServletRequest  httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		
+	    // Notice 객체 생성 및 modId 설정
+	    Notice notice = new Notice();
+	    notice.setNewsNo(newsNo);
+	    notice.setModId(empNo);
 		
 		log.debug(Debug.KJH + "/ Controller / noticeRemove newsNo :" + newsNo);
 		
@@ -49,10 +58,42 @@ public class NoticeController {
 
 	// 수정 액션
 	@PostMapping("/groupware/notice/noticeModify")
-	public String noticeModify(NoticeRequest noticeRequest) {
+	public String noticeModify(@Valid NoticeRequest noticeRequest, Errors errors, Model model, 
+			HttpServletRequest  httpServletRequest,
+			@RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("grade") String grade,
+            @RequestParam("category") String category,
+            @RequestParam("startDate") String startDate) {
+		
+		// 세션가져와서 empNo세팅
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		noticeRequest.setRegId(empNo);
+		noticeRequest.setModId(empNo);	
+		
+		// 매개값 디버깅
+		log.debug(Debug.KJH + "/ Controller <POST> noticeModify noticeRequest: ", noticeRequest.toString());
+		// 에러 발생 시 true
+		log.debug(Debug.KJH + "/ Controller <POST> noticeModify errors: ", errors.toString());
+		log.debug(Debug.KJH + "/ Controller <POST> noticeModify hasErrors: ", errors.hasErrors());
+		// true의 개수 cnt
+		log.debug(Debug.KJH + "/ Controller <POST> noticeModify errorCnt: ", errors);
+		
+		if(errors.hasErrors()) {
+		   for(FieldError e : errors.getFieldErrors()) {
+			   // 에러가 발생한 form의 name을 출력
+			   log.debug(Debug.KJH + "/ Controller <POST> noticeModify Validation fieldName: ", e.getField());
+			   // NoticeRequest에 Mapping되어 있는 에러 메시지
+			   log.debug(Debug.KJH + "/ Controller <POST> noticeModify Validation fieldName: ", e.getDefaultMessage());	
+			   // 필드 이름 + 메시지를 담아 모델에 추가
+			   model.addAttribute(e.getField() + "Error", e.getDefaultMessage());
+		   }
+		   return "groupware/notice/noticeModify?newsNo=" + noticeRequest.getNewsNo();
+		}
 		Notice notice = noticeRequest.toNotice();
 		int row = noticeService.modifyNotice(noticeRequest);
-        return "redirect:/groupware/notice/noticeDetail?newsNo=" + notice.getNewsNo(); // 적절한 리다이렉션 페이지로 변경
+        return "redirect:/groupware/notice/noticeDetail?newsNo=" + noticeRequest.getNewsNo(); // 수정한 상세 페이지로 이동
 	}
 
 	// 수정 폼
@@ -78,14 +119,22 @@ public class NoticeController {
 	// 입력 액션
 	@PostMapping("/groupware/notice/noticeAdd")
 	public String noticeAdd(@Valid NoticeRequest noticeRequest, Errors errors, Model model,
+			HttpServletRequest  httpServletRequest,
 			@RequestParam("title") String title,
             @RequestParam("content") String content,
             @RequestParam("grade") String grade,
             @RequestParam("category") String category,
             @RequestParam("startDate") String startDate,
-            @RequestParam("endDate") String endDate,
-            @RequestParam("uploadFile") MultipartFile uploadFile) {
+            @RequestParam("endDate") String endDate) {
 	   
+		
+		// 세션가져와서 empNo세팅
+		HttpSession session = httpServletRequest.getSession();
+		
+		String empNo = (String)session.getAttribute("strId");
+		noticeRequest.setRegId(empNo);
+		noticeRequest.setModId(empNo);	
+		
 		// 매개값 디버깅
 		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd noticeRequest: ", noticeRequest.toString());
 		// 에러 발생 시 true
@@ -112,16 +161,6 @@ public class NoticeController {
         noticeService.addNotice(noticeRequest);
 
         return "redirect:/groupware/notice/noticeList";
-	}
-
-	private Object getDefaultMessage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private Object getField() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	// 입력 폼

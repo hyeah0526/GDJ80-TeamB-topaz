@@ -9,10 +9,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApprovalRequest {
+public class ApprovalDocRequest {
 	
-
+	private String approvalDocNo;
 	private String templateNo;
+	private String empNo;
+	private String approvalState;
+	private String docTitle;
+	private String docContent;
+	private String startDate;
+	private String endDate;
 	private String regId;
 	private String regTime;
 	private String modId;

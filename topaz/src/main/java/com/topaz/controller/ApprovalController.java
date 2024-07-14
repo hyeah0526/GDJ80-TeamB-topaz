@@ -24,20 +24,39 @@ public class ApprovalController {
 	
 	@Autowired ApprovalService approvalService;
 	
+	@GetMapping("/groupware/approval/approvalSign")
+	public String approvalSign() {
+		
+		return "groupware/approval/approvalSign"; 
+	}
 	/*
 	 * 서비스명: - 담당자: 김지훈
 	 */
 	
 	
-	 @GetMapping("groupware/approval/approvalList") 
+	 @GetMapping("/groupware/approval/approvalList") 
 	 public String approvalList() {
-	 return "groupware/approval/approvalList"; 
+		 return "groupware/approval/approvalList"; 
 	 }
 	
-
-	@GetMapping("groupware/approval/approvalTemplateModify")
+	/*
+	 * 서비스명: - 담당자: 김지훈
+	 */
+	@PostMapping("/groupware/approval/approvalTemplateModify")
+	public String templateModify() {
+		
+		return "groupware/approval/approvalTemplateModify";
+	}
+	
+	
+	/*
+	 * 서비스명: - 담당자: 김지훈
+	 */
+	
+	@GetMapping("/groupware/approval/approvalTemplateModify")
 	public String templateDetail(Model model,
-		@RequestParam(name = "templateNo") String templateNo) {
+		@RequestParam(name = "templateNo") String templateNo,
+		HttpServletRequest  httpServletRequest) {
 		log.debug(Debug.KJH + " / Controller approvalTemplateDetail: " + templateNo);
 		
 		Map<String, Object> templateDetail = approvalService.getTemplateDetail(templateNo);
@@ -51,8 +70,9 @@ public class ApprovalController {
 	 * 서비스명: addTemplate() - 템플릿 등록 폼 담당자: 김지훈
 	 */
 	
-	@PostMapping("groupware/approval/approvalTemplateAdd")
-	public String approvalTemplateAdd(ApprovalTemplate appTemplate) throws Exception {
+	@PostMapping("/groupware/approval/approvalTemplateAdd")
+	public String approvalTemplateAdd(ApprovalTemplate appTemplate,
+			HttpServletRequest  httpServletRequest) throws Exception {
 		
 		log.debug(Debug.KJH + "/ Controller <POST> approvalTemplateAdd: " + appTemplate);
 		approvalService.addTemplate(appTemplate);

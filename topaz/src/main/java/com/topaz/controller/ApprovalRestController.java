@@ -1,11 +1,17 @@
 
 package com.topaz.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.topaz.service.ApprovalService;
 import com.topaz.utill.Debug;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -25,14 +33,12 @@ public class ApprovalRestController {
 	ApprovalService approvalService;
 	
 	
-	/*
-	 * @GetMapping("/groupware/approval/approvalSign") public
-	 */
-	
+	 
 	
 	/*
 	 * 서비스명: - 담당자: 김지훈
 	 */
+    
 	@PostMapping("/groupware/approval/approvalList")
 	public Map<String, Object> approvalList(@RequestParam Map<String, Object> paramMap) throws Exception {
 		// paramMap 디버깅

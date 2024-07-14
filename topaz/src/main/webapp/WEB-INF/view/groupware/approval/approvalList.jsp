@@ -82,7 +82,8 @@
         </ol>
       </nav>
 	</div><!-- Title 종료 -->
-
+	
+	<a href ="/topaz/groupware/approval/approvalSign">서명 등록</a>
 	<!-- section 시작 -->
     <section class="section">
     <div class="row">
@@ -91,34 +92,22 @@
 					<div class="card-body">
 						
 						<!-- Table with stripped rows -->
-						<form action="" method="post" id="approvalStateBtn" class="approvalStateBtn" name="selectApprovalState">
-							<button type="button" class="btn btn-primary" value="all">전체</button>
-							<button type="button" class="btn btn-primary" value="4">승인</button>
-							<button type="button" class="btn btn-primary" value="4">진행</button>
-							<button type="button" class="btn btn-primary" value="3">대기</button>
-							<button type="button" class="btn btn-primary" value="1,2">취소 / 반려</button>
-						</form>
-						<form>
-							
-						</form>
-					<%-- 	<form action="/topaz/groupware/approval/approvalSign">
-							<div id="signature-pad" class="m-signature-pad">
-								<div class="m-signature-pad--body">
-									<canvas></canvas>
+						<div id="searchFormContainer" style="margin-top: 20px;">
+							<form action="/topaz/groupware/approval/approvalList" id="searchForm" method="get">
+								<div id="approvalStateContainer" style="margin-bottom: 30px;">
+									<button type="button" class="btn btn-primary" value="">전체</button>
+									<button type="button" class="btn btn-primary" value="4">승인</button>
+									<button type="button" class="btn btn-primary" value="3">진행</button>
+									<button type="button" class="btn btn-primary" value="2">대기</button>
+									<button type="button" class="btn btn-primary" value="1">취소 / 반려</button>
 								</div>
-								<div class="m-signature-pad--footer">
-									<div class="description">서명해 주세요</div>
-									<button type="button" class="button clear" data-action="clear">초기화</button>
-									<button type="button" class="button save" data-action="save">저장</button>
+								<div id="approvalSearchContainer">
+									<button type="button" class="resetBtn hiddenBtn">초기화</button>
+									<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
+									<button type="submit" class="btn btn-primary">검색</button>
 								</div>
-							</div>
-						</form> --%>
-						<form action="/topaz/groupware/approval/approvalList" id="searchForm" method="get">
-							<br>
-							<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord">
-							<button type="button" class="resetBtn hiddenBtn">초기화</button>
-							<button type="submit" class="btn btn-primary">검색</button>
-						</form>
+							</form>
+						</div>
 						<br>
 						<form action="" method="get">
 							<button type="submit" class="btn btn-primary">작성</button>
@@ -140,7 +129,6 @@
 						
 					<nav aria-label="Page navigation example">
 						<ul class="pagination" id="paginationUl">
-						
 			           </ul>
 					</nav>				
 						<!-- End Table with stripped rows -->

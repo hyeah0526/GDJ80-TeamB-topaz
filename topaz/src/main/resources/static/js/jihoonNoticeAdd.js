@@ -97,14 +97,22 @@ document.addEventListener('DOMContentLoaded', function() {
 function formSubmit(event) {
 	event.preventDefault();
 	
-    const oEditor = nhn.husky.EZCreator.getEditor('content'); // 에디터 객체 가져오기
-    const content = oEditor.getIR().trim(); // 에디터의 내용 가져오기
 	
-	
+	// 내용 업데이트
+    oEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+    const content = oEditor.getById["content"].getIR();
+
+    if (!content) {
+        alert("내용을 입력하세요.");
+        $("#content").focus();
+        return false;
+    }
 	const title = $('#title').val().trim();
 	const grade = document.querySelector('[name="grade"]:checked');
 	const category = document.querySelector('[name="category"]:checked');
-	const uploadFile = document.getElementById('uploadFile').files;
+    const selectedDate = $('#startDate').val().trim();
+    const startDate = selectedDate ? `${selectedDate} 00:00:00` : `${new Date().toISOString().slice(0, 10)} 00:00:00`;
+    const endDate = $('#endDate').val().trim() ? $('#endDate').val().trim() + ' 23:59:59' : '2099-12-31 23:59:59';
 	
 	if(!title) {
 		alert("제목을 입력하세요.")
@@ -142,16 +150,14 @@ function formSubmit(event) {
 	console.log("AJAX 요청 시작")
 	
     let formdata = new FormData($("#addNoticeForm")[0]);
-    // uploadFile이 정의되어 있다면 FormData에 추가
-    if (uploadFile) {
-          if (uploadFile.length > 0) {
-            for (let i = 0; i < uploadFile.length; i++) {
-                formdata.append('uploadFile', uploadFile[i]);
-            }
-        }
-    }    
+    formdata.append("startDate", startDate); // startDate를 추가
+    formdata.append("endDate", endDate); // startDate를 추가
+    
+		for (let [key, value] of formdata.entries()) {
+    		console.log(key, value);
+		}
 	$.ajax({
-		url: '${pageContext.request.contextPath}/groupware/notice/noticeAdd',
+		url: contextPath + '/groupware/notice/noticeAdd',
 		type: 'POST',
 		data: formdata,
 		processData: false,
@@ -168,6 +174,7 @@ function formSubmit(event) {
 	 },
         error: function (xhr, status, error) {
             alert("다시 시도해 주세요.");
+            console.error(xhr.responseText);
             console.log("error: ", error);
         }
     });

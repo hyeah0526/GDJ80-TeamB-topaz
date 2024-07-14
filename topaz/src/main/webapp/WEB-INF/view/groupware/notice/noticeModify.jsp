@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!--
    분류 번호: #10 - 공지 사항 수정 페이지
    시작 날짜: 2024-07-05
@@ -14,6 +15,10 @@
 	<!-- CSS / JS -->
 	<link href="/topaz/css/jihoon.css" rel="stylesheet">
 	<script src="/topaz/js/jihoonNoticeModify.js"></script>
+	<script>
+        // JSP에서 contextPath 값을 JavaScript로 넘김
+        const contextPath = '<%= request.getContextPath() %>';
+    </script>
 	<!-- naver smart editor -->
 	<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 	<script>
@@ -33,13 +38,22 @@
 		function submitContent(form) {
 			// 폼 전송 전에 에디터 내용을 textarea에 업데이트
 			oEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+			
+			// 에디터에서 내용 가져오기
+			const content = oEditor.getById["content"].getIR();
+				console.log("#content: ", content);
+				
+			if (!content.trim()) {
+                alert("내용을 입력해 주세요.");
+                return false; // 폼을 제출하지 않습니다.
+            }
 			return true; // 폼을 submit
 		}
+		
 		function decodeHTMLEntity(text) {
 			const doc = new DOMParser().parseFromString(text, "text/html");
 			return doc.documentElement.textContent;
 		}
-
 		// 문서 로드 후 스마트 에디터 초기화
 		document.addEventListener("DOMContentLoaded", function() {
 			const initialContentElement = document.getElementById("initialContent");
@@ -71,16 +85,15 @@
 					<div class="card">
 						<div class="card-body">
 							<h5 class="card-title">공지 사항 작성</h5>
-							<form action="${pageContext.request.contextPath}/groupware/notice/noticeModify" method="post" id="modifyNoticeForm" onsubmit="return submitContent(this);" enctype="multipart/form-data">
+							<form action="<c:url value="${contextPath}/groupware/notice/noticeModify" />"  method="post" id="modifyNoticeForm" onsubmit="return submitContent(this);" enctype="multipart/form-data">
 								<input type="hidden" name="newsNo" value="${noticeDetail.newsNo}">
-								<input type="hidden" name="modId" value="">
 								<!-- notice title -->
 								<div class="row mb-3">
 									<label for="modifyTitle" class="col-sm-2 col-form-label">
 										제목
 									</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control step" data-step="1" id="title" name="title" value="${noticeDetail.title}">
+										<input type="text" class="form-control" id="title" name="title" value="${noticeDetail.title}">
 									</div>
 								</div>
 								<!-- notice grade -->
@@ -88,13 +101,13 @@
 									<legend class="col-form-label col-sm-2 pt-0">등급</legend>
 									<div class="col-sm-10">
 										<div class="form-check">
-											<input class="form-check-input modifyGrade step" data-step="2" type="radio" name="grade" id="modifyGrade1" value="1" ${noticeDetail.grade == 1 ? 'checked' : ''}> 
+											<input class="form-check-input modifyGrade" type="radio" name="grade" id="modifyGrade1" value="1" ${noticeDetail.grade == 1 ? 'checked' : ''}> 
 											<label class="form-check-label" for="modifyGrade"> 
 												직원 
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input modifyGrade step" data-step="2"type="radio" name="grade" id="modifyGrade2" value="2" ${noticeDetail.grade == 2 ? 'checked' : ''}> 
+											<input class="form-check-input modifyGrade" type="radio" name="grade" id="modifyGrade2" value="2" ${noticeDetail.grade == 2 ? 'checked' : ''}> 
 											<label class="form-check-label" for="modifyGrade"> 
 												외주 업체 
 											</label>
@@ -106,19 +119,19 @@
 									<legend class="col-form-label col-sm-2 pt-0">종류</legend>
 									<div class="col-sm-10">
 										<div class="form-check">
-											<input class="form-check-input modifyCategory step" data-step="3" type="radio" name="category" id="modifyCategory1" value="1" ${noticeDetail.category == 1 ? 'checked' : ''}> 
+											<input class="form-check-input modifyCategory" type="radio" name="category" id="modifyCategory1" value="1" ${noticeDetail.category == 1 ? 'checked' : ''}> 
 											<label class="form-check-label" for="modifyCategory"> 
 												필독
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input modifyCategory step" data-step="3" type="radio" name="category" id="modifyCategory2" value="2" ${noticeDetail.category == 2 ? 'checked' : ''}> 
+											<input class="form-check-input modifyCategory" type="radio" name="category" id="modifyCategory2" value="2" ${noticeDetail.category == 2 ? 'checked' : ''}> 
 											<label class="form-check-label" for="noticeCategory2"> 
 												일반
 											</label>
 										</div>
 										<div class="form-check">
-											<input class="form-check-input modifyCategory step" data-step="3" type="radio" name="category" id="modifyCategory3" value="3" ${noticeDetail.category == 3 ? 'checked' : ''}> 
+											<input class="form-check-input modifyCategory" type="radio" name="category" id="modifyCategory3" value="3" ${noticeDetail.category == 3 ? 'checked' : ''}> 
 											<label class="form-check-label" for="noticeCategory3"> 
 												이벤트
 											</label>
@@ -130,7 +143,7 @@
 									<label for="modifyNoticeStart" class="col-sm-2 col-form-label">게시 시작일
 									</label>
 									<div class="col-sm-4">
-										<input type="date" class="form-control step" data-step="4" id="startDate" name="startDate" value="${noticeDetail.startDate.toString().substring(0, 10)}">
+										<input type="datetime-local" class="form-control" id="startDate" name="startDate" value="<c:out value='${noticeDetail.startDate}' />">
 									</div>
 								</div>
 								<!-- end date-->
@@ -139,7 +152,7 @@
 										게시 종료일
 									</label>
 									<div class="col-sm-4">
-										<input type="date" class="form-control step" data-step="5" id="endDate" name="endDate" value="${noticeDetail.endDate.toString().substring(0, 10)}">
+										<input type="datetime-local" class="form-control" id="endDate" name="endDate" value="<c:out value='${noticeDetail.endDate}' />">
 									</div>
 								</div>
 								<!-- content -->
@@ -147,22 +160,14 @@
 									<label for="content" class="col-sm-2 col-form-label">내용</label>
 									<div class="col-sm-10">
 										<!-- c:out 이용하여 입력된 서식 깨지지 않게 출력 -->
-										<textarea class="form-control step" data-step="6" style="height: 100px" name="content" id="content">
+										<textarea class="form-control" style="height: 100px" name="content" id="content">
 											<c:out value="${noticeDetail.content}" escapeXml="false" />
 										</textarea>
 									</div>
 								</div>
-								<div class="row mb-3">
-									<label for="noticeFile" class="col-sm-2 col-form-label">
-										첨부 파일
-									</label>
-									<div class="col-sm-10">
-										<input class="form-control" type="file" id="uploadFile" name="uploadFile" multiple>
-									</div>
-								</div>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeRemove?newsNo=${noticeDetail.newsNo}'">삭제</button>
-								<button type="submit" id="noticeModifyBtn" class="btn btn-primary">수정하기</button>
+								<button type="submit" id="noticeModifyBtn" onclick="formSubmit(event)" class="btn btn-primary">수정하기</button>
 							</form>
 							<!-- End General Form Elements -->
 						</div>

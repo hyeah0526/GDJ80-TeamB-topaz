@@ -1,11 +1,16 @@
 package com.topaz.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.topaz.dto.ApprovalTemplate;
 import com.topaz.mapper.ApprovalMapper;
@@ -21,6 +26,17 @@ public class ApprovalService {
 	@Autowired UploadFileService uploadFileService;
 	
 	
+	/*
+	 * 분류 번호: #11 - 결재 리스트
+	 * 시작 날짜: 2024-07-10
+	 * 담당자: 김지훈
+	*/
+	
+
+    public String selectSign(String empNo) {
+        return approvalMapper.selectSign(empNo);
+    }
+    
 	/*
 	 * 분류 번호: #11 - 결재 리스트
 	 * 시작 날짜: 2024-07-10

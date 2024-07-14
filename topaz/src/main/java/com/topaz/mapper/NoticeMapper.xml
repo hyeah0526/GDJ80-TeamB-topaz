@@ -7,7 +7,7 @@
 	UPDATE news_notice
 	SET 
 		use_yn = 'N',
-		mod_id = 'C3de4f5gh',
+		mod_id = #{modId},
 		mod_time = NOW()
 	WHERE 
 		news_no = #{newsNo};
@@ -22,7 +22,7 @@
 		category = #{category},
 		start_date = #{startDate},
 		end_date = #{endDate},
-		mod_id = 'C3de4f5gh',
+		mod_id = #{modId},
 		mod_time = NOW()
 	WHERE 
 		news_no = #{newsNo};	
@@ -31,29 +31,14 @@
 	<!-- 분류 번호: #10 - 공지 사항 등록 -->
 	<insert id="insertNotice" parameterType="com.topaz.dto.Notice">
 	
-	<selectKey resultType="String" order="AFTER" keyProperty="newsNo">
-		SELECT LAST_INSERT_ID()
-	</selectKey>
-	INSERT INTO news_notice(
-		news_no, title, content, grade, category, start_date, end_date, views,
-		reg_time, mod_time, reg_id, mod_id, use_yn
-	) VALUES (
-		CURRENT_TIMESTAMP(5), #{title}, #{content},
-		CASE
-		WHEN #{grade} != '1' OR #{category} != '3' THEN '1'
-		ELSE #{grade}
-		END,
-		#{category},
-		CASE
-		WHEN #{grade} != '1' OR #{category} != '3' THEN NOW()
-		ELSE DATE_ADD(#{startDate}, INTERVAL 0 SECOND)
-		END,
-		CASE
-		WHEN #{grade} != '1' OR #{category} != '3' THEN '2099-12-31 23:59:59'
-		ELSE DATE_SUB(DATE_ADD(#{endDate}, INTERVAL 1 DAY), INTERVAL 1 SECOND)
-		END,
-		NULL, NOW(), NOW(), 'C3de4f5gh', 'C3de4f5gh', 'Y'
-	);
+		INSERT INTO news_notice(
+			news_no, title, content, grade, category, start_date, end_date, views,
+			reg_time, mod_time, reg_id, mod_id, use_yn
+		) VALUES (
+		    CURRENT_TIMESTAMP(5), #{title}, #{content}, #{grade}, #{category}, 
+		    #{startDate}, #{endDate}, 
+		    NULL, NOW(), NOW(), #{regId}, #{modId}, 'Y'
+		);
 </insert>
 	<!-- 분류 번호: #10 - 공지 사항 상세 페이지 -->
 	<!-- 작성자 이름을 위한 news_notice-employee 테이블 간 JOIN -->

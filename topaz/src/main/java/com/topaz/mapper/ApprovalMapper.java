@@ -18,10 +18,14 @@ public interface ApprovalMapper {
 	
 	/*  분류 번호: #11 - 결재 문서 등록 */
 	
-	/*  분류 번호: #11 - 결재 사인 등록 */
-	
 	/*  분류 번호: #11 - 결재 사인 조회 */
-	public String selectSign(String empNo);
+	String selectSign(String empNo);
+
+	/*  분류 번호: #11 - 결재 사인 등록 */
+    int insertApprovalSign(Map<String, Object> paramMap);
+    
+    /*  분류 번호: #11 - 결재 사인 업로드 */
+    int insertApprovalUpload(Map<String, Object> paramMap);
 	
 	/*  분류 번호: #11 - 결재 리스트 - 페이징 */
 	int approvalListCnt(Map<String, Object> paramMap);

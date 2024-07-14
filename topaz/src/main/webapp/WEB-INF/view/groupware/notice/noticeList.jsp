@@ -49,12 +49,21 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-body">
+
 						<!-- Table with stripped rows -->
 						<form action="/topaz/groupware/notice/noticeList" method="get">
 							<div class="searchContainer">
+								<input type="radio">
+								<label>필독</label>
+								<input type="radio">
+								<label>이벤트</label>
+								<input type="radio">
+								<label>일반</label>
+							</div>
+							<div class="searchContainer">
 								<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord" class="searchBox">
-								<button type="button" class="resetBtn hiddenBtn"></button>
 								<button type="submit" class="btn btn-primary searchBoxBtn">검색</button>
+								<button type="button" class="resetBtn hiddenBtn"></button>
 							</div>
 						</form>
 						<form action="/topaz/groupware/notice/noticeAdd" method="get">
