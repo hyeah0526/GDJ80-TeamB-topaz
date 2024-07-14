@@ -300,10 +300,9 @@
 			, o.incharge_name inchargeName
 			, DATE(o.contract_start) contractStart
 			, DATE(o.contract_end) contractEnd
-			, (SELECT emp_name FROM employee WHERE emp_no = o.emp_no) empNo
-			, CONCAT(SUBSTRING(o.contact_no from 1 for 3), '-'
-						, SUBSTRING(o.contact_no from 4 for 4), '-'
-						, SUBSTRING(o.contact_no from 8 for 4)) contactNo
+			, o.emp_no empNo
+			, (SELECT emp_name FROM employee WHERE emp_no = o.emp_no) empName
+			, o.contact_no contactNo
 			, o.post_no postNo
 			, o.address address
 			, (SELECT emp_name FROM employee WHERE emp_no = o.reg_id) regId
@@ -317,4 +316,55 @@
 		WHERE 
 			o.outsourcing_no = #{outsourcingNo}
 	</select>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 상세 페이지 :: 수정하기 -->
+	<update id="updateBpo" parameterType="com.topaz.dto.Outsourcing">
+		UPDATE 
+			outsourcing
+		SET 
+			outsourcing_name = #{outsourcingName}
+			, outsourcing_about = #{outsourcingAbout}
+			, incharge_name = #{inchargeName}
+			, emp_no = #{empNo}
+			, contract_start = #{contractStart}
+			, contract_end = #{contractEnd}
+			, post_no = #{postNo}
+			, address = #{address}
+			, contact_no = #{contactNo}
+			, mod_id = #{modId}
+			, mod_time = NOW()
+		WHERE 
+			outsourcing_no = #{outsourcingNo}
+	</update>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 상세 페이지 :: 수정하기 파일수정 -->
+	<update id="updateBpoFile" parameterType="com.topaz.dto.UploadFile">
+		UPDATE 
+			file_upload
+		SET 
+			original_file_name = #{OriginalFileName}
+			, file_name = #{fileName}
+			, file_size = #{fileSize}
+			, file_type = #{fileType}
+			, mod_id = #{modId}
+			, mod_time = NOW()
+		
+		WHERE 
+			reference_no = #{referenceNo}
+	</update>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 상세 페이지 :: 비밀번호 초기화 수정 -->
+	<update id="updateBpoPw" parameterType="com.topaz.dto.Outsourcing">
+		UPDATE
+			outsourcing
+		SET
+			outsourcing_pw = SHA2(#{outsourcingPw}, 256)
+			, mod_id = #{modId}
+			, mod_time = NOW()
+		WHERE 
+			outsourcing_no = #{outsourcingNo}
+	</update>
 </mapper>

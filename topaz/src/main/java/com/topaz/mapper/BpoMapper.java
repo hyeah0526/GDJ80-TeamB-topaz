@@ -55,4 +55,13 @@ public interface BpoMapper {
 	
 	/* 분류 번호: #5 - 외주업체 상세 페이지 :: 상세보기 */
 	Map<String, Object> selectBpoOne(String outsourcingNo);
+	
+	/* 분류 번호: #5 - 외주업체 상세 페이지 :: 수정하기 */
+	int updateBpo(Outsourcing outsourcing);
+	
+	/* 분류 번호: #5 - 외주업체 상세 페이지 :: 수정하기 파일수정 */
+	int updateBpoFile(UploadFile file);
+	
+	/* 분류 번호: #5 - 외주업체 상세 페이지 :: 비밀번호 초기화 수정 */
+	int updateBpoPw(Outsourcing outsourcing);
 }

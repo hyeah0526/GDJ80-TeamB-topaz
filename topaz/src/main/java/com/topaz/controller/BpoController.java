@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.topaz.dto.Outsourcing;
 import com.topaz.dto.OutsourcingRequest;
@@ -227,20 +228,56 @@ public class BpoController {
 	
 	
 	/*
-	 * 서비스명: 
+	 * 서비스명: modBpo
 	 * 시작 날짜: 2024-07-13
 	 * 담당자: 박혜아
 	*/
 	@RequestMapping("/groupware/bpo/bpoModify")
-	public String bpoModify(@Valid OutsourcingRequest oscRq
-							, Errors errors // errors유효성검사
-							, Model model
-							, HttpServletRequest  httpServletRequest) {
+	public String bpoModify(OutsourcingRequest oscRq
+							, HttpServletRequest  httpServletRequest
+							, @RequestParam(name="oldFileName") String oldFileName) {
 		
-		bpoService.modBpo(oscRq);
+		// 파일 있으면 false, 없으면 true
+		log.debug(Debug.PHA + "bpoModify Controller 파일 체크--> " + oscRq.getUploadFile().isEmpty() + Debug.END);
+		log.debug(Debug.PHA + "bpoModify Controller oldFileName 체크--> " + oldFileName + Debug.END);
+
+		// 수정아이디 세팅
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		oscRq.setModId(empNo);
 		
+		log.debug(Debug.PHA + "bpoModify Controller oscRq--> " + oscRq + Debug.END);
+		
+		// 수정
+		bpoService.modBpo(oscRq, oldFileName);
+
 		return "redirect:/groupware/bpo/bpoDetail?outsourcingNo="+oscRq.getOutsourcingNo();
 	}
+	
+	
+	
+	
+	/*
+	 * 서비스명: modBpo
+	 * 시작 날짜: 2024-07-13
+	 * 담당자: 박혜아
+	*/
+	@RequestMapping("/groupware/bpo/bpoResetPw")
+	public String bpoResetPw(Outsourcing outsourcing
+							, HttpServletRequest  httpServletRequest) {
+		log.debug(Debug.PHA + "bpoResetPw Controller 비밀번호 초기화 외주업체--> "+ outsourcing + Debug.END);
+		
+		// modId 세팅
+		HttpSession session = httpServletRequest.getSession();
+		String modId = (String)session.getAttribute("strId");
+		outsourcing.setModId(modId);
+		
+		// 비밀번호 수정
+		bpoService.modResetPw(outsourcing);
+		
+		return  "redirect:/groupware/bpo/bpoDetail?outsourcingNo="+outsourcing.getOutsourcingNo();
+	}
+	
 	
 	
 	

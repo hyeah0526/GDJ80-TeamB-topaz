@@ -2,6 +2,7 @@ package com.topaz.service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -361,16 +362,112 @@ public class BpoService {
 	
 	/*
 	 * 분류번호: #5 - 외주업체 상세 페이지(bpoDetail.jsp) :: 수정하기
-	 * 시작 날짜: 2024-07-11
+	 * 시작 날짜: 2024-07-14
 	 * 담당자: 박혜3
 	*/
-	public void modBpo(OutsourcingRequest oscRq){
-		
+	public void modBpo(OutsourcingRequest oscRq
+						,String oldFileName){
 		log.debug(Debug.PHA + "modBpo Service oscRq--> " + oscRq + Debug.END);
+		log.debug(Debug.PHA + "modBpo Service oldFileName--> " + oldFileName + Debug.END);
+		
+		// 파일 있으면 false, 없으면 true
+		log.debug(Debug.PHA + "modBpo Service 파일 체크--> " + oscRq.getUploadFile().isEmpty() + Debug.END);
 
+		// 외주업체 테이블 update
+		Outsourcing outsourcing = new Outsourcing();
+		outsourcing.setOutsourcingNo(oscRq.getOutsourcingNo());
+		outsourcing.setOutsourcingName(oscRq.getOutsourcingName());
+		outsourcing.setOutsourcingAbout(oscRq.getOutsourcingAbout());
+		outsourcing.setInchargeName(oscRq.getInchargeName());
+		outsourcing.setEmpNo(oscRq.getEmpNo());
+		outsourcing.setContractStart(oscRq.getContractStart());
+		outsourcing.setContractEnd(oscRq.getContractEnd());
+		outsourcing.setPostNo(oscRq.getPostNo());
+		outsourcing.setAddress(oscRq.getAddress());
+		outsourcing.setContactNo(oscRq.getContactNo());
+		outsourcing.setModId(oscRq.getModId());
+		
+		// update 실패시 예외처리
+		int updateBpo = bpoMapper.updateBpo(outsourcing);
+		if(updateBpo != 1) {
+			// 수정 실패시 예외 발생시키기
+			log.debug(Debug.PHA + "modBpo에서 RuntimeException 발생! " + Debug.END);
+			throw new RuntimeException();
+		}
 		
 		
-		
+		// 새로운 파일 업로드시에만 update하기
+		if(oscRq.getUploadFile().isEmpty() == false) {
+			//log.debug(Debug.PHA + "파일 있을시에만 update" + Debug.END);
+			
+			MultipartFile mf = oscRq.getUploadFile();
+			// file_upload테이블 DTO에 값 저장
+			UploadFile file = new UploadFile();
+			file.setReferenceNo(oscRq.getOutsourcingNo());
+			file.setOriginalFileName(mf.getOriginalFilename());
+			file.setFileType(mf.getContentType());
+			file.setFileSize(mf.getSize());
+			file.setModId(oscRq.getModId());
+			
+			// file uuid세팅
+			String prefix = UUID.randomUUID().toString().replace("-", ""); //랜덤 uuid 생성 / 하이픈(-)은 제거
+			int p = mf.getOriginalFilename().lastIndexOf("."); // 파일타입전(.의 위치)까지 길이 담기
+			String suffix = mf.getOriginalFilename().substring(p); //.의 위치부터 자른 후 담아주기
+			// 세팅한 uuid 담아주기
+			file.setFileName(prefix + suffix);
+			log.debug(Debug.PHA + "신규 fileName확인 "+file.getFileName()+ Debug.END);
+			
+			// file_upload테이블 insert
+			int updateBpoFile = bpoMapper.updateBpoFile(file);
+			if(updateBpoFile != 1) {
+				// 등록 실패시 예외 발생시키기
+				log.debug(Debug.PHA + "updateBpoFile에서 RuntimeException 발생! " + Debug.END);
+				throw new RuntimeException();
+			}
+			
+			
+			// 파일 폴더에 저장하기
+			File emptyFile = new File(System.getProperty("user.dir") 
+					+ "/src/main/resources/static/assets/img/bpo/" 
+					+ file.getFileName());
+			try {
+				// mf안에 있는 getinputStream을 가져와서 비어있는 emptyFile로 복사를 함 
+				mf.transferTo(emptyFile);
+				
+				// 기존 파일 삭제
+				String filePath = System.getProperty("user.dir") 
+									+ "/src/main/resources/static/assets/img/bpo/" 
+									+ oldFileName;
+			    File fileDel = new File(filePath);
+			    fileDel.delete();
+			    
+			} catch (Exception e) {
+				e.printStackTrace(); // 예외나면 전부 취소
+				throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 update명령도 전부 취소
+			}
+		}
 	}
+	
+	
+	
+	/*
+	 * 분류번호: #5 - 외주업체 예약일정 상세 페이지(bpoRsvnDetail.jsp) :: 수정(비밀번호 초기화)
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 박혜아
+	*/
+	public int modResetPw(Outsourcing outsourcing) {
+		log.debug(Debug.PHA + "modResetPw Service getOutsourcingNo--> "+ outsourcing.getOutsourcingNo() + Debug.END);
+		log.debug(Debug.PHA + "modResetPw Service getOutsourcingPw--> "+ outsourcing.getOutsourcingPw() + Debug.END);
+		log.debug(Debug.PHA + "modResetPw Service getModId--> "+ outsourcing.getModId()+ Debug.END);
+		
+		// 외주업체 비밀번호 수정하기
+		int updateRow = bpoMapper.updateBpoPw(outsourcing);
+		if(updateRow == 1) {
+			log.debug(Debug.PHA + "modResetPw Service updateBpoPw--> 수정성공! " + Debug.END);
+		}
+		
+		return updateRow;
+	}
+	
 
 }

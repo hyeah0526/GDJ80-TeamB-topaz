@@ -4,6 +4,8 @@
 <html lang="en">
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
+	<!-- 다음 주소 API -->
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<head>
 	<!-- hyeah CSS / JS -->
 	<link rel="stylesheet" href="<c:url value='/css/hyeah.css' />">
@@ -58,7 +60,7 @@
 				  <li class="nav-item">
 	                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
 				  </li>
-              </ul>
+             	</ul>
               
               <div class="tab-content pt-2">
 
@@ -84,7 +86,7 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">사내 담당자</div>
-                    <div class="col-lg-9 col-md-8">${b.empNo}</div>
+                    <div class="col-lg-9 col-md-8">${b.empName}</div>
                   </div>
 
                   <div class="row">
@@ -109,28 +111,30 @@
 
                 </div>
 
-                <div class="tab-pane fade profile-edit pt-3 bpoDetails" id="profile-edit">
-
-                  <!-- Edit Outsourcing Form -->
-                  <form>
+				 <div class="tab-pane fade profile-edit pt-3 bpoDetails" id="profile-edit">
+				
+                  <!-- 외주업체 수정 폼 -->
+                  <form method="post" action="${pageContext.request.contextPath}/groupware/bpo/bpoModify" enctype="multipart/form-data">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">업체 사진</label>
                       <div class="col-md-8 col-lg-9">
-                        <input class="form-control" type="file" id="" name="">
+                        <img id="preview" class="preview">
+                        <input class="form-control" type="file" name="uploadFile" id="uploadFile">
+                        <input class="form-control" type="hidden" name="oldFileName" value="${b.fileName}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">업체 이름</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="${b.outsourcingName}">
+                        <input name="outsourcingName" type="text" class="form-control" id="outsourcingName" value="${b.outsourcingName}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">업체 소개</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">${b.outsourcingAbout}</textarea>
+                        <textarea name="outsourcingAbout" class="form-control" id="outsourcingAbout" style="height: 100px">${b.outsourcingAbout}</textarea>
                       </div>
                     </div>
 
@@ -144,64 +148,71 @@
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">외주업체 담당자</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="" type="text" class="form-control" value="${b.inchargeName}">
+                        <input name="inchargeName" id="inchargeName" type="text" class="form-control" value="${b.inchargeName}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">사내 담당자</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="" type="text" class="form-control" value="${b.empNo}">
+                      <div class="col-md-8 col-lg-5">
+                        <input type="text" id="empNameInput" name="empNameInput" class="form-control" value="${b.empName}">
+                        <input type="hidden" id="empNoInput" name="empNo" class="form-control" value="${b.empNo}" readonly>
+                      </div>
+                      <div class="col-md-8 col-lg-4">
+                      	<button type="button" id="chkEmp" class="btn btn-primary">직원검색</button>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">계약시작</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="" type="date" class="form-control" id="" value="${b.contractStart}">
+                        <input name="contractStart" id="contractStart" type="date" class="form-control" value="${b.contractStart}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">계약종료</label>
-                      <div class="col-md-8 col-lg-5">
-                        <input name="" type="date" class="form-control" id="" value="${b.contractEnd}">
-                      </div>
-                      <div class="col-md-8 col-lg-4">
-                      	<a class="btn btn-primary">비활성화 처리</a>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="contractEnd" id="contractEnd" type="date" class="form-control" value="${b.contractEnd}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">주소</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="" type="text" class="form-control" id="" value="${b.address}">
+                      <div class="col-md-8 col-lg-5">
+	                      <input name="postNo" class="form-control" data-step="11" placeholder="우편번호" maxlength="5" value="${b.postNo}" readonly>
+						  <input name="firstAddress" id="firstAddress" class="step form-control" data-step="12" placeholder="주소" value="${b.address}">
+                      </div>
+                      <div class="col-md-8 col-lg-4">
+                        <button class="step btn btn-primary" type="button" data-step="10" onclick="openPostcode('postNo','firstAddress')">우편번호찾기</button><br>
+                        <input name="address" id="address" type="hidden" class="form-control" value="${b.address}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="" type="text" class="form-control" id="" value="${b.contactNo}">
+                        <input name="contactNo" id="contactNo" type="number" class="form-control" value="${b.contactNo}">
                       </div>
                     </div>
                     
                     <div class="row mb-3">
                       <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">작성자</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="" type="text" class="form-control" id="" value="${b.regId}" style="background-color: #d9dce1;" readonly>
+                        <input name="regId" type="text" class="form-control" value="${b.regId}" style="background-color: #d9dce1;" readonly>
                       </div>
                     </div>
                     
                     <div class="row mb-3">
                       <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">최종수정자</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="" type="text" class="form-control" id="" value="${b.modId}" style="background-color: #d9dce1;" readonly>
+                        <input name="modId" type="text" class="form-control" value="${b.modId}" style="background-color: #d9dce1;" readonly>
                       </div>
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <button type="submit" id="modBpoBtn" class="btn btn-primary">Save Changes</button>
+                      <button type="button" class="btn btn-primary" onclick="window.location.href='/topaz/groupware/bpo/bpoDetail?outsourcingNo=${b.outsourcingNo}'">Cancel</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -209,23 +220,17 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form>
+                  <form method="post" action="${pageContext.request.contextPath}/groupware/bpo/bpoResetPw">
                     <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">비밀번호 초기화</label>
+                      
                       <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                      	<input type="password" class="form-control" name="outsourcingPw">
+                      	<input type="hidden" name="outsourcingNo" value="${b.outsourcingNo}">
                       </div>
                     </div>
-
-                    <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                      </div>
-                    </div>
-
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      	<button id="bpoResetPwBtn" type="submit" class="btn btn-primary">Reset Password</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
@@ -234,12 +239,45 @@
 			</div></div>
 		</div></div>
     </section><!-- section 종료 -->
+    
+    
+    <!-- 직원검색 모달 -->
+	<div class="modal fade" id="empModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+			<!-- 모달 제목 -->
+			<div class="modal-header">
+				<h5 class="modal-title">담당 직원 선택</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			
+				<div class="modal-body">
+					<div class="row mb-5">
+						<label for="inputEmail" class="col-sm-4 col-form-label"></label>
+						<div class="col-sm-8 scheduleModalDiv" id="empNameSelectDiv">
+							<!-- 직원 출력되는 곳 -->
+						</div>
+					</div>
+				</div>
+				
+				<!-- 모달 일정 취소/등록버튼 -->
+				<div class="modal-footer">
+					<button type="button" id="empChkCxlBtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button id="empChkSaveBtn" type="submit" class="btn btn-primary">Save</button>
+				</div>
+		</div></div>
+	</div><!-- End 직원검색 Modal-->
 
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	
+	<!-- 카카오 우편번호API -->
+	<script src="<c:url value='/js/post.js'/>"></script>
+	
+	<!-- 외주업체등록 JS -->
+	<script src="<c:url value='/js/hyeahBpoAdd.js'/>"></script>
 </body>
 
 </html>
