@@ -355,20 +355,46 @@
             AND em.emp_name = #{empName}
         </if>
 	</select>
+
+	
+	<!-- 분류 번호 :  #2 -  쪽지 전송할 직원 조회  -->
+	<select id="selectEmpName" parameterType="String" resultType="map">
+		SELECT 
+			em.emp_name empName, 
+			cm.cd_nm empDept,
+			em.emp_no empNo
+		FROM
+			employee em
+		INNER JOIN
+			common_code cm
+		ON 
+			em.emp_dept = cm.cd
+			AND cm.crp_cd = 'E001' 
+		WHERE
+			em.emp_name LIKE CONCAT('%', #{empName}, '%')
+	</select>
+	
+	<!-- ======= 쪽지 -->
 	
 	<!--  분류 번호 :  #2 - 수신 쪽지 조회 -->
 	<select id="selectNoteReceived" parameterType="Map" resultType="Map">
 		SELECT 
-			 ROW_NUMBER() OVER (ORDER BY send_time DESC) AS no,
-			 note_id noteId,
-			 sender_id sendId, 
-			 note_content noteContent, 
-			 DATE_FORMAT(send_time, '%Y-%m-%d %H:%i:%s') sendTime
+			 ROW_NUMBER() OVER (ORDER BY nt.send_time DESC) AS no,
+			 nt.note_id noteId,
+			 em.emp_name empName,
+			 nt.sender_id sendId, 
+			 nt.note_content noteContent, 
+			 DATE_FORMAT(nt.send_time, '%Y-%m-%d %H:%i:%s') sendTime
 		FROM 
-			note_history
+			note_history nt
+		INNER JOIN
+			employee em
+		ON
+			nt.sender_id = em.emp_no
 		WHERE
-			receiver_id = #{empNo} AND
-			use_yn = 'Y'
+			nt.receiver_id = #{empNo} AND
+			nt.receiver_delete = 'N' AND
+			nt.use_yn = 'Y'
 		LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 	
@@ -380,8 +406,38 @@
 			note_history
 		WHERE
 			receiver_id = #{empNo} AND
-			use_yn = 'Y'
+			receiver_delete = 'N' AND
+			use_yn = 'Y' 
+			
 	</select>
+	
+	<!-- 분류 번호 :  #2 - 발신 쪽지 삭제 -->
+	<update id="deleteSenNote" >
+		UPDATE
+			note_history
+		SET 
+			sender_delete = 'Y',
+			mod_time = NOW()
+		WHERE
+			note_id IN
+		<foreach item="noteId" collection="noteIds" open="(" separator="," close=")">
+			#{noteId}
+		</foreach>
+	</update>
+	
+	<!-- 분류 번호 :  #2 - 수신  쪽지 삭제 -->
+	<update id="deleteRecNote" >
+		UPDATE
+			note_history
+		SET 
+			receiver_delete = 'Y',
+			mod_time = NOW()
+		WHERE
+			note_id IN
+		<foreach item="noteId" collection="noteIds" open="(" separator="," close=")">
+			#{noteId}
+		</foreach>
+	</update>
 	
 	<!-- 분류 번호 :  #2 -  쪽지 삭제 -->
 	<update id="deleteNote" >
@@ -400,30 +456,42 @@
 	<!-- 분류 번호 :  #2 -  쪽지 상세 보기 -->
 	<select id="selectNoteDetail" resultType="Map" >		
 		SELECT 
-			note_id noteId,
-			sender_id senderId,
-			receive_time receiveTime,
-			note_content noteContent
+			nt.note_id noteId,
+			em.emp_name empName,
+			nt.sender_id senderId,
+			nt.note_content noteContent,
+			DATE_FORMAT(nt.receive_time, '%Y-%m-%d %H:%i:%s') receive_time
 		FROM
-			note_history
+			note_history nt
+		INNER JOIN
+			employee em
+		ON
+			nt.sender_id = em.emp_no
 		WHERE
 			note_id = #{noteId}
 	</select>
 	
 	<!--  분류 번호 :  #2 - 휴지통 쪽지 조회 -->
 	<select id="selectNoteTrash" parameterType="Map" resultType="Map">
-		SELECT 
-			 ROW_NUMBER() OVER (ORDER BY send_time DESC) AS no,
-			 note_id noteId,
-			 sender_id sendId, 
-			 note_content noteContent, 
-			 DATE_FORMAT(send_time, '%Y-%m-%d %H:%i:%s') sendTime
-		FROM 
-			note_history
-		WHERE
-			(receiver_id = #{empNo} OR sender_id = #{empNo}) AND
-			use_yn = 'N'
-		LIMIT #{currentPage}, #{rowPerPage}
+		  SELECT 
+	        ROW_NUMBER() OVER (ORDER BY nt.send_time DESC) AS no,
+	        nt.note_id noteId,
+	        se.emp_no empNo,
+	        se.emp_name senderName,
+	        se.emp_no sendId,
+	        nt.note_content noteContent, 
+	        DATE_FORMAT(nt.send_time, '%Y-%m-%d %H:%i:%s') sendTime
+	    FROM 
+	        note_history nt
+	    LEFT JOIN
+	        employee se ON nt.sender_id = se.emp_no
+	    LEFT JOIN
+	        employee re ON nt.receiver_id = re.emp_no
+	    WHERE
+	        ((nt.receiver_id = #{empNo} AND nt.receiver_delete = 'Y') OR 
+	         (nt.sender_id = #{empNo} AND nt.sender_delete = 'Y')) AND
+	        nt.use_yn = 'Y'
+	    LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 	
 	<!--  분류 번호 :  #2 - 휴지통 쪽지수 조회  -->
@@ -433,39 +501,57 @@
 		FROM 
 			note_history
 		WHERE
-			receiver_id = #{empNo} AND
-			use_yn = 'N'
+			(receiver_id = #{empNo} OR sender_id = #{empNo}) AND
+        	(sender_delete = 'Y' OR receiver_delete = 'Y') AND
+			use_yn = 'Y'
 	</select>
 	
 	
 	<!-- 분류 번호 :  #2 -  쪽지 복구 -->
 	<update id="restorationNote" >
 		UPDATE
-			note_history
-		SET 
-			use_yn = 'Y',
-			mod_time = NOW()
-		WHERE
-			note_id IN
-		<foreach item="noteId" collection="noteIds" open="(" separator="," close=")">
-			#{noteId}
-		</foreach>
+	        note_history
+	    SET 
+	        mod_time = NOW(),
+	        receiver_delete = CASE 
+	            WHEN receiver_id = #{empNo} THEN 'N' 
+	            ELSE receiver_delete 
+	        END,
+	        sender_delete = CASE 
+	            WHEN sender_id = #{empNo} THEN 'N' 
+	            ELSE sender_delete 
+	        END
+	    WHERE
+	        note_id IN
+	        <foreach item="noteId" collection="noteIds" open="(" separator="," close=")">
+	            #{noteId}
+	        </foreach>
+	        AND (
+	            (receiver_id = #{empNo} AND receiver_delete = 'Y') OR
+	            (sender_id = #{empNo} AND sender_delete = 'Y')
+	        )
 	</update>
 	
 	
 	<!--  분류 번호 :  #2 - 발신 쪽지 조회 -->
 	<select id="selectNoteList" parameterType="Map" resultType="Map">
 		SELECT 
-			 ROW_NUMBER() OVER (ORDER BY send_time DESC) AS no,
-			 note_id noteId,
-			 receiver_id receiverId, 
-			 note_content noteContent, 
-			 DATE_FORMAT(receive_time, '%Y-%m-%d %H:%i:%s') receiveTime
+			 ROW_NUMBER() OVER (ORDER BY nt.send_time DESC) AS no,
+			 nt.note_id noteId,
+			 em.emp_name empName,
+			 nt.receiver_id receiverId, 
+			 nt.note_content noteContent, 
+			 DATE_FORMAT(nt.receive_time, '%Y-%m-%d %H:%i:%s') receiveTime
 		FROM 
-			note_history
+			note_history nt
+		INNER JOIN
+			employee em
+		ON
+			nt.receiver_id = em.emp_no
 		WHERE
-			sender_id = #{empNo} AND
-			use_yn = 'Y'
+			nt.sender_id = #{empNo} AND
+			nt.sender_delete = 'N' AND
+			nt.use_yn = 'Y'
 		LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 	
@@ -477,7 +563,47 @@
 			note_history
 		WHERE
 			sender_id = #{empNo} AND
+			sender_delete = 'N' AND
 			use_yn = 'Y'
 	</select>
+	
+	<!--  분류 번호 :  #2 - 쪽지 전송  -->
+	<insert id="insertNote" parameterType="Map">
+	        INSERT INTO note_history
+	        (
+	            note_id,
+	            sender_id,
+	            receiver_id,
+	            note_content,
+	            send_time,
+	            receive_time,
+	            reg_time,
+	            mod_time,
+	            reg_id,
+	            mod_id,
+	            sender_delete,
+	            receiver_delete,
+	            use_yn
+	        )
+	        VALUES
+       	<foreach collection="recipients" item="recipient" index="index"  separator=",">
+	        (
+	            DATE_ADD(CURRENT_TIMESTAMP(5), INTERVAL ${index}/10000 SECOND),
+	            #{senderId},
+	            #{recipient},
+	            #{noteContent},
+	            NOW(),
+	            NOW(),
+	            NOW(),
+	            NOW(),
+	            #{senderId},
+	            #{senderId},
+	            'N',
+	            'N',
+	            'Y'
+	        )
+    	</foreach>
+	</insert>
+
 	
 </mapper>

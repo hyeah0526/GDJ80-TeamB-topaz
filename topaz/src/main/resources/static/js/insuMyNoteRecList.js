@@ -44,9 +44,9 @@ $(document).ready(function() {
                     noteListContainer.append(`
                         <tr>
                             <td><input type="checkbox" class="noteCheckbox" value="${note.noteId}"></td>
-                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.sendId}</td>
-                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.noteContent}</td>
-                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.sendTime}</td>
+                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.empName}</td>
+                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.noteContent}</td>
+                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.sendTime}</td>
                         </tr>
                     `);
                 });
@@ -119,11 +119,13 @@ $(document).ready(function() {
 
         if(selectedNoteIds.length > 0) {
             $.ajax({
-                url: '/topaz/groupware/myPage/deleteNote',
+                url: '/topaz/groupware/myPage/deleteRecNote',
                 method: 'post',
                  contentType: 'application/json',
                 data: JSON.stringify({ noteIds: selectedNoteIds }),
                 success: function(response) {
+            		
+        			console.log("수신 쪽지 삭제 완료");
             		
             		//삭제 후 리스트 다시 로드
                     loadEmpList(1);

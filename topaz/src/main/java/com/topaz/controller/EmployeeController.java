@@ -1,6 +1,8 @@
 package com.topaz.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,6 +81,17 @@ public class EmployeeController {
 	@GetMapping("/groupware/emp/empList")
 	public String empList() {
 		return "groupware/emp/empList";
+	
+	}
+	
+	/*
+	 * 서비스명: empLeave.jsp ( 직원 전체 휴가 조회 뷰 )
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/empLeave")
+	public String empLeave() {
+		return "groupware/emp/empLeave";
 	
 	}
 	
@@ -277,7 +290,7 @@ public class EmployeeController {
 	}
 	
 	/*
-	 * 서비스명: myNoteDetail.jsp ( 쪽지 상세 ) 
+	 * 서비스명: myNoteDetail.jsp ( 보낸 쪽지 상세 ) 
 	 * 시작 날짜: 2024-07-13
 	 * 담당자: 김인수
 	*/
@@ -296,6 +309,46 @@ public class EmployeeController {
 		return "groupware/myPage/myNoteDetail";
 	}
 	
+	
+	/*
+	 * 서비스명: myNoteRecDetail.jsp ( 받은 쪽지 상세 ) 
+	 * 시작 날짜: 2024-07-13
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myNoteRecDetail")
+	public String  myNoteRecDetail(
+			Model model,
+			@RequestParam(name = "noteId") String noteId) {
+		
+		//내 정보 리스트 가져오기
+	    Map<String, Object> noteDetail = employeeService.selectNoteDetail(noteId);
+	    log.debug(Debug.KIS + "controller / myNoteRecDetail / noteDetail : " + noteDetail);
+	  
+	    //모델 객체에 데이터 추가
+	    model.addAttribute("noteDetail", noteDetail);
+		
+		return "groupware/myPage/myNoteRecDetail";
+	}
+	
+	/*
+	 * 서비스명: myNoteRecDetail.jsp ( 휴지통 쪽지 상세 ) 
+	 * 시작 날짜: 2024-07-13
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myNoteTrashDetail")
+	public String  myNoteTrashDetail(
+			Model model,
+			@RequestParam(name = "noteId") String noteId) {
+		
+		//내 정보 리스트 가져오기
+	    Map<String, Object> noteDetail = employeeService.selectNoteDetail(noteId);
+	    log.debug(Debug.KIS + "controller / myNoteTrashDetail / noteDetail : " + noteDetail);
+	  
+	    //모델 객체에 데이터 추가
+	    model.addAttribute("noteDetail", noteDetail);
+		
+		return "groupware/myPage/myNoteTrashDetail";
+	}
 
 	/*
 	 * 서비스명: myNoteTrash.jsp ( 휴지통 쪽지함 뷰) 
@@ -307,7 +360,6 @@ public class EmployeeController {
 		return "groupware/myPage/myNoteTrash";
 	}
 	
-	
 
 	/*
 	 * 서비스명: myNoteList.jsp ( 발신 쪽지함 뷰) 
@@ -318,4 +370,34 @@ public class EmployeeController {
 	public String myNoteList() {
 		return "groupware/myPage/myNoteList";
 	}
+	
+
+	/*
+	 * 서비스명: myNoteAdd.jsp ( 쪽지 보내기 뷰) 
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myNoteAdd")
+	public String myNoteAdd(Model model) {
+		
+		List<Map<String, Object>> empList = employeeService.selectEmpAllInChart();
+
+	    Map<String, List<Map<String, Object>>> deptMap = new LinkedHashMap<>();
+	    for (Map<String, Object> emp : empList) {
+	        
+	    	String dept = (String) emp.get("empDept");
+	        
+	    	if (!deptMap.containsKey(dept)) {
+	            deptMap.put(dept, new ArrayList<>());
+	        }
+	        
+	        deptMap.get(dept).add(emp);
+	    }
+	    
+	    model.addAttribute("deptMap", deptMap);
+        
+ 
+		return "groupware/myPage/myNoteAdd";
+	}
 }
+

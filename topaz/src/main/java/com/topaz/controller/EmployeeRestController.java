@@ -151,7 +151,7 @@ public class EmployeeRestController {
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
-	@GetMapping("/groupware/emp/empLeave")
+	@PostMapping("/groupware/emp/empLeave")
 	public String empLeave(
 			Model model,
 			@RequestParam Map<String, Object> paramMap) {
@@ -192,8 +192,29 @@ public class EmployeeRestController {
 		//model.addAttribute("lastPage", lastPage);
 		//model.addAttribute("currentPage", currentPage);
 		
-		return "groupware/emp/empLeave";
+		return null;
 	}
+	
+	
+	/*
+	 * 서비스명: selectEmpName ( 쪽지 전송할 직원 조회 )
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/selectEmpName")
+	public List<Map<String, Object>> selectEmpName(@RequestParam("empName") String empName) {
+        // 매개변수 디버깅
+        log.debug(Debug.KIS + "controller / selectEmpName / empName : " + empName);
+
+        // 직원 이름으로 조회
+        List<Map<String, Object>> empList = employeeService.selectEmpName(empName);
+
+        // empList 디버깅
+        log.debug(Debug.KIS + "controller / selectEmpName / empList : " + empList);
+
+
+        return empList;
+    }
 	
 	//========== 조직도
 	
@@ -273,7 +294,40 @@ public class EmployeeRestController {
 		
 		return response;
 	}
+
+	/*
+	 * 서비스명: deleteSenNote ( 발신 쪽지 삭제 ) 
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	@PostMapping("/groupware/myPage/deleteSenNote")
+	public int deleteSenNote(@RequestBody  Map<String, Object> noteList) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "controller / deleteNote / noteList : " + noteList);
+	    
+	    List<String> noteIds = (List<String>)noteList.get("noteIds");
+	    int result = employeeService.deleteSenNote(noteList);
+		
+		return result;
+	}
 	
+	/*
+	 * 서비스명: deleteRecNote ( 수신 쪽지 삭제 ) 
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	@PostMapping("/groupware/myPage/deleteRecNote")
+	public int deleteRecNote(@RequestBody  Map<String, Object> noteList) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "controller / deleteNote / noteList : " + noteList);
+	    
+	    List<String> noteIds = (List<String>)noteList.get("noteIds");
+	    int result = employeeService.deleteRecNote(noteList);
+		
+		return result;
+	}
 
 	/*
 	 * 서비스명: deleteNote ( 쪽지 삭제 ) 
@@ -348,24 +402,37 @@ public class EmployeeRestController {
 	    response.put("noteList", noteList);
 	    response.put("lastPage", lastPage);
 	    response.put("currentPage", currentPage);
-	   
-		
+	    response.put("empNo", empNo);
+	    
 		return response;
 	}
 	
 	
 	/*
-	 * 서비스명: deleteNote ( 쪽지 삭제 ) 
+	 * 서비스명: deleteNote ( 쪽지 복구 ) 
 	 * 시작 날짜: 2024-07-14
 	 * 담당자: 김인수
 	*/
 	@PostMapping("/groupware/myPage/restorationNote")
-	public int restorationNote(@RequestBody  Map<String, Object> noteList) {
+	public int restorationNote(
+			@RequestBody  Map<String, Object> noteList,
+			HttpServletRequest req) {
 		
 		//매개변수 디버깅
 	    log.debug(Debug.KIS + "controller / restorationNote / noteList : " + noteList);
+	    log.debug(Debug.KIS + "controller / restorationNote / req : " + req);
 	    
-	    List<String> noteIds = (List<String>)noteList.get("noteIds");
+	    //HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		
+		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / restorationNote / empNo : " + empNo);
+	    
+		// noteList에 empNo 추가
+	    noteList.put("empNo", empNo);
+
+	    // 서비스 호출
 	    int result = employeeService.restorationNote(noteList);
 		
 		return result;
@@ -430,4 +497,38 @@ public class EmployeeRestController {
 		
 		return response;
 	}
+	
+	 /*
+     * 서비스명: insertNote ( 쪽지 보내기 ) 
+     * 시작 날짜: 2024-07-15
+     * 담당자: 김인수
+     */
+    @PostMapping("/groupware/myPage/insertNote")
+    public Map<String, Object> insertNote(
+            @RequestBody Map<String, Object> paramMap,
+            HttpServletRequest req) {
+
+        // 매개변수 디버깅
+        log.debug(Debug.KIS + "controller / insertNote / paramMap : " + paramMap);
+        log.debug(Debug.KIS + "controller / insertNote / req : " + req);
+
+        // HttpServletRequest를 사용하여 세션 가져오기
+        HttpSession session = req.getSession();
+
+        // 세션에서 strId(직원아이디)라는 속성 가져오기
+        String empNo = (String) session.getAttribute("strId");
+        log.debug(Debug.KIS + "controller / insertNote / empNo : " + empNo);
+
+        // empNo를 paramMap에 추가
+        paramMap.put("senderId", empNo);
+
+        // 쪽지 전송 로직 실행
+        int result = employeeService.insertNote(paramMap);
+
+        // 응답 데이터
+        Map<String, Object> response = new HashMap<>();
+        response.put("result", result);
+
+        return response;
+    }
 }

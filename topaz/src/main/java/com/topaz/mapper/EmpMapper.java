@@ -53,9 +53,15 @@ public interface EmpMapper {
 	
 	/* 분류 번호 :  #4 - 전체 근무수 조회 */
 	public  int selectEmpAttendanceAllCnt(Map<String, Object> paramMap);
+
+	/* 분류 번호 :  #2 - 쪽지 전송할 직원 조회 */
+	public List<Map<String, Object>> selectEmpName(String empName);
 	
 	
 	/* ==== 쪽지 === */
+	
+	/* 분류 번호 :  #2 - 쪽지 전송 */
+	public  int insertNote(Map<String, Object> paramMap);
 	
 	/* 분류 번호 :  #2 - 수신 쪽지 조회 */
 	public  List<Map<String, Object>> selectNoteReceived(Map<String, Object> noteList);
@@ -72,16 +78,22 @@ public interface EmpMapper {
 	/* 분류 번호 :  #2 - 휴지통 쪽지 조회 */
 	public  List<Map<String, Object>> selectNoteTrash(Map<String, Object> noteList);
 	
-	/* 분류 번호 :  #2 -  휴지통 쪽지수 조회 */
+	/* 분류 번호 :  #2 - 휴지통 쪽지수 조회 */
 	public int selectNoteTrashCnt(Map<String, Object> paramMap);
 	
-	/* 분류 번호 :  #2 -  쪽지 복구 */
-	public int restorationNote(List<String> noteIds);
+	/* 분류 번호 :  #2 - 쪽지 복구 */
+	public int restorationNote(Map<String, Object> params);
 	
-	/* 분류 번호 :  #2 -  쪽지 삭제 */
+	/* 분류 번호 :  #2 - 발신 쪽지 삭제 */
+	public int deleteSenNote(List<String> noteIds);
+	
+	/* 분류 번호 :  #2 - 수신 쪽지 삭제 */
+	public int deleteRecNote(List<String> noteIds);
+	
+	/* 분류 번호 :  #2 - 쪽지 삭제 */
 	public int deleteNote(List<String> noteIds);
 	
-	/* 분류 번호 :  #2 -  쪽지 상세 보기 */
+	/* 분류 번호 :  #2 - 쪽지 상세 보기 */
 	public Map<String, Object> selectNoteDetail(String noteId);
 	
 }

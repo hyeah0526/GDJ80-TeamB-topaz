@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('.resetBtn').click(function() {
         //폼을 초기화
         $('#searchForm')[0].reset();
-		
+        
         //기본 리스트 로드
         loadEmpList(1);
     });
@@ -26,32 +26,41 @@ $(document).ready(function() {
                 //JSON 데이터를 HTML로 변환하여 empListContainer에 추가
                 const noteList = response.noteList;
                 const noteListContainer = $('#noteListContainer');
+                const empNo = response.empNo;
                 noteListContainer.empty();
-				
-				//현재 날짜 가져오기
-            	const today = new Date().toISOString().slice(0, 10);
-				console.log(today);
-				
+                
+                //현재 날짜 가져오기
+                const today = new Date().toISOString().slice(0, 10);
+                console.log(today);
+                
                 noteList.forEach(note => {
-					
-					 //날짜와 시간 분리
+                    //날짜와 시간 분리
                     const sendDate = note.sendTime.slice(0, 10);
                     const sendTime = note.sendTime.slice(11, 19);
                     
                     //오늘 날짜와 비교하여 시간만 출력
-				 	const displayTime = (sendDate === today) ? sendTime : note.sendTime;	
+                    const displayTime = (sendDate === today) ? sendTime : note.sendTime;
+                    
+                    //내가 보낸 메세지인지 확인
+                    const isSender = note.sendId === empNo;
+                    
+                    //내가 보낸 메세지는 배경색을 다르게 설정
+                    const rowClass = isSender ? 'sent-message' : '';
+                    
+                    //발신자 이름 설정
+                    const displaySenderName = isSender ? '나' : note.senderName;
                     
                     noteListContainer.append(`
-                        <tr>
+                        <tr class="${rowClass}">
                             <td><input type="checkbox" class="noteCheckbox" value="${note.noteId}"></td>
-                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.sendId}</td>
-                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.noteContent}</td>
-                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.sendTime}</td>
+                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteTrashDetail?noteId=${note.noteId}'" style="cursor:pointer;">${displaySenderName}</td>
+                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteTrashDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.noteContent}</td>
+                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteTrashDetail?noteId=${note.noteId}'" style="cursor:pointer;">${displayTime}</td>
                         </tr>
                     `);
                 });
 
-                //페이지 정보 업데이트
+                // 페이지 정보 업데이트
                 const currentPage = response.currentPage;
                 const lastPage = response.lastPage;
                 
@@ -60,15 +69,15 @@ $(document).ready(function() {
         });
     }
 
-    //페이징 버튼 업데이트 
+    // 페이징 버튼 업데이트 
     function updatePagination(currentPage, lastPage) {
-       //페이지 버튼 추가해줄 ul 가져오기
+        // 페이지 버튼 추가해줄 ul 가져오기
         let paginationUl = $('#paginationUl');
         
-        //한번에 표시할 페이지 수
+        // 한번에 표시할 페이지 수
         const RANGE = 10;
         
-        //페이징 버튼 비워주기
+        // 페이징 버튼 비워주기
         paginationUl.empty();
         
         // << 버튼 (이전 RANGE로 이동)
@@ -79,11 +88,11 @@ $(document).ready(function() {
         const prevPage = Math.max(1, currentPage - 1);
         paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(event, ${prevPage})" aria-label="Previous"><span aria-hidden="true">&lt;</span></a></li>`);
         
-        //페이지 번호
+        // 페이지 번호
         const startPage = Math.floor((currentPage - 1) / RANGE) * RANGE + 1;
         const endPage = Math.min(startPage + RANGE - 1, lastPage); // .min() 함수는 가장 작은 값을 반환한다. Math.min(3,6) 6을 반환
         
-        //페이지 번호 버튼 만들기
+        // 페이지 번호 버튼 만들기
         for (let i = startPage; i <= endPage; i++) {
             paginationUl.append(`<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="changePage(event, ${i})">${i}</a></li>`);
         }
@@ -97,13 +106,13 @@ $(document).ready(function() {
         paginationUl.append(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(event, ${nextRangePage})" aria-label="Next Range"><span aria-hidden="true">&raquo;</span></a></li>`);
     }
     
-     //페이지 변경 함수
+    //페이지 변경 함수
     window.changePage = function(event, page) {
         event.preventDefault();
         loadEmpList(page);
     }
     
-     //전체 선택 체크박스 기능 추가
+    //전체 선택 체크박스 기능 추가
     $('#selectAll').click(function() {
         $('.noteCheckbox').prop('checked', this.checked);
     });
@@ -120,21 +129,23 @@ $(document).ready(function() {
             $.ajax({
                 url: '/topaz/groupware/myPage/restorationNote',
                 method: 'post',
-                 contentType: 'application/json',
+                contentType: 'application/json',
                 data: JSON.stringify({ noteIds: selectedNoteIds }),
                 success: function(response) {
-            		
-            		//복구 후 리스트 다시 로드
+                    
+                    console.log("휴지통 쪽지 복구 완료");
+                    
+                    //복구 후 리스트 다시 로드
                     loadEmpList(1);
                     
                     //체크박스 상태 초기화
                     $('#selectAll').prop('checked', false);
                 },
-    		});
+            });
         }
     });
     
- 	//쪽지 리스트 로드
+    // 쪽지 리스트 로드
     loadEmpList(1);
 
 });

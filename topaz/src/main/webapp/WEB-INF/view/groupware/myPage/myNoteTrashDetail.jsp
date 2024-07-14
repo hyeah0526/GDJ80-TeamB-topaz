@@ -4,8 +4,8 @@
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- 
-	 * 분류 번호 :  #2 - 발신 쪽지 상세보기 페이지
-	 * 시작 날짜 : 2024-07-13
+	 * 분류 번호 :  #2 - 휴지통 쪽지 상세보기 페이지
+	 * 시작 날짜 : 2024-07-14
 	 * 담당자 : 김인수
  -->
 
@@ -27,7 +27,7 @@
 	
 	<!-- Title 시작 -->
 	<div class="pagetitle">
-      <h1>보낸 쪽지 상세보기</h1>
+      <h1>휴지통 쪽지 상세보기</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
@@ -47,9 +47,7 @@
    					<form id="searchForm">
    					
 				     	<div style="margin-bottom: 20px;">
-				     		<button type="button" id="deleteButton">삭제</button>
-				     		<button type="button">답장</button>
-				     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myNoteList'">목록</button>
+				     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myNoteTrash'">목록</button>
 				     	</div>
 				     	
 				     	<div class="noteDetailContainer">
@@ -76,7 +74,7 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
-	<script src="/topaz/js/insuMyNoteDetail.js"></script>
+	<script src="/topaz/js/insuMyNteTrashDetail.js"></script>
 </body>
 
 </html>

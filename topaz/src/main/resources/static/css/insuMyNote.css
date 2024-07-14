@@ -84,6 +84,42 @@ table tr:hover {
 	margin-top: 20px;
 }
 
+.dept-item {
+    margin-bottom: 10px;
+    width: 30%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.dept-name {
+    background-color: #f8f9fa;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dept-name:hover {
+    background-color: #e9ecef;
+}
+
+.dept-name span {
+    margin-right: 10px;
+}
+
+.emp-list {
+    padding: 10px;
+}
+
+.emp-list div {
+    margin-bottom: 5px;
+}
+
+.deptCheckbox {
+    margin-right: 10px;
+}
+
 #paginationUl {
     display: flex;
     justify-content: center;    

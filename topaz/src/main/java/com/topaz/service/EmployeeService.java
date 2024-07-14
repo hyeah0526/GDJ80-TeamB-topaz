@@ -1,6 +1,7 @@
 package com.topaz.service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -301,6 +302,57 @@ public class EmployeeService {
 	
 	
 	/*
+	 * 분류번호: #2 - 쪽지 전송할 직원 조회
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	public List<Map<String, Object>> selectEmpName(String empName) {
+		
+	    //전체 직원 리스트 가져오기
+	    List<Map<String, Object>> empList = empMapper.selectEmpName(empName);
+	    log.debug(Debug.KIS + "service / selectEmpAllInChart / empList : " + empList);
+		
+		return empList;
+	} 
+	
+	
+	//========== 쪽지 
+	
+	/*
+	 * 분류 번호 :  #2 - 쪽지 전송
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 김인수
+	*/
+	public int insertNote(Map<String, Object> paramMap) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / insertNote / noteList : " + paramMap);
+
+		// 수신자 이름 리스트 가져오기
+        List<String> recipientNames = (List<String>) paramMap.get("recipients");
+
+        // 수신자 이름 리스트를 empNo 리스트로 변환
+        List<String> recipientNos = new ArrayList<>();
+        for (String name : recipientNames) {
+            List<Map<String, Object>> recipientInfo = empMapper.selectEmpName(name);
+            if (!recipientInfo.isEmpty()) {
+                recipientNos.add((String) recipientInfo.get(0).get("empNo"));
+            }
+        }
+
+        // empNo 리스트를 paramMap에 설정
+        paramMap.put("recipients", recipientNos);
+
+        // 매개변수 디버깅
+        log.debug(Debug.KIS + "service / insertNote / noteList : " + paramMap);
+
+        // 쪽지 전송
+        int result = empMapper.insertNote(paramMap);
+
+        return result;
+	} 
+	
+	/*
 	 * 분류 번호 :  #2 - 수신 쪽지 조회
 	 * 시작 날짜: 2024-07-11
 	 * 담당자: 김인수
@@ -330,6 +382,42 @@ public class EmployeeService {
 	    resultMap.put("lastPage", lastPage);
 		
 		return resultMap;
+	} 
+	
+	/*
+	 * 분류 번호 :  #2 - 발신 쪽지 삭제
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	public int deleteSenNote(Map<String, Object> noteList) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / deleteSenNote / noteList : " + noteList);
+
+		List<String> noteIds = (List<String>) noteList.get("noteIds");
+
+	    //여러 개의 noteId를 업데이트
+	    int result = empMapper.deleteSenNote(noteIds);
+	        
+		return result;
+	} 
+	
+	/*
+	 * 분류 번호 :  #2 - 수신 쪽지 삭제
+	 * 시작 날짜: 2024-07-14
+	 * 담당자: 김인수
+	*/
+	public int deleteRecNote(Map<String, Object> noteList) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / deleteSenNote / noteList : " + noteList);
+
+		List<String> noteIds = (List<String>) noteList.get("noteIds");
+
+	    //여러 개의 noteId를 업데이트
+	    int result = empMapper.deleteRecNote(noteIds);
+	        
+		return result;
 	} 
 	
 	/*
@@ -404,16 +492,14 @@ public class EmployeeService {
 	 * 시작 날짜: 2024-07-14
 	 * 담당자: 김인수
 	*/
-	public int restorationNote(Map<String, Object> noteList) {
+	public int restorationNote(Map<String, Object> params) {
 		
 		//매개변수 디버깅
-		log.debug(Debug.KIS + "service / restorationNote / noteList : " + noteList);
-
-		List<String> noteIds = (List<String>) noteList.get("noteIds");
-
-	    //여러 개의 noteId를 업데이트
-	    int result = empMapper.restorationNote(noteIds);
-	        
+		log.debug(Debug.KIS + "service / restorationNote / params : " + params);
+	    
+		//쪽지 복구 하기
+		int result = empMapper.restorationNote(params);
+		
 		return result;
 	} 
 	

@@ -6,14 +6,14 @@ $(document).ready(function() {
 
         if(noteId) {
             $.ajax({
-                url: '/topaz/groupware/myPage/deleteSenNote',
+                url: '/topaz/groupware/myPage/deleteNote',
                 method: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify({ noteIds: [noteId] }),
                 success: function(response) {
-                    console.log("발신 쪽지 삭제 완료");
+                    console.log("수신 쪽지 삭제 완료");
                     // 목록 페이지로 이동
-                    window.location.href = '/topaz/groupware/myPage/myNoteList';
+                    window.location.href = '/topaz/groupware/myPage/myNoteReceived';
                 }
             });
         }
