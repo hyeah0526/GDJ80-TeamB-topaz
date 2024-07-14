@@ -1,12 +1,12 @@
 package com.topaz.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.topaz.dto.GuestRequest;
 import com.topaz.service.CustomerService;
@@ -101,7 +101,7 @@ public class CustomerController {
 	
 	/*
 	 * 서비스명: -
-	 * 시작 날짜: 2024-07-10
+	 * 시작 날짜: 2024-07-12
 	 * 담당자: 한은혜
 	 */
 	@GetMapping("/customer/gstMyInfo")
@@ -114,11 +114,23 @@ public class CustomerController {
 		String gstId = (String)session.getAttribute("gstId");
 		log.debug(Debug.HEH + "controller gstMyInfo gstId : " + gstId + Debug.END);
 
-		model.addAttribute("gstId", gstId);
+		Map<String, Object> gstDetail = customerService.selectGstOne(gstId);
+		log.debug(Debug.HEH + "controller gstMyInfo gstDetail : " + gstDetail + Debug.END);
+
+		model.addAttribute("gstDetail", gstDetail);
 		
 		return "/customer/gstMyInfo";
-			
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

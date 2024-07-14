@@ -1,5 +1,7 @@
 package com.topaz.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,9 +46,22 @@ public class CustomerService {
 	 * 담당자: 한은혜
 	 */
 	public String selectGuestId(String gstId) {
-		log.debug(Debug.HEH + "service signUp gstId : " + gstId + Debug.END);
+		log.debug(Debug.HEH + "service selectGuestId gstId : " + gstId + Debug.END);
 
 		return customerMapper.selectGuestId(gstId);
+	}
+
+	
+	/*
+	 * 분류 번호: #16 - 내 정보
+	 * 시작 날짜: 2024-07-12
+	 * 담당자: 한은혜
+	 */
+	public Map<String, Object> selectGstOne(String gstId) {
+		log.debug(Debug.HEH + "service selectGstOne gstId : " + gstId + Debug.END);
+
+		
+		return customerMapper.selectGstOne(gstId);
 	}
 	
 	

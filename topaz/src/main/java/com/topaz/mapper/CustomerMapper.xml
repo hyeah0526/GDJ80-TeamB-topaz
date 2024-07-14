@@ -47,6 +47,38 @@
 		WHERE gst_id = #{gstId}
 	</select>
 	
+	<!-- 분류 번호: #16 - 내 정보 -->
+	<select id="selectGstOne" resultType="map">
+		SELECT 	
+			gst_id gstId, 
+			gst_pw gstPw, 
+			gst_name gstName, 
+			gst_email gstEmail, 
+			gst_gender gstGender, 
+			gst_birth gstBirth, 
+			gst_phone gstPhone,
+			gst_type gstType, 
+			post_no postNo, 
+			address,
+			DATE_FORMAT(g.contract_start, '%Y-%m-%d') contractStart, 
+			DATE_FORMAT(g.contract_end, '%Y-%m-%d') contract_end,
+			g.room_no roomNo, 
+			room_amenity roomAmenity,
+			resident_note residentNote, 
+			protector_name protectorName, 
+			protector_phone protectorPhone, 
+			protector_relation protectorRelation,
+			r.room_type roomType, 
+			r.room_dong roomDong, 
+			r.room_ho roomHo
+		FROM guest g
+			INNER JOIN room r 
+			ON g.room_no = r.room_no 
+		WHERE g.gst_id = 'G001';
+	</select>
+	
+	
+	
 	<!-- 분류 번호: #16 - 회원탈퇴 : 사용여부(Y -> N)  
 	<update id="">
 		UPDATE guest 

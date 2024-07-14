@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -89,80 +91,69 @@
           <div class="col-lg-6">
             <form action="signUpPost" method="post" role="form" class="php-email-form">
               <div class="row">
-                <div class="col-md-8 form-group">
-                  <input type="text" name="gstId" class="form-control" placeholder="ID 4자 이상 입력">
-				  <div id="id-message"></div>
-                </div>
-                <div class="col text-center">
-                	<button type="button" id="idCk">중복확인</button>
+                <div class="form-group mt-3">
+                  <input type="text" name="gstId" value="${gstDetail.gstId}" readonly style="background-color: #F6F6F6;" class="form-control">
                 </div>
               </div>
               <div class="form-group mt-3">
-                <input type="password" class="form-control" name="gstPw" placeholder="비밀번호 4자 이상 입력">
+                <input type="password" value="${gstDetail.gstPw}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstPw">
               </div>
               <div class="form-group mt-3">
-                <input type="password" class="form-control" name="pwCk" placeholder="비밀번호 확인">
+                <input type="text" value="${gstDetail.gstName}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstName">
               </div>
               <div class="form-group mt-3">
-                <input type="text" class="form-control" name="gstName" placeholder="이름">
+                <input type="text" value="${gstDetail.gstEmail}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstEmail">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.gstGender}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstGender">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.gstBirth}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstBirth">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.gstPhone}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstPhone">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.gstType}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstType">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.postNo}" readonly style="background-color: #F6F6F6;" class="form-control" name="postNo">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.address}" readonly style="background-color: #F6F6F6;" class="form-control" name="address">
               </div>
               
-              <div class="row mt-3">
-                <div class="col-md-8 form-group">
-                  <input type="text" name="gstEmail" class="form-control" placeholder="Email">
-                </div>
-                <div class="col text-center">
-                	<button type="button" name="mailCk">인증번호 보내기</button>
-                </div>
+              
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.roomNo}" readonly style="background-color: #F6F6F6;" class="form-control" name="roomNo">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.roomType}" readonly style="background-color: #F6F6F6;" class="form-control" name="roomType">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.roomDong}" readonly style="background-color: #F6F6F6;" class="form-control" name="roomDong">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.roomAmenity}" readonly style="background-color: #F6F6F6;" class="form-control" name="roomAmenity">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.residentNote}" readonly style="background-color: #F6F6F6;" class="form-control" name="residentNote">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.protectorName}" readonly style="background-color: #F6F6F6;" class="form-control" name="protectorName">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.protectorPhone}" readonly style="background-color: #F6F6F6;" class="form-control" name="protectorPhone">
+              </div>
+       		   <div class="form-group mt-3">
+                <input type="text" value="${gstDetail.protectorRelation}" readonly style="background-color: #F6F6F6;" class="form-control" name="protectorRelation">
               </div>
               
-       		  <div class="row mt-3">
-                <div class="col-md-8 form-group">
-                  <input type="text" name="checkNumber" class="form-control" placeholder="인증번호">
-                </div>
-                <div class="col text-center"><button type="button">확인</button></div>
-              </div>
        		
-       		  <div class="form-group mt-3">
-                <input type="text" class="form-control" name="gstPhone" placeholder="전화번호 -빼고 숫자만 입력">
-              </div>
-              <div class="form-group mt-3">
-                <input type="text" class="form-control" name="gstBirth" placeholder="생년월일 8자리">
-              </div>
-              
-              <div class="row form-group mt-3 ">
-	              <div class="col-md-2">
-	              	<input type="radio" name="gstGender" value="M" id="gender1">
-	              	<label for="gender1">남자</label>
-	              </div>
-	              <div class="col">
-	              	<input type="radio" name="gstGender" value="F" id="gender2">
-	              	<label for="gender2">여자</label>
-	              </div>
-       		  </div>
-       		
-			  <div class="row mt-3">
-                <div class="col-md-8 form-group">
-                  <input type="text" name="postNo" class="form-control" placeholder="우편번호">
-                </div>
-                <div class="col text-center"><button type="button" onclick="openPostcode('postNo','firstAddress')">주소찾기</button></div>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="firstAddress" placeholder="주소">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="addressDetail" placeholder="상세주소">
-              </div>
-       		  <input type="hidden" id="address" name="address">
        
-       
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
               <div class="row justify-content-center">
-              	<div class="col-md-6 mt-3 text-center"><button type="submit">회원가입</button></div>
+              	<div class="col-md-6 mt-3 text-center"><button type="submit">탈퇴하기</button></div>
+              	<div class="col-md-6 mt-3 text-center"><button type="submit">수정하기</button></div>
               </div>
             </form>
             
@@ -186,7 +177,6 @@
 
   <!-- Vendor JS Files -->
   <script src="/topaz/assets/vendorGST/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/topaz/assets/vendorGST/php-email-form/validate.js"></script>
   <script src="/topaz/assets/vendorGST/aos/aos.js"></script>
   <script src="/topaz/assets/vendorGST/swiper/swiper-bundle.min.js"></script>
   <script src="/topaz/assets/vendorGST/purecounter/purecounter_vanilla.js"></script>

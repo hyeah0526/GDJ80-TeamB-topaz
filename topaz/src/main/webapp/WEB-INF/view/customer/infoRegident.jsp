@@ -21,6 +21,8 @@
   <link href="/topaz/assets/vendorGST/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="/topaz/assets/vendorGST/glightbox/css/glightbox.min.css" rel="stylesheet">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
+
   <!-- Main CSS File -->
   <link href="/topaz/assets/css/main.css" rel="stylesheet">
 </head>
@@ -103,7 +105,6 @@
 
   <!-- Vendor JS Files -->
   <script src="/topaz/assets/vendorGST/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/topaz/assets/vendorGST/php-email-form/validate.js"></script>
   <script src="/topaz/assets/vendorGST/aos/aos.js"></script>
   <script src="/topaz/assets/vendorGST/swiper/swiper-bundle.min.js"></script>
   <script src="/topaz/assets/vendorGST/purecounter/purecounter_vanilla.js"></script>
