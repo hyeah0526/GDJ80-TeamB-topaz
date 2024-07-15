@@ -363,7 +363,7 @@ public class BpoService {
 	/*
 	 * 분류번호: #5 - 외주업체 상세 페이지(bpoDetail.jsp) :: 수정하기
 	 * 시작 날짜: 2024-07-14
-	 * 담당자: 박혜3
+	 * 담당자: 박혜아
 	*/
 	public void modBpo(OutsourcingRequest oscRq
 						,String oldFileName){
