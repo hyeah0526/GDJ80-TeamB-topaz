@@ -34,9 +34,7 @@
 		UPDATE room r 
 		JOIN guest g ON g.room_no = r.room_no
 		<set>
-			<if test = "roomState != null and roomState !=''">
-				room_state = '1',
-			</if>
+			r.room_state = '1',
 			r.mod_time = NOW(),
 			r.mod_id = #{modId}
 		</set>

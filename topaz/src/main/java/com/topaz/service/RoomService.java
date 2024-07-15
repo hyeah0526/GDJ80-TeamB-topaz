@@ -28,7 +28,7 @@ public class RoomService {
 	*/
 	
 	public int insertResident(Room room) {
-		log.debug(Debug.PSJ + "resiUpdate service==>" + room.toString() + Debug.END);
+		log.debug(Debug.PSJ + "resiInsert service==>" + room.toString() + Debug.END);
 		
 		return roomMapper.insertResident(room);
 	}

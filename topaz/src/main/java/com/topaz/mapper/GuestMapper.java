@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.topaz.dto.Guest;
+import com.topaz.dto.UploadFile;
 
 @Mapper
 public interface GuestMapper {
@@ -43,4 +44,10 @@ public interface GuestMapper {
 	
 	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 입주자 등록 */
 	int insertResident(Guest guest);
+	
+	/* 분류 번호: #7 - 입주자 관리 페이지 : 입주자 파일 등록 */
+	int insertResidentFile(UploadFile file);
+	
+	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 입주자 파일 수정 */
+	int updateResidentFile(UploadFile file);
 }

@@ -1,5 +1,7 @@
 package com.topaz.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +34,7 @@ public class GuestRequest {
 	private String regId;
 	private String modId;
 	private String useYn;
+	private MultipartFile uploadFile;
 	
 	//GuestRequest를 Guest 객체로 변환하는 메서드
 	public Guest toGuest() {

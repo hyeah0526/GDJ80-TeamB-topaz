@@ -65,7 +65,7 @@
 	                  <div class="col-xl-4">
 			          <div>
 			            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-			              <img src="/topaz/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+			              <img src="/topaz/assets/img/guest/${resident.fileName}" alt="Profile" class="rounded-circle">
 			              <h2>${resident.gstName }</h2>
 			            </div>
 			          </div>
@@ -99,10 +99,6 @@
 	                          <div class="info-item">
 	                              <span class="label">내용</span>
 	                              <span class="value">${resident.residentNote}</span>
-	                          </div>
-	                          <div class="info-item">
-	                              <span class="label">등록 직원</span>
-	                              <span class="value">${resident.regId}</span>
 	                          </div>
 	                          <div class="info-item">
 	                              <span class="label">수정 직원</span>
@@ -146,16 +142,14 @@
 	              
             	<!-- 수정 -->  
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-					<form action="/topaz/groupware/resident/residentDetail?gstId=${resident.gstId }" method="post" >
+					<form action="/topaz/groupware/resident/residentDetail?gstId=${resident.gstId }" method="post" enctype="multipart/form-data" >
                 		<div class="row mb-3">
-	                 
+	                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">입주자 사진</label>
 	                      <div class="col-md-8 col-lg-9">
-	                        <img src="/topaz/assets/img/profile-img.jpg" alt="Profile" class="mb-3">
-	                        <div class="pt-2">
-	                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-	                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-	                        </div>
-	                      </div>
+	                        <img id="preview" class="preview">
+	                        <input class="form-control" type="file" name="uploadFile" id="uploadFile">
+	                        <input class="form-control" type="hidden" name="oldFileName" value="${resident.fileName}">
+                      	  </div>
 	                    </div>
 						<div class="row">
 	                    	<div class="col-lg-6 col-md-6">
@@ -186,10 +180,6 @@
 								<div class="info-item mb-3">
 								    <span class="label">내용</span>
 								    <span><textarea style="width: 200px; display: inline;" class="form-control" rows="2" cols="20" name="residentNote">${resident.residentNote}</textarea></span>
-								</div>
-								<div class="info-item mb-3">
-								    <span class="label">등록 직원</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" name="regId" type="text" value="${resident.regId}" disabled="disabled"></span>
 								</div>
 								<div class="info-item mb-3">
 								    <span class="label">수정 직원</span>
