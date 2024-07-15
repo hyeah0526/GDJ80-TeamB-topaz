@@ -53,7 +53,7 @@
 				     	<div class="noteDetailContainer">
 				     		<div class="noteHeader">
 				     		    <div>보낸 사람: ${noteDetail.empName}</div>
-				     		    <div>받은 시간: ${noteDetail.receiveTime}</div>
+				     		    <div>받은 시간: ${noteDetail.sendTime}</div>
 				     		    <input type="hidden" id="noteId" value="${noteDetail.noteId}">
 				     		</div>
 				     		

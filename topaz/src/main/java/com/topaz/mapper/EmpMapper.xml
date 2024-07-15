@@ -467,7 +467,7 @@
 			cm.cd_nm empDept,
 			nt.sender_id senderId,
 			nt.note_content noteContent,
-			DATE_FORMAT(nt.receive_time, '%Y-%m-%d %H:%i:%s') receiveTime
+			DATE_FORMAT(nt.send_time, '%Y-%m-%d %H:%i:%s') sendTime
 		FROM
 			note_history nt
 		INNER JOIN
@@ -560,7 +560,7 @@
 		 	 cm.cd_nm empDept,
 			 nt.receiver_id receiverId, 
 			 nt.note_content noteContent, 
-			 DATE_FORMAT(nt.receive_time, '%Y-%m-%d %H:%i:%s') receiveTime
+			 DATE_FORMAT(nt.send_time, '%Y-%m-%d %H:%i:%s') sendTime
 		FROM 
 			note_history nt
 		INNER JOIN
@@ -617,7 +617,7 @@
 	            #{recipient},
 	            #{noteContent},
 	            NOW(),
-	            NOW(),
+	            NULL,
 	            NOW(),
 	            NOW(),
 	            #{senderId},
@@ -628,5 +628,30 @@
 	        )
     	</foreach>
 	</insert>
+	
+	
+	<!--  분류 번호 :  #2 - 쪽지 수신 업데이트  -->
+	<update id="updateEmpNoteState">
+		UPDATE 
+			note_history
+		SET
+			receive_time = NOW()
+		WHERE
+			note_id = #{noteId};
+	</update>
+	
+	
+	<!--  분류 번호 :  #2 - 개인 수신 쪽지수 조회  -->
+	<select id="selectEmpNotRecCnt" parameterType="Map" resultType="int">
+		SELECT 
+			COUNT(*),
+			receiver_id reciverId
+		FROM 
+			note_history
+		WHERE
+			receiver_id = #{receiverId}
+			AND
+			receive_time IS NULL;
+	</select>
 	
 </mapper>

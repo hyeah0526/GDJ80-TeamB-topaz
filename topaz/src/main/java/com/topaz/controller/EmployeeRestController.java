@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topaz.service.EmployeeService;
+import com.topaz.service.NotificationService;
 import com.topaz.utill.Debug;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,9 @@ public class EmployeeRestController {
 	
 	@Autowired
 	EmployeeService employeeService;
+	
+	@Autowired
+	NotificationService notificationService;
 	
 	/*
 	 * 서비스명: selectEmpNo ( 직원번호 중복 확인 )
@@ -508,24 +512,30 @@ public class EmployeeRestController {
             @RequestBody Map<String, Object> paramMap,
             HttpServletRequest req) {
 
-        // 매개변수 디버깅
+        //매개변수 디버깅
         log.debug(Debug.KIS + "controller / insertNote / paramMap : " + paramMap);
         log.debug(Debug.KIS + "controller / insertNote / req : " + req);
 
-        // HttpServletRequest를 사용하여 세션 가져오기
+        //HttpServletRequest를 사용하여 세션 가져오기
         HttpSession session = req.getSession();
 
-        // 세션에서 strId(직원아이디)라는 속성 가져오기
+        //세션에서 strId(직원아이디)라는 속성 가져오기
         String empNo = (String) session.getAttribute("strId");
         log.debug(Debug.KIS + "controller / insertNote / empNo : " + empNo);
 
-        // empNo를 paramMap에 추가
+        //empNo를 paramMap에 추가
         paramMap.put("senderId", empNo);
 
-        // 쪽지 전송 로직 실행
+        //쪽지 전송 로직 실행
         int result = employeeService.insertNote(paramMap);
 
-        // 응답 데이터
+        if (result > 0) {
+            String recipient = (String) paramMap.get("recipientId");
+            String message = "새로운 쪽지가 도착했습니다.";
+            notificationService.sendNotification(recipient, message);
+        }
+        
+        //응답 데이터
         Map<String, Object> response = new HashMap<>();
         response.put("result", result);
 
@@ -566,4 +576,38 @@ public class EmployeeRestController {
 
         return response;
     }
+    
+    /*
+     * 서비스명: selectEmpNotRecCnt ( 쪽지 답장 보내기 ) 
+     * 시작 날짜: 2024-07-15
+     * 담당자: 김인수
+     */
+    @GetMapping("/groupware/myPage/selectEmpNotRecCnt")
+    public Map<String, Object> selectEmpNotRecCnt(HttpServletRequest req) {
+
+        // 매개변수 디버깅
+        log.debug(Debug.KIS + "controller / insertRepNote / req : " + req);
+
+        // HttpServletRequest를 사용하여 세션 가져오기
+        HttpSession session = req.getSession();
+
+        // 세션에서 strId(직원아이디)라는 속성 가져오기
+        String empNo = (String) session.getAttribute("strId");
+        log.debug(Debug.KIS + "controller / insertRepNote / empNo : " + empNo);
+
+        // empNo를 paramMap에 추가
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("receiverId", empNo);
+
+        // 쪽지 전송 로직 실행
+        int result = employeeService.selectEmpNoteRecCnt(paramMap);
+
+        // 응답 데이터
+        Map<String, Object> response = new HashMap<>();
+        response.put("result", result);
+
+        return response;
+    }
+    
+    
 }

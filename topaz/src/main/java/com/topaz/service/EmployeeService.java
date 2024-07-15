@@ -488,8 +488,31 @@ public class EmployeeService {
 		//쪽지 상세 정보 가져오기
 		Map<String, Object> noteDetail =  empMapper.selectNoteDetail(noteId);
 		
+		if(!noteDetail.isEmpty()) {			
+			//받은 쪽지 상태 업데이트
+			empMapper.updateEmpNoteState(noteId);
+		}
+		
 		return noteDetail;
 	} 
+	
+	
+	/*
+	 * 분류 번호 :  #2 - 개인 수신 쪽지수 조회 
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 김인수
+	*/
+	public int selectEmpNoteRecCnt(Map<String, Object> paramMap) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectEmpNotRecCnt / paramMap : " + paramMap);
+
+		//쪽지 상세 정보 가져오기
+		int noteCnt = empMapper.selectEmpNotRecCnt(paramMap);
+		
+		return noteCnt;
+	} 
+	
 	
 	
 	/*

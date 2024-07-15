@@ -35,18 +35,18 @@ $(document).ready(function() {
                 noteList.forEach(note => {
 					
 					//날짜와 시간 분리
-                    const receiveDate  = note.receiveTime.slice(0, 10);
-                    const receiveTime  = note.receiveTime.slice(11, 19);
+                    const sendDate  = note.sendTime.slice(0, 10);
+                    const sendTime  = note.sendTime.slice(11, 19);
                     
                     //오늘 날짜와 비교하여 시간만 출력
-				 	const displayTime = (receiveDate  === today) ? receiveTime : note.receiveTime;	
+				 	const displayTime = (sendDate  === today) ? sendTime : note.sendTime;	
                     
                     noteListContainer.append(`
                         <tr>
                             <td><input type="checkbox" class="noteCheckbox" value="${note.noteId}"></td>
                             <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.empName}(${note.empDept})</td>
                             <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.noteContent}</td>
-                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.receiveTime}</td>
+                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.sendTime}</td>
                         </tr>
                     `);
                 });

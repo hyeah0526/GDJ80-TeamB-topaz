@@ -351,7 +351,7 @@ public class EmployeeController {
 	}
 
 	/*
-	 * 서비스명: myNoteTrash.jsp ( 휴지통 쪽지함 뷰) 
+	 * 서비스명: myNoteTrash.jsp ( 휴지통 쪽지함 뷰 ) 
 	 * 시작 날짜: 2024-07-14
 	 * 담당자: 김인수
 	*/
@@ -362,7 +362,7 @@ public class EmployeeController {
 	
 
 	/*
-	 * 서비스명: myNoteList.jsp ( 발신 쪽지함 뷰) 
+	 * 서비스명: myNoteList.jsp ( 발신 쪽지함 뷰 ) 
 	 * 시작 날짜: 2024-07-14
 	 * 담당자: 김인수
 	*/
@@ -373,7 +373,7 @@ public class EmployeeController {
 	
 
 	/*
-	 * 서비스명: myNoteAdd.jsp ( 쪽지 보내기 뷰) 
+	 * 서비스명: myNoteAdd.jsp ( 쪽지 보내기 뷰 ) 
 	 * 시작 날짜: 2024-07-14
 	 * 담당자: 김인수
 	*/
@@ -427,5 +427,6 @@ public class EmployeeController {
  
 		return "groupware/myPage/myNoteRepAdd";
 	}
+	
 }
 

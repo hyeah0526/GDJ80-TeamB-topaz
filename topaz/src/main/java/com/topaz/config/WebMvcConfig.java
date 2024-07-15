@@ -7,6 +7,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.topaz.interceptor.EmpInfoInterceptor;
 
+/*
+ * 시작 날짜: 2024-07-15
+ * 담당자: 김인수
+*/
+
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer{ // 어플리케이션 내에서 인터셉터가 작동할 수 있도록 빈(bean)으로 등록
 	
