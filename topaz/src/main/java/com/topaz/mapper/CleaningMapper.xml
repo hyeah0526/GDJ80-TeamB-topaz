@@ -7,9 +7,7 @@
 	UPDATE 
 		cleaning 
 	<set>
-		<if test="roomStatus != null and roomStatus != ''">
-			room_status	= 'C',
-		</if>
+		room_status	= 'C',
 		mod_time = NOW(),
 		mod_id = #{modId}
 	</set> 
@@ -23,6 +21,7 @@
 	<select id="selectCleaningRate" resultType="map">
 	SELECT 
     	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) = 'CLEAN' THEN 1 END) cleanRoom,
+    	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) = 'DIRTY' THEN 1 END) dirtyRoom,
     	COUNT(*) totalRoom,
     	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) = 'CLEAN' THEN 1 END) * 100.0 / COUNT(*) cleanRate
 	FROM 

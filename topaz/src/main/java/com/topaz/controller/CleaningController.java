@@ -31,7 +31,7 @@ public class CleaningController {
 	 * 담당자: 박수지
 	*/
 	
-	@PostMapping("/groupware/room/roomList/state")
+	@GetMapping("/groupware/room/roomList/state")
 	public String updateStatus(Model model,
 							Cleaning cleaning,
 							@RequestParam(name="roomNo") String roomNo,
