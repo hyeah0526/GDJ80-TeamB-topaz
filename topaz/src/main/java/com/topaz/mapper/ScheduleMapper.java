@@ -28,5 +28,6 @@ public interface ScheduleMapper {
 	/* 분류 번호: #6 - 사내 일정 상세보기 페이지 :: 사내일정 삭제(사용여부 Y -> N) */
 	int deleteSchedule(Schedule schedule);
 	
-
+	/* 분류 번호: #6 - 사내 일정 관리 페이지 :: 차트 통계 */
+	List<Map<String, Object>> getScheduleChart();
 }

@@ -107,5 +107,24 @@
 			schedule_no = #{scheduleNo}
 	</update>
 	
+	<!-- 분류 번호: #6 - 사내 일정 관리 페이지 :: 차트 통계 -->
+	<select id="getScheduleChart" resultType="map">
+		SELECT
+		    YEAR(start_date) AS year,
+		    MONTH(start_date) AS month,
+		    type,
+		    COUNT(*) AS eventCount
+		FROM
+		    schedules
+		WHERE
+		    YEAR(start_date) = YEAR(CURDATE()) 
+		AND
+		    MONTH(start_date) = MONTH(CURDATE())
+		GROUP BY
+		    YEAR(start_date),
+		    MONTH(start_date),
+		    type
+	</select>
+	
 	
 </mapper>

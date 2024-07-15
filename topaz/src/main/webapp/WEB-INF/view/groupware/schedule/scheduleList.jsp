@@ -162,8 +162,8 @@
 							</c:forEach>
 					</div></div>
 					<div class="card"><div class="card-body">
-						<h5 class="card-title">통계</h5>
-						<div>차트 상세</div>
+						<h5 class="card-title">이번달 통계</h5>
+						<canvas id="doughnutChart" style="max-height: 400px;"></canvas>
 					</div></div>
 				</div>
 				
@@ -257,6 +257,34 @@
 		
 	});
 	
+	
+ 	/* 종료일이 시작일보다 먼저일 수 없게 예외처리 */
+    // 시작일 먼저 입력시 유효성검사
+    $('#addStartDate').change(function() {
+        validateDateRange();
+    });
+
+    // 종료일 먼저 입력시 유효성검사
+    $('#addEndDate').change(function() {
+        validateDateRange();
+    });
+    
+    function validateDateRange() {
+        // 시작일, 종료일 값 
+        var startDateValue = new Date($('#addStartDate').val());
+        var endDateValue = new Date($('#addEndDate').val());
+
+        // 종료일이 시작일보다 이른 경우
+        if ($('#addEndDate').val() !== '' && endDateValue < startDateValue) {
+            // 안내
+            alert('종료일은 시작일 이후여야 합니다.');
+
+            // 값 초기화
+            $('#addEndDate').val('');
+        }
+    }
+	
+    
 	// 신규일정등록 유효성 검사
 	$('#addScheduleBtn').click(function() {
 		
@@ -299,6 +327,50 @@
 		
 		// 유효성 검사 완료시 Form 보내기
 		addScheduleForm.submit();
+	});
+	
+	
+	/* 차트 :: 현재 달의 회의/행사/점검률 통계  */
+	const ChartValues = [];
+	
+	$.ajax({
+		async:false,
+		url:'/topaz/schedule/scheduleChart',
+		method:'post',
+		success:function(chartResult){
+			
+			console.log("chartResult : ",chartResult);
+			// 결과값 ChartValues에 담아주기
+			chartResult.forEach(function(item){
+				
+				ChartValues.push(item.eventCount);
+				
+			})
+			
+			console.log("ChartValues : ",ChartValues);
+		}
+		
+	})
+	// 차트 그리기
+	new Chart("doughnutChart", {
+		type: 'doughnut',
+		data: {
+			labels: [
+				'회의',
+				'행사',
+				'점검'
+			],
+		datasets: [{
+			label: '각 일정별 통계 현황',
+			data: ChartValues,
+			backgroundColor: [
+				'#81bbb2',
+  					'#af92e2',
+				'#ffbb57'
+			],
+			hoverOffset: 4
+		}]
+		}
 	});
 	</script>
 </body>

@@ -87,7 +87,7 @@
 			, o.emp_no empNo
 			, e.emp_name empName
 			, o.use_yn useYn
-		FROM outsourcing o
+		FROM outsourcing o 
 		INNER JOIN employee e 
 			ON o.emp_no = e.emp_no
 		<where>
@@ -96,7 +96,7 @@
 			</if>
 			<if test="searchType != null and searchType != ''">
 				AND o.outsourcing_type LIKE CONCAT('%',#{searchType},'%')
-			</if>
+			</if> 
 		</where>
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>

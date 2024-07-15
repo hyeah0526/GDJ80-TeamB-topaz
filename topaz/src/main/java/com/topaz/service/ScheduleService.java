@@ -130,5 +130,22 @@ public class ScheduleService {
 		
 		return updateRow;
 	}
+	
+	
+	
+	/*
+	 * 분류번호: #6 - 사내 일정 페이지(ScheduleList.jsp) :: 통계 Chart
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 박혜아
+	*/
+	
+	public List<Map<String, Object>> getScheduleChart(){
+		
+		List<Map<String, Object>> chart = scheduleMapper.getScheduleChart();
+		log.debug(Debug.PHA + "getScheduleChart service--> " + chart + Debug.END);
+		
+		return chart;
+		
+	}
 
 }

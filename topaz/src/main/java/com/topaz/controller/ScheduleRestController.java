@@ -36,6 +36,19 @@ public class ScheduleRestController {
 	}
 
 	
-	
+	/*
+	 * 서비스명: getScheduleList
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 박혜아
+	*/
+	@PostMapping("/schedule/scheduleChart")
+	public List<Map<String, Object>> scheduleChart() {
+		
+		// chart 통계 (현재 달 통계)
+		List<Map<String, Object>> chart = scheduleService.getScheduleChart();
+		
+		return chart;
+		
+	}
 	
 }
