@@ -75,7 +75,7 @@
         <h1>내 정보</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="gstMain.html">Home</a></li>
+            <li><a href="gstMain">Home</a></li>
             <li class="current">내 정보</li>
           </ol>
         </nav>
@@ -89,7 +89,8 @@
 
         <div class="row justify-content-center gy-5 gx-lg-5">
           <div class="col-lg-6">
-            <form action="signUpPost" method="post" role="form" class="php-email-form">
+          <!-- 폼 이름 입력 -->
+            <form action="" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="form-group mt-3">
                   <input type="text" name="gstId" value="${gstDetail.gstId}" readonly style="background-color: #F6F6F6;" class="form-control">
@@ -123,7 +124,7 @@
                 <input type="text" value="${gstDetail.address}" readonly style="background-color: #F6F6F6;" class="form-control" name="address">
               </div>
               
-              
+              <!-- Null 일 경우 안보이도록 처리 예정 -->
               <div class="form-group mt-3">
                 <input type="text" value="${gstDetail.roomNo}" readonly style="background-color: #F6F6F6;" class="form-control" name="roomNo">
               </div>
@@ -152,8 +153,8 @@
        		
        
               <div class="row justify-content-center">
-              	<div class="col-md-6 mt-3 text-center"><button type="submit">탈퇴하기</button></div>
-              	<div class="col-md-6 mt-3 text-center"><button type="submit">수정하기</button></div>
+              	<div class="col-md-6 mt-3 text-center"><button type="button" id="deleteGst_btn">탈퇴하기</button></div>
+              	<div class="col-md-6 mt-3 text-center"><button type="button">수정하기</button></div>
               </div>
             </form>
             
@@ -164,6 +165,30 @@
       </div>
 
     </section><!-- 입력 폼 끝 -->   
+    
+    <!-- Modal : 탈퇴 확인 메세지 -->
+    <div class="modal fade" id="deleteCheck" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+			<!-- 모달 탈퇴 확인 폼 -->
+			<form id="deleteCheck_form" action="${pageContext.request.contextPath}/customer/deleteGst" method="post">
+				<div class="modal-body">
+					<div class="row mb-5">
+						<div class="col mt-5 text-center">
+							<span>TOPAZ 회원을 탈퇴하시겠습니까? </span>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 모달 탈퇴 취소/탈퇴버튼 -->
+				<div class="modal-footer justify-content-center">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+					<a><button id="deleteCheck_btn" type="submit" style="background-color: #34bf49; border-color: #34bf49;" class="btn btn-primary">탈퇴</button></a>
+				</div>
+			</form>
+		</div></div>
+	</div><!-- End Modal-->
+   
+    
   </main>
 
   <!-- footer -->
@@ -185,6 +210,7 @@
   <script src="/topaz/assets/vendorGST/isotope-layout/isotope.pkgd.min.js"></script>
 
   <script src="<c:url value='/js/post.js'/>"></script>
+  <script src="<c:url value='/js/eunhyeGstMyInfo.js'/>"></script>
 
   <!-- Main JS File -->
   <script src="/topaz/assets/js/mainGST.js"></script>

@@ -59,32 +59,33 @@
 			gst_phone gstPhone,
 			gst_type gstType, 
 			post_no postNo, 
-			address,
-			DATE_FORMAT(g.contract_start, '%Y-%m-%d') contractStart, 
-			DATE_FORMAT(g.contract_end, '%Y-%m-%d') contract_end,
-			g.room_no roomNo, 
+			address, 
+			DATE_FORMAT(g.contract_start, '%Y-%m-%d') contractStart,
+			DATE_FORMAT(g.contract_end, '%Y-%m-%d') contractEnd,
+			g.room_no roomNo,
 			room_amenity roomAmenity,
-			resident_note residentNote, 
-			protector_name protectorName, 
-			protector_phone protectorPhone, 
+			resident_note residentNote,
+			protector_name protectorName,
+			protector_phone protectorPhone,
 			protector_relation protectorRelation,
-			r.room_type roomType, 
-			r.room_dong roomDong, 
+			r.room_type roomType,
+			r.room_dong roomDong,
 			r.room_ho roomHo
 		FROM guest g
-			INNER JOIN room r 
+			LEFT JOIN room r 
 			ON g.room_no = r.room_no 
-		WHERE g.gst_id = 'G001';
+		WHERE g.gst_id = #{gstId}
 	</select>
 	
-	
-	
-	<!-- 분류 번호: #16 - 회원탈퇴 : 사용여부(Y -> N)  
-	<update id="">
+	<!-- 분류 번호: #16 - 회원탈퇴 : 사용여부(Y -> N) -->
+	<update id="deleteGst" parameterType="com.topaz.dto.Guest">
 		UPDATE guest 
-		SET use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'N')
+		SET 
+			use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'N'),
+			mod_time = NOW(),
+			mod_id = #{modId}
 		WHERE gst_id = #{gstId}
-s	</update> -->
+	</update> 
 	
 
 </mapper>

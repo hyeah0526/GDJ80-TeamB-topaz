@@ -88,7 +88,11 @@ public class LoginController {
                 session.setAttribute("gstId", strId);
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
                 return "redirect:/customer/gstMain";
+            } else if(errMsg != null) {
+            	model.addAttribute("errMsg", errMsg);
+                return "/customer/gstLogin";
             }
+            	
         } else if (strUserType == null || strUserType.isEmpty()) {
         // 선택을 안 했을 경우
             errMsg = "사용자 유형을 선택해주세요.";

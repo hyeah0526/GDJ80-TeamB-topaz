@@ -46,6 +46,7 @@ public class CustomerService {
 	 * 담당자: 한은혜
 	 */
 	public String selectGuestId(String gstId) {
+		// 매개값 디버깅
 		log.debug(Debug.HEH + "service selectGuestId gstId : " + gstId + Debug.END);
 
 		return customerMapper.selectGuestId(gstId);
@@ -53,15 +54,33 @@ public class CustomerService {
 
 	
 	/*
-	 * 분류 번호: #16 - 내 정보
+	 * 분류 번호: #16 - 내 정보 상세보기
 	 * 시작 날짜: 2024-07-12
 	 * 담당자: 한은혜
 	 */
 	public Map<String, Object> selectGstOne(String gstId) {
+		// 매개값 디버깅
 		log.debug(Debug.HEH + "service selectGstOne gstId : " + gstId + Debug.END);
 
-		
 		return customerMapper.selectGstOne(gstId);
+	}
+
+	/*
+	 * 분류 번호: #16 - 고객 회원 탈퇴 (사용 여부 Y-> N)
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 한은혜
+	 */
+	public int deleteGst(Guest guest) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "service deleteGst guest : " + guest + Debug.END);
+
+		int row = customerMapper.deleteGst(guest);
+		if(row == 1) { // 회원 탈퇴 성공시
+			log.debug(Debug.HEH + "service deleteGst row = 1 이면 회원 탈퇴 : " + row + Debug.END);
+		}
+		log.debug(Debug.HEH + "service deleteGst row = 0 이면 탈퇴 실패 : " + row + Debug.END);
+
+		return row;
 	}
 	
 	

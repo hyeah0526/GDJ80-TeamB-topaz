@@ -1,4 +1,4 @@
-package com.topaz.utill;
+package com.topaz.config;
 
 import java.util.Properties;
 
@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import com.topaz.utill.Debug;
 
 import lombok.extern.slf4j.Slf4j;
 
