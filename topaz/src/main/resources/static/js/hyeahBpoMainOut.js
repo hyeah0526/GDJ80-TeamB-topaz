@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		$.ajax({
 			type: "GET",
 			data: {"inputState" : $('#inputState').val()},
-			url: "/topaz/bpo/bpoRsvnCalList",
+			url: "/topaz/bpo/bpoOutList",
 			success: function (response){
     			  
 				console.log("response", response);
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						title: response[i].rsvnTitle, // 제목
 						start: response[i].rsvnStart, // 시작날짜
 						end: response[i].rsvnEnd, // 종료날짜
-						url: '/topaz/groupware/bpo/bpoRsvnDetail?rsvnNo='+response[i].rsvnNo, // 상세보기 이동
+						url: '/topaz/groupware/bpo/bpoRsvnDetailOut?rsvnNo='+response[i].rsvnNo, // 상세보기 이동
 						backgroundColor: getRsvnColor(response[i].rsvnState), // 타입별 색상 분류
 						borderColor: getRsvnColor(response[i].rsvnState), // 타입별 색상분류
 					})

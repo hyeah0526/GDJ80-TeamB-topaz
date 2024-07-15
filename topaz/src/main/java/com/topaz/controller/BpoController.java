@@ -286,13 +286,13 @@ public class BpoController {
 	
 	
 	/*
-	 * 서비스명: 
+	 * 서비스명: selectBpoOne, getbpoOutTodayList
 	 * 시작 날짜: 2024-07-15
 	 * 담당자: 박혜아
 	*/
-	@GetMapping("/groupware/bpo/bpoMainOut")
+	@RequestMapping("/groupware/bpo/bpoMainOut")
 	public String bpoMainOut(Model model
-							,HttpServletRequest  httpServletRequest) {
+							, HttpServletRequest  httpServletRequest) {
 		
 		// 로그인 한 아이디 가져오기
 		HttpSession session = httpServletRequest.getSession();
@@ -301,18 +301,62 @@ public class BpoController {
 		
 		// 업체 상세정보 가져오기
 		Map<String, Object> loginInfo = bpoMapper.selectBpoOne(outsourcingNo);
+		log.debug(Debug.PHA + "bpoMainIn Controller loginInfo--> " + loginInfo + Debug.END);
 		
+		// 오늘의 일정 리스트 가져오기
+		List<Map<String, Object>> bpoRsvnToday = bpoService.getbpoOutTodayList(outsourcingNo);
+		log.debug(Debug.PHA + "bpoMainIn Controller bpoRsvnToday--> " + bpoRsvnToday + Debug.END);
+		
+		// 모델 값 담기
 		model.addAttribute("loginInfo", loginInfo);
+		model.addAttribute("bpoRsvnToday", bpoRsvnToday);
 
 		return "groupware/bpo/bpoMainOut";
 	}
 	
 	
 	
+	/*
+	 * 서비스명: setBpoOutOnOff
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 박혜아
+	*/
+	@RequestMapping("/groupware/bpo/bpoOutOnOff")
+	public String bpoOutOnOff(@RequestParam(name="outsourcingNo") String outsourcingNo
+							,@RequestParam(name="outsourcingState") String outsourcingState) {
+		
+		log.debug(Debug.PHA + "bpoOutOnOff Controller outsourcingNo--> " + outsourcingNo + Debug.END);
+		// 공통 코드 W001(1:영업중, 2:영업종료, 3:상시)
+		log.debug(Debug.PHA + "bpoOutOnOff Controller outsourcingState--> " + outsourcingState + Debug.END);
+		
+		String stateChange = "";
+		
+		// 영업중일 경우   -> 2 (영업종료)로 변경
+		// 영업종료일 경우 -> 1(영업중)으로 변경
+		if(outsourcingState.equals("영업중")) {
+			stateChange = "2";
+		}else if(outsourcingState.equals("영업종료")) {
+			stateChange = "1";
+		}
+		
+		bpoService.setBpoOutOnOff(stateChange, outsourcingNo);
+		
+		
+		return "redirect:/groupware/bpo/bpoMainOut";
+	}
+	
+	
 	@GetMapping("/groupware/bpo/bpoRsvnListOut")
 	public String bpoRsvnListOut() {
 
 		return "groupware/bpo/bpoRsvnListOut";
+	}
+	
+	
+	@GetMapping("/groupware/bpo/bpoRsvnDetailOut")
+	public String bpoRsvnDetailOut() {
+
+		return "groupware/bpo/bpoRsvnDetailOut";
 	}
 
 }

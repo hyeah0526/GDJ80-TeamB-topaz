@@ -87,7 +87,7 @@ public class BpoService {
 	public List<Map<String, Object>> getBpoRsvnToday(){
 		
 		// 오늘의 예약 일정 리스트
-		List<Map<String, Object>> bpoRsvnToday = bpoMapper.selectBpoRsvnToday();
+		List<Map<String, Object>> bpoRsvnToday = bpoMapper.selectBpoRsvnToday(null);
 		log.debug(Debug.PHA + "getBpoState Service--> " + bpoRsvnToday + Debug.END);
 		
 		
@@ -464,6 +464,55 @@ public class BpoService {
 		int updateRow = bpoMapper.updateBpoPw(outsourcing);
 		if(updateRow == 1) {
 			log.debug(Debug.PHA + "modResetPw Service updateBpoPw--> 수정성공! " + Debug.END);
+		}
+		
+		return updateRow;
+	}
+	
+	
+	
+	/*
+	 * 분류번호: #13 - 외주업체로그인 :: 메인 페이지-전체 리스트(캘린더)
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getbpoOutList(String outsourcingNo){
+		
+		// 해당 외주업체의 예약 전체 리스트
+		List<Map<String, Object>> bpoOutList = bpoMapper.selectBpoOutList(outsourcingNo);
+		log.debug(Debug.PHA + "getbpoOutList Service bpoOutList--> " + bpoOutList + Debug.END);
+		
+		return bpoOutList;
+	}
+	
+	
+	/*
+	 * 분류번호: #13 - 외주업체로그인 :: 메인 페이지-오늘의 예약
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getbpoOutTodayList(String outsourcingNo){
+		
+		// 해당 외주업체의 오늘의 예약 리스트
+		List<Map<String, Object>> bpoOutTodayList = bpoMapper.selectBpoRsvnToday(outsourcingNo);
+		log.debug(Debug.PHA + "getbpoOutTodayList Service bpoOutTodayList--> " + bpoOutTodayList + Debug.END);
+		
+		return bpoOutTodayList;
+	}
+	
+	
+	/*
+	 * 분류번호: #13 - 외주업체로그인 :: 메인 페이지-영업상태변경
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 박혜아
+	*/
+	public int setBpoOutOnOff(String stateChange, String outsourcingNo) {
+		log.debug(Debug.PHA + "setBpoOutOnOff Service stateChange--> " + stateChange + Debug.END);
+		
+		// 영업 상태 변경
+		int updateRow = bpoMapper.updateBpoOutOnOff(stateChange, outsourcingNo);
+		if(updateRow == 1) {
+			log.debug(Debug.PHA + "setBpoOutOnOff Service stateChange--> 영업상태 변경 성공! " + Debug.END);
 		}
 		
 		return updateRow;

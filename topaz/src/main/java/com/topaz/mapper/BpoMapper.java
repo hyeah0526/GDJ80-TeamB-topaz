@@ -20,8 +20,8 @@ public interface BpoMapper {
 	/* 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 예약받는 외주업체 영업상태 */
 	List<Map<String, Object>> selectBpoState();
 	
-	/* 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 오늘의 예약 조회 */
-	List<Map<String, Object>> selectBpoRsvnToday();
+	/* 분류 번호: #5 #13 - 외주업체 예약일정 관리 페이지 :: 오늘의 예약 조회 */
+	List<Map<String, Object>> selectBpoRsvnToday(String outsourcingNo);
 	
 	/* 분류 번호: #5 - 외주업체 업체 목록 페이지 :: 외주업체 전체 조회 */
 	List<Map<String, Object>> selectBpoList(int beginRow, int rowPerPage, String searchWord, String searchType);
@@ -64,4 +64,10 @@ public interface BpoMapper {
 	
 	/* 분류 번호: #5 - 외주업체 상세 페이지 :: 비밀번호 초기화 수정 */
 	int updateBpoPw(Outsourcing outsourcing);
+	
+	/* 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-전체리스트 */
+	List<Map<String, Object>> selectBpoOutList(String outsourcingNo);
+	
+	/* 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-영업상태변경 */
+	int updateBpoOutOnOff(String stateChange, String outsourcingNo);
 }

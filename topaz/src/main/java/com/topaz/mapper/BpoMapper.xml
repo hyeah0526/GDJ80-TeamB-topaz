@@ -52,8 +52,8 @@
 	</select>
 	
 	
-	<!-- 분류 번호: #5 - 외주업체 예약일정 관리 페이지 :: 오늘의 예약 조회 -->
-	<select id="selectBpoRsvnToday" resultType="map">
+	<!-- 분류 번호: #5 #13 - 외주업체 예약일정 관리 페이지 :: 오늘의 예약 조회 -->
+	<select id="selectBpoRsvnToday" parameterType="String" resultType="map">
 		SELECT 
 	        os.rsvn_no rsvnNo
 	        , o.outsourcing_name outsourcingName
@@ -69,7 +69,10 @@
 	    WHERE os.use_yn 
 	    		= (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 		AND (CURDATE() BETWEEN DATE(os.rsvn_start) AND DATE(os.rsvn_end) 
-				OR (CURDATE() = DATE(os.rsvn_start) AND CURDATE() = DATE(os.rsvn_end)));
+				OR (CURDATE() = DATE(os.rsvn_start) AND CURDATE() = DATE(os.rsvn_end)))
+		<if test="outsourcingNo != null and outsourcingNo != ''">
+			AND os.outsourcing_no = #{outsourcingNo}
+		</if>
 	</select>
 	
 	
@@ -365,5 +368,34 @@
 			, mod_time = NOW()
 		WHERE 
 			outsourcing_no = #{outsourcingNo}
+	</update>
+	
+	
+	<!-- 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지 -->
+	<select id="selectBpoOutList" parameterType="String" resultType="map">
+		SELECT  
+			os.rsvn_no rsvnNo
+			, os.rsvn_title rsvnTitle
+			, os.rsvn_content rsvnContent
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'W006' AND cd = os.rsvn_state) rsvnState
+			, DATE_FORMAT(os.rsvn_start, '%Y-%m-%dT%H:%i:%s') rsvnStart
+			, DATE_FORMAT(os.rsvn_end, '%Y-%m-%dT%H:%i:%s') rsvnEnd
+		FROM 
+			outsourcing_rsvn os
+		INNER JOIN 
+			outsourcing o 
+				ON os.outsourcing_no = o.outsourcing_no
+		WHERE 
+			os.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		AND 
+			o.outsourcing_no = #{outsourcingNo}
+	</select>
+	
+	
+	<!-- 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-영업상태변경 -->
+	<update id="updateBpoOutOnOff" parameterType="String">
+		UPDATE outsourcing 
+		SET outsourcing_state = #{stateChange} 
+		WHERE outsourcing_no = #{outsourcingNo}
 	</update>
 </mapper>

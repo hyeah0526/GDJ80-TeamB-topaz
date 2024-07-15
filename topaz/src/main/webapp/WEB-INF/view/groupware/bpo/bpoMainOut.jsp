@@ -48,13 +48,34 @@
 			<div class="card"><div class="card-body">
 				<h5 class="card-title">영업상태 변경</h5>
 				<div>
-					<a class="btn btn-danger">${loginInfo.outsourcingState}</a>
+					<form method="post" action="${pageContext.request.contextPath}/groupware/bpo/bpoOutOnOff">
+						<input type="hidden" name="outsourcingNo" value="${loginInfo.outsourcingNo}">
+						<input type="hidden" name="outsourcingState" value="${loginInfo.outsourcingState}">
+						<c:if test="${loginInfo.outsourcingState eq '영업중'}">
+							<button type="submit" class="btn btn-success" >${loginInfo.outsourcingState}</button>
+							영업 상태 변경은 왼쪽 버튼을 눌러주세요.
+						</c:if>
+						<c:if test="${loginInfo.outsourcingState eq '영업종료'}">
+							<button type="submit" class="btn btn-secondary" >${loginInfo.outsourcingState}</button>
+							영업 상태 변경은 왼쪽 버튼을 눌러주세요.
+						</c:if>
+						<c:if test="${loginInfo.outsourcingState eq '상시'}">
+							<span class="btn btn-secondary" >${loginInfo.outsourcingState}</span>
+							해당 업장은 영업 상태 변경이 필요하지 않습니다.
+						</c:if>
+					</form>
 				</div>
 			</div></div>
 			
 			<!-- 오늘의 예약 확인 -->
 			<div class="card"><div class="card-body">
 				<h5 class="card-title">오늘의 예약</h5>
+					<!-- 상시업장의 경우 안내문구 출력 -->
+					<c:if test="${loginInfo.outsourcingState eq '상시'}">
+						해당 업장은 예약이 불가능한 업장입니다.
+					</c:if>
+					
+					<!-- 예약업장의 경우 오늘의 예약 출력 -->
 					<c:forEach var="r" items="${bpoRsvnToday}">
 						 <div class="todayDiv">
 						 	<c:choose>
@@ -69,7 +90,7 @@
 						 		</c:when>
 						 	</c:choose>
 						 	${r.rsvnStart} - ${r.rsvnEnd} ::  ${r.rsvnTitle}...
-						 	<a href="/topaz/groupware/bpo/bpoRsvnDetail?rsvnNo=${r.rsvnNo}">
+						 	<a href="/topaz/groupware/bpo/bpoRsvnDetailOut?rsvnNo=${r.rsvnNo}">
 						 		<span class="badge rounded-pill bg-primary">상세보기</span>
 						 	</a>
 						 </div>
