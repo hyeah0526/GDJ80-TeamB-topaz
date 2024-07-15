@@ -628,41 +628,5 @@
 	        )
     	</foreach>
 	</insert>
-
-	<!--  분류 번호 :  #2 - 쪽지 답장 전송  -->
-	<insert id="insertRepNote" parameterType="Map">
-	        INSERT INTO note_history
-	        (
-            	note_id,
-	            sender_id,
-	            receiver_id,
-	            note_content,
-	            send_time,
-	            receive_time,
-	            reg_time,
-	            mod_time,
-	            reg_id,
-	            mod_id,
-	            sender_delete,
-	            receiver_delete,
-	            use_yn
-	        )
-	        VALUES
-	        (
-	            CURRENT_TIMESTAMP(5),
-	            #{senderId},
-	            #{recipient},
-	            #{noteContent},
-	            NOW(),
-	            NOW(),
-	            NOW(),
-	            NOW(),
-	            #{senderId},
-	            #{senderId},
-	            'N',
-	            'N',
-	            'Y'
-	        )
-	</insert>
 	
 </mapper>

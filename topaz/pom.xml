@@ -32,6 +32,12 @@
 	</properties>
 	<dependencies>
 		
+		<!-- Spring WebSocket -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-websocket</artifactId>
+	    </dependency>
+		
 		<!-- validation 유효성검사  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
