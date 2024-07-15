@@ -43,8 +43,8 @@ $(document).ready(function() {
                     
                     noteListContainer.append(`
                         <tr>
-                            <td><input type="checkbox" class="noteCheckbox" value="${note.noteId}"></td>
-                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.empName}</td>
+                            <td><input type="checkbox" class="noteCheckbox" value="${note.noteId}" data-sender-name="${note.empName}" data-sender-dept="${note.empDept}"></td>
+                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.empName}(${note.empDept})</td>
                             <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.noteContent}</td>
                             <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.sendTime}</td>
                         </tr>
@@ -137,6 +137,23 @@ $(document).ready(function() {
         }
     });
 
+	//답장 버튼 클릭 시 선택된 체크박스 값 가져오기
+    $('#replyButton').click(function() {
+        const selectedRecipients = [];
+        $('.noteCheckbox:checked').each(function() {
+            const senderName = $(this).data('sender-name');
+            const senderDept = $(this).data('sender-dept');
+            selectedRecipients.push(`[${senderDept} - ${senderName}]`);
+        });
+
+        if (selectedRecipients.length > 0) {
+            const recipientParam = selectedRecipients.join(',');
+            window.location.href = `/topaz/groupware/myPage/myNoteRepAdd?recipients=${encodeURIComponent(recipientParam)}`;
+        } else {
+            alert('답장할 쪽지를 선택해주세요.');
+        }
+    });
+    
  	//쪽지 리스트 로드
     loadEmpList(1);
 

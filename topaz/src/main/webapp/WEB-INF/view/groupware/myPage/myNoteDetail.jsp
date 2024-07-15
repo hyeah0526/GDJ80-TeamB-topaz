@@ -48,7 +48,6 @@
    					
 				     	<div style="margin-bottom: 20px;">
 				     		<button type="button" id="deleteButton">삭제</button>
-				     		<button type="button">답장</button>
 				     		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myNoteList'">목록</button>
 				     	</div>
 				     	

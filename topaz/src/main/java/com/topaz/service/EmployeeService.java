@@ -326,7 +326,7 @@ public class EmployeeService {
 	public int insertNote(Map<String, Object> paramMap) {
 		
 		//매개변수 디버깅
-		log.debug(Debug.KIS + "service / insertNote / noteList : " + paramMap);
+		log.debug(Debug.KIS + "service / insertNote / paramMap : " + paramMap);
 
 		// 수신자 이름 리스트 가져오기
         List<String> recipientNames = (List<String>) paramMap.get("recipients");
@@ -344,13 +344,50 @@ public class EmployeeService {
         paramMap.put("recipients", recipientNos);
 
         // 매개변수 디버깅
-        log.debug(Debug.KIS + "service / insertNote / noteList : " + paramMap);
+        log.debug(Debug.KIS + "service / insertNote / paramMap : " + paramMap);
 
         // 쪽지 전송
         int result = empMapper.insertNote(paramMap);
 
         return result;
 	} 
+	
+	
+	
+	/*
+	 * 분류 번호 :  #2 - 쪽지 답장 전송
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 김인수
+	*/
+	public int insertRepNote(Map<String, Object> paramMap) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / insertRepNote / paramMap : " + paramMap);
+
+		// 수신자 이름 리스트 가져오기
+        List<String> recipientNames = (List<String>) paramMap.get("recipients");
+
+        // 수신자 이름 리스트를 empNo 리스트로 변환
+        List<String> recipientNos = new ArrayList<>();
+        for (String name : recipientNames) {
+            List<Map<String, Object>> recipientInfo = empMapper.selectEmpName(name);
+            if (!recipientInfo.isEmpty()) {
+                recipientNos.add((String) recipientInfo.get(0).get("empNo"));
+            }
+        }
+
+        // empNo 리스트를 paramMap에 설정
+        paramMap.put("recipients", recipientNos);
+
+        // 매개변수 디버깅
+        log.debug(Debug.KIS + "service / insertNote / paramMap : " + paramMap);
+
+        // 쪽지 전송
+        int result = empMapper.insertNote(paramMap);
+        
+        return result;
+	} 
+	
 	
 	/*
 	 * 분류 번호 :  #2 - 수신 쪽지 조회

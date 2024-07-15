@@ -531,4 +531,39 @@ public class EmployeeRestController {
 
         return response;
     }
+    
+    
+    /*
+     * 서비스명: insertRepNote ( 쪽지 답장 보내기 ) 
+     * 시작 날짜: 2024-07-15
+     * 담당자: 김인수
+     */
+    @PostMapping("/groupware/myPage/insertRepNote")
+    public Map<String, Object> insertRepNote(
+            @RequestBody Map<String, Object> paramMap,
+            HttpServletRequest req) {
+
+        // 매개변수 디버깅
+        log.debug(Debug.KIS + "controller / insertRepNote / paramMap : " + paramMap);
+        log.debug(Debug.KIS + "controller / insertRepNote / req : " + req);
+
+        // HttpServletRequest를 사용하여 세션 가져오기
+        HttpSession session = req.getSession();
+
+        // 세션에서 strId(직원아이디)라는 속성 가져오기
+        String empNo = (String) session.getAttribute("strId");
+        log.debug(Debug.KIS + "controller / insertRepNote / empNo : " + empNo);
+
+        // empNo를 paramMap에 추가
+        paramMap.put("senderId", empNo);
+
+        // 쪽지 전송 로직 실행
+        int result = employeeService.insertRepNote(paramMap);
+
+        // 응답 데이터
+        Map<String, Object> response = new HashMap<>();
+        response.put("result", result);
+
+        return response;
+    }
 }

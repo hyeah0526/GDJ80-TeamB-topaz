@@ -1,16 +1,16 @@
 $(document).ready(function() {
-    // 부서 목록 토글
+    //부서 목록 토글
     function toggleDept(deptId) {
         const deptElement = document.getElementById(deptId);
         deptElement.style.display = deptElement.style.display === 'none' ? 'block' : 'none';
     }
 
-    // 체크박스 클릭 시 받는 사람 필드 업데이트
+    //체크박스 클릭 시 받는 사람 필드 업데이트
     $(document).on('change', '.deptCheckbox', function() {
         updateRecipientsField();
     });
 
-    // 직원 목록을 초기 로드
+    //직원 목록을 초기 로드
     function loadAllEmployees() {
         $.get('/topaz/groupware/emp/selectEmpName', { empName: '' }, function(response) {
             displayEmployeeList(response);
@@ -18,7 +18,7 @@ $(document).ready(function() {
         });
     }
 
-    // 직원 목록을 표시하는 함수
+    //직원 목록을 표시하는 함수
     function displayEmployeeList(empList) {
         const deptListContainer = $('#deptList');
         deptListContainer.empty();
@@ -52,23 +52,23 @@ $(document).ready(function() {
         }
     }
 
-    // 검색 버튼 클릭 시 이름 검색
+    //검색 버튼 클릭 시 이름 검색
     $('#searchButton').click(function() {
         const searchKeyword = $('#searchDept').val();
         $.get('/topaz/groupware/emp/selectEmpName', { empName: searchKeyword }, function(response) {
             displayEmployeeList(response);
             checkSelectedRecipients();
-            $('#searchDept').val(''); // 검색 입력 필드 초기화
+            $('#searchDept').val(''); //검색 입력 필드 초기화
         });
     });
 
-    // 리셋 버튼 클릭 시 전체 목록 표시
+    //리셋 버튼 클릭 시 전체 목록 표시
     $('#resetButton').click(function() {
         loadAllEmployees();
-        $('#searchDept').val(''); // 검색 입력 필드 초기화
+        $('#searchDept').val(''); //검색 입력 필드 초기화
     });
 
-    // 전송 버튼 클릭 시 쪽지 전송
+    //전송 버튼 클릭 시 쪽지 전송
     $('#sendButton').click(function() {
         const noteContent = $('#noteContent').val();
         const recipients = [];
@@ -95,10 +95,10 @@ $(document).ready(function() {
         }
     });
 
-    // 초기 로드 시 모든 직원 목록 표시
+    //초기 로드 시 모든 직원 목록 표시
     loadAllEmployees();
 
-    // 받는 사람 필드 업데이트 함수
+    //받는 사람 필드 업데이트 함수
     function updateRecipientsField() {
         const recipientsField = $('#recipients');
         const checkedBoxes = $('.deptCheckbox:checked');
@@ -113,7 +113,7 @@ $(document).ready(function() {
         recipientsField.val(recipients.join(', '));
     }
 
-    // 체크된 값 유지 함수
+    //체크된 값 유지 함수
     function checkSelectedRecipients() {
         const recipientsField = $('#recipients').val();
         if (!recipientsField) return;
@@ -128,7 +128,7 @@ $(document).ready(function() {
     }
 });
 
-// 부서 목록 토글 함수
+//부서 목록 토글 함수
 function toggleDept(deptId) {
     const deptElement = document.getElementById(deptId);
     deptElement.style.display = deptElement.style.display === 'none' ? 'block' : 'none';

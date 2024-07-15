@@ -399,5 +399,33 @@ public class EmployeeController {
  
 		return "groupware/myPage/myNoteAdd";
 	}
+	
+	/*
+	 * 서비스명: myNoteRepAdd.jsp ( 쪽지 보내기 뷰) 
+	 * 시작 날짜: 2024-07-15
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myNoteRepAdd")
+	public String myNoteRepAdd(Model model) {
+		
+		List<Map<String, Object>> empList = employeeService.selectEmpAllInChart();
+
+	    Map<String, List<Map<String, Object>>> deptMap = new LinkedHashMap<>();
+	    for (Map<String, Object> emp : empList) {
+	        
+	    	String dept = (String) emp.get("empDept");
+	        
+	    	if (!deptMap.containsKey(dept)) {
+	            deptMap.put(dept, new ArrayList<>());
+	        }
+	        
+	        deptMap.get(dept).add(emp);
+	    }
+	    
+	    model.addAttribute("deptMap", deptMap);
+        
+ 
+		return "groupware/myPage/myNoteRepAdd";
+	}
 }
 

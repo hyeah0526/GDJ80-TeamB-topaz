@@ -63,6 +63,9 @@ public interface EmpMapper {
 	/* 분류 번호 :  #2 - 쪽지 전송 */
 	public  int insertNote(Map<String, Object> paramMap);
 	
+	/* 분류 번호 :  #2 - 쪽지 답장 전송 */
+	public  int insertRepNote(Map<String, Object> paramMap);
+	
 	/* 분류 번호 :  #2 - 수신 쪽지 조회 */
 	public  List<Map<String, Object>> selectNoteReceived(Map<String, Object> noteList);
 	

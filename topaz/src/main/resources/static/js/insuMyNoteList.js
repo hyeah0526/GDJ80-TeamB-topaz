@@ -44,7 +44,7 @@ $(document).ready(function() {
                     noteListContainer.append(`
                         <tr>
                             <td><input type="checkbox" class="noteCheckbox" value="${note.noteId}"></td>
-                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.empName}</td>
+                            <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.empName}(${note.empDept})</td>
                             <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.noteContent}</td>
                             <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.receiveTime}</td>
                         </tr>

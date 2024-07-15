@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- 
 	 * 분류 번호 :  #2 - 수신 쪽지함 페이지
 	 * 시작 날짜 : 2024-07-13
@@ -55,7 +56,7 @@
 				     	
 				     	<div style="margin-bottom: 20px;">
 				     		<button type="button" id="deleteButton">삭제</button>
-				     		<button>답장</button>
+				     		<button type="button" id="replyButton">답장</button>
 				     	</div>
 				     	
 				     	<table class="table table-hover">

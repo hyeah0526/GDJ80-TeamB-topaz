@@ -382,6 +382,7 @@
 			 ROW_NUMBER() OVER (ORDER BY nt.send_time DESC) AS no,
 			 nt.note_id noteId,
 			 em.emp_name empName,
+			 cm.cd_nm empDept,
 			 nt.sender_id sendId, 
 			 nt.note_content noteContent, 
 			 DATE_FORMAT(nt.send_time, '%Y-%m-%d %H:%i:%s') sendTime
@@ -391,6 +392,11 @@
 			employee em
 		ON
 			nt.sender_id = em.emp_no
+		INNER JOIN
+			common_code cm
+		ON
+			em.emp_dept = cm.cd
+			AND cm.crp_cd = 'E001'
 		WHERE
 			nt.receiver_id = #{empNo} AND
 			nt.receiver_delete = 'N' AND
@@ -458,15 +464,21 @@
 		SELECT 
 			nt.note_id noteId,
 			em.emp_name empName,
+			cm.cd_nm empDept,
 			nt.sender_id senderId,
 			nt.note_content noteContent,
-			DATE_FORMAT(nt.receive_time, '%Y-%m-%d %H:%i:%s') receive_time
+			DATE_FORMAT(nt.receive_time, '%Y-%m-%d %H:%i:%s') receiveTime
 		FROM
 			note_history nt
 		INNER JOIN
 			employee em
 		ON
 			nt.sender_id = em.emp_no
+		INNER JOIN
+			common_code cm
+		ON
+			em.emp_dept = cm.cd
+			AND cm.crp_cd = 'E001'
 		WHERE
 			note_id = #{noteId}
 	</select>
@@ -477,6 +489,7 @@
 	        ROW_NUMBER() OVER (ORDER BY nt.send_time DESC) AS no,
 	        nt.note_id noteId,
 	        se.emp_no empNo,
+	        cm.cd_nm empDept,
 	        se.emp_name senderName,
 	        se.emp_no sendId,
 	        nt.note_content noteContent, 
@@ -487,6 +500,11 @@
 	        employee se ON nt.sender_id = se.emp_no
 	    LEFT JOIN
 	        employee re ON nt.receiver_id = re.emp_no
+        INNER JOIN
+			common_code cm
+		ON
+			se.emp_dept = cm.cd
+			AND cm.crp_cd = 'E001'
 	    WHERE
 	        ((nt.receiver_id = #{empNo} AND nt.receiver_delete = 'Y') OR 
 	         (nt.sender_id = #{empNo} AND nt.sender_delete = 'Y')) AND
@@ -539,6 +557,7 @@
 			 ROW_NUMBER() OVER (ORDER BY nt.send_time DESC) AS no,
 			 nt.note_id noteId,
 			 em.emp_name empName,
+		 	 cm.cd_nm empDept,
 			 nt.receiver_id receiverId, 
 			 nt.note_content noteContent, 
 			 DATE_FORMAT(nt.receive_time, '%Y-%m-%d %H:%i:%s') receiveTime
@@ -548,6 +567,11 @@
 			employee em
 		ON
 			nt.receiver_id = em.emp_no
+		INNER JOIN
+			common_code cm
+		ON
+			em.emp_dept = cm.cd
+			AND cm.crp_cd = 'E001'
 		WHERE
 			nt.sender_id = #{empNo} AND
 			nt.sender_delete = 'N' AND
@@ -605,5 +629,40 @@
     	</foreach>
 	</insert>
 
+	<!--  분류 번호 :  #2 - 쪽지 답장 전송  -->
+	<insert id="insertRepNote" parameterType="Map">
+	        INSERT INTO note_history
+	        (
+            	note_id,
+	            sender_id,
+	            receiver_id,
+	            note_content,
+	            send_time,
+	            receive_time,
+	            reg_time,
+	            mod_time,
+	            reg_id,
+	            mod_id,
+	            sender_delete,
+	            receiver_delete,
+	            use_yn
+	        )
+	        VALUES
+	        (
+	            CURRENT_TIMESTAMP(5),
+	            #{senderId},
+	            #{recipient},
+	            #{noteContent},
+	            NOW(),
+	            NOW(),
+	            NOW(),
+	            NOW(),
+	            #{senderId},
+	            #{senderId},
+	            'N',
+	            'N',
+	            'Y'
+	        )
+	</insert>
 	
 </mapper>
