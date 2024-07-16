@@ -163,4 +163,23 @@ public class BpoRestController {
 		return list;
 	}
 	
+	
+	
+	
+	/*
+	 * 서비스명: getBpoOutNoticeDetail
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/bpo/bpoOutNoticeDetail")
+	public Map<String, Object> bpoOutNoticeDetail(String newsNo) {
+		log.debug(Debug.PHA + "bpoOutNoticeDetail controller newsNo--> " + newsNo + Debug.END);
+		
+		// 공지사항 상세보기
+		Map<String, Object> map = bpoService.getBpoOutNoticeDetail(newsNo);
+		log.debug(Debug.PHA + "bpoOutNoticeDetail controller map--> " + map + Debug.END);
+		
+		return map;
+	}
+	
 }

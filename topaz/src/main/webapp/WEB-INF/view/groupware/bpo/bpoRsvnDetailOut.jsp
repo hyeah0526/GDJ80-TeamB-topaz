@@ -4,6 +4,10 @@
 <html lang="en">
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
+	<head>
+	<!-- hyeah CSS / JS -->
+	<link href="/topaz/css/hyeah.css" rel="stylesheet">
+	</head>
 	
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
@@ -33,7 +37,7 @@
     	 	<div class="card"><div class="card-body">
               <h5 class="card-title">Reservation Detail & Edit</h5>
 			  
-			  <c:set var="r" value="${bpoRsvnOne}"></c:set>
+			  <c:set var="r" value="${bpoOutRsvnOne}"></c:set>
               <!-- 예약 상세 및 수정폼  -->
               <form id="modRsvnForm" method="post" action="${pageContext.request.contextPath}/groupware/bpo/bpoRsvnModify">
                 <input type="hidden" name="rsvnNo" value="${r.rsvnNo}">
@@ -41,14 +45,14 @@
                 <div class="row mb-3">
 				  <label for="inputEmail3" class="col-sm-2 col-form-label">시작 날짜</label>
 				  <div class="col-sm-10">
-				    <input type="datetime-local" class="form-control" value="${r.rsvnStart}" readonly style="background-color: #d9dce1;">
+				    <input type="datetime-local" class="form-control" name="rsvnStart" value="${r.rsvnStart}" readonly style="background-color: #d9dce1;">
 				  </div>
                 </div>
                 
                 <div class="row mb-3">
 				  <label for="inputEmail3" class="col-sm-2 col-form-label">종료 날짜</label>
 				  <div class="col-sm-10">
-				    <input type="datetime-local" class="form-control" value="${r.rsvnEnd}" readonly style="background-color: #d9dce1;">
+				    <input type="datetime-local" class="form-control" name="rsvnEnd" value="${r.rsvnEnd}" readonly style="background-color: #d9dce1;">
 				  </div>
                 </div>
                 
@@ -61,7 +65,7 @@
 				  <div class="col-sm-4">
 				  	<select class="form-select" id="rsvnState" name="rsvnState">
 				  		<option value="" id="rsvnWait">변경 선택</option>
-				  		<option value="1" id="rsvnWait">대기</option>
+				  		<option value="2" id="rsvnConfirm">확정</option>
 				  		<option value="3" id="rsvnCxl">취소</option>
 				  	</select>
 				  </div>
@@ -77,7 +81,7 @@
                 <div class="row mb-3">
 				  <label for="inputEmail3" class="col-sm-2 col-form-label">고객 이름</label>
 				  <div class="col-sm-5">
-				    <input type="text" class="form-control" id="" name="" value="${r.gstName}" readonly style="background-color: #d9dce1;">
+				    <input type="text" class="form-control" value="${r.gstName}" readonly style="background-color: #d9dce1;">
 				  </div>
 				  <div class="col-sm-5">
 					<input class="form-check-input" type="radio" name="gstGender" id="gstGenderM" onclick="return(false);" readonly> 남자
@@ -135,6 +139,58 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	
+	<!--  -->
+	<script>
+	/* type 값에 맞게 checked 추가해주기 */
+ 	// 성별에 맞게 checked표시해주고 여자는 배경색상을 회색으로 변경
+	if(${r.gstGender eq '남자'}){
+		console.log('고객 성별: 남자');
+		$('#gstGenderM').attr('checked', true);
+		$('#gstGenderF').attr('style', 'background-color: #d9dce1');
+		
+	}else if(${r.gstGender eq '여자'}){
+		console.log('고객 성별: 여자');
+		$('#gstGenderF').attr('checked', true);
+		$('#gstGenderM').attr('style', 'background-color: #d9dce1');
+		
+	}
+ 	
+	
+	/* 예약 상태에 따라 상태 효과 넣어주기 */
+ 	if(${r.rsvnState eq '대기'}){
+ 		console.log('예약 상태 : 대기');
+ 		
+ 		// 상태변경 - 대기 선택
+ 		$('#rsvnWait').attr('selected', true);
+ 		// 예약상태 - 배경색상 변경
+ 		$('#rsvnStateShk').attr('style', 'background-color: #81bbb2');
+ 		
+ 	}else if(${r.rsvnState eq '확정'}){
+ 		console.log('예약 상태 : 확정');
+ 		
+ 		// 상태변경 - 확정 선택
+ 		$('#rsvnConfirm').attr('selected', true);
+ 		// 예약상태 - 배경색상 변경
+ 		$('#rsvnStateShk').attr('style', 'background-color: #f6bf26');
+ 		
+ 	}else if(${r.rsvnState eq '취소'}){
+ 		console.log('예약 상태 : 취소');
+ 		
+ 		// 상태변경 - 확정 선택
+ 		$('#rsvnCxl').attr('selected', true);
+ 		// 예약상태 - 배경색상 변경
+ 		$('#rsvnStateShk').attr('style', 'background-color: #d50000');
+ 		
+ 		//예약 취소일 경우 모든 내용 수정 불가능하게 변경
+ 		$('#rsvnState').attr('disabled', true);
+ 		$('#rsvnState').attr('style', 'background-color: #ffffff');
+ 		$('#rsvnContent').attr('readonly', true);
+ 		$('#rsvnTitle').attr('readonly', true);
+ 		$('#rsvnStart').attr('readonly', true);
+ 		$('#rsvnEnd').attr('readonly', true);
+ 	}
+	</script>
 	
 </body>
 

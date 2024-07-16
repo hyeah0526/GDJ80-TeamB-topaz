@@ -518,5 +518,60 @@ public class BpoService {
 		return updateRow;
 	}
 	
+	
+	/*
+	 * 분류번호: #13 - 외주업체로그인 :: 메인 페이지-공지사항
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getBpoOutNoticeList(int currentPage,int rowPerPage, String searchWord) {
+		
+		// 외주업체로그인 공지사항 가져오기
+		List<Map<String, Object>> list = bpoMapper.selectBpoNoticeList(currentPage, rowPerPage, searchWord);
+		log.debug(Debug.PHA + "getBpoOutNoticeList Service list--> " + list + Debug.END);
+		
+		return list;
+	}
+	
+	
+	/*
+	 * 분류번호: #13 - 외주업체로그인 :: 메인 페이지-공지사항 총 행의 개수
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 박혜아
+	*/
+	public int getBpoOutNoticeLastPage(int rowPerPage, String searchWord) {
+		log.debug(Debug.PHA + "getBpoOutNoticeLastPage Service rowPerPage--> " + rowPerPage + Debug.END);
+		log.debug(Debug.PHA + "getBpoOutNoticeLastPage Service searchWord--> " + searchWord + Debug.END);
+		
+		// 총 행의 개수구하기
+		int totalCnt = bpoMapper.selectBpoNoticeListTotalCnt(searchWord);
+		log.debug(Debug.PHA + "getBpoOutNoticeLastPage Service totalCnt--> " + totalCnt + Debug.END);
+						
+		// 총행의 개수로 나머지 계산하기
+		int lastPage = totalCnt / rowPerPage;
+		if(totalCnt%rowPerPage != 0) {
+			lastPage = lastPage+1;
+		}
+		log.debug(Debug.PHA + "getBpoOutNoticeLastPage Service lastPage--> " + lastPage + Debug.END);
+
+		return lastPage;
+		
+	}
+	
+	
+	/*
+	 * 분류번호: #13 - 외주업체로그인 :: 메인 페이지-공지사항 상세보기
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 박혜아
+	*/
+	public Map<String, Object> getBpoOutNoticeDetail(String newsNo){
+		log.debug(Debug.PHA + "getBpoOutNoticeDetail Service newsNo--> " + newsNo + Debug.END);
+		
+		Map<String, Object> map = bpoMapper.selectBpoNoticeOne(newsNo);
+		log.debug(Debug.PHA + "getBpoOutNoticeDetail Service map--> " + map + Debug.END);
+	
+		return map;
+	}
+	
 
 }

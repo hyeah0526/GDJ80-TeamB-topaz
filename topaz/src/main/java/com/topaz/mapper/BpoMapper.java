@@ -70,4 +70,13 @@ public interface BpoMapper {
 	
 	/* 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-영업상태변경 */
 	int updateBpoOutOnOff(String stateChange, String outsourcingNo);
+	
+	/* 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-공지사항 리스트 */
+	List<Map<String, Object>> selectBpoNoticeList(int beginRow, int rowPerPage, String searchWord);
+	
+	/* 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-공지사항 리스트 총 행의 개수 */
+	int selectBpoNoticeListTotalCnt(String searchWord);
+	
+	/* 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-공지사항 상세보기 */
+	Map<String, Object> selectBpoNoticeOne(String newsNo);
 }

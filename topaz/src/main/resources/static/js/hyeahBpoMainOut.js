@@ -65,3 +65,52 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 	}
 });
+
+
+/* 공지사항 상세보기 모달 띄우기 */
+function NoticeDetail(row){
+	// 공지사항 번호 가져오기
+	let newsNo = $(row).find('#newsNo').val();
+	console.log('newsNo--> ', newsNo);
+	
+	// 모달창 비우기
+	$('#noticeDetail').html('');
+	
+	// ajax 데이터 담기
+	$.ajax({
+		type: "GET",
+		data: {newsNo : newsNo},
+		url: "/topaz/bpo/bpoOutNoticeDetail",
+		success: function (response){
+			  
+			console.log("response", response);
+			// 모달 내용 담을 Div
+			let Detaildiv = $('#noticeDetail');
+			
+			// 모달창에 값 담기 .append로 추가
+			Detaildiv.append('<label class="col-sm-4 col-form-label">제목</label>'
+								+'<div class="col-sm-8 detailNoticeDiv">'+response.title+'</div>');
+								
+			Detaildiv.append('<label class="col-sm-4 col-form-label">공지 종류</label>'
+								+'<div class="col-sm-8 detailNoticeDiv">'+response.category+'</div>');
+			
+			Detaildiv.append('<label class="col-sm-4 col-form-label">공지 내용</label>'
+								+'<div class="col-sm-8 detailNoticeDiv">'+response.content+'</div>');
+								
+			Detaildiv.append('<label class="col-sm-4 col-form-label">작성자</label>'
+								+'<div class="col-sm-8 detailNoticeDiv">'+response.regiId+'</div>');
+								
+			Detaildiv.append('<label class="col-sm-4 col-form-label">수정자</label>'
+								+'<div class="col-sm-8 detailNoticeDiv">'+response.modId+'</div>');	
+			
+		}
+	})
+	
+	// 모달창 열기
+	$("#noticeDetailModal").modal("show");
+}
+
+
+
+
+

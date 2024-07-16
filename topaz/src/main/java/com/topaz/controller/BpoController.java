@@ -119,6 +119,12 @@ public class BpoController {
 		// 예약 일정 변경하기
 		bpoService.modBpoRsvn(outsourcingRsvn);
 		
+		// 외주업체 로그인일 경우, 외주업체로그인 메인페이지로 보내기
+		log.debug(Debug.PHA + "bpoRsvnModify Controller empNo.substring(0)--> " + empNo.substring(0,1) + Debug.END);
+		if(empNo.substring(0,1).equals("B")){
+			return "redirect:/groupware/bpo/bpoRsvnDetailOut?rsvnNo="+outsourcingRsvn.getRsvnNo();
+		}
+		
 		return "redirect:/groupware/bpo/bpoRsvnDetail?rsvnNo="+outsourcingRsvn.getRsvnNo();
 	}
 	
@@ -292,7 +298,10 @@ public class BpoController {
 	*/
 	@RequestMapping("/groupware/bpo/bpoMainOut")
 	public String bpoMainOut(Model model
-							, HttpServletRequest  httpServletRequest) {
+							, HttpServletRequest  httpServletRequest
+							,@RequestParam(name="currentPage", defaultValue="1") int currentPage
+							,@RequestParam(name="rowPerPage", defaultValue="5") int rowPerPage
+							,@RequestParam(name="searchWord", defaultValue="") String searchWord) {
 		
 		// 로그인 한 아이디 가져오기
 		HttpSession session = httpServletRequest.getSession();
@@ -307,9 +316,21 @@ public class BpoController {
 		List<Map<String, Object>> bpoRsvnToday = bpoService.getbpoOutTodayList(outsourcingNo);
 		log.debug(Debug.PHA + "bpoMainIn Controller bpoRsvnToday--> " + bpoRsvnToday + Debug.END);
 		
+		// 공자사항 가져오기
+		List<Map<String, Object>> bpoOutNotice = bpoService.getBpoOutNoticeList(currentPage, rowPerPage, searchWord);
+		int lastPage = bpoService.getBpoOutNoticeLastPage(rowPerPage, searchWord);
+		log.debug(Debug.PHA + "bpoMainIn Controller bpoOutNotice--> " + bpoOutNotice + Debug.END);
+		
+		
+		
 		// 모델 값 담기
 		model.addAttribute("loginInfo", loginInfo);
 		model.addAttribute("bpoRsvnToday", bpoRsvnToday);
+		model.addAttribute("bpoOutNotice", bpoOutNotice);
+		model.addAttribute("lastPage", lastPage);	// 마지막 페이지
+		model.addAttribute("rowPerPage", rowPerPage);	// 한페이지당 보여줄 수
+		model.addAttribute("currentPage", currentPage);	// 최근 페이지
+		model.addAttribute("searchWord", searchWord);	// 검색어
 
 		return "groupware/bpo/bpoMainOut";
 	}
@@ -346,6 +367,28 @@ public class BpoController {
 	}
 	
 	
+	
+	/*
+	 * 서비스명: setBpoOutOnOff
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/groupware/bpo/bpoRsvnDetailOut")
+	public String bpoRsvnDetailOut(Model model
+									,@RequestParam(name="rsvnNo") String rsvnNo) {
+		
+		// 상세 예약 정보 가져오기
+		Map<String, Object> bpoOutRsvnOne = bpoService.getBpoRsvnDetail(rsvnNo);
+		log.debug(Debug.PHA + "bpoRsvnDetailOut Controller bpoRsvnOne--> " + bpoOutRsvnOne + Debug.END);
+
+		// model담기
+		model.addAttribute("bpoOutRsvnOne", bpoOutRsvnOne);
+		
+		return "groupware/bpo/bpoRsvnDetailOut";
+	}
+	
+	
+	
 	@GetMapping("/groupware/bpo/bpoRsvnListOut")
 	public String bpoRsvnListOut() {
 
@@ -353,10 +396,5 @@ public class BpoController {
 	}
 	
 	
-	@GetMapping("/groupware/bpo/bpoRsvnDetailOut")
-	public String bpoRsvnDetailOut() {
-
-		return "groupware/bpo/bpoRsvnDetailOut";
-	}
 
 }

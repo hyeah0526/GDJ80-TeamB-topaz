@@ -53,15 +53,15 @@
 						<input type="hidden" name="outsourcingState" value="${loginInfo.outsourcingState}">
 						<c:if test="${loginInfo.outsourcingState eq '영업중'}">
 							<button type="submit" class="btn btn-success" >${loginInfo.outsourcingState}</button>
-							영업 상태 변경은 왼쪽 버튼을 눌러주세요.
+							<br>영업 상태 변경은 버튼을 눌러주세요.
 						</c:if>
 						<c:if test="${loginInfo.outsourcingState eq '영업종료'}">
 							<button type="submit" class="btn btn-secondary" >${loginInfo.outsourcingState}</button>
-							영업 상태 변경은 왼쪽 버튼을 눌러주세요.
+							<br>영업 상태 변경은 버튼을 눌러주세요.
 						</c:if>
 						<c:if test="${loginInfo.outsourcingState eq '상시'}">
 							<span class="btn btn-secondary" >${loginInfo.outsourcingState}</span>
-							해당 업장은 영업 상태 변경이 필요하지 않습니다.
+							<br>해당 업장은 영업 상태 변경이 필요하지 않습니다.
 						</c:if>
 					</form>
 				</div>
@@ -77,7 +77,7 @@
 					
 					<!-- 예약업장의 경우 오늘의 예약 출력 -->
 					<c:forEach var="r" items="${bpoRsvnToday}">
-						 <div class="todayDiv">
+						<div class="todayDiv">
 						 	<c:choose>
 						 		<c:when test="${r.rsvnState eq '대기'}">
 						 			<span class="badge rounded-pill rsvnInfoWait" id="typeEvent">${r.rsvnState}</span>
@@ -89,7 +89,9 @@
 						 			<span class="badge rounded-pill rsvnInfoCxl" id="typeEvent">${r.rsvnState}</span>
 						 		</c:when>
 						 	</c:choose>
+						 	
 						 	${r.rsvnStart} - ${r.rsvnEnd} ::  ${r.rsvnTitle}...
+						 	
 						 	<a href="/topaz/groupware/bpo/bpoRsvnDetailOut?rsvnNo=${r.rsvnNo}">
 						 		<span class="badge rounded-pill bg-primary">상세보기</span>
 						 	</a>
@@ -100,11 +102,105 @@
 			<!-- 공지사항 -->
 			<div class="card"><div class="card-body">
 				<h5 class="card-title">공지사항</h5>
+				<!-- 제목으로 검색하기 -->
+				<form method="get" action="/topaz/groupware/bpo/bpoMainOut">
+					<div class="row mb-3">
+						<label for="inputText" class="col-sm-8 col-form-label">
+							<input class="form-control" name="searchWord">
+						</label>
+						<div class="col-sm-4">
+							<button class="btn btn-primary" type="submit">Title Search</button>
+						</div>
+					</div>
+				</form>
+				
+				<!-- 리스트 출력 -->
+				<table class="table table-hover">
+					<thead>
+		               <tr>
+		                 <th scope="col" class="text-center">Category</th>
+		                 <th scope="col">Title</th>
+		                 <th scope="col">Content</th>
+		                 <th scope="col"></th>
+		               </tr>
+					</thead>
+					<tbody>
+						<c:forEach var="n" items="${bpoOutNotice}">
+			               <tr onclick="NoticeDetail(this)">
+			                 <th scope="row" class="text-center">${n.category}</th>
+			                 <td>${n.title}...</td>
+			                 <td>${n.content}...</td>
+			                 <td><input type="hidden" id="newsNo" name="newsNo" value="${n.newsNo}"></td>
+			               </tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<!-- End Table with hoverable rows -->
+				 
+				<!-- 페이징 -->
+				<!-- 이전페이지 -->
+				<div class="pagingDiv">
+					<ul class="pagination justify-content-center">
+					<c:choose>
+						<c:when test="${currentPage > 1}">
+							<li class="page-item">
+								<a class="page-link"
+								 		href="/topaz/groupware/bpo/bpoMainOut?currentPage=${currentPage-1}&searchWord=${searchWord}">◀&nbsp;&nbsp;
+								 </a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item disabled">
+								<a class="page-link">◀&nbsp;&nbsp;</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+					<!-- 다음페이지 -->
+					<c:choose>
+						<c:when test="${currentPage < lastPage}">
+							<li class="page-item">
+								<a class="page-link" 
+										href="/topaz/groupware/bpo/bpoMainOut?currentPage=${currentPage+1}&searchWord=${searchWord}">&nbsp;&nbsp;▶
+								</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item disabled">
+								<a class="page-link">&nbsp;&nbsp;▶</a>
+							</li>
+	    				</c:otherwise>
+					</c:choose>
+					</ul>
+				</div>
+              
 			</div></div>
 		</div>
 		
 	</div>	
     </section><!-- section 종료 -->
+    
+    
+    <!-- 공지사항 상세 가져오는 모달 -->
+	<div class="modal fade" id="noticeDetailModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+			<!-- 모달 제목 -->
+			<div class="modal-header">
+				<h5 class="modal-title">공지사항 상세보기</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			
+			<div class="modal-body">
+				<div class="row mb-5" id="noticeDetail">
+					<!-- 상세보기 보여지는 곳 -->
+				</div>
+			</div>
+				
+			<!-- 모달 닫기버튼 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div></div>
+	</div><!-- End addRsvn Modal-->
 
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->

@@ -179,8 +179,12 @@
 			,os.rsvn_content rsvnContent
 			,os.rsvn_start rsvnStart
 			,os.rsvn_end rsvnEnd
-			,(SELECT emp_name FROM employee WHERE emp_no = os.reg_id) regName
-			,(SELECT emp_name FROM employee WHERE emp_no = os.mod_id) modName
+			
+			,COALESCE((SELECT emp_name FROM employee WHERE emp_no = os.reg_id) 
+				,(SELECT outsourcing_no FROM outsourcing WHERE outsourcing_no = os.reg_id)) regName
+			
+			,COALESCE((SELECT emp_name FROM employee WHERE emp_no = os.mod_id) 
+				,(SELECT outsourcing_no FROM outsourcing WHERE outsourcing_no = os.mod_id)) modName
 		FROM outsourcing_rsvn os
 		INNER JOIN outsourcing o 
 			ON os.outsourcing_no = o.outsourcing_no
@@ -199,9 +203,16 @@
 			<if test="rsvnState != null and rsvnState != ''">
 				, rsvn_state = #{rsvnState}
 			</if>
-			, rsvn_content = #{rsvnContent}
-			, rsvn_start = #{rsvnStart}
-			, rsvn_end = #{rsvnEnd}
+			<if test="rsvnContent != null and rsvnContent != ''">
+				, rsvn_content = #{rsvnContent}
+			</if>
+			<if test="rsvnStart != null and rsvnStart != ''">
+				, rsvn_start = #{rsvnStart}
+			</if>
+			<if test="rsvnEnd != null and rsvnEnd != ''">
+				, rsvn_end = #{rsvnEnd}
+			</if>
+			
 			, mod_id = #{modId}
 			, mod_time = NOW()
 		WHERE 
@@ -398,4 +409,59 @@
 		SET outsourcing_state = #{stateChange} 
 		WHERE outsourcing_no = #{outsourcingNo}
 	</update>
+	
+	
+	<!-- 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-공지사항 리스트 -->
+	<select id="selectBpoNoticeList" parameterType="int" resultType="map">
+		SELECT 
+			n.news_no newsNo
+			, SUBSTRING(n.title, 1, 6) title
+			, SUBSTRING(n.content, 1, 6) content
+			, (SELECT cd_nm FROM common_code c WHERE c.crp_cd = 'W005' AND cd = n.category) category
+		FROM 
+			news_notice n
+		WHERE 
+			grade = '2'
+		AND 
+			use_yn = 'Y'
+		<if test="searchWord != null">
+			AND n.title LIKE CONCAT('%',#{searchWord},'%')
+		</if>
+		ORDER BY n.reg_time DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	
+	<!-- 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-공지사항 리스트 총 행의 개수 -->
+	<select id="selectBpoNoticeListTotalCnt" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) cnt
+		FROM 
+			news_notice n
+		WHERE 
+			grade = '2'
+		AND 
+			use_yn = 'Y'
+		<if test="searchWord != null">
+			AND n.title LIKE CONCAT('%',#{searchWord},'%')
+		</if>
+	</select>
+	
+	
+	<!-- 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-공지사항 상세보기 -->
+	<select id="selectBpoNoticeOne" parameterType="String" resultType="map">
+		SELECT 
+			n.news_no newsNo
+			, n.title title
+			, n.content content
+			, (SELECT cd_nm FROM common_code c WHERE c.crp_cd = 'W005' AND cd = n.category) category
+			, n.start_date startDate
+			, n.end_date endDate
+			, (SELECT emp_name FROM employee WHERE emp_no = n.reg_id) regiId
+			, (SELECT emp_name FROM employee WHERE emp_no = n.mod_id) modId
+		FROM 
+			news_notice n
+		WHERE 
+			n.news_no = #{newsNo}
+	</select>
 </mapper>
