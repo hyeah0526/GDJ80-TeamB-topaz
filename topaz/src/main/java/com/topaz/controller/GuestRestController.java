@@ -37,7 +37,7 @@ public class GuestRestController {
 	public Map<String, Object> filterResidentList(@RequestParam(name="dong", required = false) String dong,
 	                                              @RequestParam(name="type", required = false) String type,
 	                                              @RequestParam(name="ho", required = false) String ho,
-	                                              @RequestParam(name="searchWord") String searchWord,
+	                                              @RequestParam(name="searchWord", required = false) String searchWord,
 	                                              @RequestParam(name="currentPage", defaultValue = "1") int currentPage,
 	                                              @RequestParam(name="rowPerPage", defaultValue = "5") int rowPerPage) throws Exception {
 		
@@ -46,7 +46,7 @@ public class GuestRestController {
 		int beginRow = (currentPage - 1) * rowPerPage;
 		
 		List<Map<String, Object>> residents = guestMapper.filterResidentList(dong, type, ho, searchWord, beginRow, rowPerPage);
-		int totalRecords = guestMapper.countResidents(dong, type, ho);
+		int totalRecords = guestMapper.countResidents(dong, type, searchWord, ho);
 		int totalPages = (int) Math.ceil((double) totalRecords / rowPerPage);
 			
 		log.debug(Debug.PSJ + "residentList restController list ==>" + residents.toString() + Debug.END);

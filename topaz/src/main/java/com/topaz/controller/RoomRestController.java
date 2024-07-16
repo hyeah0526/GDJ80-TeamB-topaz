@@ -80,11 +80,11 @@ public class RoomRestController {
 	
 	@PostMapping("/groupware/room/roomList/filter")
     public Map<String,Object> filterRoomList(@RequestParam(name="roomState", required = false) String roomState,
-	    								   @RequestParam(name="roomDong", required = false) String roomDong,
-	    								   @RequestParam(name="roomType", required = false) String roomType,
-	    								   @RequestParam(name="roomHo", required = false) String roomHo,
-	    								   @RequestParam(name="currentPage", defaultValue = "1") int currentPage,
-	                                       @RequestParam(name="rowPerPage", defaultValue = "5") int rowPerPage) throws Exception {
+	    								     @RequestParam(name="roomDong", required = false) String roomDong,
+	    								     @RequestParam(name="roomType", required = false) String roomType,
+	    								     @RequestParam(name="roomHo", required = false) String roomHo,
+	    								     @RequestParam(name="currentPage", defaultValue = "1") int currentPage,
+	                                         @RequestParam(name="rowPerPage", defaultValue = "5") int rowPerPage) throws Exception {
 		
 		log.debug(Debug.PSJ + "roomList restController requestParam ==>" + roomState, roomDong, roomHo + Debug.END);
 

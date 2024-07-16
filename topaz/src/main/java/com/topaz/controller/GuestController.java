@@ -38,28 +38,8 @@ public class GuestController {
 	*/
 	
 	@GetMapping("/groupware/resident/residentList")
-	public String residentList(Model model,
-							@RequestParam(name="currentPage", defaultValue = "1") int currentPage,
-							@RequestParam(name="rowPerPage", defaultValue = "5") int rowPerPage,
-							@RequestParam(name="searchWord", defaultValue = "") String searchWord) throws Exception {
-		
-		log.debug(Debug.PSJ + "residentList controller rowPerPage==>" + rowPerPage + Debug.END);
-		log.debug(Debug.PSJ + "residentList controller searchWord==>" + searchWord + Debug.END);
+	public String residentList() {
 
-		
-		// 입주자 조회
-		List<Map<String,Object>> residentList = guestService.getResidentList(currentPage, rowPerPage, searchWord);
-		log.debug(Debug.PSJ + "residentList controller==>" + residentList.toString() + Debug.END);
-		// 마지막 페이지
-		int lastPage = guestService.getLastPage(rowPerPage, searchWord);
-		log.debug(Debug.PSJ + "resiLastPage controller==>" + lastPage + Debug.END);
-		
-		// model에 넣기
-		model.addAttribute("residentList", residentList);
-		model.addAttribute("lastPage",lastPage);
-		model.addAttribute("currentPage",currentPage);
-		model.addAttribute("searchWord",searchWord);
-		
 		return "groupware/resident/residentList";
 		
 	}

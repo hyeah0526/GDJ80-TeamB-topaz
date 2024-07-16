@@ -31,6 +31,7 @@ public interface GuestMapper {
 	// 검색필터에 따른 데이터 총 개수
 	int countResidents(@Param("dong") String dong, 
 					   @Param("type") String type,
+					   @Param("searchWord") String searchWord,
 					   @Param("ho") String ho);
 	
 	/* 분류 번호 :  #7 - 입주자 관리 페이지 : 입주자 상세 조회 */
