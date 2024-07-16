@@ -378,16 +378,27 @@ public class EmployeeController {
 	 * 담당자: 김인수
 	*/
 	@GetMapping("/groupware/myPage/myNoteAdd")
-	public String myNoteAdd(Model model) {
+	public String myNoteAdd(
+			Model model,
+			HttpServletRequest req) {
 		
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		
+		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / myNoteAdd / empNo : " + empNo);
+		
+		//모든 직원과 부서 가져오기
 		List<Map<String, Object>> empList = employeeService.selectEmpAllInChart();
 
-	    Map<String, List<Map<String, Object>>> deptMap = new LinkedHashMap<>();
+		Map<String, List<Map<String, Object>>> deptMap = new LinkedHashMap<>();
+	    
 	    for (Map<String, Object> emp : empList) {
+	        String dept = (String) emp.get("empDept");
+	        emp.put("empNo", emp.get("empNo"));
 	        
-	    	String dept = (String) emp.get("empDept");
-	        
-	    	if (!deptMap.containsKey(dept)) {
+	        if (!deptMap.containsKey(dept)) {
 	            deptMap.put(dept, new ArrayList<>());
 	        }
 	        
@@ -395,9 +406,9 @@ public class EmployeeController {
 	    }
 	    
 	    model.addAttribute("deptMap", deptMap);
-        
- 
-		return "groupware/myPage/myNoteAdd";
+	    model.addAttribute("senderId", empNo);
+
+	    return "groupware/myPage/myNoteAdd";
 	}
 	
 	/*
@@ -406,11 +417,23 @@ public class EmployeeController {
 	 * 담당자: 김인수
 	*/
 	@GetMapping("/groupware/myPage/myNoteRepAdd")
-	public String myNoteRepAdd(Model model) {
+	public String myNoteRepAdd(
+			Model model,
+			HttpServletRequest req) {
 		
+		
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		
+		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / myNoteRepAdd / empNo : " + empNo);
+		
+		//모든 직원과 부서 가져오기
 		List<Map<String, Object>> empList = employeeService.selectEmpAllInChart();
 
 	    Map<String, List<Map<String, Object>>> deptMap = new LinkedHashMap<>();
+	    
 	    for (Map<String, Object> emp : empList) {
 	        
 	    	String dept = (String) emp.get("empDept");
@@ -423,6 +446,7 @@ public class EmployeeController {
 	    }
 	    
 	    model.addAttribute("deptMap", deptMap);
+	    model.addAttribute("senderId", empNo);
         
  
 		return "groupware/myPage/myNoteRepAdd";

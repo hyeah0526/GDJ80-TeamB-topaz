@@ -283,7 +283,11 @@
 	<!-- 분류 번호 :  #4 - 전체 직원조회(조직도) -->
 	<select id="selectEmpAllInChart" resultType="Map">
 		SELECT 
-			emp_name empName, dept_code.cd_nm empDept, grade_code.cd_nm empGrade, file_name
+			emp_no empNo,
+			emp_name empName, 
+			dept_code.cd_nm empDept, 
+			grade_code.cd_nm empGrade, 
+			file_name
 		FROM 
 			employee AS e
 		LEFT JOIN
@@ -645,7 +649,8 @@
 	<select id="selectEmpNotRecCnt" parameterType="Map" resultType="int">
 		SELECT 
 			COUNT(*),
-			receiver_id reciverId
+			receiver_id reciverId,
+			note_id noteId
 		FROM 
 			note_history
 		WHERE

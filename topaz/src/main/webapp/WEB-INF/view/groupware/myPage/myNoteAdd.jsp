@@ -51,6 +51,7 @@
                             
                             <div style="margin-bottom: 20px;">
                                 <button type="button" id="sendButton">보내기</button>
+                                <input type="hidden" id="senderId" value="${senderId}">
                             </div>
                             
                             <div class="form-group">

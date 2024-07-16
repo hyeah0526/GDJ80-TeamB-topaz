@@ -6,10 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SockJS and StompJs 라이브러리 -->
-    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script> <!-- SockJS  라이브러리 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
     
+    <style>
+		
+		/* 아이콘 애니메이션 효과 */
+		@keyframes glow {
+		    0%, 100% {
+		        box-shadow: 0 0 5px rgba(255, 0, 0, 0.5), 0 0 10px rgba(255, 0, 0, 0.5), 0 0 15px rgba(255, 0, 0, 0.5);
+		    }
+		    50% {
+		        box-shadow: 0 0 10px rgba(255, 0, 0, 1), 0 0 20px rgba(255, 0, 0, 1), 0 0 30px rgba(255, 0, 0, 1);
+		    }
+		}
+		
+		.glow {
+		    animation: glow 1s ease-in-out;
+		}
+    </style>
 </head>
 
 <body>
@@ -35,8 +50,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-bell"></i>
+                       
                         <!-- 쪽지 알림 개수 -->
                         <span id="notification-count" class="badge bg-primary badge-number">0</span>
+                    
                     </a><!-- End Notification Icon -->
 
                     <!-- 알림 메세지 시작 -->

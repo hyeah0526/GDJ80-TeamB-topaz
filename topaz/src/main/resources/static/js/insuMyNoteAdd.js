@@ -1,4 +1,8 @@
 $(document).ready(function() {
+
+	let senderId = $('#senderId').val();
+	
+	
     //부서 목록 토글
     function toggleDept(deptId) {
         const deptElement = document.getElementById(deptId);
@@ -43,7 +47,7 @@ $(document).ready(function() {
             employees.forEach(emp => {
                 deptHtml += `
                     <div>
-                        <input type="checkbox" class="deptCheckbox" value="${emp.empName}" data-dept="${deptName}" data-name="${emp.empName}"> ${emp.empName}
+                        <input type="checkbox" class="deptCheckbox" value="${emp.empName}" data-empno="${emp.empNo}" data-dept="${deptName}" data-name="${emp.empName}"> ${emp.empName}
                     </div>`;
             });
 
@@ -72,11 +76,15 @@ $(document).ready(function() {
     $('#sendButton').click(function() {
         const noteContent = $('#noteContent').val();
         const recipients = [];
+        const recipientNos = [];
+        
         $('.deptCheckbox:checked').each(function() {
             recipients.push($(this).val());
+            recipientNos.push($(this).data('empno'));
         });
 
         if (recipients.length > 0 && noteContent) {
+          	
             $.ajax({
                 url: '/topaz/groupware/myPage/insertNote',
                 method: 'post',
@@ -87,16 +95,29 @@ $(document).ready(function() {
                 }),
                 success: function() {
                     alert('쪽지가 전송되었습니다.');
-                    window.location.href = '/topaz/groupware/myPage/myNoteList';
+                    
+                    console.debug("MyNoteAdd :: socket >> ",webSocket)
+                    
+                    if(webSocket){
+						
+						const msg = senderId + "," + recipientNos.join(',') + "," + noteContent;
+						console.log("msg : " + msg);
+						
+						 webSocket.send(msg);
+					}
+                    //window.location.href = '/topaz/groupware/myPage/myNoteList';
                 }
             });
         } else {
             alert('모든 필드를 입력해주세요.');
         }
     });
+    
+ 
 
     //초기 로드 시 모든 직원 목록 표시
     loadAllEmployees();
+    
 
     //받는 사람 필드 업데이트 함수
     function updateRecipientsField() {
@@ -126,9 +147,11 @@ $(document).ready(function() {
             $(`.deptCheckbox[data-name="${empName}"][data-dept="${deptName}"]`).prop('checked', true);
         });
     }
+    
+    
 });
 
-//부서 목록 토글 함수
+//부서 목록 토클 함수
 function toggleDept(deptId) {
     const deptElement = document.getElementById(deptId);
     deptElement.style.display = deptElement.style.display === 'none' ? 'block' : 'none';
