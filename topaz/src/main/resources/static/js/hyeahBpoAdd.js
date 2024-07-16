@@ -375,7 +375,41 @@ $(document).ready(function() {
     fileReader.readAsDataURL(previewInput.files[0]); 
   });
   
-  
-  
-  
 });
+
+
+/* 활성화 상태 변경 */
+$('#activeChange').click(function() {
+	// 변수값 담기
+	let outsourcingNo = $('#outsourcingNo').val();
+	let useYn = $('#useYn').val();
+	console.log('활성화 상태 변경 요청outsourcingNo--> ', outsourcingNo);
+	console.log('활성화 상태 변경 요청useYn--> ', useYn);
+	
+	if(confirm('활성화 상태로 변경하시겠습니까?')){
+		
+		$.ajax({
+			type: "GET",
+			data: {outsourcingNo : outsourcingNo,
+					useYn : useYn},
+			url: "/topaz/bpo/bpoActiveChange",
+			success: function (response){
+				console.log("response", response);
+				
+				// 활성화 상태 변경 성공시
+				if(response == 1){
+					alert('상태 변경에 성공하였습니다.');
+					window.location.href="/topaz/groupware/bpo/bpoDetail?outsourcingNo="+outsourcingNo;
+				}else{
+					alert('상태 변경에 실패하였습니다.');
+					window.location.href="/topaz/groupware/bpo/bpoDetail?outsourcingNo="+outsourcingNo;
+				}
+				
+			}
+		})
+		
+		
+	}
+	
+});
+

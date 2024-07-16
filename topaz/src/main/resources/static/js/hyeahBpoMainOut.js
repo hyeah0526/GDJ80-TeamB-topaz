@@ -111,6 +111,46 @@ function NoticeDetail(row){
 }
 
 
+/* 비밀번호 변경 모달창 띄우기 */
+$('#changePw').click(function() {
+	console.log('비밀번호 변경');
+	$("#changePwModal").modal("show");
+})
 
 
+/* 비밀번호 변경 */
+$('#pwChangeBtn').click(function() {
+	
+	// 값 가져오기
+	let outsourcingNo = $('#outsourcingNo').val();
+	let oldPw = $('#oldPw').val();
+	let newPw = $('#newPw').val();
+	console.log('outsourcingNo--> ', outsourcingNo);
+	console.log('oldPw--> ', oldPw);
+	console.log('newPw--> ', newPw);
+	
+	// ajax 데이터 전송
+	$.ajax({
+		type: "GET",
+		data: {	outsourcingNo : outsourcingNo,
+				newPw : newPw,
+				oldPw : oldPw
+				},
+		url: "/topaz/bpo/bpoOutChangePw",
+		success: function (response){
+			console.log('response-->', response);
+			
+			// 비밀번호 변경 성공 / 실패 
+			if(response == 1){
+				alert('비밀번호 변경에 성공하였습니다!');
+				window.location.href="/topaz/groupware/bpo/bpoMainOut";
+			}else{
+				alert('비밀번호 변경에 실패하였습니다.');
+				window.location.href="/topaz/groupware/bpo/bpoMainOut";
+			}
+			
+			
+		}
+	})	
+})
 

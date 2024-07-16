@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.topaz.mapper.BpoMapper;
 import com.topaz.service.BpoService;
 import com.topaz.utill.Debug;
 
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BpoRestController {
 	
 	@Autowired BpoService bpoService; 
+	@Autowired BpoMapper bpoMapper;
 	
 	/*
 	 * 서비스명: getBpoList
@@ -165,7 +167,6 @@ public class BpoRestController {
 	
 	
 	
-	
 	/*
 	 * 서비스명: getBpoOutNoticeDetail
 	 * 시작 날짜: 2024-07-16
@@ -180,6 +181,49 @@ public class BpoRestController {
 		log.debug(Debug.PHA + "bpoOutNoticeDetail controller map--> " + map + Debug.END);
 		
 		return map;
+	}
+	
+	
+	
+	/*
+	 * 서비스명: setBpoActiveChange
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 박혜아
+	*/
+	@RequestMapping("/bpo/bpoActiveChange")
+	public int bpoActiveChange(String outsourcingNo, String useYn) {
+		log.debug(Debug.PHA + "bpoActiveChange controller outsourcingNo--> " + outsourcingNo + Debug.END);
+		log.debug(Debug.PHA + "bpoActiveChange controller useYn--> " + useYn + Debug.END);
+		
+		String useYnChange = "";
+		if(useYn.equals("Y")) {
+			useYnChange = "N";
+		}else {
+			useYnChange = "Y";
+		}
+		
+		int updateRow = bpoMapper.updateBpoActive(outsourcingNo, useYnChange);
+		
+		return updateRow;
+	}
+	
+	
+	
+	/*
+	 * 매퍼명: updateBpoOutPw
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 박혜아
+	*/
+	@RequestMapping("/bpo/bpoOutChangePw")
+	public int bpoOutChangePw(String outsourcingNo, String newPw, String oldPw) {
+		
+		log.debug(Debug.PHA + "bpoOutChangePw Controller outsourcingNo--> " + outsourcingNo + Debug.END);
+		log.debug(Debug.PHA + "bpoOutChangePw Controller newPw--> " + newPw + Debug.END);
+		log.debug(Debug.PHA + "bpoOutChangePw Controller oldPw--> " + oldPw + Debug.END);
+		
+		int updateRow = bpoMapper.updateBpoOutPw(outsourcingNo, newPw, oldPw);
+		
+		return updateRow;
 	}
 	
 }

@@ -373,7 +373,7 @@ public class BpoController {
 	 * 시작 날짜: 2024-07-16
 	 * 담당자: 박혜아
 	*/
-	@GetMapping("/groupware/bpo/bpoRsvnDetailOut")
+	@RequestMapping("/groupware/bpo/bpoRsvnDetailOut")
 	public String bpoRsvnDetailOut(Model model
 									,@RequestParam(name="rsvnNo") String rsvnNo) {
 		
@@ -389,11 +389,6 @@ public class BpoController {
 	
 	
 	
-	@GetMapping("/groupware/bpo/bpoRsvnListOut")
-	public String bpoRsvnListOut() {
-
-		return "groupware/bpo/bpoRsvnListOut";
-	}
 	
 	
 

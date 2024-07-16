@@ -14,14 +14,14 @@
 	      </li><!-- End F.A.Q Page Nav -->
 		
 		
-		<!-- ======= 카테고리 - 일정상세 ======= -->
+		<!-- ======= 카테고리 - 일정상세 ======= 
 		<li class="nav-item" id="">
 	        <a class="nav-link sideNotice collapsed" id="sideNotice" href="/topaz/groupware/bpo/bpoRsvnListOut">
 	          <i class="bi bi-calendar-check"></i>
 	          <span>예약 목록</span>
 	        </a>
-		</li><!-- End Profile Page Nav -->
-		
+		</li>
+		-->
 		
 		
 	</ul>

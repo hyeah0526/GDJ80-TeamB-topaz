@@ -49,7 +49,7 @@
 				<h5 class="card-title">영업상태 변경</h5>
 				<div>
 					<form method="post" action="${pageContext.request.contextPath}/groupware/bpo/bpoOutOnOff">
-						<input type="hidden" name="outsourcingNo" value="${loginInfo.outsourcingNo}">
+						<input type="hidden" id="outsourcingNo" name="outsourcingNo" value="${loginInfo.outsourcingNo}">
 						<input type="hidden" name="outsourcingState" value="${loginInfo.outsourcingState}">
 						<c:if test="${loginInfo.outsourcingState eq '영업중'}">
 							<button type="submit" class="btn btn-success" >${loginInfo.outsourcingState}</button>
@@ -65,6 +65,8 @@
 						</c:if>
 					</form>
 				</div>
+				<h5 class="card-title">비밀번호 변경</h5>
+				<button type="button" id="changePw" class="btn btn-primary" >비밀번호 변경</button>
 			</div></div>
 			
 			<!-- 오늘의 예약 확인 -->
@@ -197,6 +199,36 @@
 				
 			<!-- 모달 닫기버튼 -->
 			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div></div>
+	</div><!-- End addRsvn Modal-->
+	
+	
+	<!-- 비밀번호 변경 모달 -->
+	<div class="modal fade" id="changePwModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+			<!-- 모달 제목 -->
+			<div class="modal-header">
+				<h5 class="modal-title">비밀번호 변경</h5>
+			</div>
+			
+			<div class="modal-body">
+				<div class="row mb-5">
+					<label for="inputEmail" class="col-sm-4 col-form-label">원래 비밀번호</label>
+					<div class="col-sm-8 scheduleModalDiv">
+						<input type="password" class="form-control" id="oldPw" name="oldPw">
+					</div>
+					<label for="inputEmail" class="col-sm-4 col-form-label">신규 비밀번호</label>
+					<div class="col-sm-8 scheduleModalDiv">
+						<input type="password" class="form-control" id="newPw" name="newPw">
+					</div>
+				</div>
+			</div>
+					
+			<!-- 모달 닫기버튼 -->
+			<div class="modal-footer">
+				<button type="button" id="pwChangeBtn" class="btn btn-primary">Change</button>
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 			</div>
 		</div></div>

@@ -42,6 +42,13 @@
 				<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 	              	<img src="/topaz/assets/img/bpo/${b.fileName}" class="rounded-circle bpoPic" width="250px">
 	             	<h2>${b.outsourcingName}</h2>
+	             	<input type="hidden" value="${b.useYn}" name="useYn" id="useYn">
+	             	<c:if test="${b.useYn eq 'Y'}">
+		             	<button id="activeChange" type="button" class="btn btn btn-primary">활성화 상태</button>
+	             	</c:if>
+	             	<c:if test="${b.useYn eq 'N'}">
+		             	<button id="activeChange" type="button" class="btn btn btn-secondary">비활성화 상태</button>
+	             	</c:if>
 	            </div>
 			</div></div>
 
@@ -211,7 +218,13 @@
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" id="modBpoBtn" class="btn btn-primary">Save Changes</button>
+                      <c:if test="${b.useYn eq 'Y'}">
+	                      <button type="submit" id="modBpoBtn" class="btn btn-primary">Save Changes</button>
+                      </c:if>
+                      <c:if test="${b.useYn eq 'N'}">
+	                      해당 업체는 비활성화 상태로 수정이 불가능합니다.<br>
+	                      <button type="button" class="btn btn-secondary">Save Changes</button>
+                      </c:if>
                       <button type="button" class="btn btn-primary" onclick="window.location.href='/topaz/groupware/bpo/bpoDetail?outsourcingNo=${b.outsourcingNo}'">Cancel</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
@@ -230,7 +243,13 @@
                       </div>
                     </div>
                     <div class="text-center">
-                      	<button id="bpoResetPwBtn" type="submit" class="btn btn-primary">Reset Password</button>
+	                    <c:if test="${b.useYn eq 'Y'}">
+	                      	<button id="bpoResetPwBtn" type="submit" class="btn btn-primary">Reset Password</button>
+	                    </c:if>
+	                    <c:if test="${b.useYn eq 'N'}">
+	                      	<button type="button" class="btn btn-secondary">Reset Password</button>
+	                      	<br>해당 업체는 비활성화 상태로 수정이 불가능합니다.
+	                    </c:if>
                     </div>
                   </form><!-- End Change Password Form -->
 
@@ -276,7 +295,7 @@
 	<!-- 카카오 우편번호API -->
 	<script src="<c:url value='/js/post.js'/>"></script>
 	
-	<!-- 외주업체등록 JS -->
+	<!-- 외주업체등록/상세 JS -->
 	<script src="<c:url value='/js/hyeahBpoAdd.js'/>"></script>
 </body>
 

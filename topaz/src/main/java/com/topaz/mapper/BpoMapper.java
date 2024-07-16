@@ -79,4 +79,10 @@ public interface BpoMapper {
 	
 	/* 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-공지사항 상세보기 */
 	Map<String, Object> selectBpoNoticeOne(String newsNo);
+	
+	/* 분류 번호: #5 - 외주업체 상세 페이지 :: 사용여부 상태변경 */
+	int updateBpoActive(String outsourcingNo, String useYn);
+	
+	/* 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-비밀번호 수정 */
+	int updateBpoOutPw(String outsourcingNo, String newPw, String oldPw);
 }

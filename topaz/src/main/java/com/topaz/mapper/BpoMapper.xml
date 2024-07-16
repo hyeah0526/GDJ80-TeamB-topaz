@@ -322,6 +322,7 @@
 			, (SELECT emp_name FROM employee WHERE emp_no = o.mod_id) modId
 			, f.file_no fileNo
 			, f.file_name fileName
+			, o.use_yn useYn
 		FROM 
 			outsourcing o
 		INNER JOIN file_upload f 
@@ -464,4 +465,28 @@
 		WHERE 
 			n.news_no = #{newsNo}
 	</select>
+	
+	
+	<!-- 분류 번호: #5 - 외주업체 상세 페이지 :: 사용여부 상태변경 -->
+	<update id="updateBpoActive" parameterType="String">
+		UPDATE
+			outsourcing
+		SET
+			use_yn = #{useYn}
+		WHERE
+			outsourcing_no = #{outsourcingNo}
+	</update>
+	
+	
+	<!-- 분류 번호: #13 - 외주업체 로그인 :: 메인 페이지-비밀번호 수정 -->
+	<update id="updateBpoOutPw" parameterType="String">
+		UPDATE
+			outsourcing
+		SET
+			outsourcing_pw = SHA2(#{newPw}, 256)
+		WHERE
+			outsourcing_no = #{outsourcingNo}
+		AND
+			outsourcing_pw = SHA2(#{oldPw}, 256)
+	</update>
 </mapper>
