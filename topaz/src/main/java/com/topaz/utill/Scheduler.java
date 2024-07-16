@@ -18,7 +18,7 @@ public class Scheduler {
 	 * 담당자: 박수지
 	*/
 	
-	// 매일 자정(0시)에 실행되는 스케줄러
+	// 매일 자정(0시)에 실행되는 스케줄러	
 	@Scheduled(cron = "0 0 0 * * ?")
 	public void resetRoomStatusMidnight() {
 		cleaningService.resetRoomStatus();

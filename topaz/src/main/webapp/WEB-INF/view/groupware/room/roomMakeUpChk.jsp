@@ -31,103 +31,211 @@
 		</div><!-- End Page Title -->
 
 		<section class="section">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title">청소율</h5>
-							<span class="col-lg-6">
-								<span class="card">
-									<span class="card-body">
-										<h5 class="card-title">청소율 파이 차트</h5>
-										<canvas id="pieChart" style="max-height: 400px;"></canvas>
-									</span>
-								</span>
-							</span>
-							<!-- 청소율 게이지 차트 -->
-							<span class="col-lg-6">
-								<span class="card">
-									<span class="card-body">
-										<h5 class="card-title">청소율 게이지 차트</h5>
-										<canvas id="gaugeChart" style="max-height: 400px;"></canvas>
-									</span>
-								</span>
-							</span>
-							<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-							<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-radial-gauge"></script>
-							<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-							<script>
-								document.addEventListener("DOMContentLoaded", () => {
-									let cleanRooms = 0;
-									let dirtyRooms = 0;
-
-									$.ajax({
-									    url: '/topaz/groupware/room/roomMakeUpChk',
-									    method: 'POST',
-									    dataType: 'json',
-									    success: function(json) {
-									        console.log(json);
-									        json.forEach(function(item) {
-									            cleanRooms += item.cleanRoom;
-									            dirtyRooms += item.dirtyRoom;
-									        });
-
-									        // 현재 시간 가져오기
-									        const now = new Date();
-									        const currentTime = now.toLocaleString(); // 로컬 시간 형식으로 변환
-									        console.log(now, currentTime);
-
-									        // 데이터가 로드된 후 차트 생성
-									        new Chart(document.querySelector('#pieChart'), {
-									            type: 'pie',
-									            data: {
-									                labels: ['Clean', 'Dirty'],
-									                datasets: [{
-									                    label: 'Room Status',
-									                    data: [cleanRooms, dirtyRooms],
-									                    backgroundColor: [
-									                        'rgba(54, 162, 235, 0.2)', // Blue for Clean
-									                        'rgba(255, 99, 132, 0.2)'  // Red for Dirty
-									                    ],
-									                    borderColor: [
-									                        'rgb(54, 162, 235)', // Blue for Clean
-									                        'rgb(255, 99, 132)'  // Red for Dirty
-									                    ]
-									                }]
-									            },
-									            options: {
-									                responsive: true,
-									                plugins: {
-									                    legend: {
-									                        position: 'top',
-									                    },
-									                    title: {
-									                        display: true,
-									                        text: currentTime +
-									                    	'\n기준 청소 상태', // 차트 제목에 현재 시간 추가
-									                        font: {
-									                            size: 18
-									                        },
-									                        padding: {
-									                            top: 10,
-									                            bottom: 10
-									                        }
-									                    }
-									                }
-									            }
-									        });
-									    },
-									    error: function(xhr, status, error) {
-									        console.error('AJAX 오류:', status, error);
-									    }
-									});
-								});
+			<div class="row justify-content-center">
+				<div class="col-lg-10 card ">
+					<div class="row">
+                        <div class="col-lg-5 d-flex align-items-center justify-content-center">
+                            <div class="chart-container fixed-size">
+                                <h5 class="chart-title text-center" style="margin-top: 20px;">청소/미청소 방 개수</h5>
+                                <canvas id="pieChart" class="chartCanvas"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 d-flex align-items-center justify-content-center">
+                            <div class="chart-container">
+                                <h5 class="chart-title text-center">청소율 차트</h5>
+                                <canvas id="barChart" class="chartCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 d-flex align-items-center justify-content-center">
+                            <div class="chart-container fixed-size" style="margin: 20px;">
+                                <h5 class="chart-title text-center" >객실 점유율 차트</h5>
+                                <canvas id="occupancyChart" class="chartCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+						<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+						<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+						<script>
+							document.addEventListener("DOMContentLoaded", () => {
+								let cleanRooms = 0;
+								let dirtyRooms = 0;
+								let cleanRate = 0;
+								let totalRoom = 0;
+								let onRoom = 0;
+								let offRoom = 0;
 								
-								
-							</script>
-							
-							
-						</div>
+								$.ajax({
+								    url: '/topaz/groupware/room/roomMakeUpChk',
+								    method: 'POST',
+								    dataType: 'json',
+								    success: function(json) {
+								        console.log(json);
+								        if (json.length > 0) {
+                                               let data = json[0];
+                                               cleanRooms = data.cleanRoom;
+                                               dirtyRooms = data.dirtyRoom;
+                                               cleanRate = data.cleanRate;
+                                               totalRoom = data.totalRoom;
+                                               onRoom = data.onRoom;
+                                               offRoom = data.offRoom;
+                                           }
+				
+								        // 현재 시간 가져오기
+								        const now = new Date();
+								        const currentTime = now.toLocaleString(); // 로컬 시간 형식으로 변환
+								        console.log(now, currentTime);
+
+								        // 전체 방의 백분율 구하기
+								        const totalRoomPercentage = (totalRoom/totalRoom) * 100;
+								        console.log(totalRoomPercentage);
+								        
+								        // 데이터가 로드된 후 차트 생성
+								        var pieChartCanvas = document.querySelector('#pieChart');
+								        var pieChartContext = pieChartCanvas.getContext('2d');
+
+								        new Chart(pieChartContext, {
+								            type: 'pie',
+								            data: {
+								                labels: ['Clean', 'Dirty'],
+								                datasets: [{
+								                    label: 'Room Status',
+								                    data: [cleanRooms, dirtyRooms],
+								                    backgroundColor: [
+								                        'rgba(54, 162, 235, 0.2)', // Blue for Clean
+								                        'rgba(255, 99, 132, 0.2)'  // Red for Dirty
+								                    ],
+								                    borderColor: [
+								                        'rgb(54, 162, 235)', // Blue for Clean
+								                        'rgb(255, 99, 132)'  // Red for Dirty
+								                    ]
+								                }]
+								            },
+								            options: {
+								                responsive: true,
+								                plugins: {
+								                    legend: {
+								                        position: 'top',
+								                    },
+								                    title: {
+								                        display: true,
+								                        text: currentTime +
+								                    	'\n기준 청소 상태', // 차트 제목에 현재 시간 추가
+								                        font: {
+								                            size: 18
+								                        },
+								                        padding: {
+								                            top: 10,
+								                            bottom: 10
+								                        }
+								                    }
+								                }
+								            }
+								        });
+
+								        var barChartCanvas = document.querySelector('#barChart');
+								        var barChartContext = barChartCanvas.getContext('2d');
+
+								        new Chart(barChartContext, {
+								            type: 'bar',
+								            data: {
+								                labels: ['Clean Rate'],
+								                datasets: [{
+								                    label: 'Rate (%)',
+								                    data: [cleanRate,totalRoomPercentage],
+								                    backgroundColor: [
+								                        'rgba(54, 162, 235, 0.2)', // Blue for Clean
+								                    ],
+								                    borderColor: [
+								                        'rgb(54, 162, 235)', // Blue for Clean
+								                    ]
+								                }]
+								            },
+								            options: {
+								                responsive: true,
+								                scales: {
+								                	y: {
+								                		beginAtZero: true,
+								                		max:100,
+								                		ticks: {
+								                		    stepSize: 15 
+								                		}
+								                	}
+								                },
+								                plugins: {
+								                    legend: {
+								                        display: false
+								                    },
+								                    title: {
+								                        display: true,
+								                        text: currentTime +
+								                    	' 청소율', // 차트 제목에 현재 시간 추가
+								                    	font: {
+								                            size: 18
+								                        },
+								                        padding: {
+								                            top: 10,
+								                            bottom: 10
+								                        }
+								                    }
+								                }
+								            }
+								        });
+								        var occupancyChartCanvas = document.querySelector('#occupancyChart');
+								        var occupancyChartContext = occupancyChartCanvas.getContext('2d');
+
+								        new Chart(occupancyChartContext, {
+								            type: 'bar',
+								            data: {
+								                labels: ['유실', '공실'],
+								                datasets: [{
+								                    label: 'Rooms',
+								                    data: [onRoom, offRoom],
+								                    backgroundColor: [
+								                        'rgba(75, 192, 192, 0.2)', // Teal for Occupied
+								                        'rgba(255, 205, 86, 0.2)'  // Yellow for Unoccupied
+								                    ],
+								                    borderColor: [
+								                        'rgb(75, 192, 192)', // Teal for Occupied
+								                        'rgb(255, 205, 86)'  // Yellow for Unoccupied
+								                    ]
+								                }]
+								            },
+								            options: {
+								                responsive: true,
+								                scales: {
+								                    y: {
+								                        beginAtZero: true,
+								                        max: totalRoom
+								                    }
+								                },
+								                plugins: {
+								                    legend: {
+								                        display: false
+								                    },
+								                    title: {
+								                        display: true,
+								                        text: ' 객실 점유율', 
+								                        font: {
+								                            size: 18
+								                        },
+								                        padding: {
+								                            top: 10,
+								                            bottom: 10
+								                        }
+								                    }
+								                }
+								            }
+								        });
+								        
+                                       },
+                                       error: function(xhr, status, error) {
+                                           console.error('AJAX 오류:', status, error);
+                                       }
+                                   });
+                               });
+						</script>
 					</div>
 				</div>
 			</div>
@@ -137,5 +245,13 @@
 
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	<style>
+	    .chartCanvas {
+	        max-height: 400px;
+	        max-width: 400px;
+	        width: 100%;
+	        height: 100%;
+	    }
+	</style>
 </body>
 </html>

@@ -23,13 +23,15 @@
     	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) = 'CLEAN' THEN 1 END) cleanRoom,
     	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) = 'DIRTY' THEN 1 END) dirtyRoom,
     	COUNT(*) totalRoom,
-    	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) = 'CLEAN' THEN 1 END) * 100.0 / COUNT(*) cleanRate
+    	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C002' AND cd = c.room_status) = 'CLEAN' THEN 1 END) * 100.0 / COUNT(*) cleanRate,
+    	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C003' AND cd = r.room_state) = 'ON' THEN 1 END) onRoom,
+    	COUNT(CASE WHEN (SELECT cd_nm FROM common_code WHERE crp_cd = 'C003' AND cd = r.room_state) = 'OFF' THEN 1 END) offRoom
 	FROM 
 	    cleaning c
-	JOIN 
+	INNER JOIN 
 	    room r ON c.room_no = r.room_no
 	WHERE 
-	    r.use_yn = 'Y'
+	    r.use_yn = 'Y'	    
 	</select>
 	
 	<!-- 분류번호: #8 - 객실 관리 페이지 : 객실 상태 초기화 -->
