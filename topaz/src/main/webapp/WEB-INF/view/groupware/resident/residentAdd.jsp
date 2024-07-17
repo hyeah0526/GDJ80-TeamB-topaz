@@ -42,20 +42,10 @@
       <div class="row justify-content-center">
         
 
-        <div class="col-xl-10">
-        
+        <div class="col-xl-12">
           <div class="card">
             <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered">
-
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">입주자 등록</button>
-                </li>
-
-              </ul>
-  
-            	<!-- 수정 -->  
+            	
                 <div class="tab-pane show profile-edit pt-3" id="profile-edit">
 					<form action="/topaz/groupware/resident/residentAdd" method="post" enctype="multipart/form-data">
                 		
@@ -137,8 +127,7 @@
 								    </div>
 								    
 									<div class="info-item mb-3">
-									    <span class="label">동, 호수</span>
-									    <span><input style="width: 150px; display: inline" class="form-control date-input" id = "roomType" name="roomType" type="text" ></span> 타입 
+									    <span><input style="width: 100px; display: inline" class="form-control date-input" id = "roomType" name="roomType" type="text" ></span> 타입 
 									    <span><input style="width: 150px; display: inline" class="form-control date-input" id = "roomDong" name="roomDong" type="text" ></span> 동 
 									    <span><input style="width: 150px; display: inline" class="form-control date-input" id = "roomHo" name="roomHo" type="text" ></span> 호
 									</div>
@@ -180,7 +169,6 @@
           </div>
 
         </div>
-      </div>
     </section>	
 
    </main><!-- End #main -->

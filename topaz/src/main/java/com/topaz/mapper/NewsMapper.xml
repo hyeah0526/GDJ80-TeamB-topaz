@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.NewsMapper">
+	<!-- 분류 번호 :  #23 - 알림마당 : 알림마당 전체 조회 -->
+	<select id="selectAllNews" resultType="map">
+		SELECT 
+			n.news_no newsNo, 
+			n.title, 
+			n.content, 
+			n.use_yn useYn,
+			f.file_no fileNo,
+			f.file_name fileName
+		FROM 
+			news_notice n
+		LEFT JOIN 
+			file_upload f
+		ON 
+			n.news_no = f.reference_no
+		WHERE 
+			n.use_yn = 'Y'
+		AND 
+			n.grade = '3'
+	</select>
+	
+	<!-- 분류 번호 :  #23 - 알림마당 : 알림마당 상세 보기 -->
+	<select id="selectNewsDetail" resultType="map">
+		SELECT 
+			n.news_no newsNo, 
+			n.title, 
+			n.content, 
+			(SELECT emp_name FROM employee WHERE emp_no = n.reg_id) regId, 
+			DATE_FORMAT(n.reg_time,'%Y-%m-%d') regTime, 
+			(SELECT emp_name FROM employee WHERE emp_no = n.mod_id) modId, 
+			DATE_FORMAT(n.mod_time,'%Y-%m-%d') modTime, 
+			n.use_yn useYn,
+			f.file_no fileNo,
+			f.file_name fileName
+		FROM 
+			news_notice n
+		LEFT JOIN 
+			file_upload f
+		ON 
+			n.news_no = f.reference_no
+		WHERE 
+			n.use_yn = 'Y'
+		AND 
+			n.grade = '3'
+		AND
+			n.news_no = #{newsNo}
+	</select>
+	
+	<!-- 분류 번호 :  #23 - 알림마당 : 알림마당 등록 -->
+	<insert id="insertNews" parameterType="com.topaz.dto.News">
+		
+		INSERT INTO news_notice(
+			news_no, title, content, 
+			grade, category, start_date, end_date, 
+			reg_time, mod_time, reg_id, mod_id, use_yn)
+		VALUES (
+			CURRENT_TIMESTAMP(5), 
+			#{title}, 
+			#{content}, 
+			'3', 
+			'2', 
+			NULL, 
+			NULL, 
+			NOW(), 
+			NOW(), 
+			'admin', 
+			'admin', 
+			'Y' 
+		);
+		<!-- 파일등록하기 위해서는 news_no가 있어야하기 때문에 저장 -->
+		<selectKey keyProperty="newsNo" resultType="String" order="AFTER">
+	        SELECT CAST(MAX(news_no) AS CHAR) FROM news_notice WHERE reg_id='admin' AND mod_id='admin' ORDER BY reg_time DESC LIMIT 1
+	    </selectKey>
+	</insert>
+	
+	<!-- 분류 번호 :  #23 - 알림마당 : 알림마당 파일 등록 -->
+	<insert id="insertNewsFile" parameterType="com.topaz.dto.UploadFile">
+		INSERT INTO file_upload(
+			file_no, reference_no, original_file_name
+			, file_name, file_size, file_type
+			, reg_time, mod_time, reg_id, mod_id, use_yn
+		)VALUES(
+			CURRENT_TIMESTAMP(5), #{referenceNo}, #{OriginalFileName}
+			, #{fileName}, #{fileSize}, #{fileType}
+			, NOW(), NOW(), 'admin', 'admin', #{useYN}
+		)
+	</insert>
+	
+</mapper>

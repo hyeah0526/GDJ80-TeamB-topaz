@@ -234,7 +234,7 @@
 		)
 	</insert>
 	
-    <!-- 분류 번호: #7 - 입주자 관리 페이지 : 입주자 파일등록 -->
+    <!-- 분류 번호: #7 - 입주자 관리 페이지 : 입주자 파일 수정 -->
     <update id="updateResidentFile" parameterType="com.topaz.dto.UploadFile">
 		UPDATE 
 			file_upload

@@ -4,18 +4,18 @@
 
 	<!-- 분류 번호 :  #8 - 객실 청소 관리 페이지 : 객실 용품 조회  --> 
 	<select id="selectAmenity" resultType="map">
-		SELECT
-			amenity_no amenityNo,
-			amenity_name amenityName,
-			amenity_stock amenityStock,
-			reg_time regTime,
-			mod_time modTime,
-			reg_id regId,
-			mod_id modId,
-			use_yn useYn
+			SELECT
+			a.amenity_no amenityNo,
+			a.amenity_name amenityName,
+			a.amenity_stock amenityStock,
+			a.reg_time regTime,
+			a.mod_time modTime,
+			(SELECT emp_name FROM employee WHERE emp_no = a.reg_id) regId,
+			(SELECT emp_name FROM employee WHERE emp_no = a.mod_id) modId,
+			a.use_yn useYn
 		FROM 
-			amenity 
-		WHERE use_yn = 'Y'
+			amenity a
+		WHERE a.use_yn = 'Y';
 	</select>
 	
 	<!-- 분류 번호 :  #8 - 객실 청소 관리 페이지 : 객실 용품 수정  --> 

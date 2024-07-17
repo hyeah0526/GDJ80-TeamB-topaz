@@ -202,14 +202,15 @@ public class GuestService {
 		file.setFileName(prefix + suffix);
 		
 		// file_upload테이블 insert
-		int insertBpoFile = guestMapper.insertResidentFile(file);
-		if(insertBpoFile != 1) {
+		int insertGstFile = guestMapper.insertResidentFile(file);
+		if(insertGstFile != 1) {
 			// 등록 실패시 예외 발생시키기
-			log.debug(Debug.PSJ + "insertBpoFile에서 RuntimeException 발생! " + Debug.END);
+			log.debug(Debug.PSJ + "insertGstFile에서 RuntimeException 발생! " + Debug.END);
 			throw new RuntimeException();
 		}
 		
-		
+		log.debug(Debug.PSJ + insertGstFile + Debug.END);
+
 		// 파일 upload폴더에 저장하기
 		File emptyFile = new File(System.getProperty("user.dir") 
 									+ "/src/main/resources/static/assets/img/guest/" 
