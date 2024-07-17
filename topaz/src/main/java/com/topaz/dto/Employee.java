@@ -20,6 +20,7 @@ public class Employee {
 	private String postNo;
 	private String address;
 	private String fileName;
+	private String signFile;
 	private String empHireDate;
 	private String regTime;
 	private String modTime;

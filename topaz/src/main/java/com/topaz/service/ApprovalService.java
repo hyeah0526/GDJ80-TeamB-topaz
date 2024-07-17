@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.topaz.dto.ApprovalSign;
+import com.topaz.dto.Employee;
 import com.topaz.dto.UploadFile;
 import com.topaz.mapper.ApprovalMapper;
 import com.topaz.utill.Debug;
@@ -42,30 +43,25 @@ public class ApprovalService {
         String filename = UUID.randomUUID().toString().replace("-", "") + ".png";
         log.debug(Debug.PHA + "setSign service filename--> " + filename + Debug.END);
         
-        // approvalSign DTO 값 넣어주기
-        ApprovalSign approvalSign = new ApprovalSign();
-        approvalSign.setEmpNo(empNo);
-        approvalSign.setRegId(empNo);
-        approvalSign.setModId(empNo);
-        approvalSign.setUseYn("Y");
-        approvalSign.setFileName(filename);
-        log.debug(Debug.PHA + "setSign service approvalSign--> " + approvalSign + Debug.END);
+        // Employee에 서명 파일 추가해주기
+        Employee emp = new Employee();
+        emp.setEmpNo(empNo);
+        emp.setSignFile(filename);
+        emp.setModId(empNo);
+        log.debug(Debug.PHA + "setSign service emp--> " + emp + Debug.END);
         
-        // approval_sign 테이블에 서명 저장 
-        int insertSign = approvalMapper.insertApprovalSign(approvalSign);
+        // Employee 테이블에 서명 저장 (Employee테이블 update)
+        int insertSign = approvalMapper.insertApprovalSign(emp);
         if(insertSign != 1) {
 			// 등록 실패시 예외 발생시키기
 			log.debug(Debug.PHA + "insertSign에서 RuntimeException 발생! " + Debug.END);
 			throw new RuntimeException();
 		}
         
-        // approval_sign에서 insert된 singNo가져오기
-        String signNo = approvalSign.getSignNo();
-        log.debug(Debug.PHA + "setSign service signNo--> " + signNo + Debug.END);
-        
         // 파일 업로드 DTO세팅
         UploadFile file = new UploadFile();
-        file.setReferenceNo(signNo);
+        file.setFileNo(filename);
+        file.setReferenceNo(filename);
         file.setOriginalFileName(filename);
         file.setFileName(filename);
         file.setFileSize(decodedBytes.length);

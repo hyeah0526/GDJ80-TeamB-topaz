@@ -3,31 +3,16 @@
 <mapper namespace="com.topaz.mapper.ApprovalMapper">
 
 	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 등록 -->
-	<insert id="insertApprovalSign" parameterType="com.topaz.dto.ApprovalSign">
-		INSERT INTO approval_sign(
-			  sign_no
-			, emp_no
-			, reg_id
-			, reg_time
-			, mod_id
-			, mod_time
-			, use_yn
-			, file_name
-		)VALUES(
-			  CURRENT_TIMESTAMP(5)
-			, #{empNo}
-			, #{regId}
-			, NOW()
-			, #{modId}
-			, NOW()
-			, #{useYn}
-			, #{fileName}
-		)
-		
-		<selectKey keyProperty="signNo" resultType="String" order="AFTER">
-           SELECT CAST(MAX(sign_no) AS CHAR) FROM approval_sign WHERE emp_no=#{empNo}
-       </selectKey>
-	</insert>
+	<update id="insertApprovalSign" parameterType="com.topaz.dto.Employee">
+		UPDATE
+			employee
+		SET
+			  sign_file = #{signFile}
+			, mod_id = #{modId}
+			, mod_time = NOW()
+		WHERE
+			emp_no = #{empNo}
+	</update>
 	
 	
 	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 등록 -->
@@ -45,7 +30,7 @@
 			, mod_time
 			, use_yn
 		)VALUES(
-			CURRENT_TIMESTAMP(5)
+			  #{fileNo}
 			, #{referenceNo}
 			, #{OriginalFileName}
 			, #{fileName}
