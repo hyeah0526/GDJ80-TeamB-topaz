@@ -19,4 +19,7 @@ public interface VolunteerMapper {
 	/* 분류번호: #9 - 봉사 일정 페이지 : 일정 수정하기 */
 	int modifyVolunteer(Volunteer volunteer);
 
+	/* 분류번호: #9 - 봉사 일정 페이지 : 일정 등록하기 */
+	int addVolunteer(Volunteer volunteer);
+
 }

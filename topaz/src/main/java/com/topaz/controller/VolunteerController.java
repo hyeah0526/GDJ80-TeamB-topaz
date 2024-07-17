@@ -39,7 +39,7 @@ public class VolunteerController {
 	 * 서비스명: getvolunteerDetail
 	 * 시작 날짜: 2024-07-17
 	 * 담당자: 한은혜
-	*/
+	 */
 	@GetMapping("/groupware/volunteer/volunteerDetail")
 	public String volunteerDetail(@RequestParam(name="volNo") String volNo, Model model) {
 		// 매개값 디버깅
@@ -57,13 +57,14 @@ public class VolunteerController {
 	 * 서비스명: modifyVolunteer
 	 * 시작 날짜: 2024-07-17
 	 * 담당자: 한은혜
-	*/
+	 */
 	@PostMapping("/groupware/volunteer/volunteerDetail")
 	public String modifyVolunteer(Volunteer volunteer, HttpServletRequest httpServletRequest) {
 		
-		//세션에서 ID 가져오기 -> 쿼리값 세팅
+		//세션값 가져오기 -> empNo 세팅
 		HttpSession session = httpServletRequest.getSession();
 		String empNo = (String)session.getAttribute("strId");
+		// 쿼리에서 필요한 값 세팅
 		volunteer.setModId(empNo);
 		log.debug(Debug.HEH + "controller modifyVolunteer volunteer : " + volunteer + Debug.END);
 		// 가져올 상세 정보
@@ -75,10 +76,34 @@ public class VolunteerController {
 		return "redirect:/groupware/volunteer/volunteerDetail?volNo="+volNo;
 	}
 	
+	/*
+	 * 서비스명: addVolunteer
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 한은혜
+	 */
+	@PostMapping("/groupware/volunteer/volunteerMain")
+	public String addVolunteer(HttpServletRequest httpServletRequest, Volunteer volunteer) {
+		
+		// 세션값 -> gstId 가져오기
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.HEH + "controller addVolunteer empNo : " + empNo + Debug.END);
+		// 쿼리에서 필요한 값 세팅
+		volunteer.setModId(empNo);
+		volunteer.setRegId(empNo);
+		log.debug(Debug.HEH + "controller addVolunteer volunteer : " + volunteer + Debug.END);
+				
+		volunteerService.addVolunteer(volunteer);
+		
+		return "redirect:/groupware/volunteer/volunteerMain";
+	}
 	
 	
-	
-	
+	/*
+	 * 서비스명: deleteVolunteer
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 한은혜
+	 */
 	
 	
 	

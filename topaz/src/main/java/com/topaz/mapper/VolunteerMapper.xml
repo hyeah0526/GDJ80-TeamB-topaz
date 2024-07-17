@@ -41,8 +41,36 @@
 			mod_id = #{modId},
 			mod_time = NOW()
 		WHERE vol_no = #{volNo};
-	
 	</update>
+	
+	<!-- 분류번호: #9 - 봉사 일정 페이지 : 일정 등록하기 -->
+	<insert id="addVolunteer">
+		INSERT INTO volunteer 
+			(vol_no, 
+			 vol_content, 
+			 vol_starttime, 
+			 vol_endtime, 
+			 vol_people, 
+			 reg_id, 
+			 reg_time, 
+			 mod_id, 
+			 mod_time, 
+			 use_yn)
+		VALUES
+			(CURRENT_TIMESTAMP(5), 
+			 #{volContent}, 
+			 #{volStartTime},
+			 #{volEndTime}, 
+			 #{volPeople},
+			 #{regId},
+			 NOW(), 
+			 #{modId},
+			 NOW(), 
+			 'Y'
+			 )
+	</insert>
+	
+	
 
 
 </mapper>

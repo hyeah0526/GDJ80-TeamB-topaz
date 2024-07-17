@@ -41,7 +41,7 @@ public class VolunteerService {
 	public Volunteer getVolunteerDetail(String volNo) {
 		// 매개값 디버깅
 		log.debug(Debug.HEH + "VolunteerService getVolunteerDetail volunteerNo : " + volNo + Debug.END);
-
+		// 봉사 일정 상세 
 		Volunteer volunteer = volunteerMapper.selectVolunteerOne(volNo);
 		log.debug(Debug.HEH + "VolunteerService getVolunteerDetail volunteer : " + volunteer + Debug.END);
 		
@@ -57,7 +57,7 @@ public class VolunteerService {
 	public int modifyVolunteer(Volunteer volunteer) {
 		// 매개값 디버깅
 		log.debug(Debug.HEH + "VolunteerService modifyVolunteer volunteer : " + volunteer + Debug.END);
-
+		// 봉사 일정 수정
 		int row = volunteerMapper.modifyVolunteer(volunteer);
 		
 		if(row != 1) {
@@ -66,6 +66,28 @@ public class VolunteerService {
 			throw new RuntimeException();
 		}
 		log.debug(Debug.HEH + "VolunteerService modifyVolunteer 수정 성공시 1 : " + row + Debug.END);
+		
+		return row;
+	}
+
+	
+	/*
+	 * 분류번호: #9 - 봉사 일정 페이지 : 봉사 일정 등록하기
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 한은혜 
+	 */
+	public int addVolunteer(Volunteer volunteer) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "VolunteerService addVolunteer volunteer : " + volunteer + Debug.END);
+		// 봉사 일정 등록 
+		int row = volunteerMapper.addVolunteer(volunteer);
+		
+		if(row != 1) {
+			// 등록 실패일 경우
+			log.debug(Debug.HEH + "VolunteerService addVolunteer 등록 실패시 0 : "+ row + Debug.END);
+			throw new RuntimeException();
+		}
+		log.debug(Debug.HEH + "VolunteerService addVolunteer 등록 성공시 1 : " + row + Debug.END);
 		
 		return row;
 	}

@@ -125,7 +125,7 @@
 				</div>
 				
 				<!-- 모달 일정 등록폼 -->
-				<form id="addVolunteerForm" action="${pageContext.request.contextPath}/groupware/volunteer/volunteerMain" method="post">
+				<form id="addVolunteer" action="${pageContext.request.contextPath}/groupware/volunteer/volunteerMain" method="post">
 					<div class="modal-body">
 						<div class="row mb-5">
 							<label for="volStartTime" class="col-sm-4 col-form-label">시작 시간</label>
@@ -153,8 +153,8 @@
 					
 					<!-- 모달 일정 취소/등록버튼 -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button id="addVolunteer_btn" type="submit" class="btn btn-primary">Save</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						<button id="addVolunteer_btn" type="submit" class="btn btn-primary">저장</button>
 					</div>
 				</form>
 			</div></div>
