@@ -386,6 +386,7 @@
 			 ROW_NUMBER() OVER (ORDER BY nt.send_time DESC) AS no,
 			 nt.note_id noteId,
 			 em.emp_name empName,
+			 em.emp_no empNo,
 			 cm.cd_nm empDept,
 			 nt.sender_id sendId, 
 			 nt.note_content noteContent, 

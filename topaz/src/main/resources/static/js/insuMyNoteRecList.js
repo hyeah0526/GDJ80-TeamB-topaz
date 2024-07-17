@@ -43,7 +43,7 @@ $(document).ready(function() {
                     
                     noteListContainer.append(`
                         <tr>
-                            <td><input type="checkbox" class="noteCheckbox" value="${note.noteId}" data-sender-name="${note.empName}" data-sender-dept="${note.empDept}"></td>
+                            <td><input type="checkbox" class="noteCheckbox" value="${note.noteId}" data-sender-name="${note.empName}" data-sender-dept="${note.empDept}" data-sender-no="${note.empNo}"></td>
                             <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.empName}(${note.empDept})</td>
                             <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.noteContent}</td>
                             <td  onclick="window.location.href='/topaz/groupware/myPage/myNoteRecDetail?noteId=${note.noteId}'" style="cursor:pointer;">${note.sendTime}</td>
@@ -140,15 +140,19 @@ $(document).ready(function() {
 	//답장 버튼 클릭 시 선택된 체크박스 값 가져오기
     $('#replyButton').click(function() {
         const selectedRecipients = [];
+        const selectedRecipientNos = [];
         $('.noteCheckbox:checked').each(function() {
             const senderName = $(this).data('sender-name');
             const senderDept = $(this).data('sender-dept');
+            const senderNo = $(this).data('sender-no');
             selectedRecipients.push(`[${senderDept} - ${senderName}]`);
+            selectedRecipientNos.push(senderNo);
         });
 
         if (selectedRecipients.length > 0) {
             const recipientParam = selectedRecipients.join(',');
-            window.location.href = `/topaz/groupware/myPage/myNoteRepAdd?recipients=${encodeURIComponent(recipientParam)}`;
+            const recipientNosParam = selectedRecipientNos.join(',');
+           	window.location.href = `/topaz/groupware/myPage/myNoteRepAdd?recipients=${encodeURIComponent(recipientParam)}&recipientNos=${encodeURIComponent(recipientNosParam)}`;
         } else {
             alert('답장할 쪽지를 선택해주세요.');
         }

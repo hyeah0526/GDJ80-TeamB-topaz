@@ -1,6 +1,10 @@
 $(document).ready(function() {
+	
+	 
     $('#sendButton').click(function() {
-        const noteContent = $('#noteContent').val();
+        let noteContent = $('#noteContent').val();
+        let senderId = $('#senderId').val();
+		let recipientNos = $('#recipientNos').val().split(',');
         let recipients = $('#recipient').val().split(',');
 
         // 각 수신자 이름을 정규식을 사용하여 추출
@@ -18,11 +22,19 @@ $(document).ready(function() {
                     noteContent: noteContent,
                     recipients: recipients
                 }),
-                success: function(response) {
-                    if (response.result > 0) {
-                        alert('답장이 전송되었습니다.');
-                        window.location.href = '/topaz/groupware/myPage/myNoteList';
-                    }
+                success: function() {
+	               alert('답장이 전송되었습니다.');
+	                
+	                if(webSocket){
+					
+						const msg = senderId + "," + recipientNos.join(',') + "," + noteContent;
+						console.log("msg : " + msg);
+						
+						webSocket.send(msg);
+					}
+	                
+	                //window.location.href = '/topaz/groupware/myPage/myNoteList';
+ 
                 }
             });
         } else {

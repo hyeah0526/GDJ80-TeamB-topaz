@@ -586,14 +586,14 @@ public class EmployeeRestController {
     public Map<String, Object> selectEmpNotRecCnt(HttpServletRequest req) {
 
         // 매개변수 디버깅
-        log.debug(Debug.KIS + "controller / insertRepNote / req : " + req);
+        log.debug(Debug.KIS + "controller / selectEmpNotRecCnt / req : " + req);
 
         // HttpServletRequest를 사용하여 세션 가져오기
         HttpSession session = req.getSession();
 
         // 세션에서 strId(직원아이디)라는 속성 가져오기
         String empNo = (String) session.getAttribute("strId");
-        log.debug(Debug.KIS + "controller / insertRepNote / empNo : " + empNo);
+        log.debug(Debug.KIS + "controller / selectEmpNotRecCnt / empNo : " + empNo);
 
         // empNo를 paramMap에 추가
         Map<String, Object> paramMap = new HashMap<>();

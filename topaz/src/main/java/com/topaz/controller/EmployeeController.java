@@ -412,7 +412,7 @@ public class EmployeeController {
 	}
 	
 	/*
-	 * 서비스명: myNoteRepAdd.jsp ( 쪽지 보내기 뷰) 
+	 * 서비스명: myNoteRepAdd.jsp ( 쪽지 답장 보내기 뷰) 
 	 * 시작 날짜: 2024-07-15
 	 * 담당자: 김인수
 	*/
@@ -432,7 +432,7 @@ public class EmployeeController {
 		//모든 직원과 부서 가져오기
 		List<Map<String, Object>> empList = employeeService.selectEmpAllInChart();
 
-	    Map<String, List<Map<String, Object>>> deptMap = new LinkedHashMap<>();
+	    Map<String, List<Map<String, Object>>> deptMap = new LinkedHashMap<>();	    
 	    
 	    for (Map<String, Object> emp : empList) {
 	        

@@ -47,6 +47,8 @@
                                 <label for="recipient">받는 사람</label>
                                   <textarea id="recipient" name="recipient" class="form-control" readonly rows="3" style="resize: none;"><c:choose><c:when test="${not empty param.recipients}">${param.recipients}</c:when><c:otherwise>[${param.empDept} - ${param.empName}]</c:otherwise></c:choose>
                                 </textarea>
+                                 <input type="hidden" id="senderId" value="${senderId}">
+                                 <input type="hidden" id="recipientNos" name="recipientNos" value="${param.recipientNos}">
                             </div>
                             
                             <div class="form-group" style="margin-top: 20px">
