@@ -62,18 +62,13 @@
 	        </a>
 	        <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
 	          <li>
-	            <a href="/topaz/groupware/approval/approvalTemplateList" class="nav-click sideAppr">
-	              <i class="bi bi-circle"></i><span>서식 목록</span>
+	            <a href="/topaz/groupware/approval/approvalAdd" class="nav-click sideAppr">
+	              <i class="bi bi-circle"></i><span>신규 결재</span>
 	            </a>
 	          </li>
 	          <li>
-	            <a href="/topaz/groupware/approval/approvalTemplateAdd" class="nav-click sideApprAdd">
-	              <i class="bi bi-circle"></i><span>서식 등록</span>
-	            </a>
-	          </li>
-	          <li>
-	            <a href="/topaz/groupware/approval/approvalList" class="nav-click sideApprList">
-	              <i class="bi bi-circle"></i><span>결재함</span>
+	            <a href="/topaz/groupware/approval/approvalList" class="nav-click sideApprAdd">
+	              <i class="bi bi-circle"></i><span>내 결재함</span>
 	            </a>
 	          </li>
 	        </ul>
@@ -169,11 +164,20 @@
 		</li><!-- End Charts Nav -->
 		
 		
-		<!-- ======= 카테고리 - 봉사 관리 ======= -->
+		<!-- ======= 카테고리 - 봉사 일정 관리 ======= -->
 		<li class="nav-item">
-	        <a class="nav-link sideVolunteer collapsed" id="sideVolunteer" href="/topaz/groupware/volunteer/volunteerList">
+	        <a class="nav-link sideVolunteer collapsed" id="sideVolunteerMain" href="/topaz/groupware/volunteer/volunteerMain">
+	          <i class="bi bi-calendar-heart"></i>
+	          <span>봉사 일정 관리</span>
+	        </a>
+		</li><!-- End Register Page Nav -->
+		
+		
+		<!-- ======= 카테고리 - 봉사 신청 관리 ======= -->
+		<li class="nav-item">
+	        <a class="nav-link sideVolunteer collapsed" id="sideVolunteerList" href="/topaz/groupware/volunteer/volunteerList">
 	          <i class="bi bi-balloon-heart"></i>
-	          <span>봉사 관리</span>
+	          <span>봉사 신청 관리</span>
 	        </a>
 		</li><!-- End Register Page Nav -->
       
@@ -213,9 +217,13 @@
 					// 입주자 관리 클릭시 collapsed 클래스 제거
 					 $('.sideResident').removeClass('collapsed');
 					 
-				}else if(chkId == 'sideVolunteer'){
-					// 객실 관리 클릭시 collapsed 클래스 제거
-					 $('.sideVolunteer').removeClass('collapsed');
+				}else if(chkId == 'sideVolunteerMain'){
+					// 봉사 일정 관리 클릭시 collapsed 클래스 제거
+					 $('.sideVolunteerMain').removeClass('collapsed');
+					 
+				}else if(chkId == 'sideVolunteerList'){
+					// 봉사 신청 관리 클릭시 collapsed 클래스 제거
+					 $('.sideVolunteerList').removeClass('collapsed');
 					 
 				}else{
 					// 그 외 카테고리 클릭 시 show, active 클래스 추가

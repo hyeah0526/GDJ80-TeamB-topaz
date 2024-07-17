@@ -83,7 +83,6 @@
       </nav>
 	</div><!-- Title 종료 -->
 	
-	<a href ="/topaz/groupware/approval/approvalSign">서명 등록</a>
 	<!-- section 시작 -->
     <section class="section">
     <div class="row">
