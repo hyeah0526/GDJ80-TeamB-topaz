@@ -104,7 +104,20 @@ public class VolunteerController {
 	 * 시작 날짜: 2024-07-17
 	 * 담당자: 한은혜
 	 */
-	
+	@GetMapping("/groupware/volunteer/deleteVolunteer")
+	public String deleteVolunteer(HttpServletRequest httpServletRequest, Volunteer volunteer) {
+		// 세션값 -> gstId 가져오기
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.HEH + "controller deleteVolunteer empNo : " + empNo + Debug.END);
+		// 쿼리에서 필요한 값 세팅
+		volunteer.setModId(empNo);
+		log.debug(Debug.HEH + "controller deleteVolunteer empNo : " + volunteer + Debug.END);
+
+		volunteerService.deleteVolunteer(volunteer);
+		
+		return "redirect:/groupware/volunteer/volunteerMain";
+	}
 	
 	
 	

@@ -16,7 +16,7 @@
 	</select>
 
 	<!-- 분류번호: #9 - 봉사 일정 페이지 : 일정 상세보기 -->
-	<select id="selectVolunteerOne">
+	<select id="selectVolunteerOne" parameterType="String" resultType="com.topaz.dto.Volunteer">
 		SELECT 
 			vol_no volNo, 
 			vol_content volContent, 
@@ -30,8 +30,8 @@
 		AND vol_no = #{volNo};
 	</select>
 
-	<!-- 분류번호: #9 - 봉사 일정 페이지 : 일정 상세보기 -->
-	<update id="modifyVolunteer">
+	<!-- 분류번호: #9 - 봉사 일정 페이지 : 일정 수정하기 -->
+	<update id="modifyVolunteer" parameterType="com.topaz.dto.Volunteer">
 		UPDATE volunteer 
 		SET 
 			vol_content = #{volContent}, 
@@ -44,7 +44,7 @@
 	</update>
 	
 	<!-- 분류번호: #9 - 봉사 일정 페이지 : 일정 등록하기 -->
-	<insert id="addVolunteer">
+	<insert id="addVolunteer" parameterType="com.topaz.dto.Volunteer">
 		INSERT INTO volunteer 
 			(vol_no, 
 			 vol_content, 
@@ -70,6 +70,15 @@
 			 )
 	</insert>
 	
+	<!-- 분류번호: #9 - 봉사 일정 페이지 : 일정 삭제하기 -->
+	<update id="deleteVolunteer" parameterType="com.topaz.dto.Volunteer">
+		UPDATE volunteer 
+		SET 
+			use_yn = 'N',
+			mod_time = NOW(),
+			mod_id  = #{modId}
+		WHERE vol_no = #{volNo};
+	</update>
 	
 
 

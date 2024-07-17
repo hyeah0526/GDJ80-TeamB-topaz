@@ -91,6 +91,29 @@ public class VolunteerService {
 		
 		return row;
 	}
+
+	
+	/*
+	 * 분류번호: #9 - 봉사 일정 페이지 : 봉사 일정 삭제하기
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 한은혜 
+	 */
+	public int deleteVolunteer(Volunteer volunteer) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "VolunteerService deleteVolunteer volunteer : " + volunteer + Debug.END);
+		// 봉사 일정 삭제
+		int row = volunteerMapper.deleteVolunteer(volunteer);
+
+		if(row != 1) {
+			// 삭제 실패일 경우
+			log.debug(Debug.HEH + "VolunteerService addVolunteer 삭제 실패시 0 : "+ row + Debug.END);
+			throw new RuntimeException();
+		}
+		log.debug(Debug.HEH + "VolunteerService addVolunteer 삭제 성공시 1 : " + row + Debug.END);
+		
+		return row;
+		
+	}
 	
 
 
