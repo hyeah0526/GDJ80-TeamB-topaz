@@ -72,6 +72,11 @@ public class CustomerController {
 		return "/customer/signUp";
 	}
 	
+	@GetMapping("/customer/gstPWModify")
+	public String gstPWModify() {
+		
+		return "/customer/gstPWModify";
+	}
 	
 	/*
 	 * 서비스명: signUp 
@@ -146,12 +151,35 @@ public class CustomerController {
 		return "/customer/gstMyInfo";
 	}
 	
+	
+	/*
+	 * 서비스명: modifyGst : 고객 정보 수정 폼
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 한은혜
+	 */
+	@GetMapping("/customer/gstMyInfoModify")
+	public String gstMyInfoModify(HttpServletRequest httpServletRequest, Model model) {
+		// 세션값 -> gstId 가져오기
+		HttpSession session = httpServletRequest.getSession();
+		log.debug(Debug.HEH + "controller gstMyInfoModify session : " + session + Debug.END);
+		String gstId = (String)session.getAttribute("gstId");
+		
+		// gstId로 상세 정보 가져오기	
+		Map<String, Object> gstDetail = customerService.selectGstOne(gstId);
+		log.debug(Debug.HEH + "controller gstMyInfoModify gstDetail : " + gstDetail + Debug.END);
+
+		model.addAttribute("gstDetail", gstDetail);
+				
+		return "/customer/gstMyInfoModify";
+	}
+	
+	
 	/*
 	 * 서비스명: modifyGst : 고객 정보 수정
 	 * 시작 날짜: 2024-07-16
 	 * 담당자: 한은혜
 	 */
-	@GetMapping("/customer/gstMyInfoModify")
+	@PostMapping("/customer/gstMyInfoModify")
 	public String gstMyInfoModify(HttpServletRequest httpServletRequest, GuestRequest guestRequest) {
 		// 세션값 -> gstId 가져오기
 		HttpSession session = httpServletRequest.getSession();
@@ -164,7 +192,7 @@ public class CustomerController {
 		
 		customerService.modifyGst(guestRequest);
 		
-		return "/customer/gstMyInfo";
+		return "redirect:/customer/gstMyInfo";
 	}
 	
 	

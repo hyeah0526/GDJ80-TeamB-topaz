@@ -99,14 +99,16 @@ public class CustomerService {
 		guest.setPostNo(guestRequest.getPostNo());
 		guest.setAddress(guestRequest.getAddress());
 		guest.setModId(guestRequest.getModId());
+		guest.setGstId(guestRequest.getGstId());
 		
 		int row = customerMapper.modifyGst(guest);
 		
 		if(row != 1) {
+			// 수정 실패일 경우
 			log.debug(Debug.HEH + "service modifyGst 수정 실패 : " + Debug.END);
 			throw new RuntimeException();
 		}
-		
+		log.debug(Debug.HEH + "service modifyGst 수정 성공시 1 : " + row + Debug.END);
 	}
 	
 	

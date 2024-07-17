@@ -38,3 +38,48 @@ $(document).ready(function(){
 	
 	
 });
+
+
+ // 입력값 유효성 검사
+    function validateForm() {
+        
+        let validation = true;
+        
+        const gstName = $("input[name='gstName']").val().trim();
+        const gstPhone = $("input[name='gstPhone']").val().trim();
+        const postNo = $("input[name='postNo']").val().trim();
+        const firstAddress = $("input[name='firstAddress']").val().trim();
+        const addressDetail = $("input[name='addressDetail']").val().trim();
+        
+        const namePattern = /^[a-zA-Z가-힣]{1,20}$/;
+        const phonePattern = /^\d{11}$/;
+        
+        // 이름
+        if(gstName === ""){
+            validation = false;
+            alert("이름을 입력해주세요.");
+            return false;
+        } else if(!namePattern.test(gstName)){
+            alert("이름은 한글로 2글자 이상 입력해야합니다.");
+            return false;
+        }
+        
+        // 전화번호
+        else if(gstPhone === ""){
+            validation = false;
+            alert("전화번호를 입력해주세요.");
+            return false;
+        } else if(!phonePattern.test(gstPhone)){
+            alert("전화번호를 확인해주세요.");
+            return false;
+        }
+        
+        // 주소
+        else if(postNo === "" || firstAddress === "" || addressDetail === ""){
+            validation = false;
+            alert("주소를 입력해주세요.");
+            return false;
+        }
+        
+        return validation;
+    };

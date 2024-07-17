@@ -95,18 +95,13 @@
                	ID
                 <input type="text" name="gstId" value="${gstDetail.gstId}" readonly style="background-color: #F6F6F6;" class="form-control">
               </div>
-              <div class="row justify-content-center">
-                <div class="col-md-8 form-group">
-                  PW
-				<input type="password" value="${gstDetail.gstPw}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstPw">				  <div class="id-message hide"></div>
-                </div>
-                <div class="col text-center mt-4">
-                	<button type="button" id="passwordModify_btn" onclick="window.location.href='${pageContext.request.contextPath}/customer/gstPWModify'">비밀번호 수정</button>
-                </div>
+              <div class="form-group mt-3">
+              	PW
+                <input type="password" value="${gstDetail.gstPw}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstPw">
               </div>
               <div class="form-group mt-3">
               	이름
-                <input type="text" value="${gstDetail.gstName}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstName">
+                <input type="text" value="${gstDetail.gstName}" class="form-control" name="gstName">
               </div>
               <div class="form-group mt-3">
               	Email
@@ -122,17 +117,26 @@
               </div>
               <div class="form-group mt-3">
              	연락처
-                <input type="text" value="${gstDetail.gstPhone}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstPhone">
+                <input type="text" value="${gstDetail.gstPhone}" class="form-control" name="gstPhone">
               </div>
               <div class="form-group mt-3">
               	고객 타입
                 <input type="text" value="${gstDetail.gstType}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstType">
               </div>
-              <div class="form-group mt-3">
-              	주소
-                <input type="text" value="${gstDetail.postNo}" readonly style="background-color: #F6F6F6; margin-bottom: 10px;" class="form-control" name="postNo">
-                <input type="text" value="${gstDetail.address}" readonly style="background-color: #F6F6F6;" class="form-control" name="address">
+              
+              <div class="row mt-3">
+                <div class="col-md-8 form-group">
+                  <input type="text" name="postNo" value="${gstDetail.postNo}" style="margin-bottom: 10px;" class="form-control" placeholder="우편번호">
+                </div>
+                <div class="col text-center"><button type="button" onclick="openPostcode('postNo','firstAddress')">주소찾기</button></div>
               </div>
+              <div class="form-group">
+                <input type="text" class="form-control" value="${gstDetail.address}" style="margin-bottom: 10px;" name="firstAddress" placeholder="주소">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="addressDetail" placeholder="상세주소">
+              </div>
+       		  <input type="hidden" id="address" name="address">
               
             <!-- Null 일 경우 안보이도록 처리 예정 -->
             <c:if test="${not empty gstDetail.roomNo}">
@@ -192,11 +196,8 @@
 			  </div>
 			</c:if>
               
-       		
-       
               <div class="row justify-content-center">
-              	<div class="col-md-6 mt-3 text-center"><button type="button" id="deleteGst_btn">탈퇴하기</button></div>
-              	<div class="col-md-6 mt-3 text-center"><button type="button" onclick="window.location.href='${pageContext.request.contextPath}/customer/gstMyInfoModify'">수정하기</button></div>
+              	<div class="col-md-6 mt-3 text-center"><button type="submit">수정완료</button></div>
               </div>
             </form>
             
@@ -207,29 +208,6 @@
       </div>
 
     </section><!-- 입력 폼 끝 -->   
-    
-    <!-- Modal : 탈퇴 확인 메세지 -->
-    <div class="modal fade" id="deleteCheck" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
-			<!-- 모달 탈퇴 확인 폼 -->
-			<form id="deleteCheck_form" action="${pageContext.request.contextPath}/customer/deleteGst" method="post">
-				<div class="modal-body">
-					<div class="row mb-5">
-						<div class="col mt-5 text-center">
-							<span>TOPAZ 회원을 탈퇴하시겠습니까? </span>
-						</div>
-					</div>
-				</div>
-				
-				<!-- 모달 탈퇴 취소/탈퇴버튼 -->
-				<div class="modal-footer justify-content-center">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-					<a><button id="deleteCheck_btn" type="submit" style="background-color: #34bf49; border-color: #34bf49;" class="btn btn-primary">탈퇴</button></a>
-				</div>
-			</form>
-		</div></div>
-	</div><!-- End Modal-->
-   
     
   </main>
 
@@ -251,6 +229,7 @@
   <script src="/topaz/assets/vendorGST/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="/topaz/assets/vendorGST/isotope-layout/isotope.pkgd.min.js"></script>
 
+  <script src="<c:url value='/js/post.js'/>"></script>
   <script src="<c:url value='/js/eunhyeGstMyInfo.js'/>"></script>
 
   <!-- Main JS File -->
