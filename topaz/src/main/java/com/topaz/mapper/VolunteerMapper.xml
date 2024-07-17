@@ -15,5 +15,34 @@
 		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y');
 	</select>
 
+	<!-- 분류번호: #9 - 봉사 일정 페이지 : 일정 상세보기 -->
+	<select id="selectVolunteerOne">
+		SELECT 
+			vol_no volNo, 
+			vol_content volContent, 
+			DATE_FORMAT(vol_starttime, '%Y-%m-%d %H:%i') volStartTime ,
+			DATE_FORMAT(vol_endtime, '%Y-%m-%d %H:%i') volEndTime , 
+			vol_people volPeople,
+			(SELECT emp_name FROM employee WHERE emp_no = v.reg_id) regId,
+			(SELECT emp_name FROM employee WHERE emp_no = v.mod_id) modId
+		FROM volunteer v
+		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		AND vol_no = #{volNo};
+	</select>
+
+	<!-- 분류번호: #9 - 봉사 일정 페이지 : 일정 상세보기 -->
+	<update id="modifyVolunteer">
+		UPDATE volunteer 
+		SET 
+			vol_content = #{volContent}, 
+			vol_starttime = #{volStartTime},
+			vol_endtime = #{volEndTime}, 
+			vol_people = #{volPeople},
+			mod_id = #{modId},
+			mod_time = NOW()
+		WHERE vol_no = #{volNo};
+	
+	</update>
+
 
 </mapper>

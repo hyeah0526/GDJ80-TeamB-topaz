@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.topaz.dto.Volunteer;
 import com.topaz.mapper.VolunteerMapper;
 import com.topaz.utill.Debug;
 
@@ -22,7 +23,7 @@ public class VolunteerService {
 	 * 분류번호: #9 - 봉사 일정 페이지 : 전체 리스트
 	 * 시작 날짜: 2024-07-17
 	 * 담당자: 한은혜 
-	*/
+	 */
 	public List<Map<String, Object>> getVolunteerList() {
 		// 봉사 일정 리스트 호출 
 		List<Map<String, Object>> volunteerList = new ArrayList<>();
@@ -32,4 +33,57 @@ public class VolunteerService {
 		return volunteerList;
 	}
 
+	/*
+	 * 분류번호: #9 - 봉사 일정 페이지 : 봉사 일정 상세보기
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 한은혜 
+	 */
+	public Volunteer getVolunteerDetail(String volNo) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "VolunteerService getVolunteerDetail volunteerNo : " + volNo + Debug.END);
+
+		Volunteer volunteer = volunteerMapper.selectVolunteerOne(volNo);
+		log.debug(Debug.HEH + "VolunteerService getVolunteerDetail volunteer : " + volunteer + Debug.END);
+		
+		return volunteer;
+	}
+
+	
+	/*
+	 * 분류번호: #9 - 봉사 일정 페이지 : 봉사 일정 수정하기
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 한은혜 
+	 */
+	public int modifyVolunteer(Volunteer volunteer) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "VolunteerService modifyVolunteer volunteer : " + volunteer + Debug.END);
+
+		int row = volunteerMapper.modifyVolunteer(volunteer);
+		
+		if(row != 1) {
+			// 수정 실패일 경우
+			log.debug(Debug.HEH + "VolunteerService modifyVolunteer 수정 실패시 0 : "+ row + Debug.END);
+			throw new RuntimeException();
+		}
+		log.debug(Debug.HEH + "VolunteerService modifyVolunteer 수정 성공시 1 : " + row + Debug.END);
+		
+		return row;
+	}
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

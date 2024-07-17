@@ -105,7 +105,7 @@ public class CustomerService {
 		
 		if(row != 1) {
 			// 수정 실패일 경우
-			log.debug(Debug.HEH + "service modifyGst 수정 실패 : " + Debug.END);
+			log.debug(Debug.HEH + "service modifyGst 수정 실패시 0 : "+ row + Debug.END);
 			throw new RuntimeException();
 		}
 		log.debug(Debug.HEH + "service modifyGst 수정 성공시 1 : " + row + Debug.END);
