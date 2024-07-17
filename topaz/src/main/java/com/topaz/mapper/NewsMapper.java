@@ -21,4 +21,10 @@ public interface NewsMapper {
 	
 	/* 분류 번호 :  #23 - 알림마당 : 알림마당 파일 등록 */
 	int insertNewsFile(UploadFile file);
+	
+	/* 분류 번호 :  #23 - 알림마당 : 알림마당 수정 */
+	int updateNews(News news);
+	
+	/* 분류 번호 :  #23 - 알림마당 : 알림마당 파일 등록 */
+	int updateNewsFile(UploadFile file);
 }

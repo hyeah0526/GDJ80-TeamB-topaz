@@ -73,7 +73,7 @@ public class NewsController {
 	*/
 	
 	@GetMapping("/customer/newsAdd")
-	public String insertNewsAdd() {
+	public String insertNews() {
 		
 		return "customer/newsAdd";
 	}
@@ -94,5 +94,46 @@ public class NewsController {
 		log.debug(Debug.PSJ + "newsAdd controller newsRq==> " + newsRq + Debug.END);
 
 		return "redirect:/customer/newsList";
+	}
+	
+	/*
+	 * 서비스명: updateNews
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 박수지
+	*/
+	
+	@GetMapping("/customer/newsModify")
+	public String updateNews(Model model, 
+							@RequestParam(name="newsNo") String newsNo) {
+		
+		log.debug(Debug.PSJ + "newsModify controller newsNo==> " + newsNo + Debug.END);
+		
+		// 알림마당 상세 조회
+		Map<String,Object> newsOne = newsService.getNewsOne(newsNo);
+		log.debug(Debug.PSJ + "newsModify controller newsOne==> " + newsOne + Debug.END);
+		
+		model.addAttribute("one",newsOne);
+		
+		return "customer/newsModify";
+	}
+	
+	/*
+	 * 서비스명: updateNews
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 박수지
+	*/
+	
+	@PostMapping("/customer/newsModify")
+	public String updateNews(NewsRequest newsRq,
+							@RequestParam(name="newsNo") String newsNo,
+							@RequestParam(name="oldFileName") String oldFileName) throws Exception {
+		
+		log.debug(Debug.PSJ + "newsModify controller newsRq==> " + newsRq + Debug.END);
+		log.debug(Debug.PSJ + "newsModify controller parameter==> " + newsNo,oldFileName + Debug.END);
+		
+		// 알림마당 수정
+		newsService.updateNews(newsRq, oldFileName);
+		
+		return "redirect:/customer/newsDetail?newsNo="+newsNo;
 	}
 }

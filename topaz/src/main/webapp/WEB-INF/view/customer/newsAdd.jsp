@@ -24,6 +24,7 @@
 
   <!-- Main CSS File -->
   <link href="/topaz/assets/css/main.css" rel="stylesheet">
+  
 </head>
 
 <body class="team-page">
@@ -78,25 +79,25 @@
     <!-- 입력 폼 -->
     <section id="contact" class="contact section">
 
-      <div class="col-xl-12">
-          <div class="card">
+      <div class="col-xl-6" style="margin: auto">
+          <div class="card" > 
             <div class="card-body pt-3">
             	
                 <div class="tab-pane show profile-edit pt-3" id="profile-edit">
 					<form action="/topaz/customer/newsAdd" method="post" enctype="multipart/form-data">
                 		
-						<div class="row">
-	                    	<div class="col-lg-6 col-md-6">
+						<div class="row" >
+	                    	<div class="col-lg-6 col-md-6" style="margin: auto" >
 	                    	
-	                          	<!-- 고객 선택 -->
+								<h3 class="info-item text-center">알림마당 등록</h3>								
 							    <div class="info-item mb-3">
 								    <span class="label">제목</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" id="title" name="title" type="text"></span>
+								    <span><input style="width: 350px; display: inline;" class="form-control" id="title" name="title" type="text"></span>
 								</div>
 
 								<div class="info-item mb-3">
 								    <span class="label">내용</span>
-								    <span><textarea style="width: 200px; display: inline;" class="form-control" rows="2" cols="40" name="content"></textarea></span>
+								    <span><textarea style=" display: inline;" class="form-control" rows="7" cols="40" name="content"></textarea></span>
 								</div>
 								
 	                    		<div class="info-item mb-3">
@@ -116,7 +117,7 @@
 								</div>
 							</div>
 				    		<div class="text-center">
-		                      <button type="submit" class="btn btn-primary">Save Changes</button>
+		                      <button type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">등록</button>
 		                    </div>
 				    	</div>
 					</form><!-- End Profile Edit Form -->      

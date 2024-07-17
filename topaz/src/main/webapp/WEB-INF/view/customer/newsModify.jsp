@@ -4,8 +4,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>알림마당 상세</title>
-
+  <title>알림마당 수정</title>
   <!-- Favicons -->
   <link href="/topaz/assets/img/TOPAZ_logo.png" rel="icon">
 
@@ -25,9 +24,10 @@
 
   <!-- Main CSS File -->
   <link href="/topaz/assets/css/main.css" rel="stylesheet">
+  
 </head>
 
-<body class="blog-details-page">
+<body class="team-page">
   <!-- Header -->
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
@@ -51,7 +51,7 @@
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li>
-          <li><a href="volunteerRqAdd" >봉사 신청</a></li>
+          <li><a href="volunteerRqAdd" class="active">봉사 신청</a></li>
           <li><a href="newsList">알림마당</a></li>
           <li><a href="gstLogin">로그인</a></li>
         </ul>
@@ -61,55 +61,67 @@
   </header><!-- Header 끝 -->
 
   <main class="main">
-	<!-- Page Title -->
-       <div class="page-title light-background">
-           <div class="container">
-               <h1>알림마당 상세</h1>
-               <nav class="breadcrumbs">
-                   <ol>
-                       <li><a href="gstMain">Home</a></li>
-                       <li><a href="newsList">알림마당</a></li>
-                       <li class="current">상세보기</li>
-                   </ol>
-               </nav>
-           </div>
-       </div>
-  		<!-- Page Title 끝 -->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <!-- Blog Details Section -->
-          <section id="blog-details" class="blog-details section">
-            <div class="container">
-            	<div>
-                  <a href="/topaz/customer/newsModify?newsNo=${newsOne.newsNo }" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 수정</a>
-                </div>
-                <br>
-				<article class="article" style="text-align: center; margin-auto" >
-	                <div class="content">
-		                <h2 class="title">${newsOne.title }</h2>
-		                <div class="post-img">
-		                <br>
-		                  <img src="/topaz/assets/img/guest/${newsOne.fileName }" alt="" class="img-fluid">
-		                </div>
-		                <p>
-		                  ${newsOne.content }
-		                </p>
-		                <p>
-		                 등록자/등록시간 <br>
-						 ${newsOne.regId }/${newsOne.regTime }
-		                </p>
-		                <p>
-		                 수정자/수정시간 <br>
-		                  ${newsOne.modId }/${newsOne.modTime }
-		                </p>
-	                </div><!-- End post content -->
-              	</article>
-            </div>
-          </section><!-- /Blog Details Section -->
-        </div>
+
+    <!-- Page Title -->
+    <div class="page-title light-background">
+      <div class="container">
+        <h1>알림마당 수정</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="gstMain">Home</a></li>
+            <li><a href="newsDetail?newsNo=${one.newsNo }">알림마당 상세</a></li>
+            <li class="current">알림마당 수정</li>
+          </ol>
+        </nav>
       </div>
-    </div>
+    </div><!-- Page Title 끝 -->
+
+    <!-- 입력 폼 -->
+    <section id="contact" class="contact section">
+
+      <div class="col-xl-6" style="margin: auto">
+          <div class="card" > 
+            <div class="card-body pt-3">
+            	
+                <div class="tab-pane show profile-edit pt-3" id="profile-edit">
+					<form action="/topaz/customer/newsModify" method="post" enctype="multipart/form-data">
+                		
+						<div class="row" >
+	                    	<div class="col-lg-6 col-md-6" style="margin: auto" >
+	                    	
+								<h3 class="info-item text-center">알림마당 수정</h3>								
+							    <div class="info-item mb-3">
+								    <span class="label">제목</span>
+								    <span><input style="width: 350px; display: inline;" class="form-control" id="title" name="title" type="text" value="${one.title }" ></span>
+								</div>
+
+								<div class="info-item mb-3">
+								    <span class="label">내용</span>
+								    <span><textarea style=" display: inline;" class="form-control" rows="7" cols="40" name="content">${one.content }</textarea></span>
+								</div>
+								
+	                    		<div class="info-item mb-3">
+								    <span class="label" >사진</span>
+								    <span><input class="form-control" type="hidden" id="formFile" name="oldFileName" value="${one.fileName }" ></span>
+								    <span><input class="form-control" type="file" id="formFile" name="uploadFile" ></span>
+								</div>
+								
+								<div class="info-item mb-3">
+								   	<span><input style="width: 200px; display: inline;" class="form-control" name="newsNo" type="hidden" value="${one.newsNo }" ></span>
+								</div>
+							</div>
+				    		<div class="text-center">
+		                      <button type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">수정</button>
+		                    </div>
+				    	</div>
+					</form><!-- End Profile Edit Form -->      
+	            </div>
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+    </section><!-- 입력 폼 끝 -->   
   </main>
 
   <!-- footer -->

@@ -71,7 +71,9 @@
             <div class="site-section slider-team-wrap">
                 <div class="container">
 	                <div>
-	                	<a href="/topaz/customer/newsAdd">알림마당 등록</a>
+	                	<div>
+	                      <a href="/topaz/customer/newsAdd" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 등록</a>
+	                    </div>
 	                </div>
 	                <hr>
                     <div class="slider-nav d-flex justify-content-end mb-3">
@@ -122,8 +124,6 @@
                                         <h3 class="">
                                             <a href="/topaz/customer/newsDetail?newsNo=${newsItem.newsNo }"><span class="">${newsItem.title}</span></a>
                                         </h3>
-                                        <span class="d-block position">${newsItem.date}</span>
-                                        <p>${newsItem.content}</p>
                                     </div>
                                 </div>
                             </c:forEach>

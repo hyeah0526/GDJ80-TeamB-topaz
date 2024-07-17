@@ -120,4 +120,83 @@ public class NewsService {
 			throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 insert명령도 전부 취소
 		}
 	}
+	
+	/* 
+	 * 분류 번호 :  #23 - 알림마당 : 알림마당 수정
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 박수지
+	*/
+	
+	public void updateNews(NewsRequest newsRq,
+							String oldFileName) {
+		log.debug(Debug.PSJ + "newsUpdate service newsRq ==>" + newsRq.toString() + Debug.END);
+		log.debug(Debug.PSJ + "newsUpdate service oldFileName ==>" + oldFileName + Debug.END);
+		
+		// 파일 있으면 false, 없으면 true
+		log.debug(Debug.PSJ + "newsUpdate Service 파일 체크--> " + newsRq.getUploadFile().isEmpty() + Debug.END);
+		
+		News news = new News();
+		news.setNewsNo(newsRq.getNewsNo());
+		news.setTitle(newsRq.getTitle());
+		news.setContent(newsRq.getContent());
+		news.setModTime(newsRq.getModTime());
+		
+		// update 실패시 예외처리
+		int updateNews = newsMapper.updateNews(news);
+		if(updateNews != 1) {
+			// 수정 실패시 예외 발생시키기
+			log.debug(Debug.PSJ + "updateNews 에러" + Debug.END);
+			throw new RuntimeException();
+		}
+		
+		// 새로운 파일 업로드시에만 update하기
+		if(newsRq.getUploadFile().isEmpty() == false) {
+			
+			MultipartFile mf = newsRq.getUploadFile();
+			// file_upload테이블 DTO에 값 저장
+			UploadFile file = new UploadFile();
+			file.setReferenceNo(newsRq.getNewsNo());
+			file.setOriginalFileName(mf.getOriginalFilename());
+			file.setFileType(mf.getContentType());
+			file.setFileSize(mf.getSize());
+			file.setModId(newsRq.getModId());
+			
+			// file uuid세팅
+			String prefix = UUID.randomUUID().toString().replace("-", ""); //랜덤 uuid 생성 / 하이픈(-)은 제거
+			int p = mf.getOriginalFilename().lastIndexOf("."); // 파일타입전(.의 위치)까지 길이 담기
+			String suffix = mf.getOriginalFilename().substring(p); //.의 위치부터 자른 후 담아주기
+			// 세팅한 uuid 담아주기
+			file.setFileName(prefix + suffix);
+			log.debug(Debug.PSJ + "신규 fileName확인 "+file.getFileName()+ Debug.END);
+			
+			// file_upload테이블 insert
+			int updateNewsFile = newsMapper.updateNewsFile(file);
+			if(updateNewsFile != 1) {
+				// 등록 실패시 예외 발생시키기
+				log.debug(Debug.PSJ + "updateNewsFile에서 오류 " + Debug.END);
+				throw new RuntimeException();
+			}
+			
+			// 파일 폴더에 저장하기
+			File emptyFile = new File(System.getProperty("user.dir") 
+					+ "/src/main/resources/static/assets/img/guest/" 
+					+ file.getFileName());
+			try {
+				// mf안에 있는 getinputStream을 가져와서 비어있는 emptyFile로 복사를 함 
+				mf.transferTo(emptyFile);
+				
+				// 기존 파일 삭제
+				String filePath = System.getProperty("user.dir") 
+									+ "/src/main/resources/static/assets/img/guest/" 
+									+ oldFileName;
+			    File fileDel = new File(filePath);
+			    fileDel.delete();
+			    
+			} catch (Exception e) {
+				e.printStackTrace(); // 예외나면 전부 취소
+				throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 update명령도 전부 취소
+			}
+		}
+	}
+	
 }

@@ -145,25 +145,20 @@
     <update id="updateResident" parameterType="com.topaz.dto.Guest">
     	UPDATE guest
 	    <set>
-	        <if test="gstPhone != null and gstPhone != ''">
-	            gst_phone = #{gstPhone},
+            gst_phone = #{gstPhone},
+            gst_email = #{gstEmail},
+            room_amenity = #{roomAmenity},
+            resident_note = #{residentNote},
+            contract_end = #{contractEnd},
+			<if test="protectorName != null and protectorName != ''">
+	        	protector_name = #{protectorName},
 	        </if>
-	        <if test="gstEmail != null and gstEmail != ''">
-	            gst_email = #{gstEmail},
-	        </if>
-	        <if test="roomAmenity != null and roomAmenity != ''">
-	            room_amenity = #{roomAmenity},
-	        </if>
-	        <if test="residentNote != null and residentNote != ''">
-	            resident_note = #{residentNote},
-	        </if>
-	        <if test="contractEnd != null and contractEnd != ''">
-	            contract_end = #{contractEnd},
-	        </if>
-
-	        protector_name = #{protectorName},
+	        <if test="protectorPhone != null and protectorPhone != ''">
 	        protector_phone = #{protectorPhone},
+	        </if>
+	        <if test="protectorRelation != null and protectorRelation != ''">
 	        protector_relation = #{protectorRelation},
+	        </if>
 	        mod_time = NOW(),
 	        mod_id = #{modId}
 	    </set>
