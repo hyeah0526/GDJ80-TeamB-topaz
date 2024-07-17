@@ -102,4 +102,17 @@ public interface EmpMapper {
 	/* 분류 번호 :  #2 - 쪽지 상세 보기 */
 	public Map<String, Object> selectNoteDetail(String noteId);
 	
+	/* 분류 번호 :  #2 - 나의 발신 쪽지 수 보기 */
+	public List<Map<String, Object>> selectMyNoteSendCnt(String empNo);
+	
+	/* 분류 번호 :  #2 - 나의 수신 쪽지 수 보기 */
+	public List<Map<String, Object>> selectMyNoteRecCnt(String empNo);
+	
+	/* 분류 번호 :  #4 - 부서별 발신 쪽지 수 보기 */
+	public List<Map<String, Object>> selectDeptNoteSendCnt(String empNo);
+	
+	/* 분류 번호 :  #4 - 부서별 수신 쪽지 수 보기 */
+	public List<Map<String, Object>> selectDeptNoteRecCnt(String empNo);
+	
+	
 }

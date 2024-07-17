@@ -595,4 +595,73 @@ public class EmployeeService {
 		
 		return resultMap;
 	} 
+	
+	
+	/*
+	 * 분류 번호 :  #2 - 나의 발신 쪽지 수 보기 
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 김인수
+	*/
+	public List<Map<String, Object>> selectMyNoteSendCnt(String empNo) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectMyNoteSendCnt / empNo : " + empNo);
+
+		//쪽지 상세 정보 가져오기
+		List<Map<String, Object>> noteCnt = empMapper.selectMyNoteSendCnt(empNo);
+		
+		return noteCnt;
+	} 
+	
+	/*
+	 * 분류 번호 :  #2 - 나의 수신 쪽지 수 보기 
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 김인수
+	*/
+	public List<Map<String, Object>> selectMyNoteRecCnt(String empNo) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectMyNoteRecCnt / empNo : " + empNo);
+
+		//쪽지 상세 정보 가져오기
+		List<Map<String, Object>> noteCnt = empMapper.selectMyNoteRecCnt(empNo);
+		
+		return noteCnt;
+	} 
+	
+	
+	/*
+	 * 분류 번호 :  #2 - 부서 발신 쪽지 수 보기 
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 김인수
+	*/
+	public List<Map<String, Object>> selectDeptNoteSendCnt(String empNo) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectDeptNoteSendCnt / empNo : " + empNo);
+
+		//쪽지 상세 정보 가져오기
+		List<Map<String, Object>> noteCnt = empMapper.selectDeptNoteSendCnt(empNo);
+		
+		return noteCnt;
+	} 
+	
+	/*
+	 * 분류 번호 :  #2 - 부서 수신 쪽지 수 보기 
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 김인수
+	*/
+	public List<Map<String, Object>> selectDeptNoteRecCnt(String empNo) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectDeptNoteRecCnt / empNo : " + empNo);
+
+		//쪽지 상세 정보 가져오기
+		List<Map<String, Object>> noteCnt = empMapper.selectDeptNoteRecCnt(empNo);
+		
+		return noteCnt;
+	} 
+	
+	
+	
 }

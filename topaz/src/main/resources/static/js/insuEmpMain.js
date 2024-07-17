@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	
+	//==== 공지사항 
+	
+	
+	// ========= 출석 체크 
     // 출퇴근 상태 체크
     $.ajax({
         url: '/topaz/groupware/checkWorkState',

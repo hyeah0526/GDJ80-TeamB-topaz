@@ -452,5 +452,25 @@ public class EmployeeController {
 		return "groupware/myPage/myNoteRepAdd";
 	}
 	
+	/*
+	 * 서비스명: myNoteStatistics.jsp ( 나의 쪽지 통계 뷰 )  
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myNoteStatistics")
+	public String myNoteStatistics() {
+		return "groupware/myPage/myNoteStatistics";
+	}
+	
+	/*
+	 * 서비스명: empNoteStatistics.jsp ( 부서 쪽지 통계 뷰 )  
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/empNoteStatistics")
+	public String empNoteStatistics() {
+		return "groupware/emp/empNoteStatistics";
+	}
+	
 }
 

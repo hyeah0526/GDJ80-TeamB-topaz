@@ -93,7 +93,7 @@ public class EchoHandler extends TextWebSocketHandler  {
                     WebSocketSession receiverSession = userSessionMap.get(receiver);
 
                     if (receiverSession != null && receiverSession.isOpen()) {
-                        TextMessage tmpMsg = new TextMessage(sender + "님이 쪽지를 보냈습니다: " + content);
+                        TextMessage tmpMsg = new TextMessage(sender + "님이 쪽지를 보냈습니다.");
 
                         // 디버깅
                         log.debug(Debug.KIS + " handleTextMessage / sending message to : " + receiver);

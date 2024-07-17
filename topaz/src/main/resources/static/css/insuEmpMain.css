@@ -24,7 +24,7 @@
     gap: 20px;
 }
 
-.btn {
+.btns {
     background-color: #007bff;
     border: none;
     color: white;
@@ -41,17 +41,17 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn:hover {
+.btns:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
 
-.btn:disabled {
+.btns:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
 }
 
-.btn.active {
+.btns.active {
     background-color: #808080;
 }
 
@@ -84,3 +84,65 @@
     color: #333;
     font-size: 16px;
 }
+
+
+
+/* 사내 일정 */
+
+.todayDiv{
+	margin: 3%;
+}
+
+.todayDiv button{
+	border: 0;
+	outline: 0;
+	background: none;
+}
+
+/* 캘린더 일정 간격 조정 */
+.fc-event {
+    margin-bottom: 3px; 
+}
+ 
+ /* 일요일 날짜 색상 */
+.fc-day-sun a {
+  color: red;
+  text-decoration: none;
+}
+
+/* 토요일 날짜 색상 */
+.fc-day-sat a {
+  color: blue;
+  text-decoration: none;
+}
+
+/* 평일 날짜 색상 */
+.fc-day-mon a, .fc-day-tue a, .fc-day-wed a,.fc-day-thu a, .fc-day-fri a {
+  color: #012970;
+  text-decoration: none;
+}
+
+/* 오늘의 일정 type별 색상 */
+.typeMeeting{
+	background-color: #81bbb2;
+}
+
+.typeInspection{
+	background-color: #ffbb57;
+}
+
+.typeFestival{
+	background-color: #af92e2;
+}
+
+.scheduleModalDiv{
+	margin-bottom: 15px;
+}
+
+/* 모달 내용등록 label */
+.modal-body label{
+	text-align: center;
+	font-weight: bolder;
+}
+
+

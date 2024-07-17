@@ -660,4 +660,132 @@
 			receive_time IS NULL;
 	</select>
 	
+	<!--  분류 번호 :  #2 - 나의 발신 쪽지 수 보기  -->
+	<select id="selectMyNoteSendCnt" parameterType="String" resultType="Map">
+		SELECT 'day' period, COUNT(*) sentCnt
+	    FROM note_history
+	    WHERE sender_id = #{empNo}
+	      AND DATE(send_time) = CURDATE()
+	    UNION ALL
+	    SELECT 'week' period, COUNT(*) sentCnt
+	    FROM note_history
+	    WHERE sender_id = #{empNo}
+	      AND DATE(send_time) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+	    UNION ALL
+	    SELECT 'month' period, COUNT(*) sentCnt
+	    FROM note_history
+	    WHERE sender_id = #{empNo}
+	      AND DATE(send_time) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH);
+	</select>
+	
+	<!--  분류 번호 :  #2 - 나의 수신 쪽지 수 보기  -->
+	<select id="selectMyNoteRecCnt" parameterType="String" resultType="Map">
+		SELECT 'day' period, COUNT(*) recCnt
+	    FROM note_history
+	    WHERE receiver_id = #{empNo}
+	      AND DATE(receive_time) = CURDATE()
+	    UNION ALL
+	    SELECT 'week' period, COUNT(*) recCnt
+	    FROM note_history
+	    WHERE receiver_id = #{empNo}
+	      AND DATE(receive_time) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+	    UNION ALL
+	    SELECT 'month' period, COUNT(*) recCnt
+	    FROM note_history
+	    WHERE receiver_id = #{empNo}
+	      AND DATE(receive_time) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH);
+	</select>
+
+	<!--  분류 번호 :  #4 - 부서별 발신 쪽지 수 보기  -->
+	<select id="selectDeptNoteSendCnt" parameterType="String" resultType="Map">
+		SELECT 
+		    cc.cd_nm AS dept,
+		    'day' AS period,
+		    COUNT(nh.note_id) AS sendCnt
+		FROM common_code cc
+		LEFT JOIN employee em 
+		ON  cc.cd = em.emp_dept
+		LEFT JOIN note_history nh 
+		ON em.emp_no = nh.sender_id
+		    AND DATE(nh.send_time) = CURDATE()
+		WHERE cc.crp_cd = 'E001'
+		GROUP BY cc.cd_nm
+		    
+		UNION ALL
+		
+		SELECT 
+		    cc.cd_nm AS dept,
+		    'week' AS period,
+		    COUNT(nh.note_id) AS sendCnt
+		FROM common_code cc
+		LEFT JOIN employee em 
+		ON cc.cd = em.emp_dept
+		LEFT JOIN note_history nh 
+		ON em.emp_no = nh.sender_id
+		    AND nh.send_time >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+		WHERE cc.crp_cd = 'E001'
+		GROUP BY cc.cd_nm
+		
+		UNION ALL
+		
+		SELECT 
+		    cc.cd_nm AS dept,
+		    'month' AS period,
+		    COUNT(nh.note_id) AS sendCnt
+		FROM common_code cc
+		LEFT JOIN employee em 
+		ON cc.cd = em.emp_dept
+		LEFT JOIN note_history nh 
+		ON em.emp_no = nh.sender_id
+		    AND nh.send_time >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+		WHERE cc.crp_cd = 'E001'
+		GROUP BY cc.cd_nm
+	</select>
+	
+	<!--  분류 번호 :  #4 - 부서별 수신 쪽지 수 보기  -->
+	<select id="selectDeptNoteRecCnt" parameterType="String" resultType="Map">
+		SELECT 
+		    cc.cd_nm AS dept,
+		    'day' AS period,
+		    COUNT(nh.note_id) AS receiveCnt
+		FROM common_code cc
+		LEFT JOIN employee em 
+		ON cc.cd = em.emp_dept
+		LEFT JOIN note_history nh 
+		ON em.emp_no = nh.receiver_id
+		    AND DATE(nh.receive_time) = CURDATE()
+		WHERE cc.crp_cd = 'E001'
+		GROUP BY cc.cd_nm
+		
+		UNION ALL
+		
+		SELECT 
+		    cc.cd_nm AS dept,
+		    'week' AS period,
+		    COUNT(nh.note_id) AS receiveCnt
+		FROM common_code cc
+		LEFT JOIN employee em 
+		ON cc.cd = em.emp_dept
+		LEFT JOIN note_history nh 
+		ON em.emp_no = nh.receiver_id
+		    AND nh.receive_time >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+		WHERE cc.crp_cd = 'E001'
+		GROUP BY cc.cd_nm
+		
+		UNION ALL
+		
+		SELECT 
+		    cc.cd_nm AS dept,
+		    'month' AS period,
+		    COUNT(nh.note_id) AS receiveCnt
+		FROM common_code cc
+		LEFT JOIN employee em 
+		ON cc.cd = em.emp_dept
+		LEFT JOIN note_history nh 
+		ON em.emp_no = nh.receiver_id
+		    AND nh.receive_time >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+		WHERE cc.crp_cd = 'E001'
+		GROUP BY cc.cd_nm;
+	</select>
+	
 </mapper>

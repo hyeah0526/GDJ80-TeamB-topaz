@@ -609,5 +609,72 @@ public class EmployeeRestController {
         return response;
     }
     
+    /*
+     * 서비스명: selectMyNoteSendCnt, selectMyNoteRecCnt ( 개인 발신, 수신 쪽지 수 보기 ) 
+     * 시작 날짜: 2024-07-17
+     * 담당자: 김인수
+     */
+    @GetMapping("/groupware/myPage/myNoteStaticRest")
+    public Map<String, Object> myNoteStatistics(HttpServletRequest req) {
+
+        // 매개변수 디버깅
+        log.debug(Debug.KIS + "controller / myNoteStaticRest / req : " + req);
+
+        // HttpServletRequest를 사용하여 세션 가져오기
+        HttpSession session = req.getSession();
+
+        // 세션에서 strId(직원아이디)라는 속성 가져오기
+        String empNo = (String) session.getAttribute("strId");
+        log.debug(Debug.KIS + "controller / myNoteStaticRest / empNo : " + empNo);
+
+
+        //발신 쪽지 수 로직 실행
+        List<Map<String, Object>> noteSendCnt = employeeService.selectMyNoteSendCnt(empNo);
+
+        //수신 쪽지 수 로직 실행
+        List<Map<String, Object>> noteRecCnt = employeeService.selectMyNoteRecCnt(empNo);
+        
+        // 응답 데이터
+        Map<String, Object> response = new HashMap<>();
+        response.put("noteSendCnt", noteSendCnt);
+        response.put("noteRecCnt", noteRecCnt);
+        response.put("empNo", empNo);
+        
+        return response;
+    }
     
+    
+    /*
+     * 서비스명: selectDeptNoteSendCnt, selectDeptNoteRecCnt ( 부서 발신, 수신 쪽지 수 보기 ) 
+     * 시작 날짜: 2024-07-17
+     * 담당자: 김인수
+     */
+    @GetMapping("/groupware/emp/empNoteStaticRest")
+    public Map<String, Object> empNoteStatistics(HttpServletRequest req) {
+
+        // 매개변수 디버깅
+        log.debug(Debug.KIS + "controller / empNoteStaticRest / req : " + req);
+
+        // HttpServletRequest를 사용하여 세션 가져오기
+        HttpSession session = req.getSession();
+
+        // 세션에서 strId(직원아이디)라는 속성 가져오기
+        String empNo = (String) session.getAttribute("strId");
+        log.debug(Debug.KIS + "controller / empNoteStaticRest / empNo : " + empNo);
+
+
+        //팀 발신 쪽지 수 로직 실행
+        List<Map<String, Object>> noteSendCnt = employeeService.selectDeptNoteSendCnt(empNo);
+
+        //팀 수신 쪽지 수 로직 실행
+        List<Map<String, Object>> noteRecCnt = employeeService.selectDeptNoteRecCnt(empNo);
+        
+        // 응답 데이터
+        Map<String, Object> response = new HashMap<>();
+        response.put("noteSendCnt", noteSendCnt);
+        response.put("noteRecCnt", noteRecCnt);
+        response.put("empNo", empNo);
+        
+        return response;
+    }
 }

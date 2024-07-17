@@ -14,6 +14,10 @@
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
     <link rel="stylesheet" href="/topaz/css/insuEmpMain.css"> <!-- CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
+    
+    <!-- Fullcalendar -->
+    <script src="/topaz/fullcalendar-6.1.14/dist/index.global.js"></script>
+	<script src="/topaz/fullcalendar-6.1.14/dist/index.global.min.js"></script>
 	
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
@@ -40,10 +44,11 @@
         
             <div class="colorDiv">
 
+				<!-- 출퇴근 버튼 -->
             	<div>
             		<div>
-		            	<button id="checkInBtn" class="btn" >출근</button>
-		                <button id="checkOutBtn" class="btn" disabled>퇴근</button>
+		            	<button id="checkInBtn" class="btns" >출근</button>
+		                <button id="checkOutBtn" class="btns" disabled>퇴근</button>
             		</div>
             		<div class="timeDiv">
             			 <div class="timeBox">
@@ -63,7 +68,7 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
-	<script src="<c:url value='/js/insuEmpMain.js'/>"></script>
+	<script src="/topaz/js/insuEmpMain.js"></script>
 </body>
 
 </html>
