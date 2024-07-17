@@ -84,6 +84,7 @@ public class CustomerController {
 		return "/customer/signUp";
 	}
 	
+	
 	/*
 	 * 서비스명: signUp 
 	 * 시작 날짜: 2024-07-10
@@ -157,8 +158,26 @@ public class CustomerController {
 		return "/customer/gstMyInfo";
 	}
 	
-	
-	
+	/*
+	 * 서비스명: modifyGst : 고객 정보 수정
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 한은혜
+	 */
+	@GetMapping("/customer/gstMyInfoModify")
+	public String gstMyInfoModify(HttpServletRequest httpServletRequest, GuestRequest guestRequest) {
+		// 세션값 -> gstId 가져오기
+		HttpSession session = httpServletRequest.getSession();
+		log.debug(Debug.HEH + "controller gstMyInfoModify session : " + session + Debug.END);
+		String gstId = (String)session.getAttribute("gstId");
+		// 쿼리에서 필요한 값 세팅
+		guestRequest.setModId(gstId);
+		guestRequest.setGstId(gstId);
+		log.debug(Debug.HEH + "controller gstMyInfoModify gstId : " + gstId + Debug.END);
+		
+		customerService.modifyGst(guestRequest);
+		
+		return "/customer/gstMyInfo";
+	}
 	
 	
 	

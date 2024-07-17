@@ -20,4 +20,7 @@ public interface CustomerMapper {
 	/* 분류 번호 :  #16 - 고객 회원 탈퇴 */
 	public int deleteGst(Guest guest);
 
+	/* 분류 번호 :  #16 - 고객 회원 정보 수정 */
+	public int modifyGst(Guest guest);
+
 }

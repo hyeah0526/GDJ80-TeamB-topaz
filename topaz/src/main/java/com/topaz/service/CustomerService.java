@@ -84,6 +84,32 @@ public class CustomerService {
 	}
 	
 	
+	/*
+	 * 분류 번호: #16 - 고객 내 정보 수정
+	 * 시작 날짜: 2024-07-16
+	 * 담당자: 한은혜
+	 */
+	public void modifyGst(GuestRequest guestRequest) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "service modifyGst guest : " + guestRequest + Debug.END);
+		
+		Guest guest = new Guest();
+		guest.setGstName(guestRequest.getGstName());
+		guest.setGstPhone(guestRequest.getGstPhone());
+		guest.setPostNo(guestRequest.getPostNo());
+		guest.setAddress(guestRequest.getAddress());
+		guest.setModId(guestRequest.getModId());
+		
+		int row = customerMapper.modifyGst(guest);
+		
+		if(row != 1) {
+			log.debug(Debug.HEH + "service modifyGst 수정 실패 : " + Debug.END);
+			throw new RuntimeException();
+		}
+		
+	}
+	
+	
 
 }
 
