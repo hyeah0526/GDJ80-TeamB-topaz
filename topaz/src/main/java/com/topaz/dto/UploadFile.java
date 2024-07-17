@@ -15,9 +15,9 @@ public class UploadFile {
 	private String fileName;
 	private long fileSize;
 	private String fileType;
-	private String regTime;
-	private String modTime;
 	private String regId;
+	private String regTime;
 	private String modId;
+	private String modTime;
 	private String useYN;
 }

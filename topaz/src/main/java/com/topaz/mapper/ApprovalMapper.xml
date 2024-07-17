@@ -2,155 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.ApprovalMapper">
 
-	<!-- 분류 번호: #11 - 직원 사인 조회 -->
-	<!-- 등록된 사인이 없을 시 사인 등록 화면 출력 -->
-	<select id="selectSign" parameterType="String" resultType="String">
-		SELECT 
-			*
-		FROM
-			approval_sign s
-			LEFT JOIN
-				file_upload fu
-			ON 
-				s.sign_no = fu.reference_no		
-		WHERE 
-			s.use_yn = 'Y' 
-			AND fu.use_yn = 'Y';
-			AND s.emp_no = #{empNo}	
-	</select>
-	
-	<!-- 분류 번호: #11 - 결재 템플릿의 개수 -->
-	<select id="approvalTemplateListCnt" resultType="int">
-		SELECT
-			COUNT(*) cnt
-		FROM
-			approval_template
-		WHERE
-			use_yn = 'Y'		
-	</select>
-	
-	
-	<!-- 분류 번호: #11 - 결재 내역의 개수 -->
-	<select id="approvalListCnt" resultType="int">
-		SELECT
-			COUNT(*) cnt
-		FROM
-			approval_history
-		WHERE
-			use_yn = 'Y'		
-	</select>
-	
-	
-	<!-- 분류 번호: #11 - 결재 내역 출력 -->
-	<select id="selectApprovalHistory" parameterType="map" resultType="map">
-		SELECT 
-			ah.approval_doc_no approvalDocNo, ah.approval_state approvalState,
-			DATE_FORMAT(ah.reg_time, '%Y-%m-%d %H:%i:%s') regTime, 
-			DATE_FORMAT(ah.mod_time , '%Y-%m-%d %H:%i:%s') modTime, 
-			DATE_FORMAT(ad.start_date, '%Y-%m-%d %H:%i:%s') startDate, 
-			DATE_FORMAT(ad.end_date, '%Y-%m-%d %H:%i:%s') endDate,
-			ah.use_yn useYn,
-			ad.template_no templateNo, ad.emp_no empNo, ad.doc_title docTitle,
-			emp.emp_name empName, emp.emp_dept empDept,
-			cc1.cd_nm categoryName,
-			cc2.cd_nm stateName
-		FROM 
-			approval_history ah
-			LEFT JOIN
-				approval_doc ad
-				ON ah.approval_doc_no = ad.approval_doc_no
-			LEFT JOIN
-				employee emp
-				ON ad.emp_no = emp.emp_no
-			LEFT JOIN
-				approval_template at
-				ON ah.approval_doc_no = at.template_no
-			LEFT JOIN
-				common_code cc1
-				ON at.template_category = cc1.cd
-				AND cc1.crp_cd = 'S002'
-			LEFT JOIN
-				common_code cc2
-				ON ad.approval_state = cc2.cd
-				AND cc2.crp_cd = 'S001'
-			<where>
-				ah.use_yn = 'Y'
-				<if test="searchWord != null || searchWord != ''">
-					AND (ad.doc_title LIKE CONCAT('%', #{searchWord}, '%')
-					OR emp.emp_name LIKE CONCAT('%', #{searchWord}, '%'))
-				</if>				
-			</where> 
-		ORDER BY 
-			regTime DESC
-		LIMIT #{currentPage}, #{rowPerPage}	
-	</select>
-	<!-- 분류 번호: #11 - 템플릿 등록 -->
-	<insert id="insertTemplate" parameterType="com.topaz.dto.ApprovalTemplate">
-		INSERT INTO approval_template(
-			template_no, template_category, template_content, reg_id, reg_time, mod_id, mod_time, use_yn
-		) VALUES (
-			CURRENT_TIMESTAMP(5),
-			#{templateCategory},
-			#{templateContent},
-			'I9jk0l1mn',
-			NOW(),
-			'I9jk0l1mn',
-			NOW(),
-			'Y'
-		);	
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 등록 -->
+	<insert id="insertApprovalSign" parameterType="com.topaz.dto.ApprovalSign">
+		INSERT INTO approval_sign(
+			  sign_no
+			, emp_no
+			, reg_id
+			, reg_time
+			, mod_id
+			, mod_time
+			, use_yn
+			, file_name
+		)VALUES(
+			  CURRENT_TIMESTAMP(5)
+			, #{empNo}
+			, #{regId}
+			, NOW()
+			, #{modId}
+			, NOW()
+			, #{useYn}
+			, #{fileName}
+		)
+		
+		<selectKey keyProperty="signNo" resultType="String" order="AFTER">
+           SELECT CAST(MAX(sign_no) AS CHAR) FROM approval_sign WHERE emp_no=#{empNo}
+       </selectKey>
 	</insert>
 	
-	<!-- 분류 번호: #11 - 템플릿 상세 -->
-	<select id="selectTemplateDetail" parameterType="map" resultType="map">
-		SELECT 
-			t.template_no templateNo,
-			t.template_content templateContent,
-			t.reg_id regId,
-			t.reg_time regTime,
-			t.mod_id modId,
-			t.mod_time modTime,
-			t.use_yn useYn,
-			t.template_category category,
-			c.cd_nm cdNm
-		FROM 
-			approval_template t
-			LEFT JOIN 
-				common_code c
-			ON t.template_category = c.cd
-				AND c.use_yn = 'Y'
-				AND c.crp_cd = 'S002'
-			WHERE 
-				t.template_no = #{templateNo}
-				AND
-				t.use_yn = 'Y'
-	</select>
-
-	<!-- 분류 번호: #11 - 템플릿 리스트 -->
-	<select id="selectTemplateList" parameterType="map" resultType="map">
-		SELECT 
-			t.template_no templateNo,
-
-			t.reg_id regId,
-			t.reg_time regTime,
-			t.mod_id modId,
-			t.mod_time modTime,
-			t.use_yn useYn,
-			t.template_category category,
-			c.cd_nm cdNm, e.emp_name empName
-		FROM 
-			approval_template t
-			LEFT JOIN
-				employee e
-			ON t.reg_id = e.emp_no	
-			LEFT JOIN 
-				common_code c
-			ON t.template_category = c.cd
-				AND c.use_yn = 'Y'
-				AND c.crp_cd = 'S002'
-			WHERE 
-				t.use_yn = 'Y'
-			
-		ORDER BY t.template_no DESC
-		LIMIT #{currentPage}, #{rowPerPage}; 
-	</select>
+	
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 등록 -->
+	<insert id="insertApprovalSignFile" parameterType="com.topaz.dto.UploadFile">
+		INSERT INTO file_upload(
+			  file_no
+			, reference_no
+			, original_file_name
+			, file_name
+			, file_size
+			, file_type
+			, reg_id
+			, reg_time
+			, mod_id
+			, mod_time
+			, use_yn
+		)VALUES(
+			CURRENT_TIMESTAMP(5)
+			, #{referenceNo}
+			, #{OriginalFileName}
+			, #{fileName}
+			, #{fileSize}
+			, #{fileType}
+			, #{regId}
+			, NOW()
+			, #{modId}
+			, NOW()
+			, #{useYN}
+		)
+	</insert>
+	
+	
 </mapper>
