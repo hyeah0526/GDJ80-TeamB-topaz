@@ -60,18 +60,6 @@ public class CustomerController {
 		return "/customer/infoRegidentA";
 	}
 
-	@GetMapping("/customer/newsDetail")
-	public String newDetail() {
-		
-		return "/customer/newsDetail";
-	}
-
-	@GetMapping("/customer/newsList")
-	public String newsList() {
-		
-		return "/customer/newsList";
-	}
-
 	@GetMapping("/customer/volunteerRqAdd")
 	public String volunteerRqAdd() {
 		
