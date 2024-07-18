@@ -83,6 +83,7 @@
             <div class="container">
             	<div>
                   <a href="/topaz/customer/newsModify?newsNo=${newsOne.newsNo }" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 수정</a>
+                  <a href="/topaz/customer/newsDelete?newsNo=${newsOne.newsNo }&fileName=${newsOne.fileName}" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 삭제</a>
                 </div>
                 <br>
 				<article class="article" style="text-align: center; margin-auto" >

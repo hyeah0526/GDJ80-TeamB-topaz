@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.topaz.dto.News;
 import com.topaz.dto.NewsRequest;
+import com.topaz.dto.UploadFile;
 import com.topaz.mapper.NewsMapper;
 import com.topaz.service.NewsService;
 import com.topaz.utill.Debug;
@@ -136,4 +137,23 @@ public class NewsController {
 		
 		return "redirect:/customer/newsDetail?newsNo="+newsNo;
 	}
+	
+	/*
+	 * 서비스명: deleteNews
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 박수지
+	*/
+	
+	@GetMapping("/customer/newsDelete")
+	public String deleteNews(@RequestParam(name="newsNo") String newsNo,
+							UploadFile file,
+							@RequestParam(name="fileName") String fileName) {
+		
+		log.debug(Debug.PSJ + "newsDelete controller newsNo==> " + newsNo, fileName + Debug.END);
+		// 알림마당 Y-> N
+		newsService.deleteNews(newsNo, fileName);
+		return "redirect:/customer/newsList";
+
+	}
+	
 }

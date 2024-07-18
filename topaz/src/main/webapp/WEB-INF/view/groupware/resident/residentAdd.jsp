@@ -114,7 +114,7 @@
 									</div>
 									    <!-- 객실 선택 -->
 								    <div class="info-item mb-3">
-								    	<span class="label">객실, 타입</span>
+								    	<span class="label">객실</span>
 								        <select name="roomNo" class="form-control" style="width: 200px; display: inline;" onchange="updateRoom()">
 								            <c:forEach items="${room}" var="c">
 								                <option value="${c.roomNo}" data-type="${c.roomType }"
@@ -126,10 +126,16 @@
 								        </select>
 								    </div>
 								    
-									<div class="info-item mb-3">
-									    <span><input style="width: 100px; display: inline" class="form-control date-input" id = "roomType" name="roomType" type="text" ></span> 타입 
-									    <span><input style="width: 150px; display: inline" class="form-control date-input" id = "roomDong" name="roomDong" type="text" ></span> 동 
-									    <span><input style="width: 150px; display: inline" class="form-control date-input" id = "roomHo" name="roomHo" type="text" ></span> 호
+									<div class="info-item mb-3 align-row">
+										<span class="label"></span>
+									    <input style="width: 100px; display: inline; text-align: right;" class="form-control date-input" id="roomType" name="roomType" type="text" >
+									    <span class="label">타입</span>
+									    
+									    <input style="width: 100px; display: inline; text-align: right;" class="form-control date-input" id="roomDong" name="roomDong" type="text" >
+									    <span class="label">동</span>
+									    
+									    <input style="width: 100px; display: inline; text-align: right;" class="form-control date-input" id="roomHo" name="roomHo" type="text" >
+									    <span class="label">호</span>
 									</div>
 									
 									<div class="info-item mb-3">

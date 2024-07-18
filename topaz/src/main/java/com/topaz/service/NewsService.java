@@ -199,4 +199,40 @@ public class NewsService {
 		}
 	}
 	
+	/* 
+	 * 분류 번호 :  #23 - 알림마당 : 알림마당 삭제
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 박수지
+	*/
+	
+	public void deleteNews(String newsNo, String fileName) {
+		
+		log.debug(Debug.PSJ + "deleteNews service newsNo "+ newsNo + Debug.END);
+		log.debug(Debug.PSJ + "deleteNews service fileName "+ fileName + Debug.END);
+		
+		// 알림마당 삭제 
+		int deleteNews = newsMapper.deleteNews(newsNo);
+		log.debug(Debug.PSJ + "deleteNews service deleteNews "+deleteNews+ Debug.END);
+		
+		// file_upload테이블 DTO에 값 저장
+		UploadFile file = new UploadFile();
+		file.setReferenceNo(newsNo);
+		
+		// 알림마당 파일 삭제
+		int deleteNewsFile = newsMapper.deleteNewsFile(file);
+		log.debug(Debug.PSJ + "deleteNews service deleteNewsFile "+deleteNewsFile+ Debug.END);
+
+		try {
+			// 기존 파일 삭제
+			String filePath = System.getProperty("user.dir") 
+								+ "/src/main/resources/static/assets/img/guest/" 
+								+ fileName;
+		    File fileDel = new File(filePath);
+		    fileDel.delete();
+		    
+		} catch (Exception e) {
+			e.printStackTrace(); // 예외나면 전부 취소
+			throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 update명령도 전부 취소
+		}
+	}
 }

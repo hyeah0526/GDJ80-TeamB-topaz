@@ -116,5 +116,27 @@
 		
 		WHERE 
 			reference_no = #{referenceNo}
+		AND 
+			use_yn = 'Y'
+	</update>
+	
+	<!-- 분류 번호 :  #23 - 알림마당 : 알림마당 삭제 -->
+	<update id="deleteNews" parameterType="com.topaz.dto.News">
+		UPDATE
+			news_notice
+		SET
+			use_yn = 'N'
+		WHERE 
+			news_no = #{newsNo}
+	</update>
+	
+	<!-- 분류 번호 :  #23 - 알림마당 : 알림마당 파일 삭제 -->
+	<update id="deleteNewsFile" parameterType="com.topaz.dto.UploadFile">
+		UPDATE 
+			file_upload
+		SET 
+			use_yn = 'N'
+		WHERE 
+			reference_no = #{referenceNo}
 	</update>
 </mapper>

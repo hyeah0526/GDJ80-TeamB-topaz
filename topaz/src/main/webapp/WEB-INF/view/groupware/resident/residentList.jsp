@@ -46,48 +46,33 @@
  	<div class="col-lg-12">
 		<div class="card">
 			<div class="card-body">
-		    	<h5 class="card-title"></h5>
+		    	<h5 class="card-title">
+		    		<!-- 등록 버튼 -->
+	      			<a href="/topaz/groupware/resident/residentAdd" class="ml-2 btn btn-primary" title="Add New">입주자 등록</a>
+		    	</h5>
 		    	<div class="container">
-				    <div class="row mb-3">
-				        <div class="col-md-1">
+				    <div class="row mb-3 align-items-center">
+				        <div class="col-md-3 form-group">
 				            <label for="dong" class="form-label">동</label>
-				        </div>
-				        <div class="col-md-2">
 				            <select id="dong" class="form-select" aria-label="Select dong">
 								<option value = "">동을 선택하세요 </option>
 				            </select>
 				        </div>
-				        <div class="col-md-1">
+				        <div class="col-md-3 form-group">
 				            <label for="type" class="form-label">타입</label>
-				        </div>
-				        <div class="col-md-2">
-				            <select id="type" class="form-select" aria-label="Select ho number">
+				           	<select id="type" class="form-select" aria-label="Select ho number">
 								<option value ="">타입을 선택하세요</option>
 				            </select>
 				        </div>
-				        <div class="col-md-1">
+				        <div class="col-md-3 form-group">
 				            <label for="ho" class="form-label">호수</label>
-				        </div>
-				        <div class="col-md-2">
 				            <select id="ho" class="form-select" aria-label="Select second ho number">
 				                <option value ="">호수를 선택하세요</option>
 				            </select>
 				        </div>
-				    </div>
+					</div>
+						
 				</div>
-
-	<div class="search-container">
-	  <div class="search-bar">
-	    <form id="searchForm" class="search-form d-flex align-items-center">
-	      <input type="text" id="searchWord" name="searchWord" placeholder="Search..." title="Enter search keyword">
-	      <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-	      
-	      <!-- 등록 버튼 -->
-	      <a href="/topaz/groupware/resident/residentAdd" class="ml-2 btn btn-primary" title="Add New">입주자 등록</a>
-	    </form>
-	  </div>
-	</div>
-
 	<br>
     <!-- Table with stripped rows -->
     <table class="table table-hover">
@@ -102,6 +87,13 @@
 	
 		</tbody>
 	</table>
+	<div class="search-bar col-md-3 form-group" style="margin: auto">
+	  	<form id="searchForm" class="search-form d-flex align-items-center">
+	    	<input type="text" class=" form-control" id="searchWord" name="searchWord" placeholder="Search..." title="Enter search keyword">
+	    	<button type="submit" title="Search" class="btn btn-outline-secondary ml-2"><i class="bi bi-search"></i></button>
+	  	</form>
+	</div>
+	<br>
 	<!-- End Table with stripped rows -->
 	<nav aria-label="Page navigation example">
 	  <ul class="pagination justify-content-center" id="pagination" >
@@ -219,9 +211,6 @@
 		        var pagination = $('.pagination');
 		        pagination.empty();
 		        
-		        // 처음 버튼
-		        pagination.append('<li class="page-item ' + (currentPage === 1 ? 'disabled' : '') + '"><a class="page-link" data-page="' + 1 + '" href="#">&laquo;</a></li>');
-
 		        var startPage = Math.max(currentPage - 2, 1);
 		        var endPage = Math.min(currentPage + 2, totalPages);
 		        
