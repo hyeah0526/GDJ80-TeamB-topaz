@@ -3,6 +3,7 @@ package com.topaz.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Base64;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class ApprovalService {
 	
 	
 	/*
-	 * 분류 번호: #11 - 결재 서명 등록
+	 * 분류 번호: #11 - 신규 결재 :: 결재 서명 등록
 	 * 시작 날짜: 2024-07-17
 	 * 담당자: 박혜아
 	*/
@@ -69,6 +70,7 @@ public class ApprovalService {
         file.setRegId(empNo);
         file.setModId(empNo);
         file.setUseYN("Y");
+        log.debug(Debug.PHA + "setSign service file--> " + file + Debug.END);
         
         // file_upload테이블에 저장
         int insertFile = approvalMapper.insertApprovalSignFile(file);
@@ -80,6 +82,7 @@ public class ApprovalService {
 		
         // 파일 폴더에 저장
         File emptyFile = new File(System.getProperty("user.dir") 
+						        	//+"/src/main/webapp/WEB-INF/view/groupware/approval/"
 									+ "/src/main/resources/static/assets/img/approvalSign/" 
 									+ filename);
         
@@ -88,6 +91,7 @@ public class ApprovalService {
         	FileOutputStream fileOutputStream = new FileOutputStream(emptyFile);
             fileOutputStream.write(decodedBytes); // 디코딩된 이미지 데이터를 파일에 기록합니다.
             fileOutputStream.close();
+            log.debug(Debug.PHA + "emptyFile 파일 저장 성공 " + Debug.END);
 		} catch (Exception e) {
 			log.debug(Debug.PHA + "emptyFile 파일저장에서 Exception 발생! " + Debug.END);
 			e.printStackTrace(); // 예외나면 전부 취소
@@ -98,5 +102,64 @@ public class ApprovalService {
 	}
 	
 	
+
+	/*
+	 * 분류 번호: #11 - 신규 결재 :: 결재 서명 여부 가져오기
+	 * 시작 날짜: 2024-07-18
+	 * 담당자: 박혜아
+	*/
+	public Map<String, Object> getEmpSign(String empNo){
+		
+		log.debug(Debug.PHA + "getEmpSign service empNo--> " + empNo + Debug.END);
+		
+		Map<String, Object> map = approvalMapper.selectEmpSign(empNo);
+		
+		return map;
+	}
+	
+	
+	/*
+	 * 분류 번호: #11 - 신규 결재 :: 결재 서명 수정하기
+	 * 시작 날짜: 2024-07-18
+	 * 담당자: 박혜아
+	*/
+	public int modSign(String oldSignFile, String signModImg, String empNo) throws Exception {
+		
+		log.debug(Debug.PHA + "modSign service oldSignFile--> " + oldSignFile + Debug.END);
+		log.debug(Debug.PHA + "modSign service signModImg--> " + signModImg + Debug.END);
+		log.debug(Debug.PHA + "modSign service empNo--> " +empNo + Debug.END);
+		
+		// URL데이터 형식으로 가져왔으므로 Base64 디코딩 해주기
+        String[] parts = signModImg.split(","); // 데이터 부분과 MIME 타입 부분을 나눠주기 
+        String base64Data = parts[1]; // 데이터 URL에서 base64 부분만 추출
+        byte[] decodedBytes = Base64.getDecoder().decode(base64Data); // 디코딩하여 바이트 배열로 변환
+        
+        // 수정파일이름에 원래 기존 파일이름으로 세팅해주기
+        String modFileName = oldSignFile;
+        log.debug(Debug.PHA + "modSign service modFileName--> " + modFileName + Debug.END);
+        
+        // 파일 폴더에 저장
+        File emptyModFile = new File(System.getProperty("user.dir") 
+        							//+ "/src/main/webapp/WEB-INF/view/approval/"
+									+ "/src/main/resources/static/assets/img/approvalSign/" 
+									+ modFileName);
+        
+        // file_upload,Employee테이블 수정시간 변경해주기
+        int updateRow = approvalMapper.updateApprovalSign(empNo);
+        
+        // 파일로 덮어쓰기
+        try {
+        	FileOutputStream fileOutputStream = new FileOutputStream(emptyModFile);
+            fileOutputStream.write(decodedBytes); // 디코딩된 이미지 데이터를 파일에 기록합니다.
+            fileOutputStream.close();
+            log.debug(Debug.PHA + "emptyModFile 파일 저장 성공 " + Debug.END);
+		} catch (Exception e) {
+			log.debug(Debug.PHA + "emptyModFile 파일저장에서 Exception 발생! " + Debug.END);
+			e.printStackTrace(); // 예외나면 전부 취소
+			throw new RuntimeException(); 
+		}
+        
+		return updateRow;
+	}
 	
 }

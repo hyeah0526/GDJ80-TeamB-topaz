@@ -34,11 +34,21 @@
     <section class="section">
 	    <div class="col-lg-12">
 	    	<div class="card"><div class="card-body">
-				<!-- 서명 등록 -->
-				<h6 class="card-title">
-					<button type="button" id="approvalSignAddBtn" class="btn btn-primary">서명등록</button>
-				</h6>
-				
+	    		<!-- 서명 여부 조회(signFile/empGrade/empDept/empName/empNo) -->
+	    		<c:set var="s" value="${empSign}"></c:set>
+				<!-- 서명이 없을 경우 신규 등록 버튼 -->
+				<c:if test="${s.signFile eq null}">
+					<h6 class="card-title">
+						<button type="button" id="approvalSignAddBtn" class="btn btn-primary">서명등록</button>
+					</h6>
+				</c:if>
+				<!-- 서명이 있을 경우 수정 버튼 -->
+				<c:if test="${s.signFile ne null}">
+					<h6 class="card-title">
+						<button type="button" id="approvalSignModBtn" class="btn btn-primary">서명수정</button>
+						<input type="hidden" name="oldSignFile" id="oldSignFile" value="${s.signFile}">
+					</h6>
+				</c:if>
 	
 				<!-- 탭 -->
 				<ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
@@ -83,7 +93,7 @@
 	    </div>
 	    
 	    
-	    <!-- 예약고객이름 가져오는 모달 -->
+	    <!-- 신규등록 서명패드 가져오는 모달 -->
 		<div class="modal fade" id="signAddModal" tabindex="-1">
 			<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
 				<!-- 모달 제목 -->
@@ -108,6 +118,43 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary save" data-action="signSave">서명 저장</button>
+				</div>
+				
+			</div></div>
+		</div><!-- End addRsvn Modal-->
+		
+		
+		
+		<!-- 수정 서명패드 가져오는 모달 -->
+		<div class="modal fade" id="signModModal" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+				<!-- 모달 제목 -->
+				<div class="modal-header">
+					<h5 class="modal-title">서명 수정</h5>
+				</div>
+				
+				<div class="modal-body text-center" style="margin: auto;">
+					<h5 class="modal-title">기존 서명</h5>
+					<div>
+						<img src="/topaz/assets/img/approvalSign/${s.signFile}">
+					</div>
+					<hr>
+					<!-- 서명패드 표시 -->
+					<div id="signature-pad-Mod" class="m-signature-pad">
+						<h5 class="modal-title">수정 서명</h5>
+	                    <div class="m-signature-pad--body" style="border: 1px solid black; width: 300px; height: 150px;">
+	                        <canvas></canvas>
+	                    </div>
+	                    <div class="m-signature-pad--footer" style="margin-top: 30px">
+	                        <button type="button" class="btn btn-primary clear" data-action="signClear">작성 초기화</button>
+	                    </div>
+					</div>
+				</div>
+					
+				<!-- 모달 서명 수정버튼 취소 -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary save" data-action="signModSave">서명 저장</button>
 				</div>
 				
 			</div></div>

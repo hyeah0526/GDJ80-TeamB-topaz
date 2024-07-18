@@ -43,6 +43,32 @@ public class ApprovalRestController {
 		
 		return insertRow;
 	}
+	
+	
+	/*
+	 * 서비스명: modSign
+	 * 시작 날짜: 2024-07-18
+	 * 담당자: 박혜아
+	*/
+	@PostMapping("/approval/signMod")
+	public int signMod(@RequestParam("signModImg") String signModImg
+						,@RequestParam("oldSignFile") String oldSignFile
+						,HttpServletRequest httpServletRequest) throws Exception {
+		
+		log.debug(Debug.PHA + "approval Controller signModImg--> " + signModImg + Debug.END);
+		log.debug(Debug.PHA + "approval Controller oldSignFile--> " + oldSignFile + Debug.END);
+		
+		// 세션가져와서 empNo세팅
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.PHA + "approval Controller empNo--> " + empNo + Debug.END);
+		
+		// 서명 수정 하기(성공 == 2)
+		int updateRow = approvalService.modSign(oldSignFile, signModImg, empNo);
+		
+		
+		return updateRow;
+	}
 
 
 }

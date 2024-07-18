@@ -45,4 +45,34 @@
 	</insert>
 	
 	
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 조회 -->
+	<select id="selectEmpSign" parameterType="String" resultType="map">
+		SELECT 
+			  e.emp_no empNo
+			, e.emp_name empName
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = e.emp_dept) empDept
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = e.emp_grade) empGrade
+			, e.sign_file signFile
+		FROM 
+			employee e 
+		INNER JOIN file_upload f 
+			ON e.sign_file = f.file_no
+		WHERE 
+			e.emp_no = #{empNo}
+	</select>
+	
+	
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 수정 -->
+	<update id="updateApprovalSign" parameterType="String">
+		UPDATE 
+			employee e, file_upload f
+		SET 
+			  e.mod_time = NOW()
+			, f.mod_time = NOW()
+		WHERE 
+			e.sign_file = f.file_no
+		AND 
+			e.emp_no = #{empNO}
+	</update>
+	
 </mapper>
