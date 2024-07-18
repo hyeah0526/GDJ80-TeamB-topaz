@@ -52,7 +52,7 @@
 					</h6>
 				</c:if>
 				
-				<div class="row mb-3 approvalEmpInfo justify-content-center">
+				<div class="row mb-4 approvalEmpInfo justify-content-center">
 					<label for="profileImage" class="col-md-1 col-lg-1 col-form-label text-center">이름</label>
 					<div class="col-md-2 col-lg-2">
 						<input class="form-control" type="tel" value="${s.empName}(${s.empNo})" readonly>
@@ -99,78 +99,239 @@
 							<h1>휴가 신청서</h1>
 						</div>
 						
-						<div class="row mb-3 justify-content-center">
+						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">중 간 결 재 자</label>
-							<div class="col-md-2 col-lg-3" id="dayOffYear">
+							<div class="col-lg-2" id="">
 								<input class="form-control" type="text" name="" id="" value="">
 							</div>
-							<div class="col-md-5 col-lg-2" id="dayOffYear">
+							<div class="col-lg-2" id="">
 								<button class="btn btn-primary">검색</button>
 							</div>
 						</div>
 						
-						<div class="row mb-3 justify-content-center">
+						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">최 종 결 재 자</label>
-							<div class="col-md-7 col-lg-5">
-								<select class="form-select" id="">
-									<option value="">값1</option>
-									<option value="">값1</option>
-									<option value="">값1</option>
-								</select>
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="text" name="" id="" value="">
+							</div>
+							<div class="col-lg-2" id="">
+								<button class="btn btn-primary">검색</button>
 							</div>
 						</div>
 						
-						<div class="row mb-3 justify-content-center">
+						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">휴 가 종 류</label>
-							<div class="col-md-7 col-lg-5">
+							<div class="col-lg-4">
 								<select class="form-select" id="dayOffType">
 									<option value="Y">연차</option>
 									<option value="M">월차</option>
-									<option value="H">반차</option>
+									<option value="AH">오전 반차</option>
+									<option value="PH">오후 반차</option>
 								</select>
 							</div>
 						</div>
 						
-						<div class="row mb-3 justify-content-center">
+						<div class="row mb-4 justify-content-center" id="dayOffYear">
 							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
-							
-							<div class="col-md-7 col-lg-5" id="dayOffYear">
-								<input class="form-control" type="tel" name="" id="year" value="year">
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="date" name="" id="" value="">
 							</div>
-							
-							<div class="col-md-7 col-lg-5" id="dayOffMonth" style="display: none;">
-								<input class="form-control" type="tel" name="" id="month" value="month">
-							</div>
-							
-							<div class="col-md-7 col-lg-5" id="dayOffHalf" style="display: none;">
-								<input class="form-control" type="tel" name="" id="half" value="half">
+							~
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="date" name="" id="" value="">
 							</div>
 						</div>
 						
-						<div class="row mb-3 justify-content-center">
+						<div class="row mb-4 justify-content-center" id="dayOffMonth" style="display: none;">
+							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="date" name="" id="" value="">
+							</div>
+							~
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="date" name="" id="" value="">
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center" id="dayOffHalfAm" style="display: none;">
+							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
+							<div class="col-lg-4" id="">
+								<input class="form-control" type="date" name="" id="" value="">
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center" id="dayOffHalfPm" style="display: none;">
+							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
+							<div class="col-lg-4" id="">
+								<input class="form-control" type="date" name="" id="" value="">
+							</div>
+						</div>
+						
+						
+						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">비 상 연 락 망</label>
-							<div class="col-md-7 col-lg-5">
-								<input class="form-control" type="tel" name="" id="">
+							<div class="col-lg-4" id="">
+								<input class="form-control" type="text" name="" id="" value="">
 							</div>
 						</div>
 						
-						<div class="row mb-3 justify-content-center">
+						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">사 유</label>
-							<div class="col-md-7 col-lg-5">
-								<input class="form-control" type="tel" name="" id="">
+							<div class="col-lg-4" id="">
+								<textarea class="form-control" style="height: 150px;" placeholder="신청사유를 작성해주세요"></textarea>
 							</div>
 						</div>
-                    
+						
+						
+						<div class="row mb-4 justify-content-center">
+							<div class="col-lg-4 text-center" id="">
+								<button type="button" class="btn btn-primary" style="width: 150px;">신청</button>
+							</div>
+						</div>
+						
 					</div>
+					
+					
 					
 					<!-- 기획 제안서 -->
 					<div class="tab-pane fade" id="profile-justified" role="tabpanel" aria-labelledby="profile-tab">
 						<div class="pagetitle text-center" style="margin: 20px;"><h1>기획 제안서</h1></div>
+						
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">중 간 결 재 자</label>
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="text" name="" id="" value="">
+							</div>
+							<div class="col-lg-2" id="">
+								<button class="btn btn-primary">검색</button>
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">최 종 결 재 자</label>
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="text" name="" id="" value="">
+							</div>
+							<div class="col-lg-2" id="">
+								<button class="btn btn-primary">검색</button>
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">기 획 종 류</label>
+							<div class="col-lg-4">
+								<label for="externalEvent">
+									<input type="radio" class="form-check-input" id="externalEvent" name="docFirstContent"> 외부 행사
+								</label>
+								&nbsp;&nbsp;&nbsp;
+								<label for="internalEvent">
+									<input type="radio" class="form-check-input" id="internalEvent" name="docFirstContent"> 내부 행사
+								</label>
+								&nbsp;&nbsp;&nbsp;
+								<label for="volunteerEvent">
+									<input type="radio" class="form-check-input" id="volunteerEvent" name="docFirstContent"> 봉사
+								</label>
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center" id="">
+							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="date" name="" id="" value="">
+							</div>
+							~
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="date" name="" id="" value="">
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">첨 부 파 일</label>
+							<div class="col-lg-4" id="">
+								<input class="form-control" type="file" name="" id="" value="">
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">내 용</label>
+							<div class="col-lg-4" id="">
+								<textarea class="form-control" style="height: 150px;" placeholder="기획 내용을 상세히 작성해주세요"></textarea>
+							</div>
+						</div>
+						
+						
+						<div class="row mb-4 justify-content-center">
+							<div class="col-lg-4 text-center" id="">
+								<button type="button" class="btn btn-primary" style="width: 150px;">신청</button>
+							</div>
+						</div>
+						
 					</div>
+					
+					
 					
 					<!-- 경비 청구서 -->
 					<div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
 						<div class="pagetitle text-center" style="margin: 20px;"><h1>경비 청구서</h1></div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">중 간 결 재 자</label>
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="text" name="" id="" value="">
+							</div>
+							<div class="col-lg-2" id="">
+								<button class="btn btn-primary">검색</button>
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">최 종 결 재 자</label>
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="text" name="" id="" value="">
+							</div>
+							<div class="col-lg-2" id="">
+								<button class="btn btn-primary">검색</button>
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center" id="">
+							<label for="profileImage" class="col-lg-2 col-form-label">날 짜</label>
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="date" name="" id="" value="">
+							</div>
+							<div class="col-lg-2" id=""></div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">청 구 금 액</label>
+							<div class="col-lg-2" id="">
+								<input class="form-control" type="number" name="" id="" value="">
+							</div>
+							<div class="col-lg-2" id=""></div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">영 수 증 첨 부</label>
+							<div class="col-lg-4" id="">
+								<input class="form-control" type="file" name="" id="" value="">
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">내 용</label>
+							<div class="col-lg-4" id="">
+								<textarea class="form-control" style="height: 150px;" placeholder="경비 사용 사유를 상세히 작성해주세요"></textarea>
+							</div>
+						</div>
+						
+						
+						<div class="row mb-4 justify-content-center">
+							<div class="col-lg-4 text-center" id="">
+								<button type="button" class="btn btn-primary" style="width: 150px;">신청</button>
+							</div>
+						</div>
+						
 					</div>
 				</div><!-- End Default Tabs -->
 	

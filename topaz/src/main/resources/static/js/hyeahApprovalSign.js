@@ -127,15 +127,21 @@ $('#dayOffType').change(function() {
 	var selectedOption = $(this).val();
         
 	// 모든 기간 입력 필드 숨기기
-	$('#dayOffYear, #dayOffMonth, #dayOffHalf').hide();
+	$('#dayOffYear, #dayOffMonth, #dayOffHalfAm, #dayOffHalfPm').hide();
         
 	// 선택된 휴가 종류에 따라 해당하는 기간 입력 필드 보이기
 	if (selectedOption === 'Y') {
         $('#dayOffYear').show();
+        
     } else if (selectedOption === 'M') {
         $('#dayOffMonth').show();
-    } else if (selectedOption === 'H') {
-        $('#dayOffHalf').show();
+        
+    } else if (selectedOption === 'AH') {
+        $('#dayOffHalfAm').show();
+        
+    } else if (selectedOption === 'PH') {
+        $('#dayOffHalfPm').show();
+        
     }
 });
 
