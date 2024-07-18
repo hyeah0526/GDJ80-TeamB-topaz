@@ -156,3 +156,36 @@
 .detailNoticeDiv{
 	margin: auto;
 }
+
+
+/* ==========신규결재 - approvalAdd.jsp========== */
+
+.approvalEmpInfo input{
+	border-top: none; 
+	border-left: none;
+	border-right: none;
+	text-align: center;
+}
+
+.approvalEmpInfo label{
+	font-weight: bolder;
+	color: #012970;
+}
+
+.dayOffDiv label{
+	font-weight: bolder;
+	color: #012970;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+

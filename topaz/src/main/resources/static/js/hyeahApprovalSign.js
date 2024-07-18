@@ -120,3 +120,25 @@ $("[data-action]").on("click", function(){
 });
 
 
+
+/* 휴가 신청서 */
+$('#dayOffType').change(function() {
+	// 선택된 휴가 종류 값 가져오기
+	var selectedOption = $(this).val();
+        
+	// 모든 기간 입력 필드 숨기기
+	$('#dayOffYear, #dayOffMonth, #dayOffHalf').hide();
+        
+	// 선택된 휴가 종류에 따라 해당하는 기간 입력 필드 보이기
+	if (selectedOption === 'Y') {
+        $('#dayOffYear').show();
+    } else if (selectedOption === 'M') {
+        $('#dayOffMonth').show();
+    } else if (selectedOption === 'H') {
+        $('#dayOffHalf').show();
+    }
+});
+
+
+
+

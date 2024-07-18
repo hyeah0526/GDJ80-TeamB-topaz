@@ -7,6 +7,8 @@
 	<head>
 		<!-- 서명패드JS -->
 		<script src="/topaz/javascriptSignature/js/signature_pad.min.js" type="text/javascript"></script>
+		<!-- hyeah CSS / JS -->
+		<link rel="stylesheet" href="<c:url value='/css/hyeah.css' />">
 	</head>
 	
 <body>
@@ -49,6 +51,24 @@
 						<input type="hidden" name="oldSignFile" id="oldSignFile" value="${s.signFile}">
 					</h6>
 				</c:if>
+				
+				<div class="row mb-3 approvalEmpInfo justify-content-center">
+					<label for="profileImage" class="col-md-1 col-lg-1 col-form-label text-center">이름</label>
+					<div class="col-md-2 col-lg-2">
+						<input class="form-control" type="tel" value="${s.empName}(${s.empNo})" readonly>
+					</div>
+					
+					<label for="profileImage" class="col-md-1 col-lg-1 col-form-label text-center">소속</label>
+					<div class="col-md-2 col-lg-2">
+						<input class="form-control" type="tel" value="${s.empDept}" readonly>
+					</div>
+					
+					<label for="profileImage" class="col-md-1 col-lg-1 col-form-label text-center">직위</label>
+					<div class="col-md-2 col-lg-2">
+						<input class="form-control" type="tel" value="${s.empGrade}" readonly>
+					</div>
+				</div><br>
+	
 	
 				<!-- 탭 -->
 				<ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
@@ -71,21 +91,86 @@
 	              
 	              
 				<!-- Tab에 따른 내용 출력되는 부분 -->
-				<div class="tab-content pt-2" id="myTabjustifiedContent">
+				<div class="tab-content pt-2 dayOffDiv" id="myTabjustifiedContent">
 					<!-- 휴가 신청서 -->
 					<div class="tab-pane fade show active" id="home-justified" role="tabpanel" aria-labelledby="home-tab">
-						<div class="pagetitle text-center"><h1>휴가 신청서</h1></div>
 						
+						<div class="pagetitle text-center" style="margin: 20px;">
+							<h1>휴가 신청서</h1>
+						</div>
+						
+						<div class="row mb-3 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">중 간 결 재 자</label>
+							<div class="col-md-2 col-lg-3" id="dayOffYear">
+								<input class="form-control" type="text" name="" id="" value="">
+							</div>
+							<div class="col-md-5 col-lg-2" id="dayOffYear">
+								<button class="btn btn-primary">검색</button>
+							</div>
+						</div>
+						
+						<div class="row mb-3 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">최 종 결 재 자</label>
+							<div class="col-md-7 col-lg-5">
+								<select class="form-select" id="">
+									<option value="">값1</option>
+									<option value="">값1</option>
+									<option value="">값1</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="row mb-3 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">휴 가 종 류</label>
+							<div class="col-md-7 col-lg-5">
+								<select class="form-select" id="dayOffType">
+									<option value="Y">연차</option>
+									<option value="M">월차</option>
+									<option value="H">반차</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="row mb-3 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
+							
+							<div class="col-md-7 col-lg-5" id="dayOffYear">
+								<input class="form-control" type="tel" name="" id="year" value="year">
+							</div>
+							
+							<div class="col-md-7 col-lg-5" id="dayOffMonth" style="display: none;">
+								<input class="form-control" type="tel" name="" id="month" value="month">
+							</div>
+							
+							<div class="col-md-7 col-lg-5" id="dayOffHalf" style="display: none;">
+								<input class="form-control" type="tel" name="" id="half" value="half">
+							</div>
+						</div>
+						
+						<div class="row mb-3 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">비 상 연 락 망</label>
+							<div class="col-md-7 col-lg-5">
+								<input class="form-control" type="tel" name="" id="">
+							</div>
+						</div>
+						
+						<div class="row mb-3 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">사 유</label>
+							<div class="col-md-7 col-lg-5">
+								<input class="form-control" type="tel" name="" id="">
+							</div>
+						</div>
+                    
 					</div>
 					
 					<!-- 기획 제안서 -->
 					<div class="tab-pane fade" id="profile-justified" role="tabpanel" aria-labelledby="profile-tab">
-						<div class="pagetitle text-center"><h1>기획 제안서</h1></div>
+						<div class="pagetitle text-center" style="margin: 20px;"><h1>기획 제안서</h1></div>
 					</div>
 					
 					<!-- 경비 청구서 -->
 					<div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
-						<div class="pagetitle text-center"><h1>경비 청구서</h1></div>
+						<div class="pagetitle text-center" style="margin: 20px;"><h1>경비 청구서</h1></div>
 					</div>
 				</div><!-- End Default Tabs -->
 	
