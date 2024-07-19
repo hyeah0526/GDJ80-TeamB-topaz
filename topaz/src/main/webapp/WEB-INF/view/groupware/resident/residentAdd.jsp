@@ -71,27 +71,27 @@
 								
 								<div class="info-item mb-3">
 								    <span class="label">아이디</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" id="gstId" name="gstId" type="text"></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" id="gstId" name="gstId" type="text" readonly="readonly"></span>
 								</div>
 								
 								<div class="info-item mb-3">
 								    <span class="label">전화번호</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" id="gstPhone" name="gstPhone" type="text" ></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" id="gstPhone" name="gstPhone" type="text" readonly="readonly"></span>
 								</div>
 								
 								<div class="info-item mb-3">
 								    <span class="label">이메일</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" id="gstEmail" name="gstEmail" type="text" ></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" id="gstEmail" name="gstEmail" type="text" readonly="readonly"></span>
 								</div>
 								
 								<div class="info-item mb-3">
 								    <span class="label">성별</span>
-								    <span><input style="width: 200px; display: inline;" class="form-control" id="gstGender" name="gstGender" type="text" ></span>
+								    <span><input style="width: 200px; display: inline;" class="form-control" id="gstGender" name="gstGender" type="text" readonly="readonly"></span>
 								</div>
 								
 								<div class="info-item mb-3">
 								    <span class="label">생년월일</span>
-								   	<span><input style="width: 200px; display: inline;" class="form-control" id="gstBirth" name="gstBirth" type="text" ></span>
+								   	<span><input style="width: 200px; display: inline;" class="form-control" id="gstBirth" name="gstBirth" type="text" readonly="readonly"></span>
 								</div>
 								
 								<div class="info-item mb-3">
@@ -109,8 +109,8 @@
 								<div class="col-lg-6 col-md-6">
 								    <div class="info-item mb-3">
 								        <span class="label ">계약기간</span>
-								        <span><input class="form-control date-input" style="width: 160px; display: inline; text-align: right" name="contractStart" type="datetime" placeholder="yyyy-mm-dd"></span>  ~ 
-								        <span><input style="width: 160px; display: inline; text-align: right" class="form-control date-input" name="contractEnd" type="datetime" placeholder="yyyy-mm-dd"></span>
+								        <span><input class="form-control date-input" style="width: 160px; display: inline; text-align: right" name="contractStart" type="date" placeholder="yyyy-mm-dd"></span>  ~ 
+								        <span><input style="width: 160px; display: inline; text-align: right" class="form-control date-input" name="contractEnd" type="date" placeholder="yyyy-mm-dd"></span>
 									</div>
 									    <!-- 객실 선택 -->
 								    <div class="info-item mb-3">
@@ -128,13 +128,13 @@
 								    
 									<div class="info-item mb-3 align-row">
 										<span class="label"></span>
-									    <input style="width: 100px; display: inline; text-align: right;" class="form-control date-input" id="roomType" name="roomType" type="text" >
+									    <input style="width: 100px; display: inline; text-align: right;" readonly="readonly" class="form-control date-input" id="roomType" name="roomType" type="text" >
 									    <span class="label">타입</span>
 									    
-									    <input style="width: 100px; display: inline; text-align: right;" class="form-control date-input" id="roomDong" name="roomDong" type="text" >
+									    <input style="width: 100px; display: inline; text-align: right;" readonly="readonly" class="form-control date-input" id="roomDong" name="roomDong" type="text" >
 									    <span class="label">동</span>
 									    
-									    <input style="width: 100px; display: inline; text-align: right;" class="form-control date-input" id="roomHo" name="roomHo" type="text" >
+									    <input style="width: 100px; display: inline; text-align: right;" readonly="readonly" class="form-control date-input" id="roomHo" name="roomHo" type="text" >
 									    <span class="label">호</span>
 									</div>
 									

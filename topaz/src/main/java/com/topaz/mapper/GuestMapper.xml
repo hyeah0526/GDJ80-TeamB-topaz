@@ -1,34 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topaz.mapper.GuestMapper">
-	<!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
-	<select id="selectResidentAll" parameterType="map" resultType="map">
-		SELECT 
-			g.gst_id gstId,
-			g.gst_name gstName, 
-			r.room_dong roomDong, 
-			r.room_ho roomHo 
-		FROM 
-			guest g 
-		INNER JOIN 
-			room r 
-		ON 
-			g.room_no = r.room_no
-		WHERE 
-			g.use_yn = 'Y'
-		AND	
-			g.gst_type = 'R'
-		<if test="searchWord != null">
-			AND (g.gst_name LIKE CONCAT('%', #{searchWord}, '%'))
-		</if>
-		LIMIT
-			#{beginRow}, #{rowPerPage}
-	</select>
-	
-	<!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
-	<select id="selectResidentCount" resultType="int">
-		SELECT COUNT(*) FROM guest WHERE use_yn = 'Y' AND gst_type='R'
-	</select>
 	
 	<!-- 분류번호: #7 - 입주자 관리 페이지 : 전체 입주자 조회 -->
     <!-- 검색필터에 따른 입주자 조회 -->
@@ -181,7 +153,9 @@
     		gst_birth gstBirth
     	FROM 
     		guest 
-    	WHERE gst_type = 'C';
+    	WHERE gst_type = 'C'
+    	AND 
+    		use_yn = 'Y'
     </select>
     
     <!-- 분류번호: #7 - 입주자 관리 페이지 : 입주자 등록 -->

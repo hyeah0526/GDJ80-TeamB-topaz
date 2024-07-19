@@ -63,13 +63,13 @@
 	          <div class="tab-content pt-2">
 	              <div class="tab-pane fade show active profile-overview" id="profile-overview">
 	                  <div class="col-xl-4">
-			          <div>
-			            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-			              <img src="/topaz/assets/img/guest/${resident.fileName}" alt="Profile" class="rounded-circle">
-			              <h2>${resident.gstName }</h2>
-			            </div>
+				          <div>
+				            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+				              <img src="/topaz/assets/img/guest/${resident.fileName}" alt="Profile" class="rounded-circle">
+				              <h2>${resident.gstName }</h2>
+				            </div>
+				          </div>
 			          </div>
-			        </div>
 	                  <div class="row">
 	                      <div class="col-lg-6 col-md-6">
 	                          <div class="info-item">
@@ -242,18 +242,12 @@
    <!-- =============================== Main 메인 끝 부분 ================================ -->
   	<script>
   	function validateForm() {
-        var fileInput = document.querySelector('input[name="uploadFile"]');
   		var phone = document.querySelector('input[name="gstPhone"]');
   		var email = document.querySelector('input[name="gstEmail"]');
         var contractStart = document.querySelector('input[name="contractStart"]');
         var contractEnd = document.querySelector('input[name="contractEnd"]');
 
         // 검사 조건들
-        if (fileInput.value == "") {
-            alert("파일이 선택되지 않았습니다.");
-            return false;
-        }
-        
         if (phone.value == "") {
             alert("전화번호가 입력되지 않았습니다.");
             return false;
