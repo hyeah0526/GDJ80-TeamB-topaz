@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VolunterrApplication {
+public class VolunteerApplication {
 	private String volAppNo;
 	private String volNo;
 	private String gstId;

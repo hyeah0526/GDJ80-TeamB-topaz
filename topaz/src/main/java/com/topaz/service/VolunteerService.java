@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.topaz.dto.Volunteer;
+import com.topaz.dto.VolunteerApplication;
 import com.topaz.mapper.VolunteerMapper;
 import com.topaz.utill.Debug;
 
@@ -113,6 +114,64 @@ public class VolunteerService {
 		
 		return row;
 		
+	}
+
+	
+	/*
+	 * 분류번호: #9 - 봉사 신청 리스트 페이지 : 봉사 신청 전체 리스트
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 한은혜 
+	 */
+	public List<Map<String, Object>> getVolAppList(int currentPage, int rowPerPage, String searchDate, String searchWord) {
+		// beginRow
+		int beginRow = (currentPage - 1) * rowPerPage;
+		
+		List<Map<String, Object>> volAppList = volunteerMapper.selectVolAppList(beginRow, rowPerPage, searchDate, searchWord);
+		log.debug(Debug.HEH + "VolunteerService getVolAppList volAppList : " + volAppList + Debug.END);
+
+		return volAppList;
+	}
+
+	
+	/*
+	 * 분류번호: #9 - 봉사 신청 리스트 페이지 : 봉사 신청 전체 행 수
+	 * 시작 날짜: 2024-07-17
+	 * 담당자: 한은혜 
+	 */
+	public int getVolAppListLastPage(int rowPerPage, String searchDate, String searchWord) {
+		// 전체 행 개수 
+		int totalRow = volunteerMapper.selectVolAppListTotalRow(searchDate, searchWord);
+		log.debug(Debug.HEH + "VolunteerService getVolAppListLastPage totalRow : " + totalRow + Debug.END);
+
+		int lastPage = totalRow /rowPerPage;
+		if(totalRow % rowPerPage != 0) {
+			lastPage = lastPage + 1;
+		}
+		log.debug(Debug.HEH + "VolunteerService getVolAppListLastPage lastPage : " + lastPage + Debug.END);
+
+		return lastPage;
+	}
+
+	
+	/*
+	 * 분류번호: #9 - 봉사 신청 페이지 : 봉사 신청 등록하기
+	 * 시작 날짜: 2024-07-18
+	 * 담당자: 한은혜 
+	 */
+	public int addVolApp(VolunteerApplication volunteerApplication) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "VolunteerService addVolApp volunteerApplication : " + volunteerApplication + Debug.END);
+
+		int row = volunteerMapper.addVolApp(volunteerApplication);
+		
+		if(row != 1) {
+			// 등록 실패일 경우
+			log.debug(Debug.HEH + "VolunteerService addVolApp 등록 실패시 0 : "+ row + Debug.END);
+			throw new RuntimeException();
+		}
+		log.debug(Debug.HEH + "VolunteerService addVolApp 등록 성공시 1 : " + row + Debug.END);
+		
+		return row;
 	}
 	
 

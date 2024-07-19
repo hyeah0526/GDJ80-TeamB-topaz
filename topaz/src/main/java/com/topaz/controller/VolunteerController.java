@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.topaz.dto.Volunteer;
+import com.topaz.dto.VolunteerApplication;
 import com.topaz.service.VolunteerService;
 import com.topaz.utill.Debug;
 
@@ -84,7 +85,7 @@ public class VolunteerController {
 	@PostMapping("/groupware/volunteer/volunteerMain")
 	public String addVolunteer(HttpServletRequest httpServletRequest, Volunteer volunteer) {
 		
-		// 세션값 -> gstId 가져오기
+		// 세션값 -> empNo 가져오기
 		HttpSession session = httpServletRequest.getSession();
 		String empNo = (String)session.getAttribute("strId");
 		log.debug(Debug.HEH + "controller addVolunteer empNo : " + empNo + Debug.END);
@@ -120,6 +121,47 @@ public class VolunteerController {
 	}
 	
 	
+	/*
+	 * 서비스명: getvolunteerDetail
+	 * 시작 날짜: 2024-07-18
+	 * 담당자: 한은혜
+	 */
+	@GetMapping("/customer/volunteerRqDetail")
+	public String volunteerRqDetail(@RequestParam(name="volNo") String volNo, Model model) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "controller volunteerRqDetail volunteerNo : " + volNo + Debug.END);
+		// 봉사 상세 조회
+		Volunteer volunteer = volunteerService.getVolunteerDetail(volNo);
+		log.debug(Debug.HEH + "controller volunteerRqDetail volunteer : " + volunteer + Debug.END);
+
+		model.addAttribute("volunteerOne", volunteer);
+		
+		return "/customer/volunteerRqDetail";
+	}
+	
+	/*
+	 * 서비스명: volunteerApp
+	 * 시작 날짜: 2024-07-18
+	 * 담당자: 한은혜
+	 */
+	@PostMapping("/customer/volunteerRqDetail")
+	public String volunteerApp(@RequestParam(name="volNo") String volNo, HttpServletRequest httpServletRequest, VolunteerApplication volunteerApplication) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "controller volunteerApp volNo : " + volNo + Debug.END);
+		// 세션값 -> empNo 가져오기
+		HttpSession session = httpServletRequest.getSession();
+		String gstId = (String)session.getAttribute("gstId");
+		log.debug(Debug.HEH + "controller volunteerApp gstId : " + gstId + Debug.END);
+		// 쿼리에서 필요한 값 세팅
+		volunteerApplication.setGstId(gstId);
+		volunteerApplication.setModId(gstId);
+		volunteerApplication.setRegId(gstId);
+		log.debug(Debug.HEH + "controller volunteerApp volunteerApplication : " + volunteerApplication + Debug.END);
+
+		volunteerService.addVolApp(volunteerApplication);
+		
+		return "redirect:/customer/volunteerRqAdd";
+	}
 	
 	
 	

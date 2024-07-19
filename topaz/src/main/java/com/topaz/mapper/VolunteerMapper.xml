@@ -80,6 +80,94 @@
 		WHERE vol_no = #{volNo};
 	</update>
 	
+	<!-- 분류번호: #9 - 봉사 신청 리스트 페이지 : 봉사 신청 전체 조회 -->
+	<select id="selectVolAppList" parameterType="String" resultType="map">
+		SELECT 
+			vol_content volContent, 
+			DATE_FORMAT(vol_starttime, '%Y-%m-%d %H:%i') volStarttime ,
+			va.gst_id gstId, 
+			va.vol_app_people volAppPeople, 
+			va.vol_app_comment volAppComment, 
+			va.vol_app_state volAppState
+		FROM volunteer_application va
+			INNER JOIN volunteer v
+			ON va.vol_no = v.vol_no 
+		<where>
+			va.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+			<if test="searchWord != null">
+				AND v.vol_content LIKE CONCAT('%','','%')
+			</if>
+			<if test="searchDate != null">
+				AND v.vol_starttime LIKE CONCAT('%','2024-08','%')
+			</if>
+		</where>
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 분류번호: #9 - 봉사 신청 리스트 페이지 : 봉사 신청 전체 행 수 조회 -->
+	<select id="">
+		SELECT COUNT(*) cnt
+		FROM volunteer_application va
+			INNER JOIN volunteer v
+			ON va.vol_no = v.vol_no 
+		<where>
+			va.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+			<if test="searchWord != null">
+				AND v.vol_content LIKE CONCAT('%','','%')
+			</if>
+			<if test="searchDate != null">
+				AND v.vol_starttime LIKE CONCAT('%','2024-08','%')
+			</if>
+		</where>
+	
+	</select>
+	
+	<!-- 분류번호: #9 - 봉사 신청 페이지 : 봉사 신청 등록하기 -->
+	<insert id="addVolApp">
+		INSERT INTO volunteer_application
+			(vol_app_no, 
+			 vol_no, 
+			 gst_id, 
+			 vol_app_people, 
+			 vol_app_comment, 
+			 vol_app_state, 
+			 reg_id, 
+			 reg_time, 
+			 mod_id, 
+			 mod_time, 
+			 use_yn)
+		VALUES
+			(CURRENT_TIMESTAMP(5), 
+			 #{volNo}, 
+			 #{gstId}, 
+			 #{volAppPeople}, 
+			 #{volAppComment}, 
+			 '1',
+			 #{gstId},
+			 NOW(),
+			 #{gstId},
+			 NOW(),
+			 'Y'
+			 )
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 </mapper>

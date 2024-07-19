@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -24,6 +26,82 @@
 
   <!-- Main CSS File -->
   <link href="/topaz/assets/css/main.css" rel="stylesheet">
+  <link href="/topaz/css/hyeah.css" rel="stylesheet">
+  <!-- Fullcalendar -->
+  <script src="/topaz/fullcalendar-6.1.14/dist/index.global.js"></script>
+  <script src="/topaz/fullcalendar-6.1.14/dist/index.global.min.js"></script>
+   
+   <!-- 캘린더API  -->
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		initializeCalendar(); // 페이지 로드 시 달력 초기화
+		
+		function initializeCalendar() {
+			
+	    let calendarEl = document.getElementById('calendar');
+
+	    let calendar = new FullCalendar.Calendar(calendarEl, {
+	      headerToolbar: {
+	        left: 'prevYear,prev,next,nextYear today',
+	        center: 'title',
+	        right: 'dayGridMonth addEventButton', // 달만 보이게 설정 / 이벤트 버튼 생성
+	      }, 
+	      customButtons: {
+			addEventButton: { // 추가한 이벤트 버튼 설정
+				text : "봉사일정",  // 버튼 내용
+				click : function(){ // 버튼클릭 시 이벤트 추가
+							
+                  }
+              }
+          },
+	      locale: 'kr',			// 언어 설정
+	      selectable: true, 	// 영역 선택
+	      dayMaxEvents: true, 	// 이벤트가 많을 경우 more링크 활성화
+	      events: [
+			// 전체 봉사 일정 리스트 가져오기
+			$.ajax({
+				type: 'GET',
+				url: '/topaz/volunteer/volunteerMain',
+				success: function (response){
+	    			  
+					console.log("response", response);
+					for(i=0; i<response.length; i++){
+						// title, start, end 설정
+						calendar.addEvent({
+							title: response[i].volContent, // 제목
+							start: response[i].volStartTime, // 시작날짜
+							end: response[i].volEndTime, // 종료날짜
+							url: '/topaz/customer/volunteerRqDetail?volNo='+response[i].volNo, // 상세보기 이동
+							backgroundColor: '#ffbb57', // 색상 분류
+							borderColor:'#ffbb57', 
+						})
+					}
+				}
+			})
+		],
+		
+		 eventDidMount: function(info) {
+             // 이벤트 요소에 마우스 오버 시 커서 변경
+             info.el.addEventListener('mouseenter', function() {
+                 info.el.style.cursor = 'pointer';
+             });
+             // 이벤트 요소에서 마우스가 떠날 시 커서 원래대로
+             info.el.addEventListener('mouseleave', function() {
+                 info.el.style.cursor = '';
+             });
+         },
+     });
+
+	    calendar.render();
+	    
+	}
+});
+	
+	</script>
+	
+   
+   
+   
 </head>
 
 <body class="team-page">
@@ -74,74 +152,23 @@
       </div>
     </div><!-- Page Title 끝 -->
 
-     <!-- Section 1 -->
-     <section id="about-2" class="about-2 section light-background">
-
-      <div class="container">
-        <div class="content">
-          <div class="row justify-content-center">
-            <div class="col-sm-12 col-md-5 col-lg-4 col-xl-4 order-lg-2 offset-xl-1 mb-4">
-              <div class="img-wrap text-center text-md-left" data-aos="fade-up" data-aos-delay="100">
-                <div class="img">
-                  <img src="/topaz/assets/img/img_v_3.jpg" alt="circle image" class="img-fluid">
-                </div>
-              </div>
-            </div>
-
-            <div class="offset-md-0 offset-lg-1 col-sm-12 col-md-5 col-lg-5 col-xl-4" data-aos="fade-up">
-              <div class="px-3">
-                <h2 class="content-title text-start">
-                  캘린더 보여주기 
-                </h2>
-                <p class="lead">
-                  소개글
-                </p>
-                <p class="mb-5">
-                  소개글
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section><!-- Section 1 끝 -->
-
-    <!-- 입력 폼 -->
-    <section id="contact" class="contact section">
-
-      <div class="container" data-aos="fade">
-
-        <div class="row gy-5 gx-lg-5">
-          <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required="">
-                </div>
-              </div>
-              <div class="form-group mt-3">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required="">
-              </div>
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" placeholder="Message" required=""></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-          </div><!-- End Contact Form -->
-
-        </div>
-
-      </div>
-
-    </section><!-- 입력 폼 끝 -->   
+     
+     <section class="section">
+			<div class="row justify-content-center">
+				<!-- 왼쪽 세션 -->
+				<div class="col-lg-8"><div class="card"><div class="card-body">
+					<h5 class="card-title col-md-4">
+						
+					</h5>
+					<!-- 캘린더 출력 -->
+					<div id='calendar'></div>
+					
+				</div></div></div>
+		
+				
+			</div>
+		</section>
+		
   </main>
 
   <!-- footer -->
