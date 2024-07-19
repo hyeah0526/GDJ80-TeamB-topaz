@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <title>HOME</title>
   <!-- Favicons -->
-  <link href="/topaz//topaz/assets/img/TOPAZ_logo.png" rel="icon">
+  <link href="/topaz/assets/img/TOPAZ_logo.png" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -40,14 +40,11 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="gstMain" class="active">Home</a></li>
-          <li><a href="infoCompany">회사소개</a></li>
           <li><a href="infoPrograms">프로그램</a></li>
-          <li class="dropdown"><a href="infoRegident"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><a href="infoRegident"><span>시설 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="infoRegidentA">A동</a></li>
-              <li><a href="#">B동</a></li>
-              <li><a href="#">C동</a></li>
-              <li><a href="#">Dropdown 4</a></li>
+              <li><a href="infoRegidentDiamond">다이아몬드동</a></li>
+              <li><a href="infoRegidentSilver">실버동</a></li>
             </ul>
           </li>
           <li><a href="volunteerRqAdd">봉사 신청</a></li>
@@ -112,14 +109,21 @@
             </div>
           </div>
           <div class="col-lg-4 order-lg-1">
-            <span class="section-subtitle" data-aos="fade-up">반갑습니다.</span>
-            <h1 class="mb-4" data-aos="fade-up">
+            <span class="section-subtitle" data-aos="fade-up"></span>
+            <h1 class="mb-5" data-aos="fade-up">
               TOPAZ
             </h1>
             <p data-aos="fade-up">
-              소개글
+            	TOPAZ는 건강하고 행복한 삶을 추구하는 <br>
+            	혁신적인 실버타운입니다. <br> 
+            	우리는 최첨단 시설과 다양한 프로그램을 통해 <br> 
+            	고객에게 최고의 경험을 제공합니다.
             </p>
-            
+            <p>
+              우리의 목표는 모든 세대가 즐길 수 있는 <br> 
+              커뮤니티를 만드는 것이며, <br>
+              이를 위해 꾸준히 노력하고 있습니다.
+            </p>
           </div>
         </div>
       </div>
@@ -139,16 +143,31 @@
               </div>
             </div>
 
-            <div class="offset-md-0 offset-lg-1 col-sm-12 col-md-5 col-lg-5 col-xl-4" data-aos="fade-up">
+            <div class="offset-md-0 col-sm-12 col-md-5 col-lg-5 col-xl-4" data-aos="fade-up">
               <div class="px-3">
-                <h2 class="content-title text-start">
-                  일생을 건강하게, 
-                </h2>
+                <h2 class="content-title text-start"></h2>
                 <p class="lead">
-                  소개글
+                  TOPAZ는 고객 만족을 최우선으로 하며, <br>
+                  친환경적이고 지속 가능한 방법으로 <br> 
+                  사업을 운영합니다.<br>
+                  또한, 직원의 행복과 성장을 중요하게 여기며, <br>
+                  모든 이해관계자와의 신뢰를 바탕으로 하는 <br> 
+                  경영 방침을 고수합니다.<br>
+				  TOPAZ는 지속 가능한 혁신을 통해<br>
+				  고객에게 더 나은 삶을 제공합니다.<br>
+				  우리는 끊임없이 변화를 모색하며,<br>
+				  사회적 책임을 다하고자 합니다.
                 </p>
-                <p class="mb-5">
-                  소개글
+                <p>
+                  	<ul>
+		                <li>고객 만족 최우선</li>
+		                <li>친환경 경영</li>
+		                <li>직원 성장과 행복</li>
+		                <li>지속 가능한 발전</li>
+		                <li>지속 가능한 성장</li>
+		                <li>사회적 가치 창출</li>
+		                <li>혁신적 서비스 제공</li>
+                	</ul>
                 </p>
               </div>
             </div>
@@ -157,193 +176,30 @@
       </div>
     </section><!-- Section 2 -->
    
-    <!-- Posts Section -->
-    <section id="blog-posts" class="blog-posts section">
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>알림마당</h2>
-      </div><!-- End Section Title -->
+    <!-- Section: 오시는길 -->
+    <section id="location" class="location section light-background">
       <div class="container">
-
-        <div class="row gy-4">
-          <div class="col-md-6 col-lg-4">
-            <div class="post-entry" data-aos="fade-up" data-aos-delay="100">
-              <a href="#" class="thumb d-block"><img src="/topaz/assets/img/img_h_4.jpg" alt="Image" class="img-fluid rounded"></a>
-
-              <div class="post-content">
-                <div class="meta">
-                  <a href="#" class="cat">Development</a> •
-                  <span class="date">July 20, 2020</span>
-                </div>
-                <h3><a href="#">There live the blind texts they live</a></h3>
-                <p>
-                  Far far away, behind the word mountains, far from the countries
-                  Vokalia and Consonantia, there live the blind texts.
+        <div class="content">
+          <div class="row justify-content-center">
+            <div class="col-lg-7">
+              <div data-aos="fade-up">
+                <h2 class="content-title text-center">오시는길</h2>
+                <br>
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3166.331435233709!2d126.87738367640281!3d37.47650442928474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b61e357402a11%3A0x14df9fc56994724c!2zSVTsnpDrsJTsoITslaHqta3ruYTsp4Dsm5Ag6rWs65SU7JWE7Lm0642w66-4!5e0!3m2!1sko!2sus!4v1721369791264!5m2!1sko!2sus" 
+						width="750" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+				</iframe>
+				 <p>
+                  서울특별시 금천구 가산디지털2로 95<br>
+                  전화번호: 02-1234-1234
+                  팩스: 02-123-1234
                 </p>
-
-                <div class="d-flex author align-items-center">
-                  <div class="pic">
-                    <img src="/topaz/assets/img/team/team-3.jpg" alt="Image" class="img-fluid rounded-circle">
-                  </div>
-                  <div class="author-name">
-                    <strong class="d-block">Winston Gold</strong>
-                    <span class="">Lead Product Designer</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4">
-            <div class="post-entry" data-aos="fade-up" data-aos-delay="200">
-              <a href="#" class="thumb d-block"><img src="/topaz/assets/img/img_h_2.jpg" alt="Image" class="img-fluid rounded"></a>
-
-              <div class="post-content">
-                <div class="meta">
-                  <a href="#" class="cat">Development</a> •
-                  <span class="date">July 20, 2020</span>
-                </div>
-                <h3><a href="#">There live the blind texts they live</a></h3>
-                <p>
-                  Far far away, behind the word mountains, far from the countries
-                  Vokalia and Consonantia, there live the blind texts.
-                </p>
-
-                <div class="d-flex author align-items-center">
-                  <div class="pic">
-                    <img src="/topaz/assets/img/team/team-2.jpg" alt="Image" class="img-fluid rounded-circle">
-                  </div>
-                  <div class="author-name">
-                    <strong class="d-block">Winston Gold</strong>
-                    <span class="">Lead Product Designer</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4">
-            <div class="post-entry" data-aos="fade-up" data-aos-delay="300">
-              <a href="#" class="thumb d-block"><img src="/topaz/assets/img/img_h_3.jpg" alt="Image" class="img-fluid rounded"></a>
-
-              <div class="post-content">
-                <div class="meta">
-                  <a href="#" class="cat">Development</a> •
-                  <span class="date">July 20, 2020</span>
-                </div>
-                <h3><a href="#">There live the blind texts they live</a></h3>
-                <p>
-                  Far far away, behind the word mountains, far from the countries
-                  Vokalia and Consonantia, there live the blind texts.
-                </p>
-
-                <div class="d-flex author align-items-center">
-                  <div class="pic">
-                    <img src="/topaz/assets/img/team/team-1.jpg" alt="Image" class="img-fluid rounded-circle">
-                  </div>
-                  <div class="author-name">
-                    <strong class="d-block">Winston Gold</strong>
-                    <span class="">Lead Product Designer</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section><!-- Posts Section 끝 -->
-
-    <!-- Slide Section -->
-    <section id="testimonials" class="testimonials section">
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <p>Happy Customers</p>
-        <h2>Testimonials</h2>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up">
-        <div class="row justify-content-center">
-          <div class="col-lg-7">
-            <div class="swiper init-swiper">
-              <script type="application/json" class="swiper-config">
-                {
-                  "loop": true,
-                  "speed": 600,
-                  "autoplay": {
-                    "delay": 5000
-                  },
-                  "slidesPerView": "auto",
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "type": "bullets",
-                    "clickable": true
-                  },
-                  "breakpoints": {
-                    "320": {
-                      "slidesPerView": 1,
-                      "spaceBetween": 40
-                    },
-                    "1200": {
-                      "slidesPerView": 1,
-                      "spaceBetween": 1
-                    }
-                  }
-                }
-              </script>
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <div class="testimonial mx-auto">
-                    <figure class="img-wrap">
-                      <img src="/topaz/assets/img/testimonials/testimonials-1.jpg" alt="Image" class="img-fluid">
-                    </figure>
-                    <h3 class="name">Adam Aderson</h3>
-                    <blockquote>
-                      <p>
-                        “There live the blind texts. Separated they live in
-                        Bookmarksgrove right at the coast of the Semantics, a large
-                        language ocean.”
-                      </p>
-                    </blockquote>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="testimonial mx-auto">
-                    <figure class="img-wrap">
-                      <img src="/topaz/assets/img/testimonials/testimonials-2.jpg" alt="Image" class="img-fluid">
-                    </figure>
-                    <h3 class="name">Lukas Devlin</h3>
-                    <blockquote>
-                      <p>
-                        “There live the blind texts. Separated they live in
-                        Bookmarksgrove right at the coast of the Semantics, a large
-                        language ocean.”
-                      </p>
-                    </blockquote>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="testimonial mx-auto">
-                    <figure class="img-wrap">
-                      <img src="/topaz/assets/img/testimonials/testimonials-3.jpg" alt="Image" class="img-fluid">
-                    </figure>
-                    <h3 class="name">Kayla Bryant</h3>
-                    <blockquote>
-                      <p>
-                        “There live the blind texts. Separated they live in
-                        Bookmarksgrove right at the coast of the Semantics, a large
-                        language ocean.”
-                      </p>
-                    </blockquote>
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-pagination"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section><!-- Slide Section 끝 -->
-
+    </section>
+    
   </main>
 
   <!-- footer -->

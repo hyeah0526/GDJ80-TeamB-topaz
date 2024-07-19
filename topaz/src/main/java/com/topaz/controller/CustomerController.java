@@ -195,9 +195,40 @@ public class CustomerController {
 		return "redirect:/customer/gstMyInfo";
 	}
 	
+	/*
+	 * 서비스명: -
+	 * 시작 날짜: 2024-07-19
+	 * 담당자: 박수지
+	 */
+	
+	@GetMapping("/customer/infoRegidentDiamond")
+	public String diamond() {
+		
+		return "customer/infoRegidentDiamond";
+	}
 	
 	
+	/*
+	 * 서비스명: -
+	 * 시작 날짜: 2024-07-19
+	 * 담당자: 박수지
+	 */
 	
+	@GetMapping("/customer/infoRegidentSilver")
+	public String silver() {
+		
+		return "customer/infoRegidentSilver";
+	}
 	
+	/*
+	 * 서비스명: -
+	 * 시작 날짜: 2024-07-19
+	 * 담당자: 박수지
+	 */
 	
+	@GetMapping("/customer/infoStep")
+	public String step() {
+		
+		return "customer/infoStep";
+	}
 }

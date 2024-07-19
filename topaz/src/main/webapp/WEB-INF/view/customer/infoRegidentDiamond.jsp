@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <title>입주 설명 A</title>
   <!-- Favicons -->
-  <link href="/topaz/assets/img/TOPAZ_logo.png" rel="icon">
+   <link href="/topaz/assets/img/TOPAZ_logo.png" rel="icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -24,6 +24,18 @@
 
   <!-- Main CSS File -->
   <link href="/topaz/assets/css/main.css" rel="stylesheet">
+  
+  <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
 </head>
 
 <body class="portfolio-page">
@@ -44,10 +56,9 @@
           <li><a href="infoPrograms">프로그램</a></li>
           <li class="dropdown"><a href="infoRegident" class="active"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="infoRegidentA">A동</a></li>
-              <li><a href="#">B동</a></li>
-              <li><a href="#">C동</a></li>
-              <li><a href="#">Dropdown 4</a></li>
+              <li><a href="infoRegidentDiamond">다이아몬드동</a></li>
+              <li><a href="infoRegidentSilver">실버동</a></li>
+              <li><a href="infoStep">입주 절차</a></li>
             </ul>
           </li>
           <li><a href="volunteerRqAdd">봉사 신청</a></li>
@@ -65,7 +76,7 @@
 
       <div class="container">
         <div class="content">
-          <div class="row justify-content-center">
+          <div class="row justify-content-center" style="margin-top: 50px">
             <div class="col-sm-12 col-md-5 col-lg-4 col-xl-4 order-lg-2 offset-xl-1 mb-4">
               <div class="img-wrap text-center text-md-left" data-aos="fade-up" data-aos-delay="100">
                 <div class="img">
@@ -74,17 +85,41 @@
               </div>
             </div>
 
-            <div class="offset-md-0 offset-lg-1 col-sm-12 col-md-5 col-lg-5 col-xl-4" data-aos="fade-up">
+            <div class="offset-md-0 col-sm-12 col-md-5 col-lg-5 col-xl-4" data-aos="fade-up">
               <div class="px-3">
                 <h2 class="content-title text-start">
-                  세대소개입니당
+                  다이아몬드동
                 </h2>
-                <p class="lead">
-                  소개글
-                </p>
-                <p class="mb-5">
-                  소개글
-                </p>
+                <p>다이아몬드동은 현대적인 디자인과 편의 시설을<br>
+                갖춘 공간으로, A타입은 1인 가구에 이상적인 <br>
+                생활 공간을 제공합니다. B타입은 2인 가구에<br>
+                이상적인 생활 공간을 제공합니다. 각각의 유닛은 <br>
+                최신 가전 제품과 개인의 프라이버시를 <br>
+                보장하는 설계로 구성되어 있습니다.</p>
+
+				<br>
+				<h2 class="content-title text-start">주거 타입</h2>
+		        <table>
+		            <thead>
+		                <tr>
+		                    <th>타입</th>
+		                    <th>면적</th>
+		                    <th>구성</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr>
+		                    <td>A타입</td>
+		                    <td>20평</td>
+		                    <td>방 1개, 화장실 1개, 주방 겸 거실</td>
+		                </tr>
+		                <tr>
+		                    <td>B타입</td>
+		                    <td>25평</td>
+		                    <td>방 2개, 화장실 1개, 주방 겸 거실</td>
+		                </tr>
+		            </tbody>
+		        </table>
               </div>
             </div>
           </div>
