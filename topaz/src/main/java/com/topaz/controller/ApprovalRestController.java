@@ -1,7 +1,12 @@
 
 package com.topaz.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,6 +74,25 @@ public class ApprovalRestController {
 		
 		return updateRow;
 	}
-
+	
+	
+	/*
+	 * 서비스명: getFirstApprovalList
+	 * 시작 날짜: 2024-07-19
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/approval/firstApprovalSelect")
+	public List<Map<String, Object>> firstApprovalSelect(@RequestParam("FirstApprovalName") String FirstApprovalName
+														,@RequestParam("empGrade") String empGrade){
+		
+		log.debug(Debug.PHA + "firstApprovalSelect REstController FirstApprovalName--> " + FirstApprovalName + Debug.END);
+		log.debug(Debug.PHA + "firstApprovalSelect REstController empGrade--> " + empGrade + Debug.END);
+		
+		
+		List<Map<String, Object>> list = approvalService.getFirstApprovalList(FirstApprovalName, empGrade);
+		log.debug(Debug.PHA + "firstApprovalSelect REstController list--> " + list + Debug.END);
+		
+		return list;
+	}
 
 }

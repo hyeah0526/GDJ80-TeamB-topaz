@@ -1,6 +1,7 @@
 package com.topaz.mapper;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -22,4 +23,10 @@ public interface ApprovalMapper {
 	
 	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 수정 */
 	int updateApprovalSign(String empNo);
+	
+	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 첫번째 결재자 리스트 조회 */
+	List<Map<String, Object>> selectFirstApproval(String FirstApprovalName, String empGrade);
+	
+	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 부서 카테고리 리스트 조회 */
+	List<Map<String, Object>> selectDeptList();
 }

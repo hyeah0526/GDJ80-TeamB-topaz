@@ -3,6 +3,7 @@ package com.topaz.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -160,6 +161,25 @@ public class ApprovalService {
 		}
         
 		return updateRow;
+	}
+	
+	
+	
+	/*
+	 * 분류 번호: #11 - 신규 결재 :: 중간 결재자 리스트 가져오기
+	 * 시작 날짜: 2024-07-19
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getFirstApprovalList(String FirstApprovalName, String empGrade){
+		
+		log.debug(Debug.PHA + "getFirstApprovalList service FirstApprovalName--> " + FirstApprovalName + Debug.END);
+		log.debug(Debug.PHA + "getFirstApprovalList service empGrade--> " + empGrade + Debug.END);
+		
+		List<Map<String, Object>> list = approvalMapper.selectFirstApproval(FirstApprovalName, empGrade);
+		log.debug(Debug.PHA + "getFirstApprovalList service list--> " + list + Debug.END);
+		
+		return list;
+		
 	}
 	
 }

@@ -101,6 +101,7 @@
 				AND o.outsourcing_type LIKE CONCAT('%',#{searchType},'%')
 			</if> 
 		</where>
+		ORDER BY o.reg_time DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	

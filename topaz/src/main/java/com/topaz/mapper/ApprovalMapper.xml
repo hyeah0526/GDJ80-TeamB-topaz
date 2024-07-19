@@ -50,8 +50,9 @@
 		SELECT 
 			  e.emp_no empNo
 			, e.emp_name empName
-			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = e.emp_dept) empDept
-			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = e.emp_grade) empGrade
+			, e.emp_grade empGrade
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = e.emp_dept) empDeptName
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = e.emp_grade) empGradeName
 			, e.sign_file signFile
 		FROM 
 			employee e 
@@ -74,5 +75,36 @@
 		AND 
 			e.emp_no = #{empNO}
 	</update>
+	
+	
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 첫번째 결재자 리스트 조회 -->
+	<select id="selectFirstApproval" parameterType="String" resultType="map">
+		SELECT 
+			e.emp_no empNo
+			,e.emp_name empName
+			, e.emp_dept empDept
+			,(SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = e.emp_dept) empDeptName
+			, e.emp_grade empGrade
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = e.emp_grade) empGradeName
+		FROM 
+			employee e
+		WHERE 
+			e.emp_grade > 1
+		AND 
+			e.emp_dept = #{FirstApprovalName}
+		ORDER BY e.emp_grade DESC
+	</select>
+	
+	
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 부서 카테고리 리스트 조회 -->
+	<select id="selectDeptList" resultType="map">
+		SELECT 
+			  cd departmentCode
+			, cd_nm departmentName
+		FROM 
+			common_code
+		WHERE 
+			crp_cd = 'E001'
+	</select>
 	
 </mapper>

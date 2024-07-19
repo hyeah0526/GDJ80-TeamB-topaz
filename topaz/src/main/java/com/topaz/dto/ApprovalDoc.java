@@ -1,8 +1,5 @@
 package com.topaz.dto;
 
-import java.util.List;
-import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,13 +11,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ApprovalDoc {
 	
-	// approval_doc
 	private String approvalDocNo;
-	private String templateNo;
+	private String approvalType;		// 공통 코드 S002(1:휴가, 2:기획, 3:경비)
 	private String empNo;
-	private String approvalState;
+	private String approvalState; 		// 공통 코드 S001(1:취소, 2:반려, 3: 대기 4:진행, 5:승인)
 	private String docTitle;
-	private String docContent;
+	private String firstApproval; 		// 중간 결재자 emp_no
+	private String finalApproval; 		// 최종 결재자 emp_no
+	private String docFirstContent; 	// 휴가(휴가종류),  기획(기획종류), 경비(금액)
+	private String docSecondContent;	// 휴가(비상연락망), 기획(문서 첨부파일), 경비(영수증 첨부파일)
+	private String docThirdContent;		// 휴가(사유), 기획(내용), 경비(내용)
 	private String startDate;
 	private String endDate;
 	private String regId;

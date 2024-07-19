@@ -36,8 +36,9 @@
     <section class="section">
 	    <div class="col-lg-12">
 	    	<div class="card"><div class="card-body">
-	    		<!-- 서명 여부 조회(signFile/empGrade/empDept/empName/empNo) -->
+	    		<!-- 서명 여부 조회(signFile/empGrade/empDeptName/empName/empNo) -->
 	    		<c:set var="s" value="${empSign}"></c:set>
+	    		<input type="hidden" name="empGrade" id="empGrade" value="${s.empGrade}">
 				<!-- 서명이 없을 경우 신규 등록 버튼 -->
 				<c:if test="${s.signFile eq null}">
 					<h6 class="card-title">
@@ -60,12 +61,12 @@
 					
 					<label for="profileImage" class="col-md-1 col-lg-1 col-form-label text-center">소속</label>
 					<div class="col-md-2 col-lg-2">
-						<input class="form-control" type="tel" value="${s.empDept}" readonly>
+						<input class="form-control" type="tel" value="${s.empDeptName}" readonly>
 					</div>
 					
 					<label for="profileImage" class="col-md-1 col-lg-1 col-form-label text-center">직위</label>
 					<div class="col-md-2 col-lg-2">
-						<input class="form-control" type="tel" value="${s.empGrade}" readonly>
+						<input class="form-control" type="tel" value="${s.empGradeName}" readonly>
 					</div>
 				</div><br>
 	
@@ -99,30 +100,45 @@
 							<h1>휴가 신청서</h1>
 						</div>
 						
+						<form action="">
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">중 간 결 재 자</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="text" name="" id="" value="">
+								<select class="form-select" id="dayOffFirstApproval">
+									<c:forEach var="d" items="${deptList}">
+										<option value="${d.departmentCode}">${d.departmentName}</option>
+									</c:forEach>
+								</select>
+								<div id=firstApprovalSetDayOffDiv>
+									<!-- 선택된 중간결재자 정보 나오는 창 -->
+								</div>
 							</div>
 							<div class="col-lg-2" id="">
-								<button class="btn btn-primary">검색</button>
+								<button type="button" class="btn btn-primary" id="dayOffFirstApprovalBtn">검색</button>
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">최 종 결 재 자</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="text" name="" id="" value="">
+								<select class="form-select" id="dayOffFinalApproval">
+									<c:forEach var="d" items="${deptList}">
+										<option value="${d.departmentCode}">${d.departmentName}</option>
+									</c:forEach>
+								</select>
+								<div id=FinalApprovalSetDayOffDiv>
+									<!-- 선택된 최종결재자 정보 나오는 창 -->
+								</div>
 							</div>
 							<div class="col-lg-2" id="">
-								<button class="btn btn-primary">검색</button>
+								<button type="button" class="btn btn-primary" id="dayoffFinalApprovalBtn">검색</button>
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">휴 가 종 류</label>
 							<div class="col-lg-4">
-								<select class="form-select" id="dayOffType">
+								<select class="form-select" id="dayOffType" name="docFirstContent">
 									<option value="Y">연차</option>
 									<option value="M">월차</option>
 									<option value="AH">오전 반차</option>
@@ -134,36 +150,36 @@
 						<div class="row mb-4 justify-content-center" id="dayOffYear">
 							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="" id="" value="">
+								<input class="form-control" type="date" name="startDate" id="" value="">
 							</div>
 							~
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="" id="" value="">
+								<input class="form-control" type="date" name="endDate" id="" value="">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center" id="dayOffMonth" style="display: none;">
 							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="" id="" value="">
+								<input class="form-control" type="date" name="startDate" id="" value="">
 							</div>
 							~
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="" id="" value="">
+								<input class="form-control" type="date" name="endDate" id="" value="">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center" id="dayOffHalfAm" style="display: none;">
 							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="date" name="" id="" value="">
+								<input class="form-control" type="date" name="startDate" id="" value="">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center" id="dayOffHalfPm" style="display: none;">
 							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="date" name="" id="" value="">
+								<input class="form-control" type="date" name="startDate" id="" value="">
 							</div>
 						</div>
 						
@@ -171,14 +187,14 @@
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">비 상 연 락 망</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="text" name="" id="" value="">
+								<input class="form-control" type="text" name="docSecondContent" id="" value="">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">사 유</label>
 							<div class="col-lg-4" id="">
-								<textarea class="form-control" style="height: 150px;" placeholder="신청사유를 작성해주세요"></textarea>
+								<textarea class="form-control" name="docThirdContent" style="height: 150px;" placeholder="신청사유를 작성해주세요"></textarea>
 							</div>
 						</div>
 						
@@ -188,7 +204,7 @@
 								<button type="button" class="btn btn-primary" style="width: 150px;">신청</button>
 							</div>
 						</div>
-						
+					</form>
 					</div>
 					
 					
@@ -201,20 +217,34 @@
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">중 간 결 재 자</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="text" name="" id="" value="">
+								<select class="form-select" id="eventFirstApproval">
+									<c:forEach var="d" items="${deptList}">
+										<option value="${d.departmentCode}">${d.departmentName}</option>
+									</c:forEach>
+								</select>
+								<div id=firstApprovalSetEventDiv>
+									<!-- 선택된 중간결재자 정보 나오는 창 -->
+								</div>
 							</div>
 							<div class="col-lg-2" id="">
-								<button class="btn btn-primary">검색</button>
+								<button class="btn btn-primary" id="eventFinalApprovalBtn">검색</button>
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">최 종 결 재 자</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="text" name="" id="" value="">
+								<select class="form-select" id="eventFinalApproval">
+									<c:forEach var="d" items="${deptList}">
+										<option value="${d.departmentCode}">${d.departmentName}</option>
+									</c:forEach>
+								</select>
+								<div id=FinalApprovalSetEventDiv>
+									<!-- 선택된 최종결재자 정보 나오는 창 -->
+								</div>
 							</div>
 							<div class="col-lg-2" id="">
-								<button class="btn btn-primary">검색</button>
+								<button class="btn btn-primary" id="finalApproval">검색</button>
 							</div>
 						</div>
 						
@@ -278,20 +308,34 @@
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">중 간 결 재 자</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="text" name="" id="" value="">
+								<select class="form-select" id="expenseFirstApproval">
+									<c:forEach var="d" items="${deptList}">
+										<option value="${d.departmentCode}">${d.departmentName}</option>
+									</c:forEach>
+								</select>
+								<div id=firstApprovalSetExpenseDiv>
+									<!-- 선택된 중간결재자 정보 나오는 창 -->
+								</div>
 							</div>
 							<div class="col-lg-2" id="">
-								<button class="btn btn-primary">검색</button>
+								<button class="btn btn-primary" id="expenseFirstApprovalBtn">검색</button>
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">최 종 결 재 자</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="text" name="" id="" value="">
+								<select class="form-select" id="expenseFirstApproval">
+									<c:forEach var="d" items="${deptList}">
+										<option value="${d.departmentCode}">${d.departmentName}</option>
+									</c:forEach>
+								</select>
+								<div id=firstApprovalSetExpenseDiv>
+									<!-- 선택된 중간결재자 정보 나오는 창 -->
+								</div>
 							</div>
 							<div class="col-lg-2" id="">
-								<button class="btn btn-primary">검색</button>
+								<button class="btn btn-primary" id="ExpenseFinalApprovalBtn">검색</button>
 							</div>
 						</div>
 						
@@ -333,6 +377,7 @@
 						</div>
 						
 					</div>
+				</form>
 				</div><!-- End Default Tabs -->
 	
 			</div></div>
@@ -401,6 +446,28 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary save" data-action="signModSave">서명 저장</button>
+				</div>
+				
+			</div></div>
+		</div><!-- End addRsvn Modal-->
+		
+		
+		<!-- 결재자 확인하는 모달 -->
+		<div class="modal fade" id="approvalSelectModal" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+				<!-- 모달 제목 -->
+				<div class="modal-header">
+					<h5 class="modal-title">결재자 선택</h5>
+				</div>
+				
+				<div class="modal-body" id="firstApprovalModal" style="margin: auto;">
+					<!-- 리스트 적용 -->
+				</div>
+					
+				<!-- 모달 서명 수정버튼 취소 -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary save" id="saveFirstApprovalBtn">선택</button>
 				</div>
 				
 			</div></div>

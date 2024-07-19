@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.topaz.dto.ApprovalTemplate;
+import com.topaz.mapper.ApprovalMapper;
 import com.topaz.service.ApprovalService;
 import com.topaz.utill.Debug;
 
@@ -24,9 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ApprovalController {
 	
 	@Autowired ApprovalService approvalService;
+	@Autowired ApprovalMapper approvalMapper;
 	
 	/*
-	 * 서비스명: 
+	 * 서비스명: approvalService
 	 * 시작 날짜: 2024-07-17
 	 * 담당자: 박혜아
 	*/
@@ -43,7 +45,13 @@ public class ApprovalController {
 		Map<String, Object> empSign = approvalService.getEmpSign(empNo);
 		log.debug(Debug.PHA + "approval Controller empSign--> " + empSign + Debug.END);
 		
+		// 부서 리스트 가져오기
+		List<Map<String, Object>> deptList = approvalMapper.selectDeptList();
+		log.debug(Debug.PHA + "approval Controller deptList--> " + deptList + Debug.END);
+		
+		// 값 담기
 		model.addAttribute("empSign", empSign);
+		model.addAttribute("deptList", deptList);
 		
 		
 		return "groupware/approval/approvalAdd"; 
