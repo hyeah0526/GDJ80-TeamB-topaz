@@ -113,20 +113,20 @@ public class NoticeController {
 	}
 
 	/*
-	 * 서비스명: noticeAdd() 담당자: 김지훈
-	 */
+	 * 서비스명: noticeAdd()
+	 * 시작 날짜: 2024-07-19 (수정)
+	 * 담당자: 김인수
+ 	*/
 
 	// 입력 액션
 	@PostMapping("/groupware/notice/noticeAdd")
-	public String noticeAdd(@Valid NoticeRequest noticeRequest, Errors errors, Model model,
-			HttpServletRequest  httpServletRequest,
-			@RequestParam("title") String title,
-            @RequestParam("content") String content,
-            @RequestParam("grade") String grade,
-            @RequestParam("category") String category,
-            @RequestParam("startDate") String startDate,
-            @RequestParam("endDate") String endDate) {
+	public String noticeAdd(
+			@Valid NoticeRequest noticeRequest, 
+			Errors errors, 
+			Model model,
+			HttpServletRequest  httpServletRequest) {
 	   
+		log.debug(Debug.KJH + " Controller / noticeAdd /  errors  : " + errors);
 		
 		// 세션가져와서 empNo세팅
 		HttpSession session = httpServletRequest.getSession();
@@ -136,24 +136,35 @@ public class NoticeController {
 		noticeRequest.setModId(empNo);	
 		
 		// 매개값 디버깅
-		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd noticeRequest: ", noticeRequest.toString());
+		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd noticeRequest: " +  noticeRequest.toString());
 		// 에러 발생 시 true
-		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd errors: ", errors.toString());
-		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd hasErrors: ", errors.hasErrors());
+		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd errors: " + errors.toString());
+		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd hasErrors: " + errors.hasErrors());
 		// true의 개수 cnt
-		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd errorCnt: ", errors);
+		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd errorCnt: " + errors);
 
-	   if(errors.hasErrors()) {
-		   for(FieldError e : errors.getFieldErrors()) {
-			   // 에러가 발생한 form의 name을 출력
-			   log.debug(Debug.KJH + "/ Controller <POST> noticeAdd Validation fieldName: ", e.getField());
-			   // NoticeRequest에 Mapping되어 있는 에러 메시지
-			   log.debug(Debug.KJH + "/ Controller <POST> noticeAdd Validation fieldName: ", e.getDefaultMessage());	
-			   // 필드 이름 + 메시지를 담아 모델에 추가
-			   model.addAttribute(e.getField() + "Error", e.getDefaultMessage());
-		   }
-		   return "groupware/notice/noticeAdd";
-	   }
+		if(errors.hasErrors()) {
+			
+			//업로드 파일 예외처리 
+			if(noticeRequest.getUploadFile() == null || noticeRequest.getUploadFile().isEmpty()) {
+				// 유효성 검사 실패 메세지 담기
+				model.addAttribute("uploadFileMsg", "업로드파일 선택해주세요");
+			}
+			
+			//예외 발생 시 출력
+			for(FieldError e : errors.getFieldErrors()) {
+				// 에러가 발생한 form의 name을 출력
+				log.debug(Debug.KJH + "/ Controller <POST> noticeAdd Validation fieldName: " + e.getField()  + Debug.END );
+				// NoticeRequest에 Mapping되어 있는 에러 메시지
+				log.debug(Debug.KJH + "/ Controller <POST> noticeAdd Validation fieldName: " + e.getDefaultMessage()  + Debug.END);	
+				// 필드 이름 + 메시지를 담아 모델에 추가
+				model.addAttribute(e.getField() + "Msg", e.getDefaultMessage());
+			}
+			
+			return "groupware/notice/noticeAdd";
+		}
+		 
+	
 	   // NoticeRequest 객체를 Notice 객체로 변환
         Notice notice = noticeRequest.toNotice();
 

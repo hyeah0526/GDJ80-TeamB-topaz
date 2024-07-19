@@ -28,4 +28,5 @@ public interface NoticeMapper {
 	
 	/*  분류 번호: #10 - 공지 사항 목록 페이지 - 페이징 */
 	int noticeCnt(Map<String, Object> paramMap);
+	
 }

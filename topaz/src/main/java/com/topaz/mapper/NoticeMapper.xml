@@ -32,12 +32,31 @@
 	<insert id="insertNotice" parameterType="com.topaz.dto.Notice">
 	
 		INSERT INTO news_notice(
-			news_no, title, content, grade, category, start_date, end_date, views,
-			reg_time, mod_time, reg_id, mod_id, use_yn
+			news_no, 
+			title, 
+			content, 
+			grade, 
+			category, 
+			start_date, 
+			end_date, 
+			reg_id, 
+			reg_time, 
+			mod_id, 
+			mod_time, 
+			use_yn			
 		) VALUES (
-		    CURRENT_TIMESTAMP(5), #{title}, #{content}, #{grade}, #{category}, 
-		    #{startDate}, #{endDate}, 
-		    NULL, NOW(), NOW(), #{regId}, #{modId}, 'Y'
+		    CURRENT_TIMESTAMP(5), 
+		    #{title}, 
+		    #{content}, 
+		    #{grade}, 
+		    #{category}, 
+		    #{startDate}, 
+		    #{endDate}, 
+		    #{regId}, 
+		    NOW(), 
+		    #{modId}, 
+		    NOW(), 
+		    'Y'		   
 		);
 </insert>
 	<!-- 분류 번호: #10 - 공지 사항 상세 페이지 -->

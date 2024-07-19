@@ -64,6 +64,8 @@ public class NoticeService {
 		// 파일 업로드 경로
 		String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
 	    
+		log.debug(Debug.KIS + "/ service / addNotice noticeRequest: " + imagePath);
+		
 		// 업로드 파일 처리
 		if(!noticeRequest.getUploadFile().isEmpty()) {
 			// 파일의 이름을 UUID를 사용하여 설정
