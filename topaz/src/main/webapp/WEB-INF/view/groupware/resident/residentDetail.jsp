@@ -142,7 +142,7 @@
 	              
             	<!-- 수정 -->  
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-					<form action="/topaz/groupware/resident/residentDetail?gstId=${resident.gstId }" method="post" enctype="multipart/form-data" >
+					<form action="/topaz/groupware/resident/residentDetail?gstId=${resident.gstId }" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                 		<div class="form-container">
 							<div class="row">
 		                    	<div class="col-lg-6 col-md-6">
@@ -191,7 +191,7 @@
 									    <div class="info-item mb-3">
 									        <span class="label ">계약기간</span>
 									        <span><input class="form-control date-input" style="width: 160px; display: inline;" name="contractStart" type="datetime" value = "${resident.contractStart }" disabled="disabled"></span>  ~ 
-									        <span><input style="width: 160px; display: inline" class="form-control date-input" name="contractEnd" type="datetime" value = "${resident.contractEnd }"></span>
+									        <span><input style="width: 160px; display: inline" class="form-control date-input" name="contractEnd" type="datetime" value = "${resident.contractEnd }" placeholder="yyyy-mm-dd"></span>
 										</div>
 										<div class="info-item mb-3">
 										    <span class="label">객실, 타입</span>
@@ -240,6 +240,44 @@
 
    </main><!-- End #main -->
    <!-- =============================== Main 메인 끝 부분 ================================ -->
+  	<script>
+  	function validateForm() {
+        var fileInput = document.querySelector('input[name="uploadFile"]');
+  		var phone = document.querySelector('input[name="gstPhone"]');
+  		var email = document.querySelector('input[name="gstEmail"]');
+        var contractStart = document.querySelector('input[name="contractStart"]');
+        var contractEnd = document.querySelector('input[name="contractEnd"]');
+
+        // 검사 조건들
+        if (fileInput.value == "") {
+            alert("파일이 선택되지 않았습니다.");
+            return false;
+        }
+        
+        if (phone.value == "") {
+            alert("전화번호가 입력되지 않았습니다.");
+            return false;
+        }
+
+        if (email.value == "") {
+            alert("이메일이 입력되지 않았습니다.");
+            return false;
+        }
+
+        if (contractEnd.value == "") {
+            alert("계약기간 만료일이 입력되지 않았습니다.");
+            return false;
+        }
+
+        if (new Date(contractStart.value) >= new Date(contractEnd.value)) {
+            alert("계약기간 시작일은 만료일보다 빨라야 합니다.");
+            return false;
+        }
+
+        // 모든 검사가 통과되면 폼 제출을 허용
+        return true;
+    }
+  	</script>
    
    <!-- ======= footer 부분 ======= -->
    <jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>

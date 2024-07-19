@@ -28,7 +28,6 @@ public class GuestRequest {
 	private String protectorName;
 	private String protectorPhone;
 	private String protectorRelation;
-	private String fileNo;
 	private String regTime;
 	private String modTime;
 	private String regId;
@@ -57,7 +56,6 @@ public class GuestRequest {
 		guest.setProtectorName(this.protectorName);
 		guest.setProtectorPhone(this.protectorPhone);
 		guest.setProtectorRelation(this.protectorRelation);
-		guest.setFileNo(this.fileNo);
 		guest.setRegTime(this.regTime);
 		guest.setModTime(this.modTime);
 		guest.setRegId(this.regId);

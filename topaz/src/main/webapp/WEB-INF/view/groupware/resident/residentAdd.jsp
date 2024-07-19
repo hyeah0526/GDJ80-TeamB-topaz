@@ -47,7 +47,7 @@
             <div class="card-body pt-3">
             	
                 <div class="tab-pane show profile-edit pt-3" id="profile-edit">
-					<form action="/topaz/groupware/resident/residentAdd" method="post" enctype="multipart/form-data">
+					<form action="/topaz/groupware/resident/residentAdd" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                 		
 						<div class="row">
 	                    	<div class="col-lg-6 col-md-6">
@@ -66,7 +66,7 @@
 
 	                    		<div class="info-item mb-3">
 								    <span class="label" >사진</span>
-								    <span><input class="form-control" type="file" id="formFile" name="uploadFile"></span>
+								    <span><input class="form-control" style="width: 200px" type="file" id="formFile" name="uploadFile"></span>
 								</div>
 								
 								<div class="info-item mb-3">
@@ -109,8 +109,8 @@
 								<div class="col-lg-6 col-md-6">
 								    <div class="info-item mb-3">
 								        <span class="label ">계약기간</span>
-								        <span><input class="form-control date-input" style="width: 160px; display: inline" name="contractStart" type="datetime" ></span>  ~ 
-								        <span><input style="width: 160px; display: inline" class="form-control date-input" name="contractEnd" type="datetime" ></span>
+								        <span><input class="form-control date-input" style="width: 160px; display: inline; text-align: right" name="contractStart" type="datetime" placeholder="yyyy-mm-dd"></span>  ~ 
+								        <span><input style="width: 160px; display: inline; text-align: right" class="form-control date-input" name="contractEnd" type="datetime" placeholder="yyyy-mm-dd"></span>
 									</div>
 									    <!-- 객실 선택 -->
 								    <div class="info-item mb-3">
@@ -164,7 +164,7 @@
 				    			</div>
 				    			
 				    		<div class="text-center">
-		                      <button type="submit" class="btn btn-primary">Save Changes</button>
+		                      <button type="submit" class="btn btn-primary">등록하기</button>
 		                    </div>
 				    	</div>
 					</form><!-- End Profile Edit Form -->      
@@ -207,6 +207,48 @@
 	    	document.getElementById('roomHo').value = selectedRoomHo;
 	    	document.getElementById('roomState').value = selectedRoomState;
 	    	document.getElementById('roomUse').value = selectedUse;
+	    }
+	    
+	    function validateForm() {
+	        var gstId = document.querySelector('input[name="gstId"]');
+	        var roomType = document.querySelector('input[name="roomType"]');
+	        var fileInput = document.querySelector('input[name="uploadFile"]');
+	        var contractStart = document.querySelector('input[name="contractStart"]');
+	        var contractEnd = document.querySelector('input[name="contractEnd"]');
+
+	        // 검사 조건들
+	        if (gstId.value == "") {
+	            alert("고객이 선택되지 않았습니다.");
+	            return false;
+	        }
+
+	        if (roomType.value == "") {
+	            alert("객실이 선택되지 않았습니다.");
+	            return false;
+	        }
+
+	        if (fileInput.value == "") {
+	            alert("파일이 선택되지 않았습니다.");
+	            return false;
+	        }
+
+	        if (contractStart.value == "") {
+	            alert("계약기간 시작일이 입력되지 않았습니다.");
+	            return false;
+	        }
+
+	        if (contractEnd.value == "") {
+	            alert("계약기간 만료일이 입력되지 않았습니다.");
+	            return false;
+	        }
+
+	        if (new Date(contractStart.value) >= new Date(contractEnd.value)) {
+	            alert("계약기간 시작일은 만료일보다 빨라야 합니다.");
+	            return false;
+	        }
+
+	        // 모든 검사가 통과되면 폼 제출을 허용
+	        return true;
 	    }
     </script>
    <!-- ======= footer 부분 ======= -->
