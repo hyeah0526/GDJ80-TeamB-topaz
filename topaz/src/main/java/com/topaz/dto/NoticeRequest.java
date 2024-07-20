@@ -24,7 +24,7 @@ public class NoticeRequest {
     private String title;
 	
 	@NotBlank(message = "내용을 입력하세요.")
-	@Size(min = 20, message = "내용은 20자 이상 입력하세요.")
+	@Size(min = 10, message = "내용은 10자 이상 입력하세요.")
 	private String content;
 	
 	@NotBlank(message = "등급을 선택하세요.")
@@ -33,15 +33,14 @@ public class NoticeRequest {
 	@NotBlank(message = "종류를 선택하세요.")
     private String category;
 	
+	private String fileName;
     private String startDate;
     private String endDate;
-    private String views;
-    private String regTime;
-    private String modTime;
     private String regId;
+    private String regTime;
     private String modId;
+    private String modTime;
     private String useYn;
-    private String fileName;
     
     private MultipartFile uploadFile;
 
@@ -52,20 +51,18 @@ public class NoticeRequest {
         notice.setContent(this.content);
         notice.setGrade(this.grade);
         notice.setCategory(this.category);
+        notice.setFileName(fileName);
         notice.setStartDate(this.startDate);
         notice.setEndDate(this.endDate);
-        notice.setViews(this.views);
         notice.setRegTime(this.regTime);
         notice.setModTime(this.modTime);
         notice.setRegId(this.regId);
         notice.setModId(this.modId);
         notice.setUseYn(this.useYn);
-        notice.setFileName(this.fileName);
         return notice;
         
     }
     
-    //
     public UploadFile toUploadFile() {
     	UploadFile uploadFile = new UploadFile();
     	uploadFile.setReferenceNo(this.newsNo);

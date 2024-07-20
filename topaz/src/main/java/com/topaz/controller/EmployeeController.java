@@ -62,7 +62,24 @@ public class EmployeeController {
 		Map<String, Object> leaveMap = new HashMap<>();
 		leaveMap.put("empNo", employeeRequest.getEmpNo());
 		leaveMap.put("empGrade", employeeRequest.getEmpGrade());
-		leaveMap.put("yearCnt", ' ');
+		
+		//empGrade에 따라 휴가 설정
+		int yearCnt = 0; // 기본값
+		int empGrade = Integer.parseInt(employeeRequest.getEmpGrade());
+		 
+		if (empGrade == 1) {
+	        yearCnt = 10; // 사원
+	    } else if (empGrade == 2) {
+	        yearCnt = 12; // 대리
+	    } else if (empGrade == 3) {
+	        yearCnt = 15; // 팀장
+	    } else if (empGrade == 4) {
+	        yearCnt = 18; // 부장
+	    }
+		
+	    leaveMap.put("yearCnt", yearCnt);
+		
+		//디버깅
 		log.debug(Debug.KIS + "controller / empAdd / leaveMap : " + leaveMap);
 		
 		

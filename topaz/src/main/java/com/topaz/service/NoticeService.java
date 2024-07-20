@@ -58,8 +58,9 @@ public class NoticeService {
 	*/
 	
 	public int addNotice(NoticeRequest noticeRequest) {
+		
 		// notice 디버깅
-		log.debug(Debug.KJH + "/ service / addNotice noticeRequest: " + noticeRequest);
+		log.debug(Debug.KIS + "/ service / addNotice noticeRequest: " + noticeRequest);
 		
 		// 파일 업로드 경로
 		String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
@@ -82,6 +83,8 @@ public class NoticeService {
 			file.setFileName(fileName);
 			
 			int fileRow = uploadFilemapper.insertUploadFile(file);
+			
+			log.debug(Debug.KIS + "/ service / addNotice / fileRow: " + fileRow);
 			
 			if (fileRow != 1) {
 				throw new RuntimeException("파일 업로드 실패");

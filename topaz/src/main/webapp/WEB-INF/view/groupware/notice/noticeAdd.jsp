@@ -10,6 +10,7 @@
 <head>
     <!-- CSS / JS -->
     <link href="/topaz/css/jihoon.css" rel="stylesheet">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
 </head>
     <!-- ======= header <Head> 부분 ======= -->
     <jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
@@ -39,7 +40,7 @@
                                     <div class="row mb-3">
                                         <label for="addTitle" class="col-sm-2 col-form-label">제목</label>
                                         <div class="col-sm-10">
-                                        	<input type="hidden" id="userId" name="title">
+                                        	<input type="hidden" id="empGrade" name="empGrade" value="${empGrade}">
                                             <input type="text" class="form-control" id="title" name="title">
                                         </div>
                                         <span class="validMsg">${titleMsg}</span>

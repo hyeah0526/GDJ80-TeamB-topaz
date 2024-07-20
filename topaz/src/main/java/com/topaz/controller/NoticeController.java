@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.topaz.dto.Notice;
 import com.topaz.dto.NoticeRequest;
+import com.topaz.service.EmployeeService;
 import com.topaz.service.NoticeService;
 import com.topaz.utill.Debug;
 
@@ -28,6 +29,8 @@ public class NoticeController {
 	@Autowired
 	NoticeService noticeService;
 
+	@Autowired
+	EmployeeService employeeService;
 	/*
 	 * 서비스명: noticeRemove() 담당자: 김지훈
 	 */
@@ -124,24 +127,28 @@ public class NoticeController {
 			@Valid NoticeRequest noticeRequest, 
 			Errors errors, 
 			Model model,
-			HttpServletRequest  httpServletRequest) {
+			HttpServletRequest  req) {
 	   
-		log.debug(Debug.KJH + " Controller / noticeAdd /  errors  : " + errors);
+		log.debug(Debug.KIS + " Controller / noticeAdd /  noticeRequest  : " + noticeRequest);
+		log.debug(Debug.KIS + " Controller / noticeAdd /  errors  : " + errors);
+		log.debug(Debug.KIS + " Controller / noticeAdd /  model  : " + model);
+		log.debug(Debug.KIS + " Controller / noticeAdd /  req  : " + req);
 		
 		// 세션가져와서 empNo세팅
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession session = req.getSession();
 		
 		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "/ Controller / noticeAdd / empNo: " +  empNo);
 		noticeRequest.setRegId(empNo);
 		noticeRequest.setModId(empNo);	
 		
 		// 매개값 디버깅
-		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd noticeRequest: " +  noticeRequest.toString());
+		log.debug(Debug.KIS + "/ Controller / noticeAdd / noticeRequest: " +  noticeRequest.toString());
 		// 에러 발생 시 true
-		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd errors: " + errors.toString());
-		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd hasErrors: " + errors.hasErrors());
+		log.debug(Debug.KIS + "/ Controller / noticeAdd / noticeAdd errors: " + errors.toString());
+		log.debug(Debug.KIS + "/ Controller / noticeAdd / noticeAdd hasErrors: " + errors.hasErrors());
 		// true의 개수 cnt
-		log.debug(Debug.KJH + "/ Controller <POST> noticeAdd errorCnt: " + errors);
+		log.debug(Debug.KIS + "/Controller / noticeAdd / noticeAdd errorCnt: " + errors);
 
 		if(errors.hasErrors()) {
 			
@@ -154,12 +161,20 @@ public class NoticeController {
 			//예외 발생 시 출력
 			for(FieldError e : errors.getFieldErrors()) {
 				// 에러가 발생한 form의 name을 출력
-				log.debug(Debug.KJH + "/ Controller <POST> noticeAdd Validation fieldName: " + e.getField()  + Debug.END );
+				log.debug(Debug.KIS + "/ Controller / noticeAdd / fieldName: " + e.getField()  + Debug.END );
 				// NoticeRequest에 Mapping되어 있는 에러 메시지
-				log.debug(Debug.KJH + "/ Controller <POST> noticeAdd Validation fieldName: " + e.getDefaultMessage()  + Debug.END);	
+				log.debug(Debug.KIS + "/ Controller / noticeAdd / fieldName: " + e.getDefaultMessage()  + Debug.END);	
 				// 필드 이름 + 메시지를 담아 모델에 추가
 				model.addAttribute(e.getField() + "Msg", e.getDefaultMessage());
 			}
+
+			//로그인한 직원 정보 가져오기
+			Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
+			
+			//세션에 있는 empNo 가져오기
+			String empGrade = (String)empDetail.get("empGrade");
+			log.debug(Debug.KIS + " Controller / noticeAdd / empGrade : " + empGrade);
+			model.addAttribute("empGrade", empGrade);
 			
 			return "groupware/notice/noticeAdd";
 		}
@@ -176,9 +191,32 @@ public class NoticeController {
 
 	// 입력 폼
 	@GetMapping("/groupware/notice/noticeAdd")
-	public String noticeAdd(Model model) {
-		log.debug(Debug.KJH + "/ Controller <GET> noticeAdd Form: " + model);
+	public String noticeAdd(
+			Model model,
+			HttpServletRequest  req) {
+		
+		//디버깅
+		log.debug(Debug.KJH + "/ Controller / noticeAdd / model : " + model);
+		log.debug(Debug.KJH + "/ Controller / noticeAdd / req : " + req);
+		
+		
+		// 세션가져와서 empNo세팅
+		HttpSession session = req.getSession();
+		
+		//세션에 있는 empNo 가져오기
+		String empNo = (String)session.getAttribute("strId");
+
+		//로그인한 직원 정보 가져오기
+		Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
+		
+		String empGrade = (String)empDetail.get("empGrade");
+		log.debug(Debug.KIS + " Controller / noticeAdd / empGrade : " + empGrade);
+		
+		
+		//모델 객체에 데이터 추가
+		model.addAttribute("empGrade", empGrade);
 		model.addAttribute("noticeRequest", new NoticeRequest());
+		
 		return "groupware/notice/noticeAdd";
 	}
 

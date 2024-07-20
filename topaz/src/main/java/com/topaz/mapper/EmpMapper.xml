@@ -63,7 +63,7 @@
 			e.emp_name empName, 
 		 	dept_code.cd_nm empDept, 
 		   	grade_code.cd_nm empGrade,
-			leave_code.cd_nm yearCnt, 
+			lv.year_count yearCnt, 
 			e.use_yn useYn
 		FROM
 			employee AS e
@@ -81,11 +81,6 @@
 		ON
 			grade_code.cd = e.emp_grade
 			AND grade_code.crp_cd = 'E002'
-		LEFT JOIN
-			common_code AS leave_code
-		ON
-			leave_code.cd = lv.year_count
-			AND leave_code.crp_cd = 'E004'
 		WHERE
 	        1=1
 			<if test="startDate != null and startDate != ''">
