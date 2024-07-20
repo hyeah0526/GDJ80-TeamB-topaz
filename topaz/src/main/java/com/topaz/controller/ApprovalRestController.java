@@ -82,14 +82,14 @@ public class ApprovalRestController {
 	 * 담당자: 박혜아
 	*/
 	@GetMapping("/approval/firstApprovalSelect")
-	public List<Map<String, Object>> firstApprovalSelect(@RequestParam("FirstApprovalName") String FirstApprovalName
+	public List<Map<String, Object>> firstApprovalSelect(@RequestParam("approvalType") String approvalType
 														,@RequestParam("empGrade") String empGrade){
 		
-		log.debug(Debug.PHA + "firstApprovalSelect REstController FirstApprovalName--> " + FirstApprovalName + Debug.END);
+		log.debug(Debug.PHA + "firstApprovalSelect REstController approvalType--> " + approvalType + Debug.END);
 		log.debug(Debug.PHA + "firstApprovalSelect REstController empGrade--> " + empGrade + Debug.END);
 		
 		
-		List<Map<String, Object>> list = approvalService.getFirstApprovalList(FirstApprovalName, empGrade);
+		List<Map<String, Object>> list = approvalService.getFirstApprovalList(approvalType, empGrade);
 		log.debug(Debug.PHA + "firstApprovalSelect REstController list--> " + list + Debug.END);
 		
 		return list;

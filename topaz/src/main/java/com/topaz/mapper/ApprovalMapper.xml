@@ -91,7 +91,7 @@
 		WHERE 
 			e.emp_grade > 1
 		AND 
-			e.emp_dept = #{FirstApprovalName}
+			e.emp_dept = #{approvalType}
 		ORDER BY e.emp_grade DESC
 	</select>
 	

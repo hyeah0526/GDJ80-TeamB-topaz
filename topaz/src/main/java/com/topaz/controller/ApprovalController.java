@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.topaz.dto.ApprovalDoc;
 import com.topaz.dto.ApprovalTemplate;
 import com.topaz.mapper.ApprovalMapper;
 import com.topaz.service.ApprovalService;
@@ -57,6 +58,16 @@ public class ApprovalController {
 		return "groupware/approval/approvalAdd"; 
 	}
 	
+	
+	
+	@PostMapping("/groupware/approval/approvalAdd")
+	public String approvalAdd(ApprovalDoc approvalDoc) {
+		
+		log.debug(Debug.PHA + "approvalAdd Controller approvalDoc--> " + approvalDoc + Debug.END);
+		
+		
+		return "groupware/approval/approvalAdd";
+	}
 	
 	
 	

@@ -170,12 +170,12 @@ public class ApprovalService {
 	 * 시작 날짜: 2024-07-19
 	 * 담당자: 박혜아
 	*/
-	public List<Map<String, Object>> getFirstApprovalList(String FirstApprovalName, String empGrade){
+	public List<Map<String, Object>> getFirstApprovalList(String approvalType, String empGrade){
 		
-		log.debug(Debug.PHA + "getFirstApprovalList service FirstApprovalName--> " + FirstApprovalName + Debug.END);
+		log.debug(Debug.PHA + "getFirstApprovalList service FirstApprovalName--> " + approvalType + Debug.END);
 		log.debug(Debug.PHA + "getFirstApprovalList service empGrade--> " + empGrade + Debug.END);
 		
-		List<Map<String, Object>> list = approvalMapper.selectFirstApproval(FirstApprovalName, empGrade);
+		List<Map<String, Object>> list = approvalMapper.selectFirstApproval(approvalType, empGrade);
 		log.debug(Debug.PHA + "getFirstApprovalList service list--> " + list + Debug.END);
 		
 		return list;

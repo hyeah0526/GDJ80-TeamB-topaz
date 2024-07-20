@@ -25,7 +25,7 @@ public interface ApprovalMapper {
 	int updateApprovalSign(String empNo);
 	
 	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 첫번째 결재자 리스트 조회 */
-	List<Map<String, Object>> selectFirstApproval(String FirstApprovalName, String empGrade);
+	List<Map<String, Object>> selectFirstApproval(String approvalType, String empGrade);
 	
 	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 부서 카테고리 리스트 조회 */
 	List<Map<String, Object>> selectDeptList();
