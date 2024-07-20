@@ -67,6 +67,10 @@ public class NoticeService {
 	    
 		log.debug(Debug.KIS + "/ service / addNotice noticeRequest: " + imagePath);
 		
+		// 업로드 파일 확인
+	    log.debug(Debug.KIS + "/ service / addNotice uploadFile: " + noticeRequest.getUploadFile());
+	    log.debug(Debug.KIS + "/ service / addNotice uploadFile isEmpty: " + noticeRequest.getUploadFile().isEmpty());
+		
 		// 업로드 파일 처리
 		if(!noticeRequest.getUploadFile().isEmpty()) {
 			// 파일의 이름을 UUID를 사용하여 설정
@@ -76,11 +80,14 @@ public class NoticeService {
 			String fileName = prefix + suffix;
 			
 			// noticeRequest 객체 생성 및 저장
-			noticeRequest.setFileName(fileName);
-			
+			noticeRequest.setFileName(fileName);			
 			// uploadFile 객체 생성 및 저장
 			UploadFile file = noticeRequest.toUploadFile();
+			file.setReferenceNo(noticeRequest.getRegId());
+			
 			file.setFileName(fileName);
+			
+			log.debug(Debug.KIS + "/ service / addNotice / file: " + file);
 			
 			int fileRow = uploadFilemapper.insertUploadFile(file);
 			

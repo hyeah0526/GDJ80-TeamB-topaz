@@ -68,7 +68,7 @@
 						</form>
 						<form action="/topaz/groupware/notice/noticeAdd" method="get">
 							<div class="btnContainer">
-								<button id="noticeWriteBtn" name="noticeWriteBtn" type="submit" class="btn btn-primary addNoticeBtn">작성</button>
+								<button id="noticeWriteBtn" name="noticeWriteBtn" type="button" onclick="window.location.href='/topaz/groupware/notice/noticeAdd'" class="btn btn-primary addNoticeBtn">작성</button>
 							</div>
 						</form>
 						<table class="table" id="noticeTable">
