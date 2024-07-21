@@ -192,6 +192,7 @@ public class ApprovalService {
 		log.debug(Debug.PHA + "setApprovalDoc service approvalDoc--> " + approvalDocRequest + Debug.END);
 		
 		int insertRow = 0;
+		int insertFileRow = 0;
 		String approvalDocNo = "";
 		
 		if(approvalDocRequest.getApprovalType().equals("1")) {
@@ -223,6 +224,32 @@ public class ApprovalService {
 			// 기획 제안서, 경비 청구서 등록(파일O)
 			log.debug(Debug.PHA + "setApprovalDoc service 기획 제안서, 경비 청구서 등록!" + Debug.END);
 			
+			// 파일 가져오기
+			UploadFile file = approvalDocRequest.toUploadFile();
+			log.debug(Debug.PHA + "setApprovalDoc service approvalDocNo--> " + file + Debug.END);
+			
+			// ApprovalDoc DTO에 바인딩
+			ApprovalDoc approvalDoc = approvalDocRequest.toApprovalDoc();
+			
+			// 종료일이 null일 경우 시작일 넣어주기
+			if(approvalDocRequest.getEndDate() == null || approvalDocRequest.getEndDate() == "") {
+				approvalDoc.setEndDate(approvalDocRequest.getStartDate());
+			}
+			log.debug(Debug.PHA + "setApprovalDoc service approvalDoc--> " + approvalDoc + Debug.END);
+			
+			// 등록insert 실행
+			insertRow = approvalMapper.insertApprovalDoc(approvalDoc);
+			if(insertRow != 1) {
+				// 등록 실패시 예외 발생시키기
+				log.debug(Debug.PHA + "setApprovalDoc에서 RuntimeException 발생! " + Debug.END);
+				throw new RuntimeException();
+			}
+			
+			// 등록 성공 후 생성된 PK값 가져오기
+			approvalDocNo = approvalDoc.getApprovalDocNo();
+			log.debug(Debug.PHA + "setApprovalDoc service approvalDocNo--> " + approvalDocNo + Debug.END);
+			
+			//insertFileRow = approvalMapper.insertApprovalSignFile(null);
 			
 		}
 		
