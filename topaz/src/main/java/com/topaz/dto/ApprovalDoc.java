@@ -17,7 +17,9 @@ public class ApprovalDoc {
 	private String approvalState; 		// 공통 코드 S001(1:취소, 2:반려, 3: 대기 4:진행, 5:승인)
 	private String docTitle;
 	private String firstApproval; 		// 중간 결재자 emp_no
+	private String firstApprovalDate; 
 	private String finalApproval; 		// 최종 결재자 emp_no
+	private String finalApprovalDate; 		
 	private String docFirstContent; 	// 휴가(휴가종류),  기획(기획종류), 경비(금액)
 	private String docSecondContent;	// 휴가(비상연락망), 기획(문서 첨부파일), 경비(영수증 첨부파일)
 	private String docThirdContent;		// 휴가(사유), 기획(내용), 경비(내용)
@@ -28,5 +30,6 @@ public class ApprovalDoc {
 	private String modId;
 	private String modTime;
 	private String useYn;
+	
 }
 

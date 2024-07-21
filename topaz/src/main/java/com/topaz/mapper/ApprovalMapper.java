@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.topaz.dto.ApprovalDoc;
 import com.topaz.dto.Employee;
 import com.topaz.dto.UploadFile;
 
@@ -29,4 +30,7 @@ public interface ApprovalMapper {
 	
 	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 부서 카테고리 리스트 조회 */
 	List<Map<String, Object>> selectDeptList();
+	
+	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 부서 카테고리 리스트 조회 */
+	int insertApprovalDoc(ApprovalDoc approvalDoc);
 }

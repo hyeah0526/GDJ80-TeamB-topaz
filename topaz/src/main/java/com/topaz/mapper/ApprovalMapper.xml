@@ -107,4 +107,53 @@
 			crp_cd = 'E001'
 	</select>
 	
+	
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 부서 카테고리 리스트 조회 -->
+	<insert id="insertApprovalDoc" parameterType="com.topaz.dto.ApprovalDoc">
+		INSERT INTO approval_doc(
+			  approval_doc_no
+			, approval_type
+			, emp_no
+			, approval_state
+			, doc_title
+			, first_approval
+			, final_approval
+			, doc_first_content
+			, doc_second_content
+			, doc_third_content
+			, start_date
+			, end_date
+			, reg_id
+			, reg_time
+			, mod_id
+			, mod_time
+			, use_yn
+		)VALUES(
+		  	  CURRENT_TIMESTAMP(5)
+			, #{approvalType}
+			, #{empNo}
+			, #{approvalState}
+			, #{docTitle}
+			, #{firstApproval}
+			, #{finalApproval}
+			, #{docFirstContent}
+			, #{docSecondContent}
+			, #{docThirdContent}
+			, #{startDate}
+			, #{endDate}
+			, #{regId}
+			, NOW()
+			, #{modId}
+			, NOW()
+			, #{useYn}
+		)
+		
+		<selectKey keyProperty="approvalDocNo" resultType="String" order="AFTER">
+	        SELECT CAST(MAX(approval_doc_no) AS CHAR) 
+	        FROM approval_doc 
+	        WHERE reg_id=#{regId}
+	        ORDER BY reg_time DESC LIMIT 1
+		</selectKey>
+	</insert>
+	
 </mapper>

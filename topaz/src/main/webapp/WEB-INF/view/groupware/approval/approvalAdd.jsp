@@ -188,7 +188,8 @@
 					<div class="tab-pane fade" id="profile-justified" role="tabpanel" aria-labelledby="profile-tab">
 						<div class="pagetitle text-center" style="margin: 20px;"><h1>기획 제안서</h1></div>
 						
-						
+						<form method="post" action="${pageContext.request.contextPath}/groupware/approval/approvalAdd" id="eventForm" enctype="multipart/form-data">
+						<input type="hidden" name="approvalType" value="2">
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">중 간 결 재 자</label>
 							<div class="col-lg-2" id="">
@@ -202,7 +203,7 @@
 								</div>
 							</div>
 							<div class="col-lg-2" id="">
-								<button class="btn btn-primary" id="eventFirstApprovalBtn">검색</button>
+								<button type="button" class="btn btn-primary" id="eventFirstApprovalBtn">검색</button>
 							</div>
 						</div>
 						
@@ -219,7 +220,7 @@
 								</div>
 							</div>
 							<div class="col-lg-2" id="">
-								<button class="btn btn-primary" id="eventFinalApprovalBtn">검색</button>
+								<button type="button" class="btn btn-primary" id="eventFinalApprovalBtn">검색</button>
 							</div>
 						</div>
 						
@@ -227,15 +228,15 @@
 							<label for="profileImage" class="col-lg-2 col-form-label">기 획 종 류</label>
 							<div class="col-lg-4">
 								<label for="externalEvent">
-									<input type="radio" class="form-check-input" id="externalEvent" name="docFirstContent"> 외부 행사
+									<input type="radio" class="form-check-input" id="externalEvent" name="docFirstContent" value="외부 행사"> 외부 행사
 								</label>
 								&nbsp;&nbsp;&nbsp;
 								<label for="internalEvent">
-									<input type="radio" class="form-check-input" id="internalEvent" name="docFirstContent"> 내부 행사
+									<input type="radio" class="form-check-input" id="internalEvent" name="docFirstContent" value="내부 행사"> 내부 행사
 								</label>
 								&nbsp;&nbsp;&nbsp;
 								<label for="volunteerEvent">
-									<input type="radio" class="form-check-input" id="volunteerEvent" name="docFirstContent"> 봉사
+									<input type="radio" class="form-check-input" id="volunteerEvent" name="docFirstContent" value="봉사"> 봉사
 								</label>
 							</div>
 						</div>
@@ -243,18 +244,18 @@
 						<div class="row mb-4 justify-content-center" id="">
 							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="" id="" value="">
+								<input class="form-control" type="date" name="startDate">
 							</div>
 							~
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="" id="" value="">
+								<input class="form-control" type="date" name="endDate">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">첨 부 파 일</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="file" name="" id="" value="">
+								<input class="form-control" type="file" name="uploadFile">
 							</div>
 						</div>
 						
@@ -268,25 +269,29 @@
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">내 용</label>
 							<div class="col-lg-4" id="">
-								<textarea class="form-control" style="height: 150px;" placeholder="기획 내용을 상세히 작성해주세요"></textarea>
+								<textarea class="form-control" name="docThirdContent" style="height: 150px;" placeholder="기획 내용을 상세히 작성해주세요"></textarea>
 							</div>
 						</div>
 						
 						
 						<div class="row mb-4 justify-content-center">
 							<div class="col-lg-4 text-center" id="">
-								<button type="button" class="btn btn-primary" style="width: 150px;">신청</button>
+								<button type="button" id="eventSubmitBtn" class="btn btn-primary" style="width: 150px;">신청</button>
 							</div>
 						</div>
 						
+					</form>
 					</div>
-					
 					
 					
 					<!-- 경비 청구서 -->
 					<div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
-						<div class="pagetitle text-center" style="margin: 20px;"><h1>경비 청구서</h1></div>
+						<div class="pagetitle text-center" style="margin: 20px;">
+							<h1>경비 청구서</h1>
+						</div>
 						
+						<form method="post" action="${pageContext.request.contextPath}/groupware/approval/approvalAdd" id="expenseForm" enctype="multipart/form-data">
+						<input type="hidden" name="approvalType" value="3">
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">중 간 결 재 자</label>
 							<div class="col-lg-2" id="">
@@ -300,7 +305,7 @@
 								</div>
 							</div>
 							<div class="col-lg-2" id="">
-								<button class="btn btn-primary" id="expenseFirstApprovalBtn">검색</button>
+								<button type="button" class="btn btn-primary" id="expenseFirstApprovalBtn">검색</button>
 							</div>
 						</div>
 						
@@ -316,50 +321,57 @@
 									<!-- 선택된 중간결재자 정보 나오는 창 -->
 								</div>
 							</div>
-							<div class="col-lg-2" id="">
-								<button class="btn btn-primary" id="expenseFinalApprovalBtn">검색</button>
+							<div class="col-lg-2">
+								<button type="button" class="btn btn-primary" id="expenseFinalApprovalBtn">검색</button>
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center" id="">
 							<label for="profileImage" class="col-lg-2 col-form-label">날 짜</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="" id="" value="">
+								<input class="form-control" type="date" name="startDate">
 							</div>
-							<div class="col-lg-2" id=""></div>
+							<div class="col-lg-2"></div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">청 구 금 액</label>
-							<div class="col-lg-2" id="">
-								<input class="form-control" type="number" name="" id="" value="">
+							<div class="col-lg-2">
+								<input class="form-control" type="number" name="docFirstContent">
 							</div>
-							<div class="col-lg-2" id=""></div>
+							<div class="col-lg-2"></div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">영 수 증 첨 부</label>
+							<div class="col-lg-4">
+								<input class="form-control" type="file" name="docfile" accept="image/png, image/jpeg, .pdf">
+							</div>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<label for="profileImage" class="col-lg-2 col-form-label">제 목</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="file" name="" id="" value="">
+								<input class="form-control" type="text" name="docTitle">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">내 용</label>
-							<div class="col-lg-4" id="">
-								<textarea class="form-control" style="height: 150px;" placeholder="경비 사용 사유를 상세히 작성해주세요"></textarea>
+							<div class="col-lg-4">
+								<textarea class="form-control" name="docThirdContent" style="height: 150px;" placeholder="경비 사용 사유를 상세히 작성해주세요"></textarea>
 							</div>
 						</div>
 						
 						
 						<div class="row mb-4 justify-content-center">
-							<div class="col-lg-4 text-center" id="">
-								<button type="button" class="btn btn-primary" style="width: 150px;">신청</button>
+							<div class="col-lg-4 text-center">
+								<button type="button" id="expenseSubmitBtn" class="btn btn-primary" style="width: 150px;">신청</button>
 							</div>
 						</div>
 						
-					</div>
 				</form>
+					</div>
 				</div><!-- End Default Tabs -->
 	
 			</div></div>

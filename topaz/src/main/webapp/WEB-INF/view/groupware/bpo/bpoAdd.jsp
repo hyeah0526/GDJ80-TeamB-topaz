@@ -72,7 +72,7 @@
 					<div class="row mb-3">
 						<label for="inputNumber" class="col-sm-4 col-form-label">업체 사진</label>
 						<div class="col-sm-8">
-	                    	<input class="form-control" type="file" id="formFile" name="uploadFile">
+	                    	<input class="form-control" type="file" id="formFile" name="uploadFile" accept="image/png, image/jpeg">
 	                    	<div class="validMsg">${uploadFileMsg}</div>
 						</div>
 					</div>

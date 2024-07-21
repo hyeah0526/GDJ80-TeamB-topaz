@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.topaz.dto.ApprovalDoc;
+import com.topaz.dto.ApprovalDocRequest;
 import com.topaz.dto.ApprovalTemplate;
 import com.topaz.mapper.ApprovalMapper;
 import com.topaz.service.ApprovalService;
@@ -61,12 +63,21 @@ public class ApprovalController {
 	
 	
 	@PostMapping("/groupware/approval/approvalAdd")
-	public String approvalAdd(ApprovalDoc approvalDoc) {
+	public String approvalAdd(ApprovalDocRequest approvalDocRequest
+								,HttpServletRequest httpServletRequest) throws Exception {
 		
-		log.debug(Debug.PHA + "approvalAdd Controller approvalDoc--> " + approvalDoc + Debug.END);
+		// 세션가져와서 empNo세팅
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.PHA + "approval Controller empNo--> " + empNo + Debug.END);
+		approvalDocRequest.setEmpNo(empNo);
+		log.debug(Debug.PHA + "approvalAdd Controller approvalDoc--> " + approvalDocRequest + Debug.END);
 		
+		// 결재 문서 등록하기
+		String insertApprovalDocNo = approvalService.setApprovalDoc(approvalDocRequest);
+		log.debug(Debug.PHA + "approvalAdd Controller insertApprovalDocNo--> " + insertApprovalDocNo + Debug.END);
 		
-		return "groupware/approval/approvalAdd";
+		return "redirect:/groupware/approval/approvalAdd";
 	}
 	
 	

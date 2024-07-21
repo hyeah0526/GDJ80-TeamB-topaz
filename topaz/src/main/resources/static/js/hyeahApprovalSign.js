@@ -395,6 +395,19 @@ $(document).ready(function(){
 		console.log('휴가 신청서 신청버튼 클릭');
 		$('#dayOffForm').submit();
 	});
+	
+	/* ====================기획 제안서 신청버튼 클릭==================== */
+	$('#eventSubmitBtn').click(function() {
+		console.log('기획 제안서 신청버튼 클릭');
+		$('#eventForm').submit();
+	});
+	
+	/* ====================경비 청구서 신청버튼 클릭==================== */
+	$('#expenseSubmitBtn').click(function() {
+		console.log('기획 제안서 신청버튼 클릭');
+		$('#expenseForm').submit();
+	});
+
 
 });
 

@@ -9,7 +9,10 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.topaz.dto.ApprovalDoc;
+import com.topaz.dto.ApprovalDocRequest;
 import com.topaz.dto.ApprovalSign;
 import com.topaz.dto.Employee;
 import com.topaz.dto.UploadFile;
@@ -141,7 +144,6 @@ public class ApprovalService {
         
         // 파일 폴더에 저장
         File emptyModFile = new File(System.getProperty("user.dir") 
-        							//+ "/src/main/webapp/WEB-INF/view/approval/"
 									+ "/src/main/resources/static/assets/img/approvalSign/" 
 									+ modFileName);
         
@@ -180,6 +182,51 @@ public class ApprovalService {
 		
 		return list;
 		
+	}
+	
+	
+	
+	public String setApprovalDoc(ApprovalDocRequest approvalDocRequest) throws Exception {
+		// 공통 코드 S002(1:휴가, 2:기획, 3:경비)
+		// 공통 코드 S001(1:취소, 2:반려, 3: 대기 4:진행, 5:승인)
+		log.debug(Debug.PHA + "setApprovalDoc service approvalDoc--> " + approvalDocRequest + Debug.END);
+		
+		int insertRow = 0;
+		String approvalDocNo = "";
+		
+		if(approvalDocRequest.getApprovalType().equals("1")) {
+			// 휴가 신청서 등록(파일X)
+			log.debug(Debug.PHA + "setApprovalDoc service 휴기 신청서 등록!" + Debug.END);
+			
+			// ApprovalDoc DTO에 바인딩
+			ApprovalDoc approvalDoc = approvalDocRequest.toApprovalDoc();
+			// 종료일이 null일 경우 시작일 넣어주기
+			if(approvalDocRequest.getEndDate() == null || approvalDocRequest.getEndDate() == "") {
+				approvalDoc.setEndDate(approvalDocRequest.getStartDate());
+			}
+			log.debug(Debug.PHA + "setApprovalDoc service approvalDoc--> " + approvalDoc + Debug.END);
+			
+			// 등록insert 실행
+			insertRow = approvalMapper.insertApprovalDoc(approvalDoc);
+			if(insertRow != 1) {
+				// 등록 실패시 예외 발생시키기
+				log.debug(Debug.PHA + "setApprovalDoc에서 RuntimeException 발생! " + Debug.END);
+				throw new RuntimeException();
+			}
+			
+			// 등록 성공 후 생성된 PK값 가져오기
+			approvalDocNo = approvalDoc.getApprovalDocNo();
+			log.debug(Debug.PHA + "setApprovalDoc service approvalDocNo--> " + approvalDocNo + Debug.END);
+			
+			
+		}else if(approvalDocRequest.getApprovalType().equals("2") || approvalDocRequest.getApprovalType().equals("3")) {
+			// 기획 제안서, 경비 청구서 등록(파일O)
+			log.debug(Debug.PHA + "setApprovalDoc service 기획 제안서, 경비 청구서 등록!" + Debug.END);
+			
+			
+		}
+		
+		return approvalDocNo; 
 	}
 	
 }
