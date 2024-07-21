@@ -35,11 +35,11 @@ public class NoticeService {
 	 * 시작 날짜: 2024-07-07
 	 * 담당자: 김지훈
 	*/
-	
 	public int removeNotice(String newsNo) {
 		log.debug(Debug.KJH + "/ service / removeNotice newsNo: " + newsNo);
 		return noticeMapper.deleteNotice(newsNo);
 	}
+	
 	/*
 	 * 분류 번호: #10 - 공지 사항 수정
 	 * 시작 날짜: 2024-07-07
@@ -51,12 +51,12 @@ public class NoticeService {
 		return noticeMapper.updateNotice(notice);
 	}
 	
+	
 	/*
 	 * 분류 번호: #10 - 공지 사항 추가
-	 * 시작 날짜: 2024-07-07
-	 * 담당자: 김지훈
+	 * 시작 날짜: 2024-07-21
+	 * 담당자: 김인수
 	*/
-	
 	public int addNotice(NoticeRequest noticeRequest) {
 		
 		// notice 디버깅
@@ -125,7 +125,7 @@ public class NoticeService {
 	
 	public Map<String, Object> getNoticeDetail(String newsNo) {
 		
-		log.debug(Debug.KJH + "/ service / getNoticeDetail newsNo: " + newsNo);
+		log.debug(Debug.KIS + "/ service / getNoticeDetail /  newsNo: " + newsNo);
 		Map<String, Object> noticeDetail = noticeMapper.selectNoticeDetail(newsNo);
 		
 		//첨부 파일 불러오기 

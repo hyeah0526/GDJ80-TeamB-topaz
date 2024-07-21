@@ -32,7 +32,9 @@ public class NoticeController {
 	@Autowired
 	EmployeeService employeeService;
 	/*
-	 * 서비스명: noticeRemove() 담당자: 김지훈
+	 * 서비스명: noticeRemove() 
+	 * 시작 날짜: 2024-07-22
+	 * 담당자: 김인수
 	 */
 
 	@GetMapping("/groupware/notice/noticeRemove")
@@ -47,19 +49,19 @@ public class NoticeController {
 	    notice.setNewsNo(newsNo);
 	    notice.setModId(empNo);
 		
-		log.debug(Debug.KJH + "/ Controller / noticeRemove newsNo :" + newsNo);
+		log.debug(Debug.KIS + "/ Controller / noticeRemove newsNo :" + newsNo);
 		
 		int row = noticeService.removeNotice(newsNo);
 		
-		log.debug(Debug.KJH + "/ Controller / row noticeRemove  :" + row);
+		log.debug(Debug.KIS + "/ Controller / row noticeRemove  :" + row);
 		return "redirect:/groupware/notice/noticeList";
 	}
 
 	/*
-	 * 서비스명: noticeModify() 담당자: 김지훈
+	 * 서비스명: noticeModify()
+	 * 시작 날짜: 2024-07-21
+	 * 담당자: 김인수
 	 */
-
-	// 수정 액션
 	@PostMapping("/groupware/notice/noticeModify")
 	public String noticeModify(@Valid NoticeRequest noticeRequest, Errors errors, Model model, 
 			HttpServletRequest  httpServletRequest,
@@ -99,7 +101,11 @@ public class NoticeController {
         return "redirect:/groupware/notice/noticeDetail?newsNo=" + noticeRequest.getNewsNo(); // 수정한 상세 페이지로 이동
 	}
 
-	// 수정 폼
+	/*
+	 * 분류 번호: noticeModify.jsp ( 공지사항 수정 뷰 )
+	 * 시작 날짜: 2024-07-21
+	 * 담당자: 김인수
+	*/
 	@GetMapping("/groupware/notice/noticeModify")
 	public String noticeModify(Model model, 
 		@RequestParam(name = "newsNo") String newsNo) {
@@ -115,13 +121,12 @@ public class NoticeController {
 		return "groupware/notice/noticeModify";
 	}
 
+	
 	/*
-	 * 서비스명: noticeAdd()
+	 * 서비스명: noticeAdd (공지사항 등록) 
 	 * 시작 날짜: 2024-07-19 
 	 * 담당자: 김인수
  	*/
-
-	// 입력 액션
 	@PostMapping("/groupware/notice/noticeAdd")
 	public String noticeAdd(
 			@Valid NoticeRequest noticeRequest, 
@@ -189,7 +194,12 @@ public class NoticeController {
         return "redirect:/groupware/notice/noticeList";
 	}
 
-	// 입력 폼
+	
+	/*
+	 * 분류 번호: noticeAdd.jsp ( 공지사항 등록 뷰 )
+	 * 시작 날짜: 2024-07-21
+	 * 담당자: 김인수
+	*/
 	@GetMapping("/groupware/notice/noticeAdd")
 	public String noticeAdd(
 			Model model,
@@ -220,12 +230,12 @@ public class NoticeController {
 		return "groupware/notice/noticeAdd";
 	}
 
+
 	/*
-	 * 서비스명: getNoticeDetail( 공지사항 자세히 보기 )
+	 * 서비스명: noticeDetail.jsp ( 공지사항 자세히 보기 )
 	 * 시작 날짜: 2024-07-21
 	 * 담당자: 김인수
 	 */
-
 	@GetMapping("/groupware/notice/noticeDetail")
 	public String noticeDetail(Model model, 
 		@RequestParam(name = "newsNo") String newsNo,
@@ -254,7 +264,7 @@ public class NoticeController {
 	}
 
 	/*
-	 * 서비스명: getNoticeList ( 공지사항 전체 보기 )
+	 * 서비스명: noticeList.jsp ( 공지사항 전체 보기 )
 	 * 시작 날짜: 2024-07-21 
 	 * 담당자: 김인수 
 	 */

@@ -41,6 +41,7 @@ $(document).ready(function() {
                         <tr onclick="window.location.href='/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}'" style="cursor:pointer;">
                             <td>${n.no}</td>
                             <td>${n.title}</td>
+                            <td>${n.empName}</td>
                             <td>${n.grade}</td>
                             <td>${n.category}</td>
                             <td>${n.regTime}</td>

@@ -105,6 +105,10 @@
 	        common_code AS category_comm
 	    ON
 	        nn.category = category_comm.cd AND category_comm.crp_cd = 'W005'
+        LEFT JOIN
+			employee AS e
+		ON
+			e.emp_no = nn.reg_id
 	    WHERE
 	        nn.use_yn = 'Y'
 	        AND nn.grade IN (1,2)
@@ -124,6 +128,7 @@
 	        ROW_NUMBER() OVER(ORDER BY nn.news_no DESC) no, 
 	        nn.news_no newsNo,
 	        nn.title title,
+	        e.emp_name empName,
 	        nn.content content,
 	        grade_comm.cd_nm grade,
 	        category_comm.cd_nm category,
@@ -138,6 +143,10 @@
 	        common_code AS category_comm
 	    ON
 	        nn.category = category_comm.cd AND category_comm.crp_cd = 'W005'
+        LEFT JOIN
+			employee AS e
+		ON
+			e.emp_no = nn.reg_id
 	    WHERE
 	        1=1
 	        <if test="noticeType != null and noticeType != ''">

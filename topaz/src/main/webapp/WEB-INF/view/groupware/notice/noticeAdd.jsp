@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--
    분류 번호: #10 - 공지 사항 등록 페이지
-   시작 날짜: 2024-07-19 (수정)
+   시작 날짜: 2024-07-19 
    담당자: 김인수
 -->    
 <!DOCTYPE html>
@@ -24,11 +24,17 @@
     
         <!-- =============================== Main 메인 시작 부분 ================================ -->
         <main id="main" class="main">
-        
-            <div class="pagetitle">
-              <h1>공지 사항</h1>
-            </div>
-    
+       		<!-- Title 시작 -->
+			<div class="pagetitle">
+		      <h1>공지 사항 등록</h1>
+		      <nav>
+		        <ol class="breadcrumb">
+		          <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+		          <li class="breadcrumb-item active">Notice Add</li>
+		        </ol>
+		      </nav>
+			</div><!-- Title 종료 -->
+
             <section class="section">
                 <div class="row">
                     <div class="col-lg-10">
@@ -116,14 +122,22 @@
                                         </div>
                                         <span class="validMsg">${contentMsg}</span>
                                     </div>
+                                    
+                                    <!-- 첨부파일 -->
                                     <div class="row mb-3">
-                                        <input type="file" name="uploadFile" id="uploadFile">
-                                        <span class="validMsg">${uploadFileMsg}</span>
+                                        <label for="noticeFile" class="col-sm-2 col-form-label">
+											첨부 파일
+										</label>
+										<div class="col-sm-10">
+	                                        <input class="form-control" type="file" name="uploadFile" id="uploadFile">
+	                                        <span class="validMsg">${uploadFileMsg}</span>
+										</div>
                                         <div id="previewContainer" class="imagePreviewContainer" style="display:none;">
                                             <img id="preview">
                                             <span id="removeImage" class="removeImage">&times;</span>
                                         </div>
                                     </div>
+                                    
 	                                <button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>    
 	                                <button type="submit" class="btn btn-primary">등록하기</button>
                                 </form>

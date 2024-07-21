@@ -5,8 +5,8 @@
 
 <!--
    분류 번호: #10 - 공지 사항 목록 페이지
-   시작 날짜: 2024-07-05
-   담당자: 김지훈
+   시작 날짜: 2024-07-21
+   담당자: 김인수
 -->
 
 <!DOCTYPE html>
@@ -29,11 +29,11 @@
 	
 	<!-- Title 시작 -->
 	<div class="pagetitle">
-      <h1>공지 사항</h1>
+      <h1>공지 사항 목록</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">중제목</a></li>
-          <li class="breadcrumb-item active">소제목</li>
+          <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+          <li class="breadcrumb-item active">Notice List</li>
         </ol>
       </nav>
 	</div><!-- Title 종료 -->
@@ -70,7 +70,8 @@
 							<thead>
 								<tr>
 									<th>No</th>
-									<th >제목</th>
+									<th>제목</th>
+									<th>작성자</th>
 									<th>공유등급</th>
 									<th>분류</th>
 									<th>생성 일자</th>

@@ -25,18 +25,25 @@
 	<!-- =============================== Main 메인 시작 부분 ================================ -->
 	<main id="main" class="main">
 	
-	    <div class="pagetitle">
-	      <h1>공지 사항</h1>
-	    </div>
+    	<!-- Title 시작 -->
+		<div class="pagetitle">
+	      <h1>공지 사항 상세</h1>
+	      <nav>
+	        <ol class="breadcrumb">
+	          <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
+	          <li class="breadcrumb-item active">Notice Detail</li>
+	        </ol>
+	      </nav>
+		</div><!-- Title 종료 -->
+	    
+	    
+	    
 		<section class="section">
 			<div class="row">
 				<div class="col-lg-10">
 					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title">공지 사항 상세</h5>
-							<form action="<c:url value="${contextPath}/groupware/notice/noticeModify" />" method="get">
-
-
+							<form action="<c:url value="${contextPath}/groupware/notice/noticeModify" />" method="get" style="margin-top:20px;">
 								<div class="row mb-3">
 									<label for="noticeTitle" class="col-sm-2 col-form-label" readonly>제목</label>
 									<div class="col-sm-10">
