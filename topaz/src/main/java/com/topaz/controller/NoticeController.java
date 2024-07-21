@@ -240,10 +240,8 @@ public class NoticeController {
 	}
 
 	/*
-	 * 서비스명: getNoticeList() 담당자: 김지훈
+	 * 서비스명: getNoticeList() 담당자: 
 	 */
-
-	// http://localhost/topaz/groupware/notice/noticeList
 	@GetMapping("/groupware/notice/noticeList")
 	public String noticeList() throws Exception {
 		return "groupware/notice/noticeList";

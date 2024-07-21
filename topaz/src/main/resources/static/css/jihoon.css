@@ -37,3 +37,9 @@
     font-size: .875em;
     color: var(--bs-form-invalid-color);
 }
+
+.resetBtn {
+    width: 80px; 
+    height: 50px; 
+    
+}

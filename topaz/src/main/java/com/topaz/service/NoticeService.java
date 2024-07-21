@@ -133,8 +133,8 @@ public class NoticeService {
 	
 	/*
 	 * 분류 번호: #10 - 공지 사항 목록 페이지
-	 * 시작 날짜: 2024-07-05
-	 * 담당자: 김지훈
+	 * 시작 날짜: 2024-07-21
+	 * 담당자: 김인수
 	*/
 	public Map<String, Object> getNoticeList(Map<String, Object> paramMap) {
 		// paramMap 디버깅

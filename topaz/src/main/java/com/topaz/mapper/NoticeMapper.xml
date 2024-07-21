@@ -60,10 +60,9 @@
 		    NOW(), 
 		    'Y'		   
 		);
-</insert>
+	</insert>
+	
 	<!-- 분류 번호: #10 - 공지 사항 상세 페이지 -->
-	<!-- 작성자 이름을 위한 news_notice-employee 테이블 간 JOIN -->
-	<!-- datetime 소수점 첫째까지 출력돼서 포맷 변환 -->
 	<select id="selectNoticeDetail" parameterType="map" resultType="map">
 		SELECT
 			nn.news_no newsNo, nn.title, nn.content, nn.grade, nn.category, 
@@ -85,46 +84,59 @@
 	
 	<!-- 분류 번호: #10 - 공지 사항 목록 페이지 - 페이징 -->
 	<select id="noticeCnt" resultType="int">
-		SELECT
-			COUNT(*) cnt
-		FROM
-			news_notice
-		WHERE
-			use_yn = 'Y'
-			AND grade IN (1,2)
-			AND category IN (1,2,3)
-			AND (start_date IS NOT NULL OR end_date IS NOT NULL);	 
+		 SELECT
+	        COUNT(*) 
+	    FROM
+	        news_notice AS nn
+	    LEFT JOIN
+	        common_code AS grade_comm
+	    ON
+	        nn.grade = grade_comm.cd AND grade_comm.crp_cd = 'W004'
+	    LEFT JOIN
+	        common_code AS category_comm
+	    ON
+	        nn.category = category_comm.cd AND category_comm.crp_cd = 'W005'
+	    WHERE
+	        nn.use_yn = 'Y'
+	        AND nn.grade IN (1,2)
+	        AND nn.category IN (1,2,3)
+	        <if test="noticeType != null and noticeType != ''">
+	            AND category_comm.cd_nm = #{noticeType}
+	        </if>
+	        <if test="searchWord != null and searchWord != ''">
+	            AND (nn.title LIKE CONCAT('%', #{searchWord}, '%')
+	            OR nn.content LIKE CONCAT('%', #{searchWord}, '%'))
+	        </if> 
 	</select> 
 	
 	<!-- 분류 번호: #10 - 공지 사항 목록 페이지 - 리스트 -->
-	<!-- 작성자 이름을 위한 news_notice-employee 테이블 간 JOIN -->
-	<!-- datetime 소수점 첫째까지 출력돼서 포맷 변환 -->
 	<select id="selectNoticeList" parameterType="map" resultType="map">
-		SELECT 
-			ROW_NUMBER() OVER(ORDER BY nn.news_no ASC) no, nn.news_no newsNo, nn.title title, nn.content content, nn.grade grade, nn.category category, 
-			DATE_FORMAT(nn.start_date, '%Y-%m-%d %H:%i:%s') startDate, 
-			DATE_FORMAT(nn.end_date, '%Y-%m-%d %H:%i:%s') endDate, 
-			DATE_FORMAT(nn.reg_time, '%Y-%m-%d %H:%i:%s') regTime, 
-			DATE_FORMAT(nn.mod_time, '%Y-%m-%d %H:%i:%s') modTime, 
-			nn.use_yn useYn, e.emp_name empName
-		FROM
-			news_notice nn
-			JOIN 
-				employee e 
-			ON 
-				nn.reg_id = e.emp_no
-		<where>
-			nn.use_yn = 'Y'
-			AND (nn.start_date IS NOT NULL OR nn.end_date IS NOT NULL)
-			AND nn.grade IN (1,2)
-			AND nn.category IN (1,2,3)
-			<if test="searchWord != null">
-				AND (nn.title LIKE CONCAT('%', #{searchWord}, '%')
-				OR nn.content LIKE CONCAT('%', #{searchWord}, '%'))
-			</if>
-		</where>
-		ORDER BY 
-			nn.news_no DESC
-		LIMIT #{currentPage}, #{rowPerPage}
+		 SELECT
+	        ROW_NUMBER() OVER(ORDER BY nn.news_no DESC) no, 
+	        nn.title title,
+	        nn.content content,
+	        grade_comm.cd_nm grade,
+	        category_comm.cd_nm category,
+	        nn.reg_time regTime
+	    FROM
+	        news_notice AS nn
+	    LEFT JOIN
+	        common_code AS grade_comm
+	    ON
+	        nn.grade = grade_comm.cd AND grade_comm.crp_cd = 'W004'
+	    LEFT JOIN
+	        common_code AS category_comm
+	    ON
+	        nn.category = category_comm.cd AND category_comm.crp_cd = 'W005'
+	    WHERE
+	        1=1
+	        <if test="noticeType != null and noticeType != ''">
+	            AND category_comm.cd_nm = #{noticeType}
+	        </if>
+	        <if test="searchWord != null and searchWord != ''">
+	            AND (nn.title LIKE CONCAT('%', #{searchWord}, '%')
+	            OR nn.content LIKE CONCAT('%', #{searchWord}, '%'))
+	        </if>
+	    LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 </mapper>

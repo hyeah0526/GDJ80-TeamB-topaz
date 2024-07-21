@@ -21,6 +21,12 @@ public class NoticeRestController {
 	@Autowired
 	NoticeService noticeService;
 	
+	
+	/*
+	 * 서비스명: getNoticeList ( 공지사항 조회 )
+	 * 시작 날짜: 2024-07-21
+	 * 담당자: 김인수
+	*/
 	@PostMapping("/groupware/notice/noticeList")
 	public Map<String, Object> approvalList(@RequestParam Map<String, Object> paramMap) throws Exception {
 		// paramMap 디버깅
