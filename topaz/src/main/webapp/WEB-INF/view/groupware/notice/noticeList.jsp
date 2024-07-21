@@ -70,7 +70,7 @@
 							<thead>
 								<tr>
 									<th>No</th>
-									<th>제목</th>
+									<th >제목</th>
 									<th>공유등급</th>
 									<th>분류</th>
 									<th>생성 일자</th>
@@ -85,7 +85,6 @@
 						</table>
 						<nav aria-label="Page navigation example">
 							<ul class="pagination" id="paginationUl">
-							
 				           </ul>
 						</nav>				
 						</div>

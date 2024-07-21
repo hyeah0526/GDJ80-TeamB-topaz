@@ -3,7 +3,7 @@
 <mapper namespace="com.topaz.mapper.NoticeMapper">
 
 	<!-- 분류 번호: #10 - 공지 사항 삭제 -->
-	<delete id="deleteNotice" parameterType="String">
+	<update id="deleteNotice" parameterType="String">
 	UPDATE news_notice
 	SET 
 		use_yn = 'N',
@@ -11,21 +11,22 @@
 		mod_time = NOW()
 	WHERE 
 		news_no = #{newsNo};
-	</delete>
+	</update>
+	
 	<!-- 분류 번호: #10 - 공지 사항 수정 -->
 	<update id="updateNotice" parameterType="com.topaz.dto.Notice">
-	UPDATE news_notice
-	SET 
-		title = #{title},
-		content = #{content},
-		grade = #{grade},
-		category = #{category},
-		start_date = #{startDate},
-		end_date = #{endDate},
-		mod_id = #{modId},
-		mod_time = NOW()
-	WHERE 
-		news_no = #{newsNo};	
+		UPDATE news_notice
+		SET 
+			title = #{title},
+			content = #{content},
+			grade = #{grade},
+			category = #{category},
+			start_date = #{startDate},
+			end_date = #{endDate},
+			mod_id = #{modId},
+			mod_time = NOW()
+		WHERE 
+			news_no = #{newsNo};	
 	</update>
 	
 	<!-- 분류 번호: #10 - 공지 사항 등록 -->
@@ -65,24 +66,32 @@
 	<!-- 분류 번호: #10 - 공지 사항 상세 페이지 -->
 	<select id="selectNoticeDetail" parameterType="map" resultType="map">
 		SELECT
-			nn.news_no newsNo, nn.title, nn.content, nn.grade, nn.category, 
+			nn.news_no newsNo, 
+			nn.title, 
+			nn.content, 
+			nn.grade, 
+			nn.category, 
 			DATE_FORMAT(nn.start_date, '%Y-%m-%d %H:%i:%s') startDate,
 			DATE_FORMAT(nn.end_date, '%Y-%m-%d %H:%i:%s') endDate,
-			DATE_FORMAT(nn.reg_time, '%Y-%m-%d %H:%i:%s') regTime, 
-			DATE_FORMAT(nn.mod_time, '%Y-%m-%d %H:%i:%s') modTime, 
-			nn.use_yn useYn, e.emp_name empName
+			nn.use_yn useYn, 
+			e.emp_name empName,
+			e.emp_no empNo,
+			nn.file_name fileName
 		FROM
 			news_notice nn
-		JOIN
+		LEFT JOIN
 			employee e 
 		ON
 			nn.reg_id = e.emp_no	
+		LEFT JOIN
+			file_upload fu
+		ON
+			fu.file_name = nn.file_name
 		WHERE 	
 			nn.news_no = #{newsNo}
-	
 	</select>
 	
-	<!-- 분류 번호: #10 - 공지 사항 목록 페이지 - 페이징 -->
+	<!-- 분류 번호: #10 - 공지 사항 개수 조회 -->
 	<select id="noticeCnt" resultType="int">
 		 SELECT
 	        COUNT(*) 
@@ -113,11 +122,12 @@
 	<select id="selectNoticeList" parameterType="map" resultType="map">
 		 SELECT
 	        ROW_NUMBER() OVER(ORDER BY nn.news_no DESC) no, 
+	        nn.news_no newsNo,
 	        nn.title title,
 	        nn.content content,
 	        grade_comm.cd_nm grade,
 	        category_comm.cd_nm category,
-	        nn.reg_time regTime
+        	DATE_FORMAT(nn.reg_time, '%Y-%m-%d') regTime
 	    FROM
 	        news_notice AS nn
 	    LEFT JOIN

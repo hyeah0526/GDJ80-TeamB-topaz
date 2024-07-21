@@ -206,16 +206,16 @@ public class EmployeeController {
 	@GetMapping("/groupware/myPage/myInfo")
 	public String myinfo(
 			Model model, 
-			HttpServletRequest  httpServletRequest ) {
+			HttpServletRequest  req ) {
 
 		//매개변수 디버깅
-		log.debug(Debug.KIS + "controller / myinfo / httpServletRequest : " + httpServletRequest);
+		log.debug(Debug.KIS + "controller / myinfo / httpServletRequest : " + req);
 		
 		//HttpServletRequest를 사용하여 세션 가져오기
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession session = req.getSession();
 		log.debug(Debug.KIS + "controller / myinfo / session : " + session);
 		
-		// 세션에서 strId(직원아이디)라는 속성 가져오기
+		//세션에서 strId(직원아이디)라는 속성 가져오기
 		String empNo = (String)session.getAttribute("strId");
 		log.debug(Debug.KIS + "controller / myinfo / empNo : " + empNo);
 		

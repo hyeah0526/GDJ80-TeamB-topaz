@@ -119,14 +119,22 @@ public class NoticeService {
 	
 	/*
 	 * 분류 번호: #10 - 공지 사항 상세 페이지
-	 * 시작 날짜: 2024-07-05
-	 * 담당자: 김지훈
+	 * 시작 날짜: 2024-07-21
+	 * 담당자: 김인수
 	*/
 	
 	public Map<String, Object> getNoticeDetail(String newsNo) {
 		
 		log.debug(Debug.KJH + "/ service / getNoticeDetail newsNo: " + newsNo);
 		Map<String, Object> noticeDetail = noticeMapper.selectNoticeDetail(newsNo);
+		
+		//첨부 파일 불러오기 
+		String fileName = (String) noticeDetail.get("fileName");
+	    if (fileName != null && !fileName.isEmpty()) {
+	        String filePath =  "/upload/" + fileName;
+	        noticeDetail.put("filePath", filePath);
+	    }
+		
 		return noticeDetail;
 	}
 	

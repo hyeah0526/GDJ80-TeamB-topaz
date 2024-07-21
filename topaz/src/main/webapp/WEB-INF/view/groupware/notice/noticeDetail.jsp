@@ -1,54 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!--
    분류 번호: #10 - 공지 사항 상세 페이지
-   시작 날짜: 2024-07-05
-   담당자: 김지훈
+   시작 날짜: 2024-07-21
+   담당자: 김인수
 -->    
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- CSS / JS -->
-	<link href="/topaz/css/jihoon.css" rel="stylesheet">
-	<!-- naver smart edior -->
-	<script type="text/javascript" src="/topaz/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-	<script>
-        // JSP에서 contextPath 값을 JavaScript로 넘김
-        const contextPath = '<%= request.getContextPath() %>';
-    </script>
-	<script>
-		let oEditor = [];
-		function initSmartEditor(contentValue) {
-			nhn.husky.EZCreator.createInIFrame({
-				oAppRef: oEditor,
-				elPlaceHolder: "content", // 에디터가 삽입될 위치 == textarea의 id
-				sSkinURI: "/topaz/smarteditor/SmartEditor2Skin.html",
-				fCreator: "createSEditor2",
-				fOnAppLoad: function() {
-					oEditor.getById["content"].exec("PASTE_HTML", [contentValue]);
-				}
-			});
-		}
-		function submitContent(form) {
-			// 폼 전송 전에 에디터 내용을 textarea에 업데이트
-			oEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-			return true; // 폼을 submit
-		}
-		function decodeHTMLEntity(text) {
-			const doc = new DOMParser().parseFromString(text, "text/html");
-			return doc.documentElement.textContent;
-		}
-
-		// 문서 로드 후 스마트 에디터 초기화
-		document.addEventListener("DOMContentLoaded", function() {
-			const initialContentElement = document.getElementById("initialContent");
-			const contentValue = initialContentElement ? decodeHTMLEntity(initialContentElement.innerHTML) : "";
-			initSmartEditor(contentValue);
-		});
-	</script>
-</head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
+	<!-- CSS / JS -->
+	<link href="/topaz/css/jihoon.css" rel="stylesheet">
+</head>
 	
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
@@ -73,7 +38,7 @@
 
 
 								<div class="row mb-3">
-									<label for="noticeTitle" class="col-sm-2 col-form-label">제목</label>
+									<label for="noticeTitle" class="col-sm-2 col-form-label" readonly>제목</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" id="title" name="title" value="${noticeDetail.title}" readonly="readonly">
 									</div>
@@ -134,20 +99,32 @@
 								<div class="row mb-3">
 									<label for="noticeContent" class="col-sm-2 col-form-label">내용</label>
 									<div class="col-sm-10">
-										<textarea class="form-control" style="height: 100px" name="content" id="content">
-											<c:out value="${noticeDetail.content}" escapeXml="false" />
+										<textarea class="form-control" style="height: 100px" name="content" id="content" readonly><c:out value="${noticeDetail.content}" escapeXml="false" />
 										</textarea>
 									</div>
 								</div>
 								<div class="row mb-3">
-										<input type="file" name="uploadFile" id="uploadFile">
-									    <div id="previewContainer" class="imagePreviewContainer" style="display:none;">
-									        <img id="preview">
-									        <span id="removeImage" class="removeImage">&times;</span>
-									    </div>
+								   <label for="noticeFile" class="col-sm-2 col-form-label">첨부 파일</label>
+								    <div class="col-sm-10">
+								        <c:if test="${noticeDetail.filePath != null}">
+								            <c:choose>
+								                <c:when test="${fn:contains(noticeDetail.filePath, '.png') || fn:contains(noticeDetail.filePath, '.jpg') || fn:contains(noticeDetail.filePath, '.jpeg')}">
+								                    <img  src="<c:url value='/${noticeDetail.filePath}'/>" alt="첨부 이미지" style="max-width: 100%; height: auto;">
+								                </c:when>
+								                <c:otherwise>
+								                    <span>첨부 파일: ${noticeDetail.filePath}</span>
+								                </c:otherwise>
+								            </c:choose>
+								        </c:if>
+								        <c:if test="${noticeDetail.filePath == null}">
+								            <span>첨부 파일 없음</span>
+								        </c:if>
+								    </div>
 						    	</div>
 								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>
-								<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeModify?newsNo=${noticeDetail.newsNo}'">수정</button>
+								<c:if test="${empNo == noticeDetail.empNo}">
+									<button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeModify?newsNo=${noticeDetail.newsNo}'">수정</button>
+								</c:if>
 							</form>
 							<!-- End General Form Elements -->
 						</div>

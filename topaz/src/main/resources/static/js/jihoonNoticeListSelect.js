@@ -32,6 +32,8 @@ $(document).ready(function() {
                 noticeList.forEach(n => {
                     const title = (n.category === '필독') ? '&#128227; [필독] ' + n.title : 
                                   (n.category === '이벤트') ? '&#127881; [이벤트] ' + n.title : n.title;
+                    
+                          
 
                     const container = (n.category === '필독' || n.category === '이벤트') ? topNoticeContainer : normalNoticeContainer;
 

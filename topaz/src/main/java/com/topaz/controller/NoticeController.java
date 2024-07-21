@@ -117,7 +117,7 @@ public class NoticeController {
 
 	/*
 	 * 서비스명: noticeAdd()
-	 * 시작 날짜: 2024-07-19 (수정)
+	 * 시작 날짜: 2024-07-19 
 	 * 담당자: 김인수
  	*/
 
@@ -221,26 +221,42 @@ public class NoticeController {
 	}
 
 	/*
-	 * 서비스명: getNoticeDetail() 담당자: 김지훈
+	 * 서비스명: getNoticeDetail( 공지사항 자세히 보기 )
+	 * 시작 날짜: 2024-07-21
+	 * 담당자: 김인수
 	 */
 
 	@GetMapping("/groupware/notice/noticeDetail")
 	public String noticeDetail(Model model, 
-		@RequestParam(name = "newsNo") String newsNo) {
+		@RequestParam(name = "newsNo") String newsNo,
+		HttpServletRequest  req) {
 		
-		log.debug(Debug.KJH + "/ Controller noticeDetail newsNo:" + newsNo);
-
+		//매개변수 디버깅
+		log.debug(Debug.KJH + " controller noticeDetail / newsNo: " + newsNo);
+		log.debug(Debug.KJH + " controller noticeDetail / newsNo: " + req);
+		
+		
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		
+		//세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "/ Controller / noticeAdd / empNo: " +  empNo);
+		
+		//공지사항 상세 정보 가져오기
 		Map<String, Object> noticeDetail = noticeService.getNoticeDetail(newsNo);
-
-		log.debug(Debug.KJH + "/ Controller noticeDetail:" + noticeDetail);
+		log.debug(Debug.KIS + " Controller / noticeDetail /  noticeDetail  :" + noticeDetail);
 
 		model.addAttribute("noticeDetail", noticeDetail);
+		model.addAttribute("empNo", empNo);
 
 		return "groupware/notice/noticeDetail";
 	}
 
 	/*
-	 * 서비스명: getNoticeList() 담당자: 
+	 * 서비스명: getNoticeList ( 공지사항 전체 보기 )
+	 * 시작 날짜: 2024-07-21 
+	 * 담당자: 김인수 
 	 */
 	@GetMapping("/groupware/notice/noticeList")
 	public String noticeList() throws Exception {
