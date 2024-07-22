@@ -144,7 +144,7 @@ public class VolunteerService {
 		// 전체 행 개수 
 		int totalRow = volunteerMapper.selectVolAppListTotalRow(searchDate, searchWord);
 		log.debug(Debug.HEH + "VolunteerService getVolAppListLastPage totalRow : " + totalRow + Debug.END);
-
+		// 마지막 페이지 계산
 		int lastPage = totalRow /rowPerPage;
 		if(totalRow % rowPerPage != 0) {
 			lastPage = lastPage + 1;
@@ -163,7 +163,7 @@ public class VolunteerService {
 	public int addVolApp(VolunteerApplication volunteerApplication) {
 		// 매개값 디버깅
 		log.debug(Debug.HEH + "VolunteerService addVolApp volunteerApplication : " + volunteerApplication + Debug.END);
-
+		// 봉사 신청하기
 		int insertRow = volunteerMapper.addVolApp(volunteerApplication);
 		
 		if(insertRow != 1) {
@@ -173,7 +173,7 @@ public class VolunteerService {
 		}
 		log.debug(Debug.HEH + "VolunteerService addVolApp 등록 성공시 1 : " + insertRow + Debug.END);
 		
-		// 신청 등록시 신청 가능 인원 변경 
+		// 신청 등록 성공 -> 신청 가능 인원 변경 
 		String volAppPeople = volunteerApplication.getVolAppPeople();
 		String volNo = volunteerApplication.getVolNo();
 		int updatRow = volunteerMapper.updateVolPeople(volAppPeople, volNo);
@@ -202,19 +202,52 @@ public class VolunteerService {
 		log.debug(Debug.HEH + "VolunteerService getVolunteerAppDetail volunteer : " + map + Debug.END);
 		return map;
 	}
-	
-
 
 	
 	
+	/*
+	 * 분류번호: #9, 16 - 봉사 신청 페이지 : 봉사 신청 상태 변경하기
+	 * 시작 날짜: 2024-07-22
+	 * 담당자: 한은혜 
+	 */
+	public int updateVolState(VolunteerApplication volunteerApplication) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "VolunteerService updateVolState volunteerApplication : " + volunteerApplication + Debug.END);
+		// 봉사 신청 상태 변경하기
+		int stateUpdateRow = volunteerMapper.updateVolState(volunteerApplication);
+		
+		if(stateUpdateRow != 1) {
+			// 변경 실패일 경우
+			log.debug(Debug.HEH + "VolunteerService updateVolState stateUpdateRow 변경 실패시 0 : "+ stateUpdateRow + Debug.END);
+			throw new RuntimeException();
+		}
+		
+		// 상태 변경 성공 -> 신청 가능 인원 변경 
+		String volAppPeople = volunteerApplication.getVolAppPeople();
+		String volNo = volunteerApplication.getVolNo();
+		log.debug(Debug.HEH + "VolunteerService volNo : "+ volNo + Debug.END);
+		
+		// 신청 상태가 거절/취소일 경우에만 신청 가능 인원 수 복구
+		if(stateUpdateRow == 1 && ("3".equals(volunteerApplication.getVolAppState()) || "4".equals(volunteerApplication.getVolAppState()))) {
+			// VolState 디버깅
+			log.debug(Debug.HEH + "VolunteerService updateVolState volunteerApplication volAppState : " + volunteerApplication.getVolAppState() + Debug.END);
+			// 봉사 신청 가능 인원 변경하기
+			int peopleUpdateRow = volunteerMapper.cancelVolPeople(volAppPeople, volNo);
+			
+			if(peopleUpdateRow != 1) {
+				// 변경 실패일 경우
+				log.debug(Debug.HEH + "VolunteerService updateVolState peopleUpdateRow 변경 실패시 0 : "+ peopleUpdateRow + Debug.END);
+				throw new RuntimeException();
+			}
+			// 성공할 경우
+			log.debug(Debug.HEH + "VolunteerService updateVolState peopleUpdateRow 변경 성공시 1 : "+ peopleUpdateRow + Debug.END);
+
+		}
+		return stateUpdateRow;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
+
+
 	
 	
 	

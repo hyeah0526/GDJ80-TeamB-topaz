@@ -92,7 +92,7 @@
     
     
     <!-- Modal -->
-	<!-- addSchedule 모달창 : 봉사 신청 폼 -->
+	<!-- 모달창 : 봉사 신청 폼 -->
 	<div class="modal fade" id="volunteerAppDetail" tabindex="-1">
 		<div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
 			<!-- 모달 제목 -->
@@ -102,11 +102,12 @@
 			</div>
 			
 			<!-- 모달 봉사 신청 폼 -->
-			<form id="volunteerAppDetailForm" action="${pageContext.request.contextPath}/groupware/volunteer/volunteerAppDetail" method="post">
+			<form id="volunteerAppDetailForm" action="/topaz/groupware/volunteer/modifyVolAppState" method="post">
 				<div class="modal-body">
 					<div class="row mb-5">
-						<input type="hidden" id="volAppNo">
-						<input type="hidden" id="volAppState">
+						<input type="hidden" name="volAppNo" id="volAppNo">
+						<input type="hidden" name="volAppState" id="volAppState">
+						<input type="hidden" name="volNo" id="volNo">
 						
 			             	<label for="volTime" class="col-3 mb-3 col-form-label">봉사 일시</label>
 			                <div class="col-9 form-group">
@@ -165,8 +166,8 @@
 				
 				<!-- 모달 일정 취소/등록버튼 -->
 				<div class="modal-footer justify-content-center">
-					<button type="button" class="btn btn-success" id="accept_btn">수락</button>
-					<button type="button" class="btn btn-danger" id="reject_btn">거절</button>
+					<button type="submit" class="btn btn-success" id="accept_btn" onclick="submitForm(2)">수락</button>
+					<button type="submit" class="btn btn-danger" id="reject_btn" onclick="submitForm(3)">거절</button>
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 				</div>
 			</form>
@@ -342,6 +343,13 @@
             });
         }
     });
+    
+ 	// 폼 제출 함수 추가
+    function submitForm(state) {
+        $('#volAppState').val(state);
+        $('#volunteerAppDetailForm').submit();
+    }
+    
     </script>
 </body>
 </html>

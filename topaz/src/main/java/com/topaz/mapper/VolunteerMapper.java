@@ -41,4 +41,10 @@ public interface VolunteerMapper {
 	/* 분류번호: #9 - 봉사 신청하기  : 봉사 신청 가능 인원 계산하기(신청시) */
 	int updateVolPeople(String volAppPeople, String volNo);
 
+	/* 분류번호: #9, 16 - 봉사 신청하기  : 봉사 신청 상태 변경하기 */
+	int updateVolState(VolunteerApplication volunteerApplication);
+
+	/* 분류번호: #9, 16 - 봉사 신청하기  : 봉사 신청 가능 인원 계산하기(거절/취소 시) */
+	int cancelVolPeople(String volAppPeople, String volNo);
+
 }

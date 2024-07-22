@@ -181,7 +181,7 @@
 	</select>
 	
 	
-	<!-- 분류번호: #9 - 봉사 신청 상세 페이지 : 봉사 신청 가능 인원 변경 (고객이 봉사 신청시 변경) -->
+	<!-- 분류번호: #16 - 봉사 신청 페이지 : 봉사 신청 가능 인원 변경 (고객이 봉사 신청시) -->
 	<update id="updateVolPeople" parameterType="String">
 		UPDATE volunteer v
 			INNER JOIN volunteer_application va 
@@ -192,9 +192,25 @@
 		AND v.vol_people > 0
 	</update>
 	
+	<!-- 분류번호: #9 - 봉사 신청 상세 페이지 : 봉사 신청 가능 인원 변경 (거절/취소 시) -->
+	<update id="cancelVolPeople" parameterType="String">
+		UPDATE volunteer v
+			INNER JOIN volunteer_application va 
+			ON v.vol_no = va.vol_no
+		SET v.vol_people = v.vol_people + #{volAppPeople}
+		WHERE v.vol_no = #{volNo}
+		AND v.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+	</update>
 	
 	
-	
+	<!-- 분류번호: #9, 16 - 봉사 신청 상세 페이지 : 봉사 신청 상태 변경 -->
+	<update id="updateVolState" parameterType="String">
+		UPDATE volunteer_application 
+		SET vol_app_state = #{volAppState},
+			mod_id = #{modId},
+			mod_time = NOW()
+		WHERE vol_app_no = #{volAppNo}
+	</update>
 	
 	
 	

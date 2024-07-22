@@ -148,7 +148,7 @@ public class VolunteerController {
 	public String volunteerApp(@RequestParam(name="volNo") String volNo, HttpServletRequest httpServletRequest, VolunteerApplication volunteerApplication) {
 		// 매개값 디버깅
 		log.debug(Debug.HEH + "controller volunteerApp volNo : " + volNo + Debug.END);
-		// 세션값 -> empNo 가져오기
+		// 세션값 -> gstId 가져오기
 		HttpSession session = httpServletRequest.getSession();
 		String gstId = (String)session.getAttribute("gstId");
 		log.debug(Debug.HEH + "controller volunteerApp gstId : " + gstId + Debug.END);
@@ -162,9 +162,43 @@ public class VolunteerController {
 		
 		return "redirect:/customer/volunteerRqAdd";
 	}
+	
+	
+	/*
+	 * 서비스명: modifyVolAppState
+	 * 시작 날짜: 2024-07-22
+	 * 담당자: 한은혜
+	 */
+	@PostMapping("/groupware/volunteer/modifyVolAppState")
+	public String modifyVolAppState(@RequestParam(name="volAppNo") String volAppNo, 
+									@RequestParam(name="volAppState") String volAppState,
+									@RequestParam(name="volNo") String volNo,
+									HttpServletRequest httpServletRequest, 
+									VolunteerApplication volunteerApplication) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "controller modifyVolAppState volAppNo : " + volAppNo + Debug.END);
+		log.debug(Debug.HEH + "controller modifyVolAppState volAppState : " + volAppState + Debug.END);
+		log.debug(Debug.HEH + "controller modifyVolAppState volNo : " + volNo + Debug.END);
+		// 세션값에서 gstId와 strId 가져오기
+	    HttpSession session = httpServletRequest.getSession();
+	    String gstId = (String) session.getAttribute("gstId");
+	    String empNo = (String) session.getAttribute("strId");
+
+	    // 사용 가능한 ID 결정
+	    String idToUse = (gstId != null) ? gstId : empNo;
+	    // ID 디버깅
+	    log.debug(Debug.HEH + "controller modifyVolAppState idToUse : " + idToUse + Debug.END);
+	    // 쿼리에서 필요한 값 세팅 
+	    volunteerApplication.setModId(idToUse);
+	    volunteerApplication.setVolAppNo(volAppNo);
+	    volunteerApplication.setVolAppState(volAppState);
+	    volunteerApplication.setVolNo(volNo);
+		log.debug(Debug.HEH + "controller modifyVolAppState volunteerApplication : " + volunteerApplication + Debug.END);
+
+	    volunteerService.updateVolState(volunteerApplication);
 		
-	
-	
+		return "redirect:/groupware/volunteer/volunteerList";
+	}
 	
 	
 	
