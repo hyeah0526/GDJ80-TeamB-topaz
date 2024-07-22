@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.topaz.dto.VolunteerApplication;
 import com.topaz.service.VolunteerService;
 import com.topaz.utill.Debug;
 
@@ -67,6 +69,25 @@ public class VolunteerRestController {
 
 		return map;
 	}
+	
+	
+	/*
+	 * 서비스명: getVolAppDetail
+	 * 시작 날짜: 2024-07-22
+	 * 담당자: 한은혜
+	 */
+	@GetMapping("/groupware/volunteer/volunteerAppDetail")
+	public Map<String, Object> volunteerAppDetail(@RequestParam(name="volAppNo") String volAppNo, Model model) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "controller volunteerAppDetail volAppNo : " + volAppNo + Debug.END);
+		// 봉사 신청 상세 조회
+		Map<String, Object> map = volunteerService.getVolunteerAppDetail(volAppNo);
+		log.debug(Debug.HEH + "controller volunteerRqDetail volunteerApplication : " + map + Debug.END);
+
+		return map;
+	}
+	
+	
 	
 	
 	

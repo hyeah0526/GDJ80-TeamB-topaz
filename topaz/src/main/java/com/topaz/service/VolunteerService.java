@@ -173,6 +173,21 @@ public class VolunteerService {
 		
 		return row;
 	}
+
+	
+	/*
+	 * 분류번호: #9 - 봉사 신청 상세 페이지 : 봉사 신청 상세보기
+	 * 시작 날짜: 2024-07-22
+	 * 담당자: 한은혜 
+	 */
+	public Map<String, Object> getVolunteerAppDetail(String volAppNo) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + "VolunteerService getVolunteerAppDetail volAppNo : " + volAppNo + Debug.END);
+		// 봉사 신청 상세 
+		Map<String, Object> map = volunteerMapper.selectVolAppOne(volAppNo);
+		log.debug(Debug.HEH + "VolunteerService getVolunteerAppDetail volunteer : " + map + Debug.END);
+		return map;
+	}
 	
 
 

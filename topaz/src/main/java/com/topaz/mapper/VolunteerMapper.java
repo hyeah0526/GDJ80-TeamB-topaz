@@ -35,4 +35,7 @@ public interface VolunteerMapper {
 	/* 분류번호: #9 - 봉사 신청하기  : 봉사 신청 등록하기 */
 	int addVolApp(VolunteerApplication volunteerApplication);
 
+	/* 분류번호: #9 - 봉사 신청하기  : 봉사 신청 상세보기 */
+	Map<String, Object> selectVolAppOne(String volAppNo);
+
 }

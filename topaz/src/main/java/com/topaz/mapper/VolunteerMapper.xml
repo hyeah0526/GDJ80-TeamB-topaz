@@ -154,9 +154,30 @@
 	</insert>
 	
 	<!-- 분류번호: #9 - 봉사 신청 상세 페이지 : 봉사 정보, 신청자 정보 상세 -->
-	<select id="selectVolAppDetail" parameterType="String" resultType="map">
-		
-	
+	<select id="selectVolAppOne" parameterType="String" resultType="map">
+		SELECT 	
+			va.vol_app_no volAppNo, 
+			va.vol_no volNo,
+			va.vol_app_people volAppPeople, 
+			va.vol_app_comment volAppComment, 
+			va.vol_app_state volAppState, 
+			va.gst_id gstId,
+			v.vol_content volContent,
+			v.vol_people volPeople,
+			DATE_FORMAT(v.vol_starttime, '%Y-%m-%d %H:%i') volStartTime,
+			DATE_FORMAT(v.vol_endtime, '%Y-%m-%d %H:%i') volEndTime,
+			g.gst_name gstName,
+			(SELECT cd_nm FROM common_code WHERE crp_cd = 'A001' AND cd = g.gst_gender) gstGender,
+			g.gst_birth gstBirth,
+			g.gst_phone gstPhone
+		FROM volunteer_application va 
+			INNER JOIN volunteer v
+			ON va.vol_no = v.vol_no
+			INNER JOIN guest g 
+			ON va.gst_id = g.gst_id 
+		WHERE va.vol_app_no = #{volAppNo}
+		AND va.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		AND v.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 	</select>
 	
 	

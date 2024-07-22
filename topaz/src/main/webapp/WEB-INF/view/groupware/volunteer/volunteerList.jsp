@@ -73,8 +73,6 @@
                         <th scope="col">신청 인원</th>
                         <th scope="col">신청 내용</th>
                         <th scope="col">상태</th>
-                        <th scope="col">수락</th>
-                        <th scope="col">거절</th>
                       </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -93,40 +91,83 @@
     </section><!-- section 종료 -->
     
     
-    
     <!-- Modal -->
 	<!-- addSchedule 모달창 : 봉사 신청 폼 -->
-	<div class="modal fade" id="volAppDetail" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+	<div class="modal fade" id="volunteerAppDetail" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
 			<!-- 모달 제목 -->
 			<div class="modal-header">
-				<h5 class="modal-title">봉사 신청</h5>
+				<h5 class="modal-title">봉사 신청 내용</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			
 			<!-- 모달 봉사 신청 폼 -->
-			<form id="addVolunteerApp" action="${pageContext.request.contextPath}/customer/volunteerRqDetail" method="post">
+			<form id="volunteerAppDetailForm" action="${pageContext.request.contextPath}/groupware/volunteer/volunteerAppDetail" method="post">
 				<div class="modal-body">
 					<div class="row mb-5">
-						<input type="hidden" value="${v.volNo}" name="volNo">
+						<input type="hidden" id="volAppNo">
+						<input type="hidden" id="volAppState">
 						
-						<label for="volAppPeople" class="col-4 mb-3 col-form-label">신청 인원</label>
-						<div class="col-8 mb-3">
-							<input type="text" class="form-control" id="volAppPeople" name="volAppPeople">
+			             	<label for="volTime" class="col-3 mb-3 col-form-label">봉사 일시</label>
+			                <div class="col-9 form-group">
+			                 	<input type="text" name="volTime" id="volTime" class="form-control" readonly>
+			                </div>
+						
+						<label for="volPeople" class="col-3 mb-3 col-form-label">신청 가능 인원</label>
+						<div class="col-9 mb-3">
+							<input type="text" class="form-control" id="volPeople" name="volPeople" readonly>
 						</div>
 						
-						<label for="volAppComment" class="col-4 mb-3 col-form-label">신청 내용</label>
-						<div class="col-8 mb-3">
-							<textarea rows="3" maxlength="100" class="col-sm-12" id="volAppComment" name="volAppComment" placeholder="하고싶은 말을 100자 이하로 작성해주세요." style="height: 150px"></textarea>
-							(<span id="chatHelper">0</span>/100)
+						<label for="volContent" class="col-3 mb-3 col-form-label">봉사 내용</label>
+						<div class="col-9 mb-3">
+							<input type="text" class="form-control" id="volContent" name="volContent" readonly>
 						</div>
+						
+						<hr >
+						
+						<label for="gstId" class="col-3 mb-3 col-form-label">신청자 ID</label>
+						<div class="col-9 mb-3">
+							<input type="text" class="form-control" id="gstId" name="gstId" readonly>
+						</div>
+						
+						<label for="gstName" class="col-3 mb-3 col-form-label">신청자 이름</label>
+						<div class="col-9 mb-3">
+							<input type="text" class="form-control" id="gstName" name="gstName" readonly>
+						</div>
+						
+						<label for="gstPhone" class="col-3 mb-3 col-form-label">신청자 연락처</label>
+						<div class="col-9 mb-3">
+							<input type="text" class="form-control" id="gstPhone" name="gstPhone" readonly>
+						</div>
+						
+						<label for="gstBirth" class="col-3 mb-3 col-form-label">신청자 생년월일</label>
+						<div class="col-9 mb-3">
+							<input type="text" class="form-control" id="gstBirth" name="gstBirth" readonly>
+						</div>
+						
+						<label for="gstGender" class="col-3 mb-3 col-form-label">신청자 성별</label>
+						<div class="col-9 mb-3">
+							<input type="text" class="form-control" id="gstGender" name="gstGender" readonly>
+						</div>
+						
+						<label for="volAppPeople" class="col-3 mb-3 col-form-label">신청 인원</label>
+						<div class="col-9 mb-3">
+							<input type="text" class="form-control" id="volAppPeople" name="volAppPeople" readonly>
+						</div>
+						
+						<label for="volAppComment" class="col-3 mb-3 col-form-label">신청 내용</label>
+						<div class="col-9 mb-3">
+							<input type="text" class="form-control" id="volAppComment" name="volAppComment" readonly>
+						</div>
+						
 					</div>
 				</div>
 				
 				<!-- 모달 일정 취소/등록버튼 -->
 				<div class="modal-footer justify-content-center">
+					<button type="button" class="btn btn-success" id="accept_btn">수락</button>
+					<button type="button" class="btn btn-danger" id="reject_btn">거절</button>
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button id="AddVolApp_btn" type="submit" class="btn btn-primary" style="background-color: #34bf49; border-color: #34bf49;">신청</button>
 				</div>
 			</form>
 		</div></div>
@@ -177,12 +218,29 @@
         }
     }
     
+    // 연락처 포맷 맞추기
+    function formatPhoneNumber(phoneNumber) {
+        // 전화번호에서 숫자만 추출
+        let cleaned = ('' + phoneNumber).replace(/\D/g, '');
+
+        // 길이가 맞지 않으면 빈 문자열 반환
+        if (cleaned.length !== 11) {
+            return phoneNumber; // 또는 빈 문자열
+        }
+
+        let match = cleaned.match(/^(\d{3})(\d{4})(\d{4})$/);
+        if (match) {
+            return [match[1], match[2], match[3]].join('-');
+        }
+
+        return phoneNumber;
+    }
+    
     $(document).ready(function() {
         // 페이지 로드 시 1페이지 불러오기
         volunteerList(1);
         
         console.log("volunteerList page load ", )
-
     
         // 검색 버튼 클릭 시 첫번째 페이지로 조회하기
         $('#searchButton').click(function() {
@@ -196,16 +254,16 @@
             volunteerList(currentPage); // 클릭한 페이지 번호로 조회
         });
     
-        // Ajax 호출 함수
+        // Ajax 호출
         function volunteerList(currentPage) {
-            // 값 받아오기
+            // 검색 값 받아오기
             let searchDate = $('#searchDate').val();
             console.log("searchDate 결과값--> ", searchDate);
             
             let searchWord = $('#searchWord').val();
             console.log("searchWord 결과값--> ", searchWord);
             
-            // Ajax
+            // Ajax 리스트 호출 
             $.ajax({
                 url: '/topaz/volunteer/volunteerList',
                 type: 'GET',
@@ -215,13 +273,13 @@
                     "searchDate": searchDate
                 },
                 success: function(response) {
-                    console.log("response 결과값--> ", response)
+                    console.log("response : ", response)
     
                     // 리스트 불러올 tbody
                     let tbody = $('#tableBody');
-                    tbody.empty(); // tbody 비우기
+                    tbody.empty();
     
-                 	// response 데이터만큼 tr 생성
+                 	// response 데이터만큼 리스트 생성
                     if (response && response.list) {
                         response.list.forEach(function(item) {
                             let row = '<tr class="clickable-row" data-vol-app-no="' + item.volAppNo + '">';
@@ -231,24 +289,49 @@
                             row += '<td>' + item.volAppPeople + '</td>';
                             row += '<td>' + item.volAppComment + '</td>';
                             row += '<td>' + item.volAppState + '</td>';
-                            row += '<td><button type="button" class="btn btn-success" id="accept_btn">수락</button></td>';
-                            row += '<td><button type="button" class="btn btn-danger" id="reject_btn">거절</button></td>';
                             row += '</tr>';
 
                             // tbody에 행 추가
                             tbody.append(row);
                         });
                         
-                     	// 행 클릭 시 상세 페이지로 이동
-                        $('.clickable-row').click(function() {
-                          let volAppNo = $(this).data('volAppNo');
-                          console.log('volAppNo :', volAppNo)
-                    	  $("#volAppDetail").modal("show");
+                     // 행 클릭 시 상세 페이지로 이동
+                     $('.clickable-row').click(function() {
+                       let volAppNo = $(this).data('volAppNo');
+                       console.log('volAppNo :', volAppNo);
 
-                      	});    
-                       
-                        
+                       // 상세 정보 가져오기
+                       $.ajax({
+                           url: '/topaz/groupware/volunteer/volunteerAppDetail', // 컨트롤러 URL
+                           type: 'GET',
+                           data: { "volAppNo": volAppNo },
+                           success: function(detailResponse) {
+                               if (detailResponse) {
+                                   console.log("detailResponse : ", detailResponse)
+									// 보여줄 값 가져오기
+                                   $('#volAppNo').val(detailResponse.volAppNo);
+                                   $('#volNo').val(detailResponse.volNo);
+                                   $('#volAppPeople').val(detailResponse.volAppPeople);
+                                   $('#volAppComment').val(detailResponse.volAppComment);
+                                   $('#volAppState').val(detailResponse.volAppState);
+                                   $('#gstId').val(detailResponse.gstId);
+                                   $('#volContent').val(detailResponse.volContent);
+                                   $('#volPeople').val(detailResponse.volPeople);
+                                   $('#volTime').val(detailResponse.volStartTime + ' - ' + detailResponse.volEndTime);
+                                   $('#gstName').val(detailResponse.gstName);
+                                   $('#gstGender').val(detailResponse.gstGender);
+                                   $('#gstBirth').val(detailResponse.gstBirth);
+                                   $('#gstPhone').val(formatPhoneNumber(detailResponse.gstPhone));
+                                   
+                                   // 모달 열기
+                                   $("#volunteerAppDetail").modal("show");
+                               }
+                           },
+                       });
+                   	});    
+                   	
                     } else {
+                    	// 데이터가 없을 경우
                         let row = '<tr><td colspan="6">데이터가 없습니다.</td></tr>';
                         tbody.append(row);
                     }
