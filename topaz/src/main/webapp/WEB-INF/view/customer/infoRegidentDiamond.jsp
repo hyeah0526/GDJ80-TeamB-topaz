@@ -51,18 +51,23 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="gstMain">Home</a></li>
-          <li><a href="infoPrograms">서비스 및 프로그램</a></li>
-          <li class="dropdown active"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
+          <li><a href="gstMain" class="active">Home</a></li>
+          <li><a href="infoPrograms">서비스 및 프로그램</a></li>&nbsp;&nbsp;&nbsp;
+          <li class="dropdown"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
             <ul>
               <li><a href="infoRegidentDiamond">다이아몬드동</a></li>
               <li><a href="infoRegidentSilver">실버동</a></li>
               <li><a href="infoStep">입주 절차</a></li>
             </ul>
-          </li>
+          </li>&nbsp;&nbsp;
           <li><a href="volunteerRqAdd">봉사 신청</a></li>
           <li><a href="newsList">알림마당</a></li>
-          <li><a href="gstLogin">로그인</a></li>
+          <!-- JavaScript로 동적으로 변경될 부분 -->
+          <li><a href="gstMyInfo" id="myInfoLink" class="active">내 정보</a></li>
+          <li><a href="gstLogin" id="loginLink" class="active">로그인</a></li>
+          <li><a href="signUp" id="signUpLink" class="active">회원가입</a></li>
+          <li><a href="${pageContext.request.contextPath}/gstLogout">로그아웃</a></li>
+
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -120,19 +125,22 @@
 			
             <div class="offset-md-0 col-sm-12 col-md-5 col-lg-5 col-xl-4" data-aos="fade-up">
               <div class="px-3">
-                <h2 class="content-title text-start">
+                <h2 class="content-title text-start" style="font-style: italic; font-size: 25px">
                   다이아몬드동
                 </h2>
-                <p>다이아몬드동은 현대적인 디자인과 편의 시설을<br>
-                갖춘 공간으로, A타입은 1인 가구에 이상적인 <br>
-                생활 공간을 제공합니다. B타입은 2인 가구에<br>
-                이상적인 생활 공간을 제공합니다. 각각의 타입은 <br>
+                <p style="font-style: italic; font-size: 19px">
+                다이아몬드동은 현대적인 디자인과 <br>
+                편의 시설을 갖춘 공간으로, <br>
+                A타입은 1인 가구에 이상적인 <br>
+                생활 공간을 제공합니다. <br>
+                B타입은 2인 가구에 이상적인 <br>
+                생활 공간을 제공합니다. 각각의 타입은 <br>
                 최신 가전 제품과 개인의 프라이버시를 <br>
                 보장하는 설계로 구성되어 있습니다.</p>
 
 				<br>
-				<h2 class="content-title text-start">주거 타입</h2>
-		        <table style="margin-bottom: 50px">
+				<h2 class="content-title text-start" style="font-style: italic; font-size: 25px">주거 타입</h2>
+		        <table style="margin-bottom: 50px; font-style: italic;">
 		            <thead>
 		                <tr>
 		                    <th>타입</th>

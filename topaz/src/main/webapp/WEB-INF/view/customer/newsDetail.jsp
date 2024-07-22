@@ -40,20 +40,23 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="gstMain">Home</a></li>
-          <li><a href="infoCompany">회사소개</a></li>
-          <li><a href="infoPrograms">프로그램</a></li>
-          <li class="dropdown"><a href="infoRegident"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li><a href="gstMain" >Home</a></li>
+          <li><a href="infoPrograms">서비스 및 프로그램</a></li>&nbsp;&nbsp;&nbsp;
+          <li class="dropdown"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
             <ul>
-              <li><a href="infoRegidentA">A동</a></li>
-              <li><a href="#">B동</a></li>
-              <li><a href="#">C동</a></li>
-              <li><a href="#">Dropdown 4</a></li>
+              <li><a href="infoRegidentDiamond">다이아몬드동</a></li>
+              <li><a href="infoRegidentSilver">실버동</a></li>
+              <li><a href="infoStep">입주 절차</a></li>
             </ul>
-          </li>
-          <li><a href="volunteerRqAdd" >봉사 신청</a></li>
-          <li><a href="newsList">알림마당</a></li>
-          <li><a href="gstLogin">로그인</a></li>
+          </li>&nbsp;&nbsp;
+          <li><a href="volunteerRqAdd">봉사 신청</a></li>
+          <li><a href="newsList" class="active">알림마당</a></li>
+          <!-- JavaScript로 동적으로 변경될 부분 -->
+          <li><a href="gstMyInfo" id="myInfoLink" class="active">내 정보</a></li>
+          <li><a href="gstLogin" id="loginLink" class="active">로그인</a></li>
+          <li><a href="signUp" id="signUpLink" class="active">회원가입</a></li>
+          <li><a href="${pageContext.request.contextPath}/gstLogout">로그아웃</a></li>
+
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -91,10 +94,10 @@
 		                <h2 class="title">${newsOne.title }</h2>
 		                <div class="post-img">
 		                <br>
-		                  <img src="/topaz/assets/img/guest/${newsOne.fileName }" alt="" class="img-fluid">
+		                  <img src="/topaz/assets/img/guest/${newsOne.fileName }" alt="" class="img-fluid" width="600px">
 		                </div>
 		                <p>
-		                  ${newsOne.content }
+		                <textarea class="form-control" rows="7" cols="20" readonly >${newsOne.content }</textarea>
 		                </p>
 		                <p>
 		                 등록자/등록시간 <br>

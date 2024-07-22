@@ -120,18 +120,22 @@
 
             <div class="offset-md-0 col-sm-12 col-md-5 col-lg-5 col-xl-4" data-aos="fade-up">
               <div class="px-3">
-                <h2 class="content-title text-start">
+                <h2 class="content-title text-start" style="font-style: italic; font-size: 25px">
                   실버동
                 </h2>
-                <p>실버동은 넓은 공간과 다양한 커뮤니티 활동을 <br>
-                지원합니다. A타입은 1인 가구에 이상적인
-				생활 공간을 제공합니다. B타입은 2인 가구에 적합합니다. 
-				이곳은 친구나 가족과 함께 편안하고 조화로운 생활을 <br>
-				누릴 수 있는 설계로 구성되어 있습니다.</p>
+                <p style="font-style: italic; font-size: 19px">
+                실버동은 넓은 공간과 다양한 커뮤니티 <br>
+                활동을 지원합니다. A타입은 1인 가구에 <br>
+                이상적인 생활 공간을 제공합니다. B타입은 <br>
+                2인 가구에 적합합니다. 이곳은 친구나<br>
+                가족과 함께 편안하고 조화로운 생활을 <br>
+                누릴 수 있는 설계로 구성되어 있습니다.</p>
 
 				<br>
-				<h2 class="content-title text-start">주거 타입</h2>
-		        <table style="margin-bottom: 50px">
+				<h2 class="content-title text-start" style="font-style: italic; font-size: 25px">
+					주거 타입
+				</h2>
+		        <table style="margin-bottom: 50px; font-style: italic;">
 		            <thead>
 		                <tr>
 		                    <th>타입</th>
