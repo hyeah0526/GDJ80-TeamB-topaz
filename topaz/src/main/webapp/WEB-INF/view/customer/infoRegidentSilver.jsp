@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>입주 설명 A</title>
+  <title>실버동 설명</title>
   <!-- Favicons -->
    <link href="/topaz/assets/img/TOPAZ_logo.png" rel="icon">
 
@@ -52,9 +52,8 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="gstMain">Home</a></li>
-          <li><a href="infoCompany">회사소개</a></li>
-          <li><a href="infoPrograms">프로그램</a></li>
-          <li class="dropdown"><a href="infoRegident" class="active"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li><a href="infoPrograms">서비스 및 프로그램</a></li>
+          <li class="dropdown active"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
             <ul>
               <li><a href="infoRegidentDiamond">다이아몬드동</a></li>
               <li><a href="infoRegidentSilver">실버동</a></li>
@@ -78,11 +77,45 @@
         <div class="content">
           <div class="row justify-content-center" style="margin-top: 50px">
             <div class="col-sm-12 col-md-5 col-lg-4 col-xl-4 order-lg-2 offset-xl-1 mb-4">
-              <div class="img-wrap text-center text-md-left" data-aos="fade-up" data-aos-delay="100">
-                <div class="img">
-                  <img src="/topaz/assets/img/img_v_3.jpg" alt="circle image" class="img-fluid">
+              <div class="swiper init-swiper">
+              <script type="application/json" class="swiper-config">
+                {
+                  "loop": true,
+                  "speed": 600,
+                  "autoplay": {
+                    "delay": 5000
+                  },
+                  "slidesPerView": "auto",
+                  "pagination": {
+                    "el": ".swiper-pagination",
+                    "type": "bullets",
+                    "clickable": true
+                  },
+                  "breakpoints": {
+                    "320": {
+                      "slidesPerView": 1,
+                      "spaceBetween": 40
+                    },
+                    "1200": {
+                      "slidesPerView": 1,
+                      "spaceBetween": 1
+                    }
+                  }
+                }
+              </script>
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="/topaz/assets/img/silver5.jpg" alt="Image" class="img-fluid">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/topaz/assets/img/silver.png" alt="Image" class="img-fluid">
+                </div>
+                <div class="swiper-slide">
+                  <img src="/topaz/assets/img/silver4.jpg" alt="Image" class="img-fluid">
                 </div>
               </div>
+              <div class="swiper-pagination"></div>
+            </div>
             </div>
 
             <div class="offset-md-0 col-sm-12 col-md-5 col-lg-5 col-xl-4" data-aos="fade-up">
@@ -90,11 +123,15 @@
                 <h2 class="content-title text-start">
                   실버동
                 </h2>
-                <p>실버동은 넓은 공간과 다양한 커뮤니티 활동 지원으로 B타입은 2인 가구에 적합합니다. 이곳은 친구나 가족과 함께 편안하고 조화로운 생활을 누릴 수 있는 설계로 구성되어 있습니다.</p>
+                <p>실버동은 넓은 공간과 다양한 커뮤니티 활동을 <br>
+                지원합니다. A타입은 1인 가구에 이상적인
+				생활 공간을 제공합니다. B타입은 2인 가구에 적합합니다. 
+				이곳은 친구나 가족과 함께 편안하고 조화로운 생활을 <br>
+				누릴 수 있는 설계로 구성되어 있습니다.</p>
 
 				<br>
 				<h2 class="content-title text-start">주거 타입</h2>
-		        <table>
+		        <table style="margin-bottom: 50px">
 		            <thead>
 		                <tr>
 		                    <th>타입</th>
@@ -105,13 +142,13 @@
 		            <tbody>
 		                <tr>
 		                    <td>A타입</td>
-		                    <td>20평</td>
-		                    <td>방 1개, 화장실 1개, 주방 겸 거실</td>
+		                    <td>25평</td>
+		                    <td>방 2개, 화장실 1개, 주방 겸 거실</td>
 		                </tr>
 		                <tr>
 		                    <td>B타입</td>
-		                    <td>25평</td>
-		                    <td>방 2개, 화장실 1개, 주방 겸 거실</td>
+		                    <td>30평</td>
+		                    <td>방 3개, 화장실 2개, 주방 겸 거실</td>
 		                </tr>
 		            </tbody>
 		        </table>
