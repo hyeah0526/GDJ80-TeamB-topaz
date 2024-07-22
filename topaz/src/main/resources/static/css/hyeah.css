@@ -179,13 +179,80 @@
 }
 
 
+/* ==========결재 상세 - approvalDetail.jsp========== */
+.approvalSignShowLeft{
+	float: left;
+}
+
+.approvalSignShowLeft th{
+	width: 80px;
+	height: 30px;
+	text-align: center;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 600;
+	line-height: 1.5;
+	background-color: #e2e3e5;
+	color: #012970;
+}
+
+.approvalSignShowLeft td{
+	width: 170px;
+	height: 30px;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+	line-height: 1.5;
+}
+
+.approvalSignShow {
+	float: right;
+	text-align: center;
+}
+
+.approvalSignShow th{
+	width: 35px;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 600;
+	line-height: 1.5;
+	background-color: #e2e3e5;
+	color: #012970;
+}
 
 
+.approvalSignShow td{
+	width: 140px;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+	line-height: 1.5;
+}
 
 
+.approvalDetailDiv th{
+	text-align: center;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 600;
+	line-height: 1.5;
+	background-color: #e2e3e5;
+	color: #012970;
+}
 
 
-
+.approvalDetailDiv td{
+ 	border: var(--bs-border-width) solid var(--bs-border-color);
+	padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+	line-height: 1.5;
+ }
 
 
 

@@ -61,7 +61,11 @@ public class ApprovalController {
 	}
 	
 	
-	
+	/*
+	 * 서비스명: setApprovalDoc
+	 * 시작 날짜: 2024-07-19
+	 * 담당자: 박혜아
+	*/
 	@PostMapping("/groupware/approval/approvalAdd")
 	public String approvalAdd(ApprovalDocRequest approvalDocRequest
 								,HttpServletRequest httpServletRequest) throws Exception {
@@ -81,6 +85,17 @@ public class ApprovalController {
 	}
 	
 	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-07-22
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/groupware/approval/approvalDetail") 
+	public String approvalDetail(Model model, @RequestParam(name="approvalDocNo") String approvalDocNo) {
+		log.debug(Debug.PHA + "approvalDetail Controller approvalDocNo--> " + approvalDocNo + Debug.END);
+		
+		return "groupware/approval/approvalDetail";
+	}
 	
 
 }
