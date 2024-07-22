@@ -21,6 +21,7 @@
 			content = #{content},
 			grade = #{grade},
 			category = #{category},
+			file_name = #{fileName},
 			start_date = #{startDate},
 			end_date = #{endDate},
 			mod_id = #{modId},

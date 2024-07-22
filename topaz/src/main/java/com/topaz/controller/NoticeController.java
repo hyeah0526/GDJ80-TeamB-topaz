@@ -58,47 +58,55 @@ public class NoticeController {
 	}
 
 	/*
-	 * 서비스명: noticeModify()
+	 * 서비스명: noticeModify ( 공지사항 수정 )
 	 * 시작 날짜: 2024-07-21
 	 * 담당자: 김인수
 	 */
 	@PostMapping("/groupware/notice/noticeModify")
-	public String noticeModify(@Valid NoticeRequest noticeRequest, Errors errors, Model model, 
-			HttpServletRequest  httpServletRequest,
-			@RequestParam("title") String title,
-            @RequestParam("content") String content,
-            @RequestParam("grade") String grade,
-            @RequestParam("category") String category,
-            @RequestParam("startDate") String startDate) {
+	public String noticeModify(
+			@Valid NoticeRequest noticeRequest, 
+			Errors errors, 
+			Model model, 
+			HttpServletRequest  req) {
+
+		log.debug(Debug.KIS + " Controller / noticeAdd /  noticeRequest  : " + noticeRequest);
+		log.debug(Debug.KIS + " Controller / noticeAdd /  errors  : " + errors);
+		log.debug(Debug.KIS + " Controller / noticeAdd /  model  : " + model);
+		log.debug(Debug.KIS + " Controller / noticeAdd /  req  : " + req);
 		
 		// 세션가져와서 empNo세팅
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession session = req.getSession();
 		String empNo = (String)session.getAttribute("strId");
 		noticeRequest.setRegId(empNo);
 		noticeRequest.setModId(empNo);	
 		
 		// 매개값 디버깅
-		log.debug(Debug.KJH + "/ Controller <POST> noticeModify noticeRequest: ", noticeRequest.toString());
+		log.debug(Debug.KIS + "/ Controller / noticeModify / noticeRequest: " +  noticeRequest.toString());
 		// 에러 발생 시 true
-		log.debug(Debug.KJH + "/ Controller <POST> noticeModify errors: ", errors.toString());
-		log.debug(Debug.KJH + "/ Controller <POST> noticeModify hasErrors: ", errors.hasErrors());
+		log.debug(Debug.KIS + "/ Controller / noticeModify / noticeModify errors: " + errors.toString());
+		log.debug(Debug.KIS + "/ Controller / noticeModify / noticeModify hasErrors: " + errors.hasErrors());
 		// true의 개수 cnt
-		log.debug(Debug.KJH + "/ Controller <POST> noticeModify errorCnt: ", errors);
+		log.debug(Debug.KIS + "/Controller / noticeModify / noticeModify errorCnt: " + errors);
+
 		
 		if(errors.hasErrors()) {
+			
+			//업로드 파일 예외처리 
+			if(noticeRequest.getUploadFile() == null || noticeRequest.getUploadFile().isEmpty()) {
+				// 유효성 검사 실패 메세지 담기
+				model.addAttribute("uploadFileMsg", "업로드파일 선택해주세요");
+			}
+			
 		   for(FieldError e : errors.getFieldErrors()) {
-			   // 에러가 발생한 form의 name을 출력
-			   log.debug(Debug.KJH + "/ Controller <POST> noticeModify Validation fieldName: ", e.getField());
-			   // NoticeRequest에 Mapping되어 있는 에러 메시지
-			   log.debug(Debug.KJH + "/ Controller <POST> noticeModify Validation fieldName: ", e.getDefaultMessage());	
-			   // 필드 이름 + 메시지를 담아 모델에 추가
-			   model.addAttribute(e.getField() + "Error", e.getDefaultMessage());
+			   model.addAttribute(e.getField() + "Msg", e.getDefaultMessage());
 		   }
-		   return "groupware/notice/noticeModify?newsNo=" + noticeRequest.getNewsNo();
+		   return "forward:/WEB-INF/view/groupware/notice/noticeModify.jsp?newsNo=" + noticeRequest.getNewsNo();
 		}
-		Notice notice = noticeRequest.toNotice();
+		
 		int row = noticeService.modifyNotice(noticeRequest);
-        return "redirect:/groupware/notice/noticeDetail?newsNo=" + noticeRequest.getNewsNo(); // 수정한 상세 페이지로 이동
+		log.debug(Debug.KIS + " Controller / noticeModify / row : " + row);	
+		  
+        return "redirect:/groupware/notice/noticeDetail?newsNo=" + noticeRequest.getNewsNo();
 	}
 
 	/*
@@ -109,11 +117,11 @@ public class NoticeController {
 	@GetMapping("/groupware/notice/noticeModify")
 	public String noticeModify(Model model, 
 		@RequestParam(name = "newsNo") String newsNo) {
-		log.debug(Debug.KJH + "/ Controller / <GET> noticeModify request noticeModify: " + newsNo);
+		log.debug(Debug.KIS + " Controller / noticeModify / newsNo " + newsNo);
 		
 		Map<String, Object> noticeDetail = noticeService.getNoticeDetail(newsNo);
 		
-		log.debug(Debug.KJH + "/ Controller / <GET> noticeModify noticeModifyForm: " + noticeDetail);
+		log.debug(Debug.KIS + " Controller / noticeModify / noticeDetail " + noticeDetail);
 		
         
 		model.addAttribute("noticeDetail", noticeDetail);
@@ -165,11 +173,6 @@ public class NoticeController {
 			
 			//예외 발생 시 출력
 			for(FieldError e : errors.getFieldErrors()) {
-				// 에러가 발생한 form의 name을 출력
-				log.debug(Debug.KIS + "/ Controller / noticeAdd / fieldName: " + e.getField()  + Debug.END );
-				// NoticeRequest에 Mapping되어 있는 에러 메시지
-				log.debug(Debug.KIS + "/ Controller / noticeAdd / fieldName: " + e.getDefaultMessage()  + Debug.END);	
-				// 필드 이름 + 메시지를 담아 모델에 추가
 				model.addAttribute(e.getField() + "Msg", e.getDefaultMessage());
 			}
 
@@ -206,8 +209,8 @@ public class NoticeController {
 			HttpServletRequest  req) {
 		
 		//디버깅
-		log.debug(Debug.KJH + "/ Controller / noticeAdd / model : " + model);
-		log.debug(Debug.KJH + "/ Controller / noticeAdd / req : " + req);
+		log.debug(Debug.KIS + "/ Controller / noticeAdd / model : " + model);
+		log.debug(Debug.KIS + "/ Controller / noticeAdd / req : " + req);
 		
 		
 		// 세션가져와서 empNo세팅
@@ -242,8 +245,8 @@ public class NoticeController {
 		HttpServletRequest  req) {
 		
 		//매개변수 디버깅
-		log.debug(Debug.KJH + " controller noticeDetail / newsNo: " + newsNo);
-		log.debug(Debug.KJH + " controller noticeDetail / newsNo: " + req);
+		log.debug(Debug.KIS + " controller noticeDetail / newsNo: " + newsNo);
+		log.debug(Debug.KIS + " controller noticeDetail / newsNo: " + req);
 		
 		
 		//HttpServletRequest를 사용하여 세션 가져오기

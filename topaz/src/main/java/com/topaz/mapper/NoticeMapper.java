@@ -12,21 +12,22 @@ public interface NoticeMapper {
 	
 	/*  분류 번호: #10 - 공지 사항 삭제 페이지 */
 	//  use_yn 'Y' -> 'N'으로 비활성화
-	int deleteNotice(String newsNo);
+	public int deleteNotice(String newsNo);
+	
 	
 	/*  분류 번호: #10 - 공지 사항 수정 페이지 */
-	int updateNotice(Notice n); 
+	public int updateNotice(Notice n); 
 	
 	/*  분류 번호: #10 - 공지 사항 등록 페이지 */
-	int insertNotice(Notice n);
+	public int insertNotice(Notice n);
 	
 	/*  분류 번호: #10 - 공지 사항 상세 페이지 */
-	Map<String, Object> selectNoticeDetail(String newsNo);
+	public Map<String, Object> selectNoticeDetail(String newsNo);
 	
 	/*  분류 번호: #10 - 공지 사항 목록 페이지 - 리스트 */
-	List<Map<String, Object>> selectNoticeList(Map<String, Object> noticeList);
+	public List<Map<String, Object>> selectNoticeList(Map<String, Object> noticeList);
 	
 	/*  분류 번호: #10 - 공지 사항 목록 페이지 - 페이징 */
-	int noticeCnt(Map<String, Object> paramMap);
+	public int noticeCnt(Map<String, Object> paramMap);
 	
 }

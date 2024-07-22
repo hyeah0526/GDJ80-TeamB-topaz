@@ -30,6 +30,7 @@ public class NoticeService {
 	
 	@Autowired UploadFileService uploadFileService;
 	
+	
 	/*
 	 * 분류 번호: #10 - 공지 사항 삭제
 	 * 시작 날짜: 2024-07-07
@@ -40,14 +41,64 @@ public class NoticeService {
 		return noticeMapper.deleteNotice(newsNo);
 	}
 	
+	
 	/*
 	 * 분류 번호: #10 - 공지 사항 수정
 	 * 시작 날짜: 2024-07-07
 	 * 담당자: 김지훈
 	*/
 	public int modifyNotice(NoticeRequest noticeRequest) {
-		log.debug(Debug.KJH + "/ service / modifyNotice Notice: " + noticeRequest);
+		
+		log.debug(Debug.KJH + " service / modifyNotice / noticeRequest: " + noticeRequest);
+		
+		// 파일 업로드 경로
+		String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
+		log.debug(Debug.KIS + "/ service / modifyNotice noticeRequest: " + imagePath);
+		
+		// 업로드 파일 확인
+	    log.debug(Debug.KIS + "/ service / modifyNotice uploadFile: " + noticeRequest.getUploadFile());
+	    log.debug(Debug.KIS + "/ service / modifyNotice uploadFile isEmpty: " + noticeRequest.getUploadFile().isEmpty());
+		
+		// 업로드 파일 처리
+		if(!noticeRequest.getUploadFile().isEmpty()) {
+			// 파일의 이름을 UUID를 사용하여 설정
+			String prefix = UUID.randomUUID().toString().replace("-", "");
+			int p = noticeRequest.getUploadFile().getOriginalFilename().lastIndexOf(".");
+			String suffix = noticeRequest.getUploadFile().getOriginalFilename().substring(p);
+			String fileName = prefix + suffix;
+			
+			log.debug(Debug.KIS + "/ service / modifyNotice / fileName: " + fileName);
+			
+			// noticeRequest 객체 생성 및 저장
+			noticeRequest.setFileName(fileName);			
+			
+			// uploadFile 객체 생성 및 저장
+			UploadFile file = noticeRequest.toUploadFile();
+			file.setReferenceNo(noticeRequest.getRegId());
+			
+			file.setFileName(fileName);
+			
+			log.debug(Debug.KIS + "/ service / modifyNotice / file: " + file);
+			
+			int fileRow = uploadFilemapper.insertUploadFile(file);
+			
+			log.debug(Debug.KIS + "/ service / modifyNotice / fileRow: " + fileRow);
+			
+			if (fileRow != 1) {
+				throw new RuntimeException("파일 업로드 실패");
+			}
+			
+			File emptyFile = new File(imagePath + fileName);
+			try {
+				noticeRequest.getUploadFile().transferTo(emptyFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException();
+			}
+		}
+
 		Notice notice = noticeRequest.toNotice();
+		
 		return noticeMapper.updateNotice(notice);
 	}
 	

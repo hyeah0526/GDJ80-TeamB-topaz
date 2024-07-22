@@ -44,3 +44,13 @@
     
 }
 
+#currentFile{
+	margin-top: 20px;
+}
+
+
+#currentFile div{
+	width: 350px;
+	display: flex;
+	justify-content: flex-end;
+}
