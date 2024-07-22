@@ -19,7 +19,9 @@
     <!-- Fullcalendar -->
     <script src="/topaz/fullcalendar-6.1.14/dist/index.global.js"></script>
 	<script src="/topaz/fullcalendar-6.1.14/dist/index.global.min.js"></script>
-	  <!-- 캘린더API  -->
+	 
+	
+	<!-- 캘린더API  -->
 	<script>
 	document.addEventListener('DOMContentLoaded', function() {
 		initializeCalendar(); // 페이지 로드 시 달력 초기화
@@ -59,7 +61,7 @@
 			$.ajax({
 				type: "GET",
 				data: {"inputState" : $('#inputState').val()},
-				url: "/topaz/schedule/scheduleCalList",
+				url: "/topaz/groupware/empMain/scheduleData",
 				success: function (response){
 	    			  
 					console.log("response", response);
@@ -74,6 +76,7 @@
 							borderColor: getScheduleColor(response[i].type), // 타입별 색상분류
 						})
 					}
+					
 				}
 			})
 		]
@@ -140,10 +143,29 @@
             		</div>
             	</div>
             	
-            	<!-- 캘린더 출력 -->
-            	<div style="margin-top : 50px; width: 100%;">
-	            	<div id='calendar'></div>
-            	</div>
+	         	<section class="section">
+					<div class="row">
+						<!-- 왼쪽 세션 -->
+						<div class="col-lg-8">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title col-md-4">
+										<select id="inputState" name="inputState" class="form-select">
+				                    		<option value="">전체</option>
+				                    		<option value="회의">회의</option>
+				                    		<option value="점검">점검</option>
+				                    		<option value="행사">행사</option>
+				                  		</select>
+									</h5>
+									<!-- 캘린더 출력 -->
+									<div id='calendar'></div>
+							
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</section>
             	
             </div>
         </div>

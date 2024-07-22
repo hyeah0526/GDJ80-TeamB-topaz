@@ -107,7 +107,7 @@
 	
 	<!-- 분류 번호: #10 - 공지 사항 개수 조회 -->
 	<select id="noticeCnt" resultType="int">
-		  SELECT
+	  	SELECT
 	        COUNT(*) 
 	    FROM
 	        news_notice AS nn
@@ -125,7 +125,7 @@
 			e.emp_no = nn.reg_id
 	    WHERE
 	        nn.use_yn = 'Y'
-	        AND nn.grade IN (1,2)
+	        AND nn.grade IN (1,2,3)
 	        AND nn.category IN (1,2,3)
 	        <if test="noticeType != null and noticeType != ''">
 	            AND category_comm.cd_nm = #{noticeType}

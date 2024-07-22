@@ -1,13 +1,18 @@
 package com.topaz.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.topaz.service.LoginService;
+import com.topaz.service.ScheduleService;
 import com.topaz.utill.Debug;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +28,8 @@ public class LoginController {
 	@Autowired 
 	LoginService loginService;
 
+	@Autowired ScheduleService scheduleService;
+	
 	/*
 	 * 서비스명: LoginService
 	 * 시작 날짜 : 2024-07-07
@@ -36,14 +43,32 @@ public class LoginController {
 		return "/groupware/login";
 	}
 	
-	// 메인페이지 매핑
+	
+	/*
+	 * 서비스명: empMain.jsp 뷰
+	 * 시작 날짜 : 2024-07-22
+	 * 담당자: 김인수
+	 */
 	@GetMapping("/groupware/empMain")
 	public String empMain() {
-		
 		return "/groupware/empMain";
 	}
 	
 
+	/*
+	 * 서비스명: empMain.jsp 뷰 / 스케줄러 데이터 반환
+	 * 시작 날짜 : 2024-07-22
+	 * 담당자: 김인수
+	 */
+	@ResponseBody
+	@GetMapping("/groupware/empMain/scheduleData")
+	public List<Map<String, Object>> scheduleData(String inputState) {
+	    List<Map<String, Object>> list = scheduleService.getScheduleList(inputState);
+	    log.debug(Debug.KIS + " controller / scheduleData / list " + list + Debug.END);
+	    return list;
+	}
+	
+	
 	 // 로그인
 	@PostMapping("/loginPost")
     public String loginPost(@RequestParam(name = "id") String strId,
