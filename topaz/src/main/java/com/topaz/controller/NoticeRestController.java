@@ -30,7 +30,7 @@ public class NoticeRestController {
 	@PostMapping("/groupware/notice/noticeList")
 	public Map<String, Object> approvalList(@RequestParam Map<String, Object> paramMap) throws Exception {
 		// paramMap 디버깅
-	    log.debug(Debug.KJH + " / Controller / noticeList / paramMap : " + paramMap);
+	    log.debug(Debug.KIS + " controller / noticeList / paramMap : " + paramMap);
 		
 	    // 페이징 기본값 설정
 	    int currentPage = 1;

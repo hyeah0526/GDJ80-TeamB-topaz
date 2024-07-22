@@ -28,7 +28,7 @@
 	<!-- =============================== Main 메인 시작 부분 ================================ -->
 	 <main id="main" class="main">
         <div class="pagetitle">
-            <h1>공지 사항 수정</h1>
+            <h1>공지사항 수정</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
@@ -117,18 +117,20 @@
                                         <input class="form-control" type="file" id="uploadFile" name="uploadFile">
                                         <c:if test="${noticeDetail.filePath != null}">
                                             <div id="currentFile">
-                                                <p>현재 파일: <img src="<c:url value='/${noticeDetail.filePath}'/>" alt="첨부 이미지" style="max-width: 100%; height: auto;"></p>
+                                                <p>기존 파일: <img src="<c:url value='/${noticeDetail.filePath}'/>" alt="첨부 이미지" style="max-width: 100%; height: auto;"></p>
                                                 <div>
-                                                    <button type="button" class="btn btn-danger" id="removeFileButton">삭제</button>
+                                                    <button type="button" class="btn btn-danger" id="removeFileButton">파일 삭제</button>
                                                 </div>
                                             </div>
                                         </c:if>
-                                        <input type="hidden" id="fileRemoved" name="fileRemoved" value="false">
+                                        
                                         <span class="validMsg">${fileMsg}</span>
+                                        <input type="hidden" id="currentFilePath" name="currentFilePath" value="${noticeDetail.fileName}">
+                                        <input type="hidden" id="currentFileName" name="currentFileName" value="${noticeDetail.fileName}">
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeList'">목록</button>
-                                <button type="submit" id="noticeModifyBtn" class="btn btn-primary">수정</button>
+                                <button type="submit" id="noticeModifyBtn" class="btn btn-primary">확인</button>
                                 <button type="button" class="btn btn-primary" onclick="location.href='/topaz/groupware/notice/noticeRemove?newsNo=${noticeDetail.newsNo}'">삭제</button>
                             </form>
                         </div>

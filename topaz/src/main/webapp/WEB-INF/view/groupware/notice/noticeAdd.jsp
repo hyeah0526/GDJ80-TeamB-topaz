@@ -26,7 +26,7 @@
         <main id="main" class="main">
        		<!-- Title 시작 -->
 			<div class="pagetitle">
-		      <h1>공지 사항 등록</h1>
+		      <h1>공지사항 등록</h1>
 		      <nav>
 		        <ol class="breadcrumb">
 		          <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
@@ -132,7 +132,7 @@
 	                                        <input class="form-control" type="file" name="uploadFile" id="uploadFile">
 	                                        <span class="validMsg">${uploadFileMsg}</span>
 										</div>
-                                        <div id="previewContainer" class="imagePreviewContainer" style="display:none;">
+                                        <div id="previewContainer" class="imagePreviewContainer" style="display:none; margin-top: 20px; margin-bottom: 20px;" >
                                             <img id="preview">
                                             <span id="removeImage" class="removeImage">&times;</span>
                                         </div>

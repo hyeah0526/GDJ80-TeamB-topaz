@@ -13,6 +13,18 @@
 		news_no = #{newsNo};
 	</update>
 	
+	<!--  분류 번호: #10 - 공지 사항 첨부파일 상태 수정  -->
+	<update id="updateFileState" parameterType="map">
+	UPDATE file_upload
+	SET 
+		use_yn = 'N',
+		mod_id = #{modId},
+		mod_time = NOW()
+	WHERE 
+		file_name = #{currentFileName}
+	</update>
+	
+	
 	<!-- 분류 번호: #10 - 공지 사항 수정 -->
 	<update id="updateNotice" parameterType="com.topaz.dto.Notice">
 		UPDATE news_notice
@@ -64,7 +76,7 @@
 		);
 	</insert>
 	
-	<!-- 분류 번호: #10 - 공지 사항 상세 페이지 -->
+	<!-- 분류 번호: #10 - 공지 사항 상세  -->
 	<select id="selectNoticeDetail" parameterType="map" resultType="map">
 		SELECT
 			nn.news_no newsNo, 
@@ -87,14 +99,15 @@
 		LEFT JOIN
 			file_upload fu
 		ON
-			fu.file_name = nn.file_name
+			fu.file_name = nn.file_name AND 
+			fu.use_yn = 'Y'
 		WHERE 	
 			nn.news_no = #{newsNo}
 	</select>
 	
 	<!-- 분류 번호: #10 - 공지 사항 개수 조회 -->
 	<select id="noticeCnt" resultType="int">
-		 SELECT
+		  SELECT
 	        COUNT(*) 
 	    FROM
 	        news_notice AS nn
@@ -123,9 +136,9 @@
 	        </if> 
 	</select> 
 	
-	<!-- 분류 번호: #10 - 공지 사항 목록 페이지 - 리스트 -->
+	<!-- 분류 번호: #10 - 공지 사항 목록 조회 -->
 	<select id="selectNoticeList" parameterType="map" resultType="map">
-		 SELECT
+		SELECT
 	        ROW_NUMBER() OVER(ORDER BY nn.news_no DESC) no, 
 	        nn.news_no newsNo,
 	        nn.title title,
@@ -149,7 +162,7 @@
 		ON
 			e.emp_no = nn.reg_id
 	    WHERE
-	        1=1
+	        nn.use_yn = 'Y'
 	        <if test="noticeType != null and noticeType != ''">
 	            AND category_comm.cd_nm = #{noticeType}
 	        </if>

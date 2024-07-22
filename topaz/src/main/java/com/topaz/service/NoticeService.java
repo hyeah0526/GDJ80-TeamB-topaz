@@ -37,7 +37,10 @@ public class NoticeService {
 	 * 담당자: 김지훈
 	*/
 	public int removeNotice(String newsNo) {
-		log.debug(Debug.KJH + "/ service / removeNotice newsNo: " + newsNo);
+		
+		//디버깅
+		log.debug(Debug.KIS + "/ service / removeNotice newsNo: " + newsNo);
+		
 		return noticeMapper.deleteNotice(newsNo);
 	}
 	
@@ -49,7 +52,7 @@ public class NoticeService {
 	*/
 	public int modifyNotice(NoticeRequest noticeRequest) {
 		
-		log.debug(Debug.KJH + " service / modifyNotice / noticeRequest: " + noticeRequest);
+		log.debug(Debug.KIS + " service / modifyNotice / noticeRequest: " + noticeRequest);
 		
 		// 파일 업로드 경로
 		String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
@@ -100,6 +103,27 @@ public class NoticeService {
 		Notice notice = noticeRequest.toNotice();
 		
 		return noticeMapper.updateNotice(notice);
+	}
+	
+	/*
+	 * 분류 번호: #10 - 공지 사항 첨부파일 상태 변경
+	 * 시작 날짜: 2024-07-22
+	 * 담당자: 김인수
+	*/
+	public int updateFileState(String currentFileName, String modId) {
+		
+		//디버깅
+		log.debug(Debug.KIS + "/ service / updateFileState /  currentFileName: " + currentFileName);
+		log.debug(Debug.KIS + "/ service / updateFileState /  modId: " + modId);
+				
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("currentFileName", currentFileName);
+	    params.put("modId", modId);
+	    
+	    log.debug(Debug.KIS + "/ service / updateFileState /  params: " + params);
+		
+	    return noticeMapper.updateFileState(params);
+	    
 	}
 	
 	
@@ -163,7 +187,7 @@ public class NoticeService {
 		// 공지 사항 정보를 저장
 		int row = noticeMapper.insertNotice(notice);
 		
-		 log.debug(Debug.KJH + "/ service / addNotice / row :" + row); 
+		 log.debug(Debug.KIS + "/ service / addNotice / row :" + row); 
 		
 		 return row;
 	}
@@ -197,7 +221,7 @@ public class NoticeService {
 	*/
 	public Map<String, Object> getNoticeList(Map<String, Object> paramMap) {
 		// paramMap 디버깅
-		log.debug(Debug.KJH + " / Service / getNoticeList / paramMap: " + paramMap);
+		log.debug(Debug.KIS + " / Service / getNoticeList / paramMap: " + paramMap);
 		
 		// notice의 개수
 		int noticeCnt = noticeMapper.noticeCnt(paramMap);
@@ -206,11 +230,11 @@ public class NoticeService {
 		// 마지막 페이지 계산하기
 		int rowPerPage = (int) paramMap.get("rowPerPage");
 		int lastPage = (noticeCnt + rowPerPage - 1 ) / rowPerPage;
-		log.debug(Debug.KJH + " / Service / getNoticeList / lastPage: " + lastPage);
+		log.debug(Debug.KIS + " / Service / getNoticeList / lastPage: " + lastPage);
 		
 		// 공지 사항 리스트
 		List<Map<String, Object>> noticeList = noticeMapper.selectNoticeList(paramMap);
-		log.debug(Debug.KJH + " / service / getNoticeList" + noticeList);
+		log.debug(Debug.KIS + " / service / getNoticeList" + noticeList);
 		
 		// 결과 맵에 담기
 		Map<String, Object> resultMap = new HashMap<>();

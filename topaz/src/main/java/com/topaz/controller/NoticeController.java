@@ -31,16 +31,21 @@ public class NoticeController {
 
 	@Autowired
 	EmployeeService employeeService;
+	
 	/*
-	 * 서비스명: noticeRemove() 
+	 * 서비스명: noticeRemove ( 공지사항 삭제 ) 
 	 * 시작 날짜: 2024-07-22
 	 * 담당자: 김인수
 	 */
-
 	@GetMapping("/groupware/notice/noticeRemove")
 	public String noticeRemove(
 		@RequestParam(name = "newsNo") String newsNo,
 		HttpServletRequest  httpServletRequest) {
+		
+		//디버깅
+		log.debug(Debug.KIS + " controller / noticeRemove / newsNo : " + newsNo);
+
+		//세션에서 로그인한 사용자 가져오기
 		HttpSession session = httpServletRequest.getSession();
 		String empNo = (String)session.getAttribute("strId");
 		
@@ -49,11 +54,11 @@ public class NoticeController {
 	    notice.setNewsNo(newsNo);
 	    notice.setModId(empNo);
 		
-		log.debug(Debug.KIS + "/ Controller / noticeRemove newsNo :" + newsNo);
 		
+		//공지사항 삭제
 		int row = noticeService.removeNotice(newsNo);
+		log.debug(Debug.KIS + " controller / noticeRemove /row : " + row);
 		
-		log.debug(Debug.KIS + "/ Controller / row noticeRemove  :" + row);
 		return "redirect:/groupware/notice/noticeList";
 	}
 
@@ -68,24 +73,33 @@ public class NoticeController {
 			Errors errors, 
 			Model model, 
 			HttpServletRequest  req) {
-
+		
+		//디버깅
 		log.debug(Debug.KIS + " Controller / noticeAdd /  noticeRequest  : " + noticeRequest);
 		log.debug(Debug.KIS + " Controller / noticeAdd /  errors  : " + errors);
 		log.debug(Debug.KIS + " Controller / noticeAdd /  model  : " + model);
 		log.debug(Debug.KIS + " Controller / noticeAdd /  req  : " + req);
 		
-		// 세션가져와서 empNo세팅
+		//세션가져와서 empNo세팅
 		HttpSession session = req.getSession();
 		String empNo = (String)session.getAttribute("strId");
 		noticeRequest.setRegId(empNo);
 		noticeRequest.setModId(empNo);	
 		
-		// 매개값 디버깅
+		//디버깅
+		log.debug(Debug.KIS + " controller / noticeModify / empNo : " + empNo);
+		
+		//기존 파일의 이름
+		String currentFileName = req.getParameter("currentFileName");
+		String currentFilePath = req.getParameter("currentFilePath");
+		log.debug(Debug.KIS + " controller / noticeModify / currentFileName : " + currentFileName);
+		
+		//매개값 디버깅
 		log.debug(Debug.KIS + "/ Controller / noticeModify / noticeRequest: " +  noticeRequest.toString());
-		// 에러 발생 시 true
+		//에러 발생 시 true
 		log.debug(Debug.KIS + "/ Controller / noticeModify / noticeModify errors: " + errors.toString());
 		log.debug(Debug.KIS + "/ Controller / noticeModify / noticeModify hasErrors: " + errors.hasErrors());
-		// true의 개수 cnt
+		//true의 개수 cnt
 		log.debug(Debug.KIS + "/Controller / noticeModify / noticeModify errorCnt: " + errors);
 
 		
@@ -103,6 +117,16 @@ public class NoticeController {
 		   return "forward:/WEB-INF/view/groupware/notice/noticeModify.jsp?newsNo=" + noticeRequest.getNewsNo();
 		}
 		
+		 // 새로운 파일이 없으면 기존 파일 정보 사용
+	    if(noticeRequest.getUploadFile() == null || noticeRequest.getUploadFile().isEmpty()) {
+	        noticeRequest.setFileName(currentFilePath);
+	    } else {
+	        // 기존 파일의 상태 업데이트
+	        if(currentFileName != null && !currentFileName.isEmpty()) {
+	            noticeService.updateFileState(currentFileName, empNo);
+	        }
+	    }
+		 
 		int row = noticeService.modifyNotice(noticeRequest);
 		log.debug(Debug.KIS + " Controller / noticeModify / row : " + row);	
 		  
@@ -117,13 +141,14 @@ public class NoticeController {
 	@GetMapping("/groupware/notice/noticeModify")
 	public String noticeModify(Model model, 
 		@RequestParam(name = "newsNo") String newsNo) {
+		
+		//디버깅
 		log.debug(Debug.KIS + " Controller / noticeModify / newsNo " + newsNo);
 		
+		//공지사항 정보 가져오기
 		Map<String, Object> noticeDetail = noticeService.getNoticeDetail(newsNo);
-		
 		log.debug(Debug.KIS + " Controller / noticeModify / noticeDetail " + noticeDetail);
 		
-        
 		model.addAttribute("noticeDetail", noticeDetail);
 		
 		return "groupware/notice/noticeModify";
@@ -142,6 +167,7 @@ public class NoticeController {
 			Model model,
 			HttpServletRequest  req) {
 	   
+		//디버깅
 		log.debug(Debug.KIS + " Controller / noticeAdd /  noticeRequest  : " + noticeRequest);
 		log.debug(Debug.KIS + " Controller / noticeAdd /  errors  : " + errors);
 		log.debug(Debug.KIS + " Controller / noticeAdd /  model  : " + model);
@@ -150,6 +176,7 @@ public class NoticeController {
 		// 세션가져와서 empNo세팅
 		HttpSession session = req.getSession();
 		
+		//세션에서 로그인한 사용자 가져오기
 		String empNo = (String)session.getAttribute("strId");
 		log.debug(Debug.KIS + "/ Controller / noticeAdd / empNo: " +  empNo);
 		noticeRequest.setRegId(empNo);

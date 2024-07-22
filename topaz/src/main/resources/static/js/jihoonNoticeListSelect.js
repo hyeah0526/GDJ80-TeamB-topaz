@@ -29,25 +29,27 @@ $(document).ready(function() {
                 topNoticeContainer.empty();
                 normalNoticeContainer.empty();
 
+                let noticesHTML = '';
+
                 noticeList.forEach(n => {
                     const title = (n.category === '필독') ? '&#128227; [필독] ' + n.title : 
                                   (n.category === '이벤트') ? '&#127881; [이벤트] ' + n.title : n.title;
-                    
-                          
 
-                    const container = (n.category === '필독' || n.category === '이벤트') ? topNoticeContainer : normalNoticeContainer;
-
-                    container.append(`
+                    const noticeHTML = `
                         <tr onclick="window.location.href='/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}'" style="cursor:pointer;">
                             <td>${n.no}</td>
-                            <td>${n.title}</td>
+                            <td>${title}</td>
                             <td>${n.empName}</td>
                             <td>${n.grade}</td>
                             <td>${n.category}</td>
                             <td>${n.regTime}</td>
                         </tr>
-                    `);
+                    `;
+
+                    noticesHTML += noticeHTML;
                 });
+
+                normalNoticeContainer.append(noticesHTML);
 
                 const currentPage = response.currentPage;
                 const lastPage = response.lastPage;

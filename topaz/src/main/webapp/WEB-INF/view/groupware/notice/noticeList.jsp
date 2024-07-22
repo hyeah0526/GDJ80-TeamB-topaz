@@ -29,7 +29,7 @@
 	
 	<!-- Title 시작 -->
 	<div class="pagetitle">
-      <h1>공지 사항 목록</h1>
+      <h1>공지사항 목록</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
