@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.topaz.dto.Volunteer;
 import com.topaz.dto.VolunteerApplication;
@@ -15,6 +16,7 @@ import com.topaz.utill.Debug;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Transactional
 @Slf4j
 public class VolunteerService {
 	@Autowired
@@ -154,7 +156,7 @@ public class VolunteerService {
 
 	
 	/*
-	 * 분류번호: #9 - 봉사 신청 페이지 : 봉사 신청 등록하기
+	 * 분류번호: #9 - 봉사 신청 페이지 : 봉사 신청하기
 	 * 시작 날짜: 2024-07-18
 	 * 담당자: 한은혜 
 	 */
@@ -162,16 +164,28 @@ public class VolunteerService {
 		// 매개값 디버깅
 		log.debug(Debug.HEH + "VolunteerService addVolApp volunteerApplication : " + volunteerApplication + Debug.END);
 
-		int row = volunteerMapper.addVolApp(volunteerApplication);
+		int insertRow = volunteerMapper.addVolApp(volunteerApplication);
 		
-		if(row != 1) {
+		if(insertRow != 1) {
 			// 등록 실패일 경우
-			log.debug(Debug.HEH + "VolunteerService addVolApp 등록 실패시 0 : "+ row + Debug.END);
+			log.debug(Debug.HEH + "VolunteerService addVolApp 등록 실패시 0 : "+ insertRow + Debug.END);
 			throw new RuntimeException();
 		}
-		log.debug(Debug.HEH + "VolunteerService addVolApp 등록 성공시 1 : " + row + Debug.END);
+		log.debug(Debug.HEH + "VolunteerService addVolApp 등록 성공시 1 : " + insertRow + Debug.END);
 		
-		return row;
+		// 신청 등록시 신청 가능 인원 변경 
+		String volAppPeople = volunteerApplication.getVolAppPeople();
+		String volNo = volunteerApplication.getVolNo();
+		int updatRow = volunteerMapper.updateVolPeople(volAppPeople, volNo);
+		
+		if(updatRow != 1) {
+			// 등록 실패일 경우
+			log.debug(Debug.HEH + "VolunteerService addVolApp updatRow 변경 실패시 0 : "+ updatRow + Debug.END);
+			throw new RuntimeException();
+		}
+		log.debug(Debug.HEH + "VolunteerService addVolApp updatRow 변경 성공시 1 : " + updatRow + Debug.END);
+		
+		return insertRow;
 	}
 
 	

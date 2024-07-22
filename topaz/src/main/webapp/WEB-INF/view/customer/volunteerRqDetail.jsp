@@ -55,20 +55,23 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="gstMain">Home</a></li>
-          <li><a href="infoCompany">회사소개</a></li>
-          <li><a href="infoPrograms">프로그램</a></li>
-          <li class="dropdown"><a href="infoRegident"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li><a href="gstMain" class="active">Home</a></li>
+          <li><a href="infoPrograms">서비스 및 프로그램</a></li>&nbsp;&nbsp;&nbsp;
+          <li class="dropdown"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
             <ul>
-              <li><a href="infoRegidentA">A동</a></li>
-              <li><a href="#">B동</a></li>
-              <li><a href="#">C동</a></li>
-              <li><a href="#">Dropdown 4</a></li>
+              <li><a href="infoRegidentDiamond">다이아몬드동</a></li>
+              <li><a href="infoRegidentSilver">실버동</a></li>
+              <li><a href="infoStep">입주 절차</a></li>
             </ul>
-          </li>
-          <li><a href="volunteerRqAdd" class="active">봉사 신청</a></li>
+          </li>&nbsp;&nbsp;
+          <li><a href="volunteerRqAdd">봉사 신청</a></li>
           <li><a href="newsList">알림마당</a></li>
-          <li><a href="gstLogin">로그인</a></li>
+          <!-- JavaScript로 동적으로 변경될 부분 -->
+          <li><a href="gstMyInfo" id="myInfoLink" class="active">내 정보</a></li>
+          <li><a href="gstLogin" id="loginLink" class="active">로그인</a></li>
+          <li><a href="signUp" id="signUpLink" class="active">회원가입</a></li>
+          <li><a href="${pageContext.request.contextPath}/gstLogout">로그아웃</a></li>
+
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -111,7 +114,7 @@
              </div>
              
               <div class="row">
-             	<label for="volPeople" class="col-3 col-form-label">봉사 인원 수</label>
+             	<label for="volPeople" class="col-3 col-form-label">신청 가능 인원 수</label>
                 <div class="col-9 form-group">
                  	<input type="text" name="volPeople" id="volPeople" class="form-control" value="${v.volPeople}" readonly>
                 </div>
@@ -130,8 +133,8 @@
                <div class="sent-message">Your message has been sent. Thank you!</div>
              </div>
              <div class="row justify-content-center">
-             	<div class="col-4 mt-3 text-center"><button type="button" onclick="history.back()" id="volApp_btn" style="background-color: #C3C3C3;">뒤로가기</button></div>
-             	<div class="col-4 mt-3 text-center"><button type="button" id="volApp_btn" data-bs-toggle="modal" data-bs-target="#volApp">신청하기</button></div>
+             	<div class="col-4 mt-3 text-center"><button type="button" onclick="history.back()" style="background-color: #C3C3C3;">뒤로가기</button></div>
+             	<div class="col-4 mt-3 text-center"><button type="button" id="volApp_btn">신청하기</button></div>
              </div>
             </form>
             
@@ -208,16 +211,21 @@
   <script src="/topaz/assets/js/mainGST.js"></script>
   
   <script type="text/javascript">
-  	$("#volApp_btn").click(function(){
-  		
+  	$("#volApp_btn").click(function(event){
+  		event.preventDefault();
 		console.log('volApp_btn 클릭 !!');
-  		$("#volApp").modal("show");
-  		
+		
+		if(parseInt($('#volPeople').val()) == 0){
+			console.log('volPeople : ', $('#volPeople').val());
+			alert('신청 가능한 인원이 없습니다.');
+		} else {
+  			$("#volApp").modal("show");
+		}
   	});
   	
   	 // 폼 제출 이벤트 처리
     $("#addVolunteerApp").on("submit", function(event) {
-        event.preventDefault(); // 기본 제출 이벤트 방지
+        event.preventDefault();
 
         var formData = $(this).serialize(); // 폼 데이터 직렬화
 
@@ -265,8 +273,22 @@
 			$('#volAppComment').focus();
 			return false; 
 		}
+		
+		// 신청 인원이 신청 가능 인원보다 많은 경우
+		if(parseInt($('#volAppPeople').val()) > parseInt($('#volPeople').val())){
+			alert('신청 가능 인원보다 많습니다. 다시 확인해주세요.');
+			$('#volAppPeople').focus();
+			return false; 
+		}
+		
+		
+		
+		
 	});
   
+	
+	
+	
   </script>
   
 </body>
