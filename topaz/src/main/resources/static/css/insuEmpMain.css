@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 .container {
     width: 100%;
     display: flex;
@@ -12,10 +10,31 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start; 
     border-radius: 10px;
     padding: 40px;
     position: relative;
+}
+
+.notice-and-checkin {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; 
+    margin-bottom: 20px; 
+ 	gap: 40px; 
+}
+
+.noticeDiv {
+    width: 60%; 
+    overflow: auto; 
+}
+
+.checkinDiv {
+    width: 35%; 
+}
+
+.table {
+    width: 100%;
 }
 
 .btn-group {
@@ -85,86 +104,99 @@
     font-size: 16px;
 }
 
-
-
 /* 사내 일정 */
-
-.todayDiv{
-	margin: 3%;
+.todayDiv {
+    margin: 3%;
 }
 
-.todayDiv button{
-	border: 0;
-	outline: 0;
-	background: none;
+.todayDiv button {
+    border: 0;
+    outline: 0;
+    background: none;
 }
 
 /* 캘린더 일정 간격 조정 */
 .fc-event {
     margin-bottom: 3px; 
 }
- 
- /* 일요일 날짜 색상 */
+
+/* 일요일 날짜 색상 */
 .fc-day-sun a {
-  color: red;
-  text-decoration: none;
+    color: red;
+    text-decoration: none;
 }
 
 /* 토요일 날짜 색상 */
 .fc-day-sat a {
-  color: blue;
-  text-decoration: none;
+    color: blue;
+    text-decoration: none;
 }
 
 /* 평일 날짜 색상 */
-.fc-day-mon a, .fc-day-tue a, .fc-day-wed a,.fc-day-thu a, .fc-day-fri a {
-  color: #012970;
-  text-decoration: none;
+.fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
+    color: #012970;
+    text-decoration: none;
 }
 
 /* 오늘의 일정 type별 색상 */
-.typeMeeting{
-	background-color: #81bbb2;
+.typeMeeting {
+    background-color: #81bbb2;
 }
 
-.typeInspection{
-	background-color: #ffbb57;
+.typeInspection {
+    background-color: #ffbb57;
 }
 
-.typeFestival{
-	background-color: #af92e2;
+.typeFestival {
+    background-color: #af92e2;
 }
 
-.scheduleModalDiv{
-	margin-bottom: 15px;
+.scheduleModalDiv {
+    margin-bottom: 15px;
 }
 
 /* 모달 내용등록 label */
-.modal-body label{
-	text-align: center;
-	font-weight: bolder;
+.modal-body label {
+    text-align: center;
+    font-weight: bolder;
 }
 
-
-
-<!-- 스케줄러-->
-
+/* 스케줄러 크기 조절 */
 #calendar {
-	width: 100%;
-	height: 600px;
+    width: 100%;
+    height: 500px;
 }
 
-.section{
-	width: 100%;
-	margin-top:50px;
+.section {
+    width: 100%;
+    margin-top: 50px;
 }
 
 .row {
     width: 100%;
-	margin: 0; 
-	padding: 0; 
+    margin: 0;
+    padding: 0;
 }
 
 .col-lg-8 {
-    width: 100%; 
+    width: 100%;
+}
+
+
+/* 공지사항 */
+
+#noticeTable th, #noticeTable td {
+    font-size: 12px; 
+    padding: 5px 10px;
+    line-height: 1.2;  
+}
+
+/* 테이블 스타일 최적화 */
+#noticeTable {
+    width: 100%;
+    border-collapse: collapse; 
+}
+
+#noticeTable td {
+    border-bottom: 1px solid #ddd;  
 }

@@ -39,18 +39,9 @@
 	      headerToolbar: {
 	        left: 'prevYear,prev,next,nextYear today',
 	        center: 'title',
-	        right: 'dayGridMonth addEventButton', // 달만 보이게 설정 / 이벤트 버튼 생성
+	        right: 'dayGridMonth' // 달만 보이게 설정 / 이벤트 버튼 생성
 	      }, 
 	      customButtons: {
-			addEventButton: { // 추가한 이벤트 버튼 설정
-				text : "신규일정추가",  // 버튼 내용
-				click : function(){ // 버튼클릭 시 이벤트 추가
-					
-					// 모달 창 띄워서 신규 일정 추가
-					$("#addSchedule").modal("show");
-							
-                  }
-              }
           },
 	      locale: 'kr',			// 언어 설정
 	      selectable: true, 	// 영역 선택
@@ -122,27 +113,53 @@
 		</div><!-- Title 종료 -->
     
         <div class="container">
-        
             <div class="colorDiv">
+				<div class="notice-and-checkin">
+					
+					<!-- 공지사항 -->
+					<div class="noticeDiv">
+						<table class="table" id="noticeTable">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>제목</th>
+									<th>작성자</th>
+								</tr>
+							</thead>
+							<!-- 상단 노출 공지사항 -->
+							<tbody class="topNoticeContainer" id="topNoticeContainer">
+							</tbody>
+							<!-- 전체 공지사항 (상단 노출 포함) -->
+							<tbody name="normalNoticeContainer" id="normalNoticeContainer">
+							</tbody>
+						</table>
+						
+						<nav aria-label="Page navigation example">
+							<ul class="pagination" id="paginationUl">
+				           </ul>
+						</nav>		
+					</div>
+					
+					<!-- 출퇴근 버튼 -->
+	            	<div>
+	            		<div>
+			            	<button id="checkInBtn" class="btns" >출근</button>
+			                <button id="checkOutBtn" class="btns" disabled>퇴근</button>
+	            		</div>
+	            		<div class="timeDiv">
+	            			 <div class="timeBox">
+	                            <span class="timeLabel">출근 시간:</span>
+	                            <span class="startTime"></span>
+	                        </div>
+	                        <div class="timeBox">
+	                            <span class="timeLabel">퇴근 시간:</span>
+	                            <span class="endTime"></span>
+	                        </div>
+	            		</div>
+	            	</div>
+				</div>
 
-				<!-- 출퇴근 버튼 -->
-            	<div>
-            		<div>
-		            	<button id="checkInBtn" class="btns" >출근</button>
-		                <button id="checkOutBtn" class="btns" disabled>퇴근</button>
-            		</div>
-            		<div class="timeDiv">
-            			 <div class="timeBox">
-                            <span class="timeLabel">출근 시간:</span>
-                            <span class="startTime"></span>
-                        </div>
-                        <div class="timeBox">
-                            <span class="timeLabel">퇴근 시간:</span>
-                            <span class="endTime"></span>
-                        </div>
-            		</div>
-            	</div>
-            	
+				<!-- 사내일정 / 스케줄러 -->
 	         	<section class="section">
 					<div class="row">
 						<!-- 왼쪽 세션 -->
@@ -157,13 +174,13 @@
 				                    		<option value="행사">행사</option>
 				                  		</select>
 									</h5>
+									
 									<!-- 캘린더 출력 -->
 									<div id='calendar'></div>
 							
 								</div>
 							</div>
 						</div>
-						
 					</div>
 				</section>
             	
@@ -175,6 +192,6 @@
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 	<script src="/topaz/js/insuEmpMain.js"></script>
+	
 </body>
-
 </html>
