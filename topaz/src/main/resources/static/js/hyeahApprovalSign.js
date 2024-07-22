@@ -4,19 +4,21 @@ let firstApprovalName = '';
 let selectDocType = '';
 let finalApprovalName = '';
 
-
 $(document).ready(function(){
 	/* ====================페이지 로드 초기 설정==================== */
 	$('#dayOffDate').append('<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>' +
 							           '<div class="col-lg-2">' +
-							           '    <input class="form-control" type="date" name="startDate">' +
+							           '    <input class="form-control" type="date" id="dayOffStartDate" name="startDate">' +
 							           '</div>' +
 							           '~' +
 							           '<div class="col-lg-2">' +
-							           '    <input class="form-control" type="date" name="endDate">' +
+							           '    <input class="form-control" type="date" id="dayOffEndDate" name="endDate">' +
 							           '</div>');
 	
-	
+	$('#myTabjustified a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+                var target = $(e.target).attr("data-bs-target");
+                $(target + ' input').val(''); // 해당 탭 내의 모든 input 값을 초기화
+	});						           
 	/* ====================서명 등록==================== */
 	// 서명패드 신규 버튼 클릭시 모달 창 띄우기
 	$('#approvalSignAddBtn').click(function() {
@@ -153,20 +155,19 @@ $(document).ready(function(){
 			// 연차 , 월차 선택시
 			$('#dayOffDate').append('<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>' +
 							           '<div class="col-lg-2">' +
-							           '    <input class="form-control" type="date" name="startDate">' +
+							           '    <input class="form-control" type="date" id="dayOffStartDate" name="startDate">' +
 							           '</div>' +
 							           '~' +
 							           '<div class="col-lg-2">' +
-							           '    <input class="form-control" type="date" name="endDate">' +
+							           '    <input class="form-control" type="date" id="dayOffEndDate" name="endDate">' +
 							           '</div>')
 							           
 	    } else if (selectedOption === 'halfMorning' || selectedOption === 'halfAfternoon') {
 			// 오전반차, 오후반차 선택시
 	        $('#dayOffDate').append('<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>' +
 							           '<div class="col-lg-4">' +
-							           '    <input class="form-control" type="date" name="startDate">' +
-							           '</div>' +
-							           '    <input class="form-control" type="hidden" name="endDate">')
+							           '    <input class="form-control" type="date" id="dayOffStartDate" name="startDate">' +
+							           '</div>')
 	        
 	    } 
 	});
@@ -176,37 +177,43 @@ $(document).ready(function(){
 	// 휴가신청서 중간결재자
 	$('#dayOffFirstApproval').change(function(){
 		console.log('dayOffFirstApproval부서 변경 발생 다시 검색 필요');
-		$('#firstApprovalSetDayOffDiv').empty();
+		$('#dayOffFirstApprovalName').val('');
+		$('#dayOffFirstApprovalId').val('');
 	});
 	
 	// 기획제안서 중간결재자
 	$('#eventFirstApproval').change(function(){
 		console.log('eventFirstApproval부서 변경 발생 다시 검색 필요');
-		$('#firstApprovalSetEventDiv').empty();
+		$('#eventFirstApprovalName').val('');
+		$('#eventFirstApprovalId').val('');
 	});
 	
 	// 경비 청구서 중간결재자
 	$('#expenseFirstApproval').change(function(){
 		console.log('expenseFirstApproval부서 변경 발생 다시 검색 필요');
-		$('#firstApprovalSetExpenseDiv').empty();
+		$('#expenseFirstApprovalName').val('');
+		$('#expenseFirstApprovalId').val('');
 	});
 	
 	// 휴가신청서 최종 결재자
 	$('#dayOffFinalApproval').change(function(){
 		console.log('dayOffFinalApproval부서 변경 발생 다시 검색 필요');
-		$('#finalApprovalSetDayOffDiv').empty();
+		$('#dayOffFinalApprovalName').val('');
+		$('#dayOffFinalApprovalId').val('');
 	});
 	
 	// 기획제안서 최종결재자
 	$('#eventFinalApproval').change(function(){
 		console.log('eventFinalApproval부서 변경 발생 다시 검색 필요');
-		$('#finalApprovalSetEventDiv').empty();
+		$('#eventFinalApprovalName').val('');
+		$('#eventFinalApprovalId').val('');
 	});
 	
 	// 경비 청구서 최종결재자
 	$('#expenseFinalApproval').change(function(){
 		console.log('expenseFinalApproval부서 변경 발생 다시 검색 필요');
-		$('#finalApprovalSetExpenseDiv').empty();
+		$('#expenseFinalApprovalName').val('');
+		$('#expenseFinalApprovalId').val('');
 	});
 	
 	
@@ -305,77 +312,38 @@ $(document).ready(function(){
 		// <input class="form-control" type="text" name="firstApprovalName" id="firstApprovalName" value="">
 		// <input class="form-control" type="text" name="firstApproval" id="firstApproval" value="">
 		if(selectDocType == 'dayOffDocFirst'){
-			$('#firstApprovalSetDayOffDiv').empty();
 			// 휴가 신청서 중간 결재
-			$('#firstApprovalSetDayOffDiv').append('<input class="form-control" type="text"'
-											+'name="firstApprovalName" id="firstApprovalName"'
-											+'value='+selectedEmpName+'>'
-											+'<input class="form-control" type="text"'
-											+'name="firstApproval" id="firstApproval"'
-											+'value='+selectedEmpId+'>');
+			$('#dayOffFirstApprovalName').val(selectedEmpName);				
+			$('#dayOffFirstApprovalId').val(selectedEmpId);
 	
 		}else if(selectDocType == 'eventDocFirst'){
-			$('#firstApprovalSetEventDiv').empty();
 			// 기획 제안서 중간 결재
-			$('#firstApprovalSetEventDiv').append('<input class="form-control" type="text"'
-											+'name="firstApprovalName" id="firstApprovalName"'
-											+'value='+selectedEmpName+'>'
-											+'<input class="form-control" type="text"'
-											+'name="firstApproval" id="firstApproval"'
-											+'value='+selectedEmpId+'>');
+			$('#eventFirstApprovalName').val(selectedEmpName);				
+			$('#eventFirstApprovalId').val(selectedEmpId);				
 											
 		}else if(selectDocType == 'expenseDocFirst'){
-			$('#firstApprovalSetExpenseDiv').empty();
 			// 경비 청구서 중간 결재
-			$('#firstApprovalSetExpenseDiv').append('<input class="form-control" type="text"'
-											+'name="firstApprovalName" id="firstApprovalName"'
-											+'value='+selectedEmpName+'>'
-											+'<input class="form-control" type="text"'
-											+'name="firstApproval" id="firstApproval"'
-											+'value='+selectedEmpId+'>');
+			$('#expenseFirstApprovalName').val(selectedEmpName);				
+			$('#expenseFirstApprovalId').val(selectedEmpId);	
 											
 		}else if(selectDocType == 'dayOffDocFinal'){
-			$('#finalApprovalSetDayOffDiv').empty();
 			// 휴가 신청서 최종결재
-			$('#finalApprovalSetDayOffDiv').append('<input class="form-control" type="text"'
-											+'name="finalApprovalName" id="finalApprovalName"'
-											+'value='+selectedEmpName+'>'
-											+'<input class="form-control" type="text"'
-											+'name="finalApproval" id="finalApproval"'
-											+'value='+selectedEmpId+'>');
-											
+			$('#dayOffFinalApprovalName').val(selectedEmpName);				
+			$('#dayOffFinalApprovalId').val(selectedEmpId);
+							
 		}else if(selectDocType == 'eventDocFinal'){
-			$('#finalApprovalSetEventDiv').empty();
 			// 기획 제안서 최종결재
-			$('#finalApprovalSetEventDiv').append('<input class="form-control" type="text"'
-											+'name="finalApprovalName" id="finalApprovalName"'
-											+'value='+selectedEmpName+'>'
-											+'<input class="form-control" type="text"'
-											+'name="finalApproval" id="finalApproval"'
-											+'value='+selectedEmpId+'>');
+			$('#eventFinalApprovalName').val(selectedEmpName);				
+			$('#eventFinalApprovalId').val(selectedEmpId);	
 											
 		}else if(selectDocType == 'expenseDocFinal'){
-			$('#finalApprovalSetExpenseDiv').empty();
 			// 경비 청구서 최종결재
-			$('#finalApprovalSetExpenseDiv').append('<input class="form-control" type="text"'
-											+'name="finalApprovalName" id="finalApprovalName"'
-											+'value='+selectedEmpName+'>'
-											+'<input class="form-control" type="text"'
-											+'name="finalApproval" id="finalApproval"'
-											+'value='+selectedEmpId+'>');
+			$('#expenseFinalApprovalName').val(selectedEmpName);				
+			$('#expenseFinalApprovalId').val(selectedEmpId);	
+			
 		}
 		
 	
-		// 중간/최종 결재자 필드의 값에 따라 읽기 전용으로 변경
-		if (!selectedEmpName.trim()) {
-			$('#firstApprovalName').prop('readonly', false);
-			$('#finalApprovalName').prop('readonly', false);
-			
-		} else {
-		    $('#firstApprovalName').prop('readonly', true);
-		    $('#finalApprovalName').prop('readonly', true);
-		}
-		
 		// 모달 닫아주기
 		$("#approvalSelectModal").modal("hide");
 	});
@@ -389,22 +357,257 @@ $(document).ready(function(){
 	});
 	
 	
-	
 	/* ====================휴가 신청서 신청버튼 클릭==================== */
 	$('#dayOffSubmitBtn').click(function() {
 		console.log('휴가 신청서 신청버튼 클릭');
+		
+		
+		// 중간 결재자 유효성 검사
+		if($('#dayOffFirstApprovalName').val() == null || $('#dayOffFirstApprovalName').val() == ''){
+			console.log('중간 결재자 유효성검사');
+			
+			alert('중간결재자를 선택해주세요')
+			
+			$('#dayOffFirstApproval').focus();
+			return false; 
+		}
+		
+		// 최종 결재자 유효성 검사
+		if($('#dayOffFinalApprovalName').val() == null || $('#dayOffFinalApprovalName').val() == ''){
+			console.log('최종 결재자 유효성검사');
+			
+			alert('최종결재자를 선택해주세요')
+			
+			$('#dayOffFinalApproval').focus();
+			return false; 
+		}
+		
+		// 시작날짜 유효성 검사
+		if($('#dayOffStartDate').val().length < 1){
+			console.log('시작날짜 유효성검사');
+			
+			alert('시작날짜를 설정해주세요')
+			
+			$('#dayOffStartDate').focus();
+			return false; 
+		}
+		
+		if($('#dayOffType').val() == 'annual' || $('#dayOffType').val() == 'monthly' ){
+			// 종료날짜 유효성 검사
+			if($('#dayOffEndDate').val().length < 1){
+				console.log('종료날짜 유효성검사');
+				
+				alert('종료날짜를 설정해주세요')
+				
+				$('#dayOffEndDate').focus();
+				return false; 
+			}
+		}
+		
+		// 비상연락망 유효성 검사
+		if($('#dayOFfSecond').val().length < 1){
+			console.log('비상연락망 유효성검사');
+			
+			alert('비상연락망을 작성해주세요')
+			
+			$('#dayOFfSecond').focus();
+			return false; 
+		}
+		
+		// 제목 유효성 검사
+		if($('#dayOffTitle').val().length < 1){
+			console.log('제목 유효성검사');
+			
+			alert('제목을 작성해주세요')
+			
+			$('#dayOffTitle').focus();
+			return false; 
+		}
+		
+		// 사유 유효성 검사
+		if($('#dayOffThird').val().length < 1){
+			console.log('사유 유효성검사');
+			
+			alert('사유를 작성해주세요')
+			
+			$('#dayOffThird').focus();
+			return false; 
+		}
+		
+		// 유효성 검사 진행 후 통과시 폼 제출
 		$('#dayOffForm').submit();
 	});
+	
+	
 	
 	/* ====================기획 제안서 신청버튼 클릭==================== */
 	$('#eventSubmitBtn').click(function() {
 		console.log('기획 제안서 신청버튼 클릭');
+		
+		// 중간 결재자 유효성 검사
+		if($('#eventFirstApprovalName').val() == null || $('#eventFirstApprovalName').val() == ''){
+			console.log('중간 결재자 유효성검사');
+			
+			alert('중간결재자를 선택해주세요')
+			
+			$('#eventFirstApproval').focus();
+			return false; 
+		}
+		
+		// 최종 결재자 유효성 검사
+		if($('#eventFinalApprovalName').val() == null || $('#eventFinalApprovalName').val() == ''){
+			console.log('최종 결재자 유효성검사');
+			
+			alert('최종결재자를 선택해주세요')
+			
+			$('#eventFinalApproval').focus();
+			return false; 
+		}
+		
+		// 시작날짜 유효성 검사
+		if($('#eventStartDate').val().length < 1){
+			console.log('시작날짜 유효성검사');
+			
+			alert('시작날짜를 설정해주세요')
+			
+			$('#eventStartDate').focus();
+			return false; 
+		}
+		
+		// 종료날짜 유효성 검사
+		if($('#eventEndDate').val().length < 1){
+			console.log('종료날짜 유효성검사');
+			
+			alert('종료날짜를 설정해주세요')
+			
+			$('#eventEndDate').focus();
+			return false; 
+		}
+		
+		// 첨부파일 유효성 검사
+		if(!$('#eventUploadFile').val()){
+			console.log('첨부파일 유효성검사');
+			
+			alert('파일을 첨부해주세요')
+			
+			$('#eventUploadFile').focus();
+			return false; 
+		}
+		
+		// 제목 유효성 검사
+		if($('#eventTitle').val().length < 1){
+			console.log('제목 유효성검사');
+			
+			alert('제목을 작성해주세요')
+			
+			$('#eventTitle').focus();
+			return false; 
+		}
+		
+		// 내용 유효성 검사
+		if($('#eventThird').val().length < 1){
+			console.log('내용 유효성검사');
+			
+			alert('내용을 작성해주세요')
+			
+			$('#eventThird').focus();
+			return false; 
+		}
+		
+		
+		// 유효성 검사 진행 후 통과시 폼 제출
 		$('#eventForm').submit();
+		
 	});
+	
+	
 	
 	/* ====================경비 청구서 신청버튼 클릭==================== */
 	$('#expenseSubmitBtn').click(function() {
 		console.log('기획 제안서 신청버튼 클릭');
+		
+		// 중간 결재자 유효성 검사
+		if($('#expenseFirstApprovalName').val() == null || $('#expenseFirstApprovalName').val() == ''){
+			console.log('중간 결재자 유효성검사');
+			
+			alert('중간결재자를 선택해주세요')
+			
+			$('#expenseFirstApproval').focus();
+			return false; 
+		}
+		
+		// 최종 결재자 유효성 검사
+		if($('#expenseFinalApprovalName').val() == null ||  $('#expenseFinalApprovalName').val() == ''){
+			console.log('최종 결재자 유효성검사');
+			
+			alert('최종결재자를 선택해주세요')
+			
+			$('#expenseFinalApproval').focus();
+			return false; 
+		}
+		
+		// 시작날짜 유효성 검사
+		if($('#expenseStartDate').val().length < 1){
+			console.log('시작날짜 유효성검사');
+			
+			alert('시작날짜를 설정해주세요')
+			
+			$('#expenseStartDate').focus();
+			return false; 
+		}
+		
+		// 청구 금액 유효성 검사
+		let price = $('#expenseFirst').val().trim();
+		if(price.length < 1){
+			console.log('청구금액 유효성검사');
+			
+			alert('청구금액을 입력해주세요')
+			
+			$('#expenseFirst').focus();
+			return false; 
+		}
+		
+		// 청구 금액 숫자만 작성되었는지 검사
+		if (!/^\d+$/.test(price)) {
+			console.log('금액에 문자 들어가있음');
+	       
+	        alert('금액은 숫자만 입력해주세요.');
+	        
+	        $('#expenseFirst').focus();
+	        return false;
+    	}
+		
+		// 첨부파일 유효성 검사
+		if(!$('#expenseUploadFile').val()){
+			console.log('첨부파일 유효성검사');
+			
+			alert('파일을 첨부해주세요')
+			
+			$('#expenseUploadFile').focus();
+			return false; 
+		}
+		
+		// 제목 유효성 검사
+		if($('#expenseTitle').val().length < 1){
+			console.log('제목 유효성검사');
+			
+			alert('제목을 작성해주세요')
+			
+			$('#expenseTitle').focus();
+			return false; 
+		}
+		
+		// 내용 유효성 검사
+		if($('#expenseThird').val().length < 1){
+			console.log('내용 유효성검사');
+			
+			alert('내용를 작성해주세요')
+			
+			$('#expenseThird').focus();
+			return false; 
+		}
+		
+		// 유효성 검사 진행 후 통과시 폼 제출
 		$('#expenseForm').submit();
 	});
 

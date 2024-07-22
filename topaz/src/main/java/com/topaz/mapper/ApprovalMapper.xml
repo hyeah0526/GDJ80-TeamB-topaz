@@ -147,13 +147,27 @@
 			, NOW()
 			, #{useYn}
 		)
-		
+		<!-- 등록된 pk값 저장 -->
 		<selectKey keyProperty="approvalDocNo" resultType="String" order="AFTER">
 	        SELECT CAST(MAX(approval_doc_no) AS CHAR) 
 	        FROM approval_doc 
 	        WHERE reg_id=#{regId}
 	        ORDER BY reg_time DESC LIMIT 1
 		</selectKey>
+	</insert>
+	
+	
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 결재 문서 파일 등록 -->
+	<insert id="insertApprovalFile" parameterType="com.topaz.dto.UploadFile">
+		INSERT INTO file_upload(
+			file_no, reference_no, original_file_name
+			, file_name, file_size, file_type
+			, reg_id, reg_time, mod_id, mod_time, use_yn
+		)VALUES(
+			#{fileNo}, #{referenceNo}, #{OriginalFileName}
+			, #{fileName}, #{fileSize}, #{fileType}
+			, #{regId}, NOW(), #{modId}, NOW(), #{useYN} 
+		)
 	</insert>
 	
 </mapper>

@@ -112,6 +112,8 @@
 								</select>
 								<div id="firstApprovalSetDayOffDiv">
 									<!-- 선택된 중간결재자 정보 나오는 창 -->
+									<input class="form-control" type="text" name="firstApprovalName" id="dayOffFirstApprovalName" placeholder="검색시 자동입력" readonly>
+									<input class="form-control" type="text" name="firstApproval" id="dayOffFirstApprovalId" readonly>
 								</div>
 							</div>
 							<div class="col-lg-2" id="">
@@ -129,6 +131,8 @@
 								</select>
 								<div id="finalApprovalSetDayOffDiv">
 									<!-- 선택된 최종결재자 정보 나오는 창 -->
+									<input class="form-control" type="text" name="finalApprovalName" id="dayOffFinalApprovalName" placeholder="검색시 자동입력" readonly>
+									<input class="form-control" type="text" name="finalApproval" id="dayOffFinalApprovalId" readonly>
 								</div>
 							</div>
 							<div class="col-lg-2" id="">
@@ -155,21 +159,21 @@
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">비 상 연 락 망</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="text" name="docSecondContent">
+								<input class="form-control" type="text" id="dayOFfSecond" name="docSecondContent">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">제 목</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="text" name="docTitle">
+								<input class="form-control" type="text" id="dayOffTitle" name="docTitle">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">사 유</label>
 							<div class="col-lg-4" id="">
-								<textarea class="form-control" name="docThirdContent" style="height: 150px;" placeholder="신청사유를 작성해주세요"></textarea>
+								<textarea class="form-control" id="dayOffThird" name="docThirdContent" style="height: 150px;" placeholder="신청사유를 작성해주세요"></textarea>
 							</div>
 						</div>
 						
@@ -200,6 +204,8 @@
 								</select>
 								<div id="firstApprovalSetEventDiv">
 									<!-- 선택된 중간결재자 정보 나오는 창 -->
+									<input class="form-control" type="text" name="firstApprovalName" id="eventFirstApprovalName" placeholder="검색시 자동입력" readonly>
+									<input class="form-control" type="text" name="firstApproval" id="eventFirstApprovalId" readonly>
 								</div>
 							</div>
 							<div class="col-lg-2" id="">
@@ -217,6 +223,8 @@
 								</select>
 								<div id="finalApprovalSetEventDiv">
 									<!-- 선택된 최종결재자 정보 나오는 창 -->
+									<input class="form-control" type="text" name="finalApprovalName" id="eventFinalApprovalName" placeholder="검색시 자동입력" readonly>
+									<input class="form-control" type="text" name="finalApproval" id="eventFinalApprovalId" readonly>
 								</div>
 							</div>
 							<div class="col-lg-2" id="">
@@ -228,7 +236,7 @@
 							<label for="profileImage" class="col-lg-2 col-form-label">기 획 종 류</label>
 							<div class="col-lg-4">
 								<label for="externalEvent">
-									<input type="radio" class="form-check-input" id="externalEvent" name="docFirstContent" value="외부 행사"> 외부 행사
+									<input type="radio" class="form-check-input" id="externalEvent" name="docFirstContent" value="외부 행사" checked> 외부 행사
 								</label>
 								&nbsp;&nbsp;&nbsp;
 								<label for="internalEvent">
@@ -244,32 +252,32 @@
 						<div class="row mb-4 justify-content-center" id="">
 							<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="startDate">
+								<input class="form-control" type="date" id="eventStartDate" name="startDate">
 							</div>
 							~
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="endDate">
+								<input class="form-control" type="date" id="eventEndDate" name="endDate">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">첨 부 파 일</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="file" name="uploadFile">
+								<input class="form-control" type="file" id="eventUploadFile" name="uploadFile">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">제 목</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="text" name="docTitle">
+								<input class="form-control" type="text" id="eventTitle" name="docTitle">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">내 용</label>
 							<div class="col-lg-4" id="">
-								<textarea class="form-control" name="docThirdContent" style="height: 150px;" placeholder="기획 내용을 상세히 작성해주세요"></textarea>
+								<textarea class="form-control" id="eventThird" name="docThirdContent" style="height: 150px;" placeholder="기획 내용을 상세히 작성해주세요"></textarea>
 							</div>
 						</div>
 						
@@ -302,6 +310,8 @@
 								</select>
 								<div id="firstApprovalSetExpenseDiv">
 									<!-- 선택된 중간결재자 정보 나오는 창 -->
+									<input class="form-control" type="text" name="firstApprovalName" id="expenseFirstApprovalName" placeholder="검색시 자동입력" readonly>
+									<input class="form-control" type="text" name="firstApproval" id="expenseFirstApprovalId" readonly>
 								</div>
 							</div>
 							<div class="col-lg-2" id="">
@@ -319,6 +329,8 @@
 								</select>
 								<div id="finalApprovalSetExpenseDiv">
 									<!-- 선택된 중간결재자 정보 나오는 창 -->
+									<input class="form-control" type="text" name="finalApprovalName" id="expenseFinalApprovalName" placeholder="검색시 자동입력" readonly>
+									<input class="form-control" type="text" name="finalApproval" id="expenseFinalApprovalId" readonly>
 								</div>
 							</div>
 							<div class="col-lg-2">
@@ -329,7 +341,7 @@
 						<div class="row mb-4 justify-content-center" id="">
 							<label for="profileImage" class="col-lg-2 col-form-label">날 짜</label>
 							<div class="col-lg-2" id="">
-								<input class="form-control" type="date" name="startDate">
+								<input class="form-control" type="date" id="expenseStartDate" name="startDate">
 							</div>
 							<div class="col-lg-2"></div>
 						</div>
@@ -337,7 +349,7 @@
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">청 구 금 액</label>
 							<div class="col-lg-2">
-								<input class="form-control" type="number" name="docFirstContent">
+								<input class="form-control" type="number" id="expenseFirst" name="docFirstContent">
 							</div>
 							<div class="col-lg-2"></div>
 						</div>
@@ -345,21 +357,21 @@
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">영 수 증 첨 부</label>
 							<div class="col-lg-4">
-								<input class="form-control" type="file" name="docfile" accept="image/png, image/jpeg, .pdf">
+								<input class="form-control" type="file" id="expenseUploadFile" name="uploadFile" accept="image/png, image/jpeg, .pdf">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">제 목</label>
 							<div class="col-lg-4" id="">
-								<input class="form-control" type="text" name="docTitle">
+								<input class="form-control" type="text" id="expenseTitle" name="docTitle">
 							</div>
 						</div>
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">내 용</label>
 							<div class="col-lg-4">
-								<textarea class="form-control" name="docThirdContent" style="height: 150px;" placeholder="경비 사용 사유를 상세히 작성해주세요"></textarea>
+								<textarea class="form-control" id="expenseThird" name="docThirdContent" style="height: 150px;" placeholder="경비 사용 사유를 상세히 작성해주세요"></textarea>
 							</div>
 						</div>
 						

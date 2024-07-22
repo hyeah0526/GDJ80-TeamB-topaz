@@ -65,7 +65,6 @@ public class ApprovalDocRequest {
 		UploadFile uploadFile = new UploadFile();
 		uploadFile.setReferenceNo(this.approvalDocNo);
 		uploadFile.setOriginalFileName(this.uploadFile.getOriginalFilename());
-		uploadFile.setFileName(this.docSecondContent);
 		uploadFile.setFileSize(this.uploadFile.getSize());
 		uploadFile.setFileType(this.uploadFile.getContentType());
 		uploadFile.setRegId(this.empNo);

@@ -31,6 +31,9 @@ public interface ApprovalMapper {
 	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 부서 카테고리 리스트 조회 */
 	List<Map<String, Object>> selectDeptList();
 	
-	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 부서 카테고리 리스트 조회 */
+	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 결재 문서 등록 */
 	int insertApprovalDoc(ApprovalDoc approvalDoc);
+	
+	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 결재 문서 파일 등록 */
+	int insertApprovalFile(UploadFile file);
 }

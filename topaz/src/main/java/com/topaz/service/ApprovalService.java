@@ -224,12 +224,9 @@ public class ApprovalService {
 			// 기획 제안서, 경비 청구서 등록(파일O)
 			log.debug(Debug.PHA + "setApprovalDoc service 기획 제안서, 경비 청구서 등록!" + Debug.END);
 			
-			// 파일 가져오기
-			UploadFile file = approvalDocRequest.toUploadFile();
-			log.debug(Debug.PHA + "setApprovalDoc service approvalDocNo--> " + file + Debug.END);
-			
 			// ApprovalDoc DTO에 바인딩
 			ApprovalDoc approvalDoc = approvalDocRequest.toApprovalDoc();
+			approvalDoc.setDocSecondContent(approvalDocRequest.getUploadFile().getOriginalFilename());
 			
 			// 종료일이 null일 경우 시작일 넣어주기
 			if(approvalDocRequest.getEndDate() == null || approvalDocRequest.getEndDate() == "") {
@@ -237,7 +234,7 @@ public class ApprovalService {
 			}
 			log.debug(Debug.PHA + "setApprovalDoc service approvalDoc--> " + approvalDoc + Debug.END);
 			
-			// 등록insert 실행
+			// 결재문서 등록insert 실행
 			insertRow = approvalMapper.insertApprovalDoc(approvalDoc);
 			if(insertRow != 1) {
 				// 등록 실패시 예외 발생시키기
@@ -249,9 +246,37 @@ public class ApprovalService {
 			approvalDocNo = approvalDoc.getApprovalDocNo();
 			log.debug(Debug.PHA + "setApprovalDoc service approvalDocNo--> " + approvalDocNo + Debug.END);
 			
-			//insertFileRow = approvalMapper.insertApprovalSignFile(null);
+			// uploadFile DTO에 바인딩
+			UploadFile file = approvalDocRequest.toUploadFile();
+			file.setFileNo(approvalDocNo);
+			file.setReferenceNo(approvalDocNo);
+			file.setFileName(approvalDocNo);
+			// file uuid세팅
+			String prefix = UUID.randomUUID().toString().replace("-", ""); //랜덤 uuid 생성 / 하이픈(-)은 제거
+			int p = approvalDocRequest.getUploadFile().getOriginalFilename().lastIndexOf("."); // 파일타입전(.의 위치)까지 길이 담기
+			String suffix = approvalDocRequest.getUploadFile().getOriginalFilename().substring(p); //.의 위치부터 자른 후 담아주기
+			// 세팅한 uuid 담아주기
+			file.setFileName(prefix + suffix);
+			log.debug(Debug.PHA + "setApprovalDoc service file--> " + file + Debug.END);
 			
+			// 결재문서 파일 등록insert 실행
+			insertFileRow = approvalMapper.insertApprovalFile(file);
+			
+			
+			// 파일 upload폴더에 저장하기
+			File emptyFile = new File(System.getProperty("user.dir") 
+										+ "/src/main/resources/static/assets/img/approvalDoc/" 
+										+ file.getFileName());
+			try {
+				// approvalDocRequest안에 있는 getinputStream을 가져와서 비어있는 emptyFile로 복사를 함 
+				approvalDocRequest.getUploadFile().transferTo(emptyFile);
+			} catch (Exception e) {
+				log.debug(Debug.PHA + "emptyFile 파일저장에서 Exception 발생! " + Debug.END);
+				e.printStackTrace(); // 예외나면 전부 취소
+				throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 insert명령도 전부 취소
+			}
 		}
+		
 		
 		return approvalDocNo; 
 	}

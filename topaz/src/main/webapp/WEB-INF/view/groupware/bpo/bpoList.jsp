@@ -151,7 +151,6 @@
 	        // Ajax
 	        $.ajax({
 	            url: '/topaz/bpo/bpoList',
-	            async: false,
 	            type: 'GET',
 	            data: {
 	                "currentPage": currentPage,
