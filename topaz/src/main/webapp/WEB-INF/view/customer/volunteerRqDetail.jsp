@@ -249,6 +249,23 @@
         }
     });
   
+	 
+	// 입력값 유효성 검사 
+	$('#AddVolApp_btn').click(function(){
+		// 신청 인원
+		if($('#volAppPeople').val().length < 1){
+			alert('신청 인원을 입력해주세요.');
+			$('#volAppPeople').focus();
+			return false; 
+		}
+		
+		// 신청 내용
+		if($('#volAppComment').val().length < 1){
+			alert('신청 내용을 입력해주세요.');
+			$('#volAppComment').focus();
+			return false; 
+		}
+	});
   
   </script>
   

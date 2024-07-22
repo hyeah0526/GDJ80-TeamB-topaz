@@ -44,7 +44,7 @@ public class VolunteerRestController {
 	public Map<String, Object> volunteerAppList(@RequestParam(name="currentPage", defaultValue="1") int currentPage,
 											@RequestParam(name="rowPerPage", defaultValue="5") int rowPerPage,
 											@RequestParam(name="searchDate", defaultValue="") String searchDate,
-											@RequestParam(name="searchWord", defaultValue="1") String searchWord ){
+											@RequestParam(name="searchWord", defaultValue="") String searchWord ){
 		// 매개값 디버깅
 		log.debug(Debug.HEH + "restController volunteerAppList currentPage : " + currentPage + Debug.END);
 		log.debug(Debug.HEH + "restController volunteerAppList rowPerPage : " + rowPerPage + Debug.END);
@@ -67,24 +67,6 @@ public class VolunteerRestController {
 
 		return map;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
