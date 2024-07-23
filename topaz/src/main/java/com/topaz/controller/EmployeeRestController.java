@@ -197,6 +197,7 @@ public class EmployeeRestController {
 	    log.debug(Debug.KIS + "controller / myLeaveMain / myLeaveList : " + myLeaveList);
 	    int lastPage = (int) resultMap.get("lastPage");
 	    
+	    //나의 휴가 수 정보 가져오기
 	    List<Map<String, Object>> myLeaveCnt = (List<Map<String, Object>>) resultMap.get("myLeaveCnt");
 	    log.debug(Debug.KIS + "controller / myLeaveMain / myLeaveCnt : " + myLeaveCnt);
 	    
@@ -213,14 +214,12 @@ public class EmployeeRestController {
 	
 
 	/*
-	 * 서비스명: #4 - 전체 휴가 조회
-	 * 시작 날짜: 2024-07-08
+	 * 서비스명: #4 - 전체 직원 잔여 휴가 조회
+	 * 시작 날짜: 2024-07-23
 	 * 담당자: 김인수
 	*/
 	@PostMapping("/groupware/emp/empLeave")
-	public String empLeave(
-			Model model,
-			@RequestParam Map<String, Object> paramMap) {
+	public Map<String, Object> empLeave(@RequestParam Map<String, Object> paramMap) {
 		
 		//매개변수 디버깅
 	    log.debug(Debug.KIS + "controller / empLeave / paramMap : " + paramMap);
@@ -244,21 +243,18 @@ public class EmployeeRestController {
 	    paramMap.put("currentPage", (currentPage - 1) * rowPerPage);
 	    paramMap.put("rowPerPage", rowPerPage);
 		
-		
-	    //********* 결재 진행 시 함께 진행할 예정 *********
-	    // controller만 구현 / service, mapper, xml, jsp 구현 예정
-	    
 		//전체직원 정보 가져오기
-	    //Map<String, Object> resultMap = employeeService.selectEmpAll(paramMap);
-	    //List<Map<String, Object>> empList = (List<Map<String, Object>>) resultMap.get("empList");
-	    //int lastPage = (int) resultMap.get("lastPage");
+	    Map<String, Object> resultMap = employeeService.selectEmpLeave(paramMap);
+	    List<Map<String, Object>> empLeaveList = (List<Map<String, Object>>) resultMap.get("empLeaveList");
+	    int lastPage = (int) resultMap.get("lastPage");
 		
-		//모델 객체에 데이터 추가 
-		//model.addAttribute("empList", empList);
-		//model.addAttribute("lastPage", lastPage);
-		//model.addAttribute("currentPage", currentPage);
+	    // 응답 데이터
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("empLeaveList", empLeaveList);
+	    response.put("lastPage", lastPage);
+	    response.put("currentPage", currentPage);
 		
-		return null;
+		return response;
 	}
 	
 	

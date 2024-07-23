@@ -54,7 +54,7 @@
 	                    	</div>
 					     	<!-- 입사년도 -->
 					     	<div class="hireDateDiv">
-					     		<label>휴가기간</label>
+					     		<label>기간</label>
 					     		 <div class="dateInput">
 	                                <input type="date" name="startDate">
 	                                <span>~</span>

@@ -98,7 +98,6 @@ public class EmployeeController {
 	@GetMapping("/groupware/emp/empList")
 	public String empList() {
 		return "groupware/emp/empList";
-	
 	}
 	
 	/*
@@ -109,7 +108,6 @@ public class EmployeeController {
 	@GetMapping("/groupware/emp/empLeave")
 	public String empLeave() {
 		return "groupware/emp/empLeave";
-	
 	}
 	
 	/*
@@ -194,10 +192,9 @@ public class EmployeeController {
 	}
 	
 
-	
-	
 	//========== 개인 정보
 
+	
 	/*
 	 * 서비스명: selectEmpOne ( 내 정보 보기 )
 	 * 시작 날짜: 2024-07-08

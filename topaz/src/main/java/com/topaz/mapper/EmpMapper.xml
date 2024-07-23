@@ -44,6 +44,7 @@
 			)
 	</insert>
 	
+	
 	<!-- 분류 번호 :  #4 - 직원번호 중복 확인 -->
 	<select id="selectEmpNo" parameterType="String" resultType="String">
 		SELECT
@@ -104,6 +105,7 @@
 		LIMIT #{currentPage}, #{rowPerPage};
 	</select>
 	
+	
 	<!-- 분류 번호 :  #4 - 전체 직원수 조회 -->
 	<select id="selectEmpAllCnt" resultType="int">
 		 SELECT 
@@ -134,6 +136,7 @@
 	            AND e.emp_no = #{empNo}
 	        </if>
 	</select>
+	
 	
 	<!-- 분류 번호 :  #4 - 직원 상세 조회 -->
 	<select id="selectEmpOne" resultType="Map">
@@ -171,6 +174,7 @@
 			e.emp_no = #{empNo}
 	</select>
 	 
+	
 	 <!-- 분류 번호 :  #2 - 나의 휴가 조회 -->
 	 <select id="selectMyLeave" parameterType="Map" resultType="Map">
 	 	SELECT
@@ -212,6 +216,7 @@
 	    LIMIT #{currentPage}, #{rowPerPage}
 	 </select>
 	 
+	 
 	 <!-- 분류 번호 :  #4 - 나의 휴가 사용 수 조회  -->
 	 <select id="selectMyLeaveCnt" parameterType="Map" resultType="int">
 	 	SELECT
@@ -229,6 +234,7 @@
 	    </if>
 	 </select>
 	 
+	 
 	 <!--  분류 번호 :  #4 - 나의 휴가 수 조회 -->
 	 <select id="selectLeaveCnt" parameterType="Map"  resultType="Map">
 	 	SELECT 
@@ -240,6 +246,7 @@
 		WHERE
 			emp_no = #{empNo}
 	 </select>
+	 
 	 
 	 <!-- 분류 번호 :  #4 - 직원 정보 수정 -->
 	<update id="modifyEmpOne" parameterType="com.topaz.dto.Employee">
@@ -258,6 +265,7 @@
         	emp_no = #{empNo}
 	</update>
 	
+	
 	<!-- 분류 번호 :  #4 - 직원 정보 삭제 -->
 	<update id="deleteEmpOne" parameterType="com.topaz.dto.Employee">
 	 	UPDATE 
@@ -267,6 +275,7 @@
         WHERE 
         	emp_no = #{empNo}
 	</update>
+	
 	
 	<!-- 분류 번호 :  #4 - 직원 휴가 등록 -->
 	<insert id="insertEmpLeave" parameterType="Map">
@@ -308,7 +317,6 @@
 	</update>
 	
 	
-	
 	<!-- 분류 번호 :  #2 - 변경 비밀번호 중복 확인 -->
 	<select id="selectNewPw" parameterType="map" resultType="String">
 		SELECT
@@ -318,6 +326,7 @@
 		WHERE
 			user_no = #{empNo} AND  user_part = 'E' AND old_pw = SHA2(#{newPw}, 256)
 	</select>
+	
 	
 	<!-- 분류 번호 :  #2 - 이전 비밀번호 저장 -->
 	<insert id="insertNewPw"  parameterType="map">
@@ -345,6 +354,7 @@
 			)
 	</insert>
 	
+	
 	<!-- 분류 번호 :  #4 - 전체 직원조회(조직도) -->
 	<select id="selectEmpAllInChart" resultType="Map">
 		SELECT 
@@ -366,6 +376,7 @@
 			e.emp_dept = dept_code.cd
 			AND dept_code.crp_cd = 'E001'
 	</select>
+	
 	
 	<!-- 분류 번호 :  #4 - 전체 직원 근무 조회 -->
 	<select id="selectEmpAttendance" resultType="Map">
@@ -399,6 +410,7 @@
         LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 	
+	
 	<!-- 분류 번호 :  #4 - 전체 직원 근무수 조회 -->
 	<select id="selectEmpAttendanceAllCnt" resultType="int">
 		SELECT
@@ -424,9 +436,78 @@
             AND em.emp_name = #{empName}
         </if>
 	</select>
+	
+	<!-- 분류 번호 :  #4 - 전체 직원 잔여 휴가 조회 -->
+	<select id="selectEmpLeave" parameterType="Map" resultType="Map">
+		SELECT
+			e.emp_no empNo,
+			e.emp_name empName,
+			dept.cd_nm empDept,
+			grade.cd_nm empGrade,
+			COALESCE(l.year_count, 0) yearCount,
+	   		COALESCE(l.month_count, 0) monthCount, 
+   			COALESCE(l.half_count, 0) halfCount, 
+			e.use_yn useYN
+		FROM
+			`leave` AS l
+		LEFT JOIN
+			employee AS e
+		ON
+			l.emp_no = e.emp_no
+		LEFT JOIN
+			common_code dept
+		ON
+			dept.cd = e.emp_dept AND
+			dept.crp_cd = 'E001'
+		LEFT JOIN
+			common_code grade
+		ON
+			grade.cd = e.emp_grade AND
+			grade.crp_cd = 'E002'
+		WHERE
+			1=1
+		 <if test="empNo != null and empNo != ''">
+            AND e.emp_no = #{empNo}
+        </if>
+        <if test="empName != null and empName != ''">
+            AND e.emp_name = #{empName}
+        </if>
+		ORDER BY e.emp_hiredate DESC
+        LIMIT #{currentPage}, #{rowPerPage}
+	</select>
 
-
-	<!-- ========= 쪽지 -->
+	<!-- 분류 번호 :  #4 - 전체 직원 잔여 휴가 수 조회  -->
+	<select id="selectEmpLeaveCnt" parameterType="Map" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			`leave` AS l
+		LEFT JOIN
+			employee AS e
+		ON
+			l.emp_no = e.emp_no
+		LEFT JOIN
+			common_code dept
+		ON
+			dept.cd = e.emp_dept AND
+			dept.crp_cd = 'E001'
+		LEFT JOIN
+			common_code grade
+		ON
+			grade.cd = e.emp_grade AND
+			grade.crp_cd = 'E002'
+		WHERE
+			1=1
+		 <if test="empNo != null and empNo != ''">
+         	AND e.emp_no = #{empNo}
+        </if>
+       	<if test="empName != null and empName != ''">
+            AND e.emp_name = #{empName}
+   		</if>
+	</select>
+	
+	<!-- ========= 쪽지 ========= -->
+	
 	
 	<!-- 분류 번호 :  #2 -  쪽지 전송할 직원 조회  -->
 	<select id="selectEmpName" parameterType="String" resultType="map">
@@ -444,6 +525,7 @@
 		WHERE
 			em.emp_name LIKE CONCAT('%', #{empName}, '%')
 	</select>
+	
 	
 	<!--  분류 번호 :  #2 - 수신 쪽지 조회 -->
 	<select id="selectNoteReceived" parameterType="Map" resultType="Map">
@@ -474,6 +556,7 @@
 		LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 	
+	
 	<!--  분류 번호 :  #2 - 수신 쪽지수 조회  -->
 	<select id="selectNoteReceivedCnt" parameterType="Map" resultType="int">
 		SELECT 
@@ -484,9 +567,9 @@
 			receiver_id = #{empNo} AND
 			receiver_delete = 'N' AND
 			use_yn = 'Y' 
-			
 	</select>
 	
+
 	<!-- 분류 번호 :  #2 - 발신 쪽지 삭제 -->
 	<update id="deleteSenNote" >
 		UPDATE
@@ -500,6 +583,7 @@
 			#{noteId}
 		</foreach>
 	</update>
+	
 	
 	<!-- 분류 번호 :  #2 - 수신  쪽지 삭제 -->
 	<update id="deleteRecNote" >
@@ -515,6 +599,7 @@
 		</foreach>
 	</update>
 	
+	
 	<!-- 분류 번호 :  #2 -  쪽지 삭제 -->
 	<update id="deleteNote" >
 		UPDATE
@@ -528,6 +613,7 @@
 			#{noteId}
 		</foreach>
 	</update>
+	
 	
 	<!-- 분류 번호 :  #2 -  쪽지 상세 보기 -->
 	<select id="selectNoteDetail" resultType="Map" >		
@@ -552,6 +638,7 @@
 		WHERE
 			note_id = #{noteId}
 	</select>
+	
 	
 	<!--  분류 번호 :  #2 - 휴지통 쪽지 조회 -->
 	<select id="selectNoteTrash" parameterType="Map" resultType="Map">
@@ -581,6 +668,7 @@
 	        nt.use_yn = 'Y'
 	    LIMIT #{currentPage}, #{rowPerPage}
 	</select>
+	
 	
 	<!--  분류 번호 :  #2 - 휴지통 쪽지수 조회  -->
 	<select id="selectNoteTrashCnt" parameterType="Map" resultType="int">
@@ -649,6 +737,7 @@
 		LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 	
+	
 	<!--  분류 번호 :  #2 - 발신 쪽지수 조회  -->
 	<select id="selectNoteListCnt" parameterType="Map" resultType="int">
 		SELECT 
@@ -660,6 +749,7 @@
 			sender_delete = 'N' AND
 			use_yn = 'Y'
 	</select>
+	
 	
 	<!--  분류 번호 :  #2 - 쪽지 전송  -->
 	<insert id="insertNote" parameterType="Map">
@@ -725,6 +815,7 @@
 			receive_time IS NULL;
 	</select>
 	
+	
 	<!--  분류 번호 :  #2 - 나의 발신 쪽지 수 보기  -->
 	<select id="selectMyNoteSendCnt" parameterType="String" resultType="Map">
 		SELECT 'day' period, COUNT(*) sentCnt
@@ -743,6 +834,7 @@
 	      AND DATE(send_time) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH);
 	</select>
 	
+	
 	<!--  분류 번호 :  #2 - 나의 수신 쪽지 수 보기  -->
 	<select id="selectMyNoteRecCnt" parameterType="String" resultType="Map">
 		SELECT 'day' period, COUNT(*) recCnt
@@ -760,6 +852,7 @@
 	    WHERE receiver_id = #{empNo}
 	      AND DATE(receive_time) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH);
 	</select>
+
 
 	<!--  분류 번호 :  #4 - 부서별 발신 쪽지 수 보기  -->
 	<select id="selectDeptNoteSendCnt" parameterType="String" resultType="Map">
@@ -806,6 +899,7 @@
 		WHERE cc.crp_cd = 'E001'
 		GROUP BY cc.cd_nm
 	</select>
+	
 	
 	<!--  분류 번호 :  #4 - 부서별 수신 쪽지 수 보기  -->
 	<select id="selectDeptNoteRecCnt" parameterType="String" resultType="Map">

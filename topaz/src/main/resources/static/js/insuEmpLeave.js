@@ -17,36 +17,32 @@ $(document).ready(function() {
     function loadEmpList(page) {
         const formData = $('#searchForm').serialize() + `&currentPage=${page}`;
         $.ajax({
-            url: '/topaz/groupware/myPage/myLeaveMain',
+            url: '/topaz/groupware/emp/empLeave',
             method: 'post',
             data: formData,
             success: function(response) {
-                console.log("내 휴가 리스트 확인: ", response);
+                console.log("직원 휴가 리스트 확인: ", response);
 
                 //JSON 데이터를 HTML로 변환하여 empListContainer에 추가
-                const myLeaveList = response.myLeaveList;
-                const myLeaveListContainer = $('#myLeaveListContainer');
-                myLeaveListContainer.empty();
-                myLeaveList.forEach(emp => {
-            
-                    myLeaveListContainer.append(`
-                        <tr>
+                const empList = response.empLeaveList;
+                const empLeaveListContainer = $('#empLeaveListContainer');
+                empLeaveListContainer.empty();
+                empList.forEach(emp => {
+					
+                    empLeaveListContainer.append(`
+                        <tr onclick="window.location.href='/topaz/groupware/emp/empDetail?empNo=${emp.empNo}'" style="cursor:pointer;">
+                            <td>${emp.empNo}</td>
                             <td>${emp.empName}</td>
                             <td>${emp.empDept}</td>
-                            <td>${emp.startTime}</td>
-                            <td>${emp.endTime}</td>
-                            <td>${emp.leaveDays}</td>
-                            <td>${emp.leaveContent}</td>
+                            <td>${emp.empGrade}</td>
+                         	<td>${emp.yearCount}</td>
+                          	<td>${emp.monthCount}</td>
+                            <td>${emp.halfCount}</td>
+                            <td>${emp.useYN}</td>
                         </tr>
                     `);
                 });
-				
-				//남은 휴가 계산
-				const myLeaveCnt = response.myLeaveCnt[0];
-                $('#yearLeaveCnt').text(myLeaveCnt.yearCnt);
-                $('#monthLeaveCnt').text(myLeaveCnt.monthCnt);
-                $('#halfLeaveCnt').text(myLeaveCnt.halfCnt);
-				
+
                 //페이지 정보 업데이트
                 const currentPage = response.currentPage;
                 const lastPage = response.lastPage;

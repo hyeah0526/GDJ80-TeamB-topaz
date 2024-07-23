@@ -27,6 +27,12 @@ public interface EmpMapper {
 	/* 분류 번호 :  #4 - 전체 직원수 조회 */
 	public  int selectEmpAllCnt(Map<String, Object> paramMap);
 	
+	/* 분류 번호 :  #4 - 전체 직원 잔여 휴가 조회 */
+	public  List<Map<String, Object>> selectEmpLeave(Map<String, Object> paramMap);
+	
+	/* 분류 번호 :  #4 - 전체 직원 잔여 휴가 수 조회 */
+	public  int selectEmpLeaveCnt(Map<String, Object> paramMap);
+	
 	/* 분류 번호 :  #4 - 직원 상세 조회 */
 	public  Map<String, Object> selectEmpOne(String empNo);
 	
@@ -63,7 +69,7 @@ public interface EmpMapper {
 	/* 분류 번호 :  #4 - 나의 휴가 사용 수 조회 */
 	public int selectMyLeaveCnt(Map<String, Object> paramMap);
 	
-	/* 분류 번호 :  #4 - 나의 휴가 사용 수 조회 */
+	/* 분류 번호 :  #4 - 나의 휴가 수 조회 */
 	public List<Map<String, Object>> selectLeaveCnt(Map<String, Object> paramMap);
 	
 
