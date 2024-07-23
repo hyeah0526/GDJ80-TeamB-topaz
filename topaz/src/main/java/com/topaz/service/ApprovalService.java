@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.topaz.dto.ApprovalDoc;
+import com.topaz.dto.ApprovalDocModify;
 import com.topaz.dto.ApprovalDocRequest;
 import com.topaz.dto.ApprovalSign;
 import com.topaz.dto.Employee;
@@ -301,4 +302,33 @@ public class ApprovalService {
 		
 	}
 	
+	
+	/*
+	 * 분류 번호: #11 - 결재 상세보기 페이지 :: 결재 상태 변경
+	 * 시작 날짜: 2024-07-23
+	 * 담당자: 박혜아
+	*/
+	public int modApprovalState(ApprovalDocModify approvalDocModify){
+		log.debug(Debug.PHA + "modApprovalState service approvalDocModify--> " + approvalDocModify + Debug.END);
+		
+		if(approvalDocModify.getApprovalNewState().equals("진행")) {
+			approvalDocModify.setApprovalNewState("4");
+			
+		}else if(approvalDocModify.getApprovalNewState().equals("반려")) {
+			approvalDocModify.setApprovalNewState("2");
+			
+		}else if(approvalDocModify.getApprovalNewState().equals("승인")) {
+			approvalDocModify.setApprovalNewState("5");
+			
+		}else if(approvalDocModify.getApprovalNewState().equals("취소")) {
+			approvalDocModify.setApprovalNewState("1");
+		}
+		
+		
+		
+		int updateRow = approvalMapper.updateApprovalState(approvalDocModify);
+		log.debug(Debug.PHA + "modApprovalState service updateRow--> " + updateRow + Debug.END);
+		
+		return updateRow;
+	}
 }

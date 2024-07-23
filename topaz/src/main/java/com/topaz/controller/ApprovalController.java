@@ -119,5 +119,6 @@ public class ApprovalController {
 		return "groupware/approval/approvalDetail";
 	}
 	
-
+	
+	
 }

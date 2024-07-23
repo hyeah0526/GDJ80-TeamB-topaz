@@ -171,27 +171,33 @@
 	</insert>
 	
 	
-	<!--  -->
+	<!-- 분류 번호: #11 - 전자결재 상세 페이지 :: 결재 문서 상세 조회 -->
 	<select id="selectApprovalDocOne" parameterType="String" resultType="map">
 		SELECT 
-			  e1.emp_no empNo		<!-- 신청자 아이디 -->
-			, e1.emp_name empName	<!-- 신청자 이름 -->
+			<!-- 신청자 아이디 -->
+			  e1.emp_no empNo		
+			<!-- 신청자 이름 -->
+			, e1.emp_name empName	
 			<!-- 신청자 부서 -->
 			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = e1.emp_dept) empDept
 			<!-- 신청자 직위 -->
 			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = e1.emp_grade) empGrade
-			, e1.sign_file signFile	<!-- 신청자 서명파일 -->
+			<!-- 신청자 서명파일 -->
+			, e1.sign_file signFile	
 			
 			<!-- 결재문서 번호 -->
 			, ad.approval_doc_no approvalDocNo
 			<!-- 결재문서 타입 -->
 			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'S002' AND cd = ad.approval_type) approvalType
-			<!-- 결재문서 상태 -->
-			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'S001' AND cd = ad.approval_state) approvalState
+			<!-- 결재문서 상태 이름 -->
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'S001' AND cd = ad.approval_state) approvalStateName
+			<!-- 결재문서 상태 코드 -->
+			, ad.approval_state approvalState
 			, ad.doc_title docTitle					<!-- 결재문서 제목 -->
 			, ad.doc_first_content docFirstContent	<!-- 결재문서 내용1 -->
 			, ad.doc_second_content docSecondContent<!-- 결재문서 내용2 -->
 			, ad.doc_third_content docThirdContent	<!-- 결재문서 내용3 -->
+			, ad.approval_reason approvalReason		<!-- 결재문서 반려사유 -->
 			, DATE(ad.start_date) startDate			<!-- 결재문서 신청날짜 -->
 			, DATE(ad.end_date) endDate				<!-- 결재문서 종료날짜 -->
 			, DATE(ad.reg_time) regTime				<!-- 결재문서 등록날짜 -->
@@ -238,4 +244,25 @@
 			ad.approval_doc_no = #{approvalDocNo}
 	</select>
 	
+	<!-- 분류 번호: #11 - 전자결재 상세 페이지 :: 결재 문서 상태 수정  -->
+	<update id="updateApprovalState" parameterType="com.topaz.dto.ApprovalDocModify">
+		UPDATE 
+			approval_doc
+		SET
+			approval_state = #{approvalNewState},
+			<if test="approvalReason != null and approvalReason != ''">
+				approval_reason = #{approvalReason},
+			</if>
+			<if test="firstApproval != null and firstApproval != ''">
+				first_approval_date = NOW(),
+			</if>
+			<if test="finalApproval != null and finalApproval != ''">
+				final_approval_date = NOW(),
+			</if>
+			mod_id = #{modId},
+			mod_time = NOW()
+		WHERE
+			approval_doc_no = #{approvalDocNo}
+		
+	</update>
 </mapper>

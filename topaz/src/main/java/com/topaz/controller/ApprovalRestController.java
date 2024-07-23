@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.topaz.dto.ApprovalDocModify;
 import com.topaz.service.ApprovalService;
 import com.topaz.utill.Debug;
 
@@ -93,6 +94,42 @@ public class ApprovalRestController {
 		log.debug(Debug.PHA + "firstApprovalSelect REstController list--> " + list + Debug.END);
 		
 		return list;
+	}
+	
+	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-07-23
+	 * 담당자: 박혜아
+	*/
+	@PostMapping("/approval/approvalStateModify") 
+	public String approvalStateModify(ApprovalDocModify approvalDocModify
+										, HttpServletRequest httpServletRequest) {
+		
+		// 세션가져와서 세팅
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.PHA + "approvalStateModify Controller empNo--> " + empNo + Debug.END);
+		
+		approvalDocModify.setModId(empNo);
+		log.debug(Debug.PHA + "approvalStateModify Controller approvalDocModify--> " + approvalDocModify + Debug.END);
+		// 상태변경하기
+		int updateRow = approvalService.modApprovalState(approvalDocModify);
+		log.debug(Debug.PHA + "approvalStateModify Controller updateRow--> " + updateRow + Debug.END);
+		
+		String updateState = "";
+		if(approvalDocModify.getApprovalNewState().equals("1")) {
+			updateState = "결재 취소에 성공하였습니다.";
+			
+		}else if(approvalDocModify.getApprovalNewState().equals("5") 
+					|| approvalDocModify.getApprovalNewState().equals("4")) {
+			updateState = "결재를 승인하였습니다.";
+			
+		}else if(approvalDocModify.getApprovalNewState().equals("2")) {
+			updateState = "결재를 반려하였습니다.";
+		}
+		
+		return updateState;
 	}
 
 }

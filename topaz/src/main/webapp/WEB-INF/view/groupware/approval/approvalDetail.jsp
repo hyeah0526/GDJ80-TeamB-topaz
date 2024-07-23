@@ -35,7 +35,13 @@
 
 	<!-- section 시작 -->
     <section class="section">
+    <!-- 상세보기 변수 -->
     <c:set var="a" value="${approvalOne}"></c:set>
+    <input type="hidden" value="${a.approvalDocNo}" id="approvalDocNo"><!-- 문서번호 -->
+    <input type="hidden" value="${a.firstApproval}" id="firstApproval"><!-- 중간결재자 -->
+    <input type="hidden" value="${a.finalApproval}" id="finalApproval"><!-- 최종결재자 -->
+    <input type="hidden" value="${a.approvalState}" id=approvalState><!-- 문서상태 -->
+    
     <div class="row justify-content-center"><div class="col-9">
 	    <div class="card"><div class="card-body">
 	    	<div class="pagetitle text-center" style="margin: 20px;">
@@ -47,10 +53,12 @@
 	    	</div>
 	    	
 	    	<!-- 상태가 반려일경우, 반려사유 출력 -->
-	    	<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="bi bi-exclamation-octagon me-1"></i>
-                반려사유가 출력되는곳
-			</div>
+	    	<c:if test="${a.approvalStateName eq '반려'}">
+		    	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+	                <i class="bi bi-exclamation-octagon me-1"></i>
+	                반려사유 :: ${a.approvalReason}
+				</div>
+			</c:if>
 			
 			<!-- 기안자 정보 -->
 	    	<div class="approvalSignShowLeft">
@@ -67,6 +75,14 @@
 	    				<th>기안일</th>
 	    				<td>${a.regTime}</td>
 	    			</tr>
+	    			<!-- 로그인 유저가 기안자이면서 상태가 대기일경우, 취소 가능 -->
+	    			<c:if test="${a.empNo eq loginUser && a.approvalStateName eq '대기'}">
+	    				<tr>
+	    					<td colspan="2" class="text-center">
+	    						<button type="button" id="approvalCxl" class="btn btn-danger">결재 취소</button>
+	    					</td>
+	    				</tr>
+	    			</c:if>
 	    		</table>
 	    	</div>
 	    	
@@ -85,18 +101,18 @@
 			        		<img src="/topaz/assets/img/approvalSign/${a.signFile}" height="100px;" width="100px;">
 			        	</td>
 			        	<td style="height:130px;">
-			        		<c:if test="${a.firstApprovalDate eq null && a.firstApproval eq loginUser}">
-			        			<button type="button" class="btn btn-success mb-3">승인</button>
-			        			<button type="button" class="btn btn-danger">반려</button>
+			        		<c:if test="${a.firstApprovalDate eq null && a.firstApproval eq loginUser && a.approvalStateName eq '대기'}">
+			        			<button type="button" class="btn btn-success mb-3" id="firstConfirm">승인</button>
+			        			<button type="button" class="btn btn-danger" id="firstReject">반려</button>
 			        		</c:if>
 			        		<c:if test="${a.firstApprovalDate ne null}">
 			        			<img src="/topaz/assets/img/approvalSign/${a.firstApprovalSign}" height="100px;" width="100px;">
 			        		</c:if>
 			        	</td>
 			        	<td style="height:130px;">
-			        		<c:if test="${a.finalApprovalDate eq null && a.finalApproval eq loginUser}">
-			        			<button type="button" class="btn btn-success mb-3">승인</button>
-			        			<button type="button" class="btn btn-danger">반려</button>
+			        		<c:if test="${a.finalApprovalDate eq null && a.finalApproval eq loginUser && a.approvalStateName eq '진행'}">
+			        			<button type="button" class="btn btn-success mb-3" id="finalConfirm">승인</button>
+			        			<button type="button" class="btn btn-danger" id="finalReject">반려</button>
 			        		</c:if>
 			        		<c:if test="${a.finalApprovalDate ne null}">
 			        			<img src="/topaz/assets/img/approvalSign/${a.finalApprovalSign}" height="100px;" width="100px;">
@@ -236,8 +252,6 @@
 	    			</table>
     			</c:if>
     			
-    			
-    			
     		</div>
 	    	
 	    </div></div>
@@ -249,6 +263,9 @@
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
+	
+	<!-- 결재 상세보기 JS -->
+	<script src="<c:url value='/js/hyeahApprovalDetails.js'/>"></script>	
 </body>
 
 </html>

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.topaz.dto.ApprovalDoc;
+import com.topaz.dto.ApprovalDocModify;
 import com.topaz.dto.Employee;
 import com.topaz.dto.UploadFile;
 
@@ -39,4 +40,7 @@ public interface ApprovalMapper {
 	
 	/* 분류 번호: #11 - 전자결재 상세 페이지 :: 결재 문서 상세 조회 */
 	Map<String, Object> selectApprovalDocOne(String approvalDocNo);
+	
+	/* 분류 번호: #11 - 전자결재 상세 페이지 :: 결재 문서 상태 수정 */
+	int updateApprovalState(ApprovalDocModify approvalDocModify);
 }
