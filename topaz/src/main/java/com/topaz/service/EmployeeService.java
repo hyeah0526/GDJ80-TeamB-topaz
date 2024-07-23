@@ -183,13 +183,13 @@ public class EmployeeService {
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
-	public int modifyEmpOne(Employee employee) {
+	public int modifyEmpOne(EmployeeRequest employeeRequest) {
 
 		//매개변수 디버깅
-		log.debug(Debug.KIS + "service / modifyEmpOne / employee : " + employee);
+		log.debug(Debug.KIS + "service / modifyEmpOne / employeeRequest : " + employeeRequest);
 		
 		//직원 정보 저장
-		int row = empMapper.modifyEmpOne(employee);
+		int row = empMapper.modifyEmpOne(employeeRequest);
 		log.debug(Debug.KIS + "service / modifyEmpOne / row : " + row);
 
 		if(row != 1) {

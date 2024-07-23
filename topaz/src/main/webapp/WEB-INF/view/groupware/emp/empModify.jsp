@@ -101,7 +101,7 @@
                                 <div class="formGroup">
                                     <!-- 비밀번호 -->
                                     <label>비밀번호</label>
-                                    <input type="text" name="empPw" class="step" value="${empDetail.empPw}">                                
+                                    <input type="text" name="empPw" class="step" value="${empDetail.empPw}">                            
                                 </div>
                             </div>
                             
@@ -128,9 +128,11 @@
                                     <label>우편번호</label>
                                     <div>
                                     	<button class="step" type="button" data-step="10"   onclick="openPostcode('postNo','firstAddress')" style="margin-bottom: 10px;">우편번호 검색</button>
-	                                    <input type="text" name="postNo" class="step" value="${empDetail.postNo}" >
-                                    	<input type="text" name="firstAddress" class="step " data-step="12" value="${empDetail.address}" >
+	                                    <input type="text" name="postNo" class="step" value="${empDetail.postNo}" maxlength="5" pattern="\d*" >
+	                                    <div class="validMsg">${postNoMsg}</div>
+                                    	<input type="text" name="firstAddress" class="step " data-step="12" value="${empDetail.address}">
                                     	<input type="text" name="addressDetail" class="step" data-step="13" placeholder="상세 주소">
+                                    	<div class="validMsg">${addressMsg}</div>
                                     	<input type="hidden" id="address" name="address">
                                     </div>
                                 </div>
@@ -159,9 +161,9 @@
                              <div class="formRow">
                                 <div class="formGroup">
                                     <label>성별 : </label>
-							        <input type="radio" id="genderF" name="empGender" value="F" <c:if test="${empDetail.empGender == 'F'}">checked</c:if> disabled>
+							        <input type="radio" id="genderF" name="empGender" value="F" <c:if test="${empDetail.empGender == 'F'}">checked</c:if>>
 							        <label for="genderF">여자</label>
-							        <input type="radio" id="genderM" name="empGender" value="M" <c:if test="${empDetail.empGender == 'M'}">checked</c:if> disabled>
+							        <input type="radio" id="genderM" name="empGender" value="M" <c:if test="${empDetail.empGender == 'M'}">checked</c:if>>
 							        <label for="genderM">남자</label>
                                 </div>
                              </div>

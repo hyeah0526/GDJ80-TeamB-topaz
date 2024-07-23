@@ -9,6 +9,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,7 @@ import com.topaz.utill.Debug;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -50,13 +53,33 @@ public class EmployeeController {
 	 * 담당자: 김인수
 	*/
 	@PostMapping("/groupware/emp/empAdd")
-	public String empAdd(EmployeeRequest employeeRequest) {
+	public String empAdd(
+			@Valid EmployeeRequest employeeRequest,
+			Errors errors,
+			Model model) {
 		
 		//매개변수 디버깅
 		log.debug(Debug.KIS + "controller / empAdd / employeeRequest : " + employeeRequest);
 		
-		//서비스 레이어로 직원정보 이동
-		employeeService.insertEmp(employeeRequest);
+		// 유효성 검사후 에러 발견시 true
+		log.debug("hassErrors :" + errors.hasErrors());
+		
+		
+		if(errors.hasErrors()) {
+			
+			if(employeeRequest.getUploadFile() == null || employeeRequest.getUploadFile().isEmpty()) {
+				// 유효성 검사 실패 메세지 담기
+				model.addAttribute("uploadFileMsg", "업로드파일 선택해주세요");
+			}
+			
+			for(FieldError e : errors.getFieldErrors()) {
+				// 커맨드 객체에서 에러 발생시 맵핑된 에러메세지 
+				log.debug(Debug.KIS + " controller / empAdd / getDefaultMessage " +e.getDefaultMessage());
+				// "이름+Msg"에 메세지를 담아 모델에 추가
+				model.addAttribute(e.getField()+"Msg", e.getDefaultMessage());
+			}
+			return "groupware/emp/empAdd"; 
+		}
 		
 		//저장 객체 생성
 		Map<String, Object> leaveMap = new HashMap<>();
@@ -82,6 +105,8 @@ public class EmployeeController {
 		//디버깅
 		log.debug(Debug.KIS + "controller / empAdd / leaveMap : " + leaveMap);
 		
+		//서비스 레이어로 직원정보 이동
+		employeeService.insertEmp(employeeRequest);
 		
 		//서비스 레이어로 휴가정보 이동
 		employeeService.insertLeave(leaveMap);
@@ -163,15 +188,34 @@ public class EmployeeController {
 	 * 담당자: 김인수
 	*/
 	@PostMapping("/groupware/emp/empModify")
-	public String empModify(Employee employee) {
+	public String empModify(
+			@Valid EmployeeRequest employeeRequest,
+			Errors errors,
+			Model model) {
 		
 		//매개변수 디버깅
-		log.debug(Debug.KIS + "controller / empModify / employee : " + employee);
+		log.debug(Debug.KIS + "controller / empModify / employee : " + employeeRequest);
+		
+		// 유효성 검사후 에러 발견시 true
+		log.debug("hassErrors :" + errors.hasErrors());
+		
+		
+		if(errors.hasErrors()) {
+			
+			for(FieldError e : errors.getFieldErrors()) {
+				// 커맨드 객체에서 에러 발생시 맵핑된 에러메세지 
+				log.debug(Debug.KIS + " controller / empModify / getDefaultMessage " +e.getDefaultMessage());
+				// "이름+Msg"에 메세지를 담아 모델에 추가
+				model.addAttribute(e.getField()+"Msg", e.getDefaultMessage());
+			}
+			model.addAttribute("employeeRequest", employeeRequest);
+			return "groupware/emp/empModify";
+		}
 		
 		//서비스 레이어로 수정될 직원정보 이동
-		employeeService.modifyEmpOne(employee);
+		employeeService.modifyEmpOne(employeeRequest);
 		
-		return "redirect:/groupware/emp/empDetail?empNo="+employee.getEmpNo();
+		return "redirect:/groupware/emp/empDetail?empNo="+employeeRequest.getEmpNo();
 	}
 	
 	/*

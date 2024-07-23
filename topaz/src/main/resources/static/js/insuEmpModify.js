@@ -1,60 +1,63 @@
 $(document).ready(function(){
-    // 정규식
+    //정규식
     const pwPattern = /^\d{1,20}$/;
     const firstPhonePattern = /^\d{3}$/;
     const secondPhonePattern = /^\d{4}$/;
     const postNoPattern = /^\d{5}$/;
     const addressPattern = /^[a-zA-Z가-힣0-9\s!@#$%^&*()_+|<>?:{}]{1,50}$/;
 
-    // 초기 로드 시 전화번호와 주소 합치기
+    //초기 로드 시 전화번호와 주소 합치기
     combinePhoneNumber();
     combineAddress();
 
-    // 필드 입력 후 다음 필드 활성화
+    //필드 입력 후 다음 필드 활성화
     $('.step').on('blur', function(event){
-        // this는 현재 발생한 이벤트를 가르킨다.
+        //this는 현재 발생한 이벤트를 가르킨다.
         let field = $(this);
 
-        // 필드가 파일 타입일 경우 blur 이벤트 무시
+        //필드가 파일 타입일 경우 blur 이벤트 무시
         if (field.attr('type') === 'file') return;
 
-        // step 클래스를 가지고 있는 input 태그의 data-step 값을 가져오기
+        //step 클래스를 가지고 있는 input 태그의 data-step 값을 가져오기
         let dataStep = field.data('step');
 
-        // input의 값을 가져와서 양끝의 공백을 제거
+        //input의 값을 가져와서 양끝의 공백을 제거
         let value = $(this).val().trim();
 
-        // step 디버깅
+        //step 디버깅
         console.log("dataStep : " + dataStep);
-        // value 디버깅
+        //value 디버깅
         console.log("value : " + value);
 
-        // 유효성 검사
+        //유효성 검사
         if (!validation(field, value)) {
             event.preventDefault();
             return false;
         }
 
-        // 전화번호 합치기
+        //전화번호 합치기
         if (dataStep >= 7 && dataStep <= 9) {
             combinePhoneNumber();
         }
 
-        // 주소 합치기
+        //주소 합치기
         if (dataStep >= 12 && dataStep <= 13) {
             combineAddress();
         }
     });
 
-    // 폼 제출 시에도 전화번호와 주소 합치기
+    //폼 제출 시에도 전화번호와 주소 합치기
     $('#empForm').on('submit', function(event) {
         combinePhoneNumber();
         combineAddress();
+        
+         //성별 필드 disabled 속성 제거
+        $('input[name="empGender"]').prop('disabled', false);
     });
 
     
 
-    // 유효성 검사 함수
+    //유효성 검사 함수
     function validation(field, value) {
         let dataStep = field.data('step');
 
@@ -122,7 +125,7 @@ $(document).ready(function(){
         return true;
     }
 
-    // 전화번호 합치기 함수
+    //전화번호 합치기 함수
     function combinePhoneNumber() {
         let first = $("input[name='firstPhNumber']").val().trim();
         let second = $("input[name='secondPhNumber']").val().trim();
@@ -131,7 +134,7 @@ $(document).ready(function(){
         $("input[name='empPhoneNumber']").val(fullPhoneNumber);
     }
 
-    // 주소 합치기 함수
+    //주소 합치기 함수
     function combineAddress() {
         let firstAddress = $('input[name=firstAddress]').val().trim();
         let addressDetail = $('input[name=addressDetail]').val().trim();

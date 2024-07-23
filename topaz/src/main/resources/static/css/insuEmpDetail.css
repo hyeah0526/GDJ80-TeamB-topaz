@@ -205,3 +205,11 @@ input[type="radio"][name="empGender"]:checked + label:before {
 .phoneRow label {
 	margin-right: 5px;
 }
+
+.validMsg{
+	width: 100%;
+    margin-top: .25rem;
+    font-size: .875em;
+    color: var(--bs-form-invalid-color);
+}
+
