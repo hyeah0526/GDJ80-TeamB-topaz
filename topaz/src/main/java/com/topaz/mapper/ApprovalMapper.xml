@@ -56,7 +56,7 @@
 			, e.sign_file signFile
 		FROM 
 			employee e 
-		INNER JOIN file_upload f 
+		LEFT JOIN file_upload f 
 			ON e.sign_file = f.file_no
 		WHERE 
 			e.emp_no = #{empNo}

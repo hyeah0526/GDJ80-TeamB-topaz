@@ -8,6 +8,8 @@
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
 	<head>
+		<!-- 서명패드JS -->
+		<script src="/topaz/javascriptSignature/js/signature_pad.min.js" type="text/javascript"></script>
 		<!-- hyeah CSS / JS -->
 		<link rel="stylesheet" href="<c:url value='/css/hyeah.css' />">
 	</head>
@@ -39,7 +41,9 @@
     <c:set var="a" value="${approvalOne}"></c:set>
     <input type="hidden" value="${a.approvalDocNo}" id="approvalDocNo"><!-- 문서번호 -->
     <input type="hidden" value="${a.firstApproval}" id="firstApproval"><!-- 중간결재자 -->
+    <input type="hidden" value="${a.firstApprovalSign}" id="firstApprovalSign"><!-- 중간결재자 서명여부 -->
     <input type="hidden" value="${a.finalApproval}" id="finalApproval"><!-- 최종결재자 -->
+    <input type="hidden" value="${a.finalApprovalSign}" id="finalApprovalSign"><!-- 최종결재자 서명여부 -->
     <input type="hidden" value="${a.approvalState}" id=approvalState><!-- 문서상태 -->
     
     <div class="row justify-content-center"><div class="col-9">
@@ -114,7 +118,7 @@
 			        			<button type="button" class="btn btn-success mb-3" id="finalConfirm">승인</button>
 			        			<button type="button" class="btn btn-danger" id="finalReject">반려</button>
 			        		</c:if>
-			        		<c:if test="${a.finalApprovalDate ne null}">
+			        		<c:if test="${a.finalApprovalDate ne null && a.approvalStateName ne '반려'}">
 			        			<img src="/topaz/assets/img/approvalSign/${a.finalApprovalSign}" height="100px;" width="100px;">
 			        		</c:if>
 			        	</td>
@@ -256,6 +260,38 @@
 	    	
 	    </div></div>
     </div></div>
+    
+    
+     <!-- 신규등록 서명패드 가져오는 모달 -->
+	<div class="modal fade" id="signAddModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+			<!-- 모달 제목 -->
+			<div class="modal-header">
+				<h5 class="modal-title">서명 등록</h5>
+			</div>
+			
+			<div class="modal-body text-center" style="margin: auto;">
+				<!-- 서명패드 표시 -->
+				<div id="signature-pad" class="m-signature-pad">
+				
+                    <div class="m-signature-pad--body" style="border: 1px solid black; width: 300px; height: 150px;">
+                        <canvas></canvas>
+                    </div>
+                    <div class="m-signature-pad--footer" style="margin-top: 30px">
+                        <button type="button" class="btn btn-primary clear" data-action="signClear">작성 초기화</button>
+                    </div>
+				</div>
+			</div>
+				
+			<!-- 모달 서명 등록 취소 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary save" data-action="signSave">서명 저장</button>
+			</div>
+			
+		</div></div>
+	</div><!-- End addRsvn Modal-->
+    
     </section><!-- section 종료 -->
 
 	</main><!-- End #main -->
@@ -266,6 +302,7 @@
 	
 	<!-- 결재 상세보기 JS -->
 	<script src="<c:url value='/js/hyeahApprovalDetails.js'/>"></script>	
+	
 </body>
 
 </html>

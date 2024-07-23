@@ -39,6 +39,7 @@
 	    		<!-- 서명 여부 조회(signFile/empGrade/empDeptName/empName/empNo) -->
 	    		<c:set var="s" value="${empSign}"></c:set>
 	    		<input type="hidden" name="empGrade" id="empGrade" value="${s.empGrade}">
+	    		<input type="hidden" id="signFile" value="${s.signFile}">
 				<!-- 서명이 없을 경우 신규 등록 버튼 -->
 				<c:if test="${s.signFile eq null}">
 					<h6 class="card-title">
@@ -488,7 +489,7 @@
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 	
 	<!-- 결재 신규 등록 JS -->
-	<script src="<c:url value='/js/hyeahApprovalSign.js'/>"></script>	
+	<script src="<c:url value='/js/hyeahApprovalAdd.js'/>"></script>	
 </body>
 
 </html>

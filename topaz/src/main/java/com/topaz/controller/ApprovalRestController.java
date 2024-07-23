@@ -98,7 +98,7 @@ public class ApprovalRestController {
 	
 	
 	/*
-	 * 서비스명: 
+	 * 서비스명: modApprovalState
 	 * 시작 날짜: 2024-07-23
 	 * 담당자: 박혜아
 	*/
@@ -113,10 +113,12 @@ public class ApprovalRestController {
 		
 		approvalDocModify.setModId(empNo);
 		log.debug(Debug.PHA + "approvalStateModify Controller approvalDocModify--> " + approvalDocModify + Debug.END);
+		
 		// 상태변경하기
 		int updateRow = approvalService.modApprovalState(approvalDocModify);
 		log.debug(Debug.PHA + "approvalStateModify Controller updateRow--> " + updateRow + Debug.END);
 		
+		// alert에 보여줄 메세지 담기
 		String updateState = "";
 		if(approvalDocModify.getApprovalNewState().equals("1")) {
 			updateState = "결재 취소에 성공하였습니다.";
