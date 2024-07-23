@@ -122,7 +122,7 @@ public class BpoController {
 		// 외주업체 로그인일 경우, 외주업체로그인 메인페이지로 보내기
 		log.debug(Debug.PHA + "bpoRsvnModify Controller empNo.substring(0)--> " + empNo.substring(0,1) + Debug.END);
 		if(empNo.substring(0,1).equals("B")){
-			return "redirect:/groupware/bpo/bpoRsvnDetailOut?rsvnNo="+outsourcingRsvn.getRsvnNo();
+			return "redirect:/outsourcing/bpoRsvnDetailOut?rsvnNo="+outsourcingRsvn.getRsvnNo();
 		}
 		
 		return "redirect:/groupware/bpo/bpoRsvnDetail?rsvnNo="+outsourcingRsvn.getRsvnNo();
@@ -296,7 +296,7 @@ public class BpoController {
 	 * 시작 날짜: 2024-07-15
 	 * 담당자: 박혜아
 	*/
-	@RequestMapping("/groupware/bpo/bpoMainOut")
+	@RequestMapping("/outsourcing/bpoMainOut")
 	public String bpoMainOut(Model model
 							, HttpServletRequest  httpServletRequest
 							,@RequestParam(name="currentPage", defaultValue="1") int currentPage
@@ -332,7 +332,7 @@ public class BpoController {
 		model.addAttribute("currentPage", currentPage);	// 최근 페이지
 		model.addAttribute("searchWord", searchWord);	// 검색어
 
-		return "groupware/bpo/bpoMainOut";
+		return "outsourcing/bpoMainOut";
 	}
 	
 	
@@ -342,7 +342,7 @@ public class BpoController {
 	 * 시작 날짜: 2024-07-15
 	 * 담당자: 박혜아
 	*/
-	@RequestMapping("/groupware/bpo/bpoOutOnOff")
+	@RequestMapping("/outsourcing/bpoOutOnOff")
 	public String bpoOutOnOff(@RequestParam(name="outsourcingNo") String outsourcingNo
 							,@RequestParam(name="outsourcingState") String outsourcingState) {
 		
@@ -363,7 +363,7 @@ public class BpoController {
 		bpoService.setBpoOutOnOff(stateChange, outsourcingNo);
 		
 		
-		return "redirect:/groupware/bpo/bpoMainOut";
+		return "redirect:/outsourcing/bpoMainOut";
 	}
 	
 	
@@ -373,7 +373,7 @@ public class BpoController {
 	 * 시작 날짜: 2024-07-16
 	 * 담당자: 박혜아
 	*/
-	@RequestMapping("/groupware/bpo/bpoRsvnDetailOut")
+	@RequestMapping("/outsourcing/bpoRsvnDetailOut")
 	public String bpoRsvnDetailOut(Model model
 									,@RequestParam(name="rsvnNo") String rsvnNo) {
 		
@@ -384,7 +384,7 @@ public class BpoController {
 		// model담기
 		model.addAttribute("bpoOutRsvnOne", bpoOutRsvnOne);
 		
-		return "groupware/bpo/bpoRsvnDetailOut";
+		return "outsourcing/bpoRsvnDetailOut";
 	}
 	
 	

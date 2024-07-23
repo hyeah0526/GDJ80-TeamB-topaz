@@ -172,7 +172,7 @@ public class BpoRestController {
 	 * 시작 날짜: 2024-07-16
 	 * 담당자: 박혜아
 	*/
-	@GetMapping("/bpo/bpoOutNoticeDetail")
+	@GetMapping("/outsourcing/bpoOutNoticeDetail")
 	public Map<String, Object> bpoOutNoticeDetail(String newsNo) {
 		log.debug(Debug.PHA + "bpoOutNoticeDetail controller newsNo--> " + newsNo + Debug.END);
 		
@@ -214,7 +214,7 @@ public class BpoRestController {
 	 * 시작 날짜: 2024-07-16
 	 * 담당자: 박혜아
 	*/
-	@RequestMapping("/bpo/bpoOutChangePw")
+	@RequestMapping("/outsourcing/bpoOutChangePw")
 	public int bpoOutChangePw(String outsourcingNo, String newPw, String oldPw) {
 		
 		log.debug(Debug.PHA + "bpoOutChangePw Controller outsourcingNo--> " + outsourcingNo + Debug.END);

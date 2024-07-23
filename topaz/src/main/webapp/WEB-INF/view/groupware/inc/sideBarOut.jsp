@@ -7,7 +7,7 @@
 		
 		<!-- ======= 카테고리 - 입주자 관리 ======= -->
 		<li class="nav-item">
-	        <a class="nav-link sideResident collapsed" id="sideResident" href="/topaz/groupware/bpo/bpoMainOut">
+	        <a class="nav-link sideResident collapsed" id="sideResident" href="/topaz/outsourcing/bpoMainOut">
 	          <i class="bi bi-grid"></i>
 	          <span>메인</span>
 	        </a>

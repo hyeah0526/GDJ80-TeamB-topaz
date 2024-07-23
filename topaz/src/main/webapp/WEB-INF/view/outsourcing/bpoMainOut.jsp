@@ -48,7 +48,7 @@
 			<div class="card"><div class="card-body">
 				<h5 class="card-title">영업상태 변경</h5>
 				<div>
-					<form method="post" action="${pageContext.request.contextPath}/groupware/bpo/bpoOutOnOff">
+					<form method="post" action="${pageContext.request.contextPath}/outsourcing/bpoOutOnOff">
 						<input type="hidden" id="outsourcingNo" name="outsourcingNo" value="${loginInfo.outsourcingNo}">
 						<input type="hidden" name="outsourcingState" value="${loginInfo.outsourcingState}">
 						<c:if test="${loginInfo.outsourcingState eq '영업중'}">
@@ -94,7 +94,7 @@
 						 	
 						 	${r.rsvnStart} - ${r.rsvnEnd} ::  ${r.rsvnTitle}...
 						 	
-						 	<a href="/topaz/groupware/bpo/bpoRsvnDetailOut?rsvnNo=${r.rsvnNo}">
+						 	<a href="/topaz/outsourcing/bpoRsvnDetailOut?rsvnNo=${r.rsvnNo}">
 						 		<span class="badge rounded-pill bg-primary">상세보기</span>
 						 	</a>
 						 </div>
@@ -105,7 +105,7 @@
 			<div class="card"><div class="card-body">
 				<h5 class="card-title">공지사항</h5>
 				<!-- 제목으로 검색하기 -->
-				<form method="get" action="/topaz/groupware/bpo/bpoMainOut">
+				<form method="get" action="/topaz/outsourcing/bpoMainOut">
 					<div class="row mb-3">
 						<label for="inputText" class="col-sm-8 col-form-label">
 							<input class="form-control" name="searchWord">
@@ -147,7 +147,7 @@
 						<c:when test="${currentPage > 1}">
 							<li class="page-item">
 								<a class="page-link"
-								 		href="/topaz/groupware/bpo/bpoMainOut?currentPage=${currentPage-1}&searchWord=${searchWord}">◀&nbsp;&nbsp;
+								 		href="/topaz/outsourcing/bpoMainOut?currentPage=${currentPage-1}&searchWord=${searchWord}">◀&nbsp;&nbsp;
 								 </a>
 							</li>
 						</c:when>
@@ -162,7 +162,7 @@
 						<c:when test="${currentPage < lastPage}">
 							<li class="page-item">
 								<a class="page-link" 
-										href="/topaz/groupware/bpo/bpoMainOut?currentPage=${currentPage+1}&searchWord=${searchWord}">&nbsp;&nbsp;▶
+										href="/topaz/outsourcing/bpoMainOut?currentPage=${currentPage+1}&searchWord=${searchWord}">&nbsp;&nbsp;▶
 								</a>
 							</li>
 						</c:when>

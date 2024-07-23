@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						title: response[i].rsvnTitle, // 제목
 						start: response[i].rsvnStart, // 시작날짜
 						end: response[i].rsvnEnd, // 종료날짜
-						url: '/topaz/groupware/bpo/bpoRsvnDetailOut?rsvnNo='+response[i].rsvnNo, // 상세보기 이동
+						url: '/topaz/outsourcing/bpoRsvnDetailOut?rsvnNo='+response[i].rsvnNo, // 상세보기 이동
 						backgroundColor: getRsvnColor(response[i].rsvnState), // 타입별 색상 분류
 						borderColor: getRsvnColor(response[i].rsvnState), // 타입별 색상분류
 					})
@@ -80,7 +80,7 @@ function NoticeDetail(row){
 	$.ajax({
 		type: "GET",
 		data: {newsNo : newsNo},
-		url: "/topaz/bpo/bpoOutNoticeDetail",
+		url: "/topaz/outsourcing/bpoOutNoticeDetail",
 		success: function (response){
 			  
 			console.log("response", response);
@@ -136,17 +136,17 @@ $('#pwChangeBtn').click(function() {
 				newPw : newPw,
 				oldPw : oldPw
 				},
-		url: "/topaz/bpo/bpoOutChangePw",
+		url: "/topaz/outsourcing/bpoOutChangePw",
 		success: function (response){
 			console.log('response-->', response);
 			
 			// 비밀번호 변경 성공 / 실패 
 			if(response == 1){
 				alert('비밀번호 변경에 성공하였습니다!');
-				window.location.href="/topaz/groupware/bpo/bpoMainOut";
+				window.location.href="/topaz/outsourcing/bpoMainOut";
 			}else{
 				alert('비밀번호 변경에 실패하였습니다.');
-				window.location.href="/topaz/groupware/bpo/bpoMainOut";
+				window.location.href="/topaz/outsourcing/bpoMainOut";
 			}
 			
 			

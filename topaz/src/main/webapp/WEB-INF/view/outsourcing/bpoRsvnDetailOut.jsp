@@ -25,7 +25,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
-          <li class="breadcrumb-item"><a href="/topaz/groupware/bpo/bpoMainIn">Reservation</a></li>
+          <li class="breadcrumb-item"><a href="/topaz/outsourcing/bpoMainIn">Reservation</a></li>
           <li class="breadcrumb-item active">Reservation Detail & Edit</li>
         </ol>
       </nav>
@@ -124,8 +124,8 @@
                   <c:if test="${r.rsvnState ne '취소'}">
                   	<button type="submit" id="bpoRsvnEditBtn" class="btn btn-primary">Edit</button>
                   </c:if>
-	              <!-- 전페이지로 이동 버튼 -->
-	              <button type="button" onclick="history.back()" class="btn btn-secondary">Close</button>
+	              <!-- 메인페이지로 이동 버튼 -->
+	              <a href="/topaz/outsourcing/bpoMainOut" class="btn btn-secondary">Close</a>
                 </div>
               </form><!-- Vertical Form -->
 
