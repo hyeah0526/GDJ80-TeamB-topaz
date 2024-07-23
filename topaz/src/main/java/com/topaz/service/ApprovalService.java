@@ -185,7 +185,11 @@ public class ApprovalService {
 	}
 	
 	
-	
+	/*
+	 * 분류 번호: #11 - 신규 결재 :: 결재 등록
+	 * 시작 날짜: 2024-07-20
+	 * 담당자: 박혜아
+	*/
 	public String setApprovalDoc(ApprovalDocRequest approvalDocRequest) throws Exception {
 		// 공통 코드 S002(1:휴가, 2:기획, 3:경비)
 		// 공통 코드 S001(1:취소, 2:반려, 3: 대기 4:진행, 5:승인)
@@ -277,8 +281,24 @@ public class ApprovalService {
 			}
 		}
 		
-		
 		return approvalDocNo; 
+	}
+	
+	
+	/*
+	 * 분류 번호: #11 - 결재 상세보기 페이지 :: 결재 상세 조회
+	 * 시작 날짜: 2024-07-23
+	 * 담당자: 박혜아
+	*/
+	public Map<String, Object> getApprovalDocOne(String approvalDocNo){
+		
+		log.debug(Debug.PHA + "getApprovalDocOne service approvalDocNo--> " + approvalDocNo + Debug.END);
+		
+		Map<String, Object> map = approvalMapper.selectApprovalDocOne(approvalDocNo);
+		log.debug(Debug.PHA + "getApprovalDocOne service map--> " + map + Debug.END);
+		
+		return map;
+		
 	}
 	
 }

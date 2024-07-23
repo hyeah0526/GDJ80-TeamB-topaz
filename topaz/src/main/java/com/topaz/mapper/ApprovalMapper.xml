@@ -170,4 +170,72 @@
 		)
 	</insert>
 	
+	
+	<!--  -->
+	<select id="selectApprovalDocOne" parameterType="String" resultType="map">
+		SELECT 
+			  e1.emp_no empNo		<!-- 신청자 아이디 -->
+			, e1.emp_name empName	<!-- 신청자 이름 -->
+			<!-- 신청자 부서 -->
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = e1.emp_dept) empDept
+			<!-- 신청자 직위 -->
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = e1.emp_grade) empGrade
+			, e1.sign_file signFile	<!-- 신청자 서명파일 -->
+			
+			<!-- 결재문서 번호 -->
+			, ad.approval_doc_no approvalDocNo
+			<!-- 결재문서 타입 -->
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'S002' AND cd = ad.approval_type) approvalType
+			<!-- 결재문서 상태 -->
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'S001' AND cd = ad.approval_state) approvalState
+			, ad.doc_title docTitle					<!-- 결재문서 제목 -->
+			, ad.doc_first_content docFirstContent	<!-- 결재문서 내용1 -->
+			, ad.doc_second_content docSecondContent<!-- 결재문서 내용2 -->
+			, ad.doc_third_content docThirdContent	<!-- 결재문서 내용3 -->
+			, DATE(ad.start_date) startDate			<!-- 결재문서 신청날짜 -->
+			, DATE(ad.end_date) endDate				<!-- 결재문서 종료날짜 -->
+			, DATE(ad.reg_time) regTime				<!-- 결재문서 등록날짜 -->
+			, DATEDIFF(ad.end_date, ad.start_date) dayOffDays <!-- 휴가신청일 -->
+			, fu.file_name fileName					<!-- 결재문서 파일첨부 -->
+			, fu.original_file_name originalFileName<!-- 결재문서 파일첨부 오리지널네임 -->
+			
+			<!-- 중간승인자 아이디 -->
+			, e2.emp_no firstApproval
+			<!-- 중간승인자 이름 --> 
+			, e2.emp_name firstApprovalName
+			<!-- 중간승인자 부서 -->
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = e2.emp_dept) firstApprovalDeptName
+			<!-- 중간승인자 직위 -->
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = e2.emp_grade) firstApprovalGradeName
+			<!-- 중간승인자 서명파일 -->	
+			, e2.sign_file firstApprovalSign
+			<!-- 중간승인자 결재날짜 -->
+			, DATE(ad.first_approval_date) firstApprovalDate
+			
+			<!-- 최종승인자 아이디 -->
+			, e3.emp_no finalApproval
+			<!-- 최종승인자 이름  -->
+			, e3.emp_name finalApprovalName
+			<!-- 최종승인자 부서 -->
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = e3.emp_dept) finalApprovalDeptName
+			<!-- 최종승인자 직위 -->
+			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = e3.emp_grade) finalApprovalGradeName
+			<!-- 최종승인자 서명파일 -->
+			, e3.sign_file finalApprovalSign
+			<!-- 최종승인자 결재날짜 -->
+			, DATE(ad.final_approval_date) finalApprovalDate
+		FROM 
+			approval_doc ad <!-- 결재문서 ad -->
+		INNER JOIN employee e1
+			ON ad.emp_no = e1.emp_no <!-- 신청자 e1 -->
+		INNER JOIN employee e2
+			ON e2.emp_no = ad.first_approval <!-- 중간 승인자 e2  -->
+		INNER JOIN employee e3
+			ON e3.emp_no = ad.final_approval <!-- 최종 승인자 e3  -->
+		LEFT JOIN file_upload fu 
+			ON ad.approval_doc_no = fu.reference_no <!-- 첨부된 파일 fu -->
+		WHERE 
+			ad.approval_doc_no = #{approvalDocNo}
+	</select>
+	
 </mapper>

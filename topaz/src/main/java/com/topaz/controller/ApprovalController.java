@@ -86,13 +86,35 @@ public class ApprovalController {
 	
 	
 	/*
-	 * 서비스명: 
+	 * 서비스명: getApprovalDocOne
 	 * 시작 날짜: 2024-07-22
 	 * 담당자: 박혜아
 	*/
 	@GetMapping("/groupware/approval/approvalDetail") 
-	public String approvalDetail(Model model, @RequestParam(name="approvalDocNo") String approvalDocNo) {
+	public String approvalDetail(Model model
+								, @RequestParam(name="approvalDocNo") String approvalDocNo
+								, HttpServletRequest httpServletRequest) {
 		log.debug(Debug.PHA + "approvalDetail Controller approvalDocNo--> " + approvalDocNo + Debug.END);
+		
+		// 세션가져와서 세팅
+		HttpSession session = httpServletRequest.getSession();
+		String loginUser = (String)session.getAttribute("strId");
+		log.debug(Debug.PHA + "approval Controller loginUser--> " + loginUser + Debug.END);
+		
+		
+		// 결재 상세 가져오기
+		Map<String, Object> approvalOne = approvalService.getApprovalDocOne(approvalDocNo);
+		log.debug(Debug.PHA + "approvalDetail Controller approvalOne--> " + approvalOne + Debug.END);
+		
+		// 파일첨부 있을 경우 파일이름 가져오기
+		String originalFileName = (String)approvalOne.get("originalFileName");
+		log.debug(Debug.PHA + "approvalDetail Controller originalFileName--> " + originalFileName + Debug.END);
+		
+		// 값 담아주기
+		model.addAttribute("approvalOne", approvalOne);
+		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("originalFileName", originalFileName);
+		
 		
 		return "groupware/approval/approvalDetail";
 	}

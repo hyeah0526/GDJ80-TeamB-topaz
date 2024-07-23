@@ -36,4 +36,7 @@ public interface ApprovalMapper {
 	
 	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 결재 문서 파일 등록 */
 	int insertApprovalFile(UploadFile file);
+	
+	/* 분류 번호: #11 - 전자결재 상세 페이지 :: 결재 문서 상세 조회 */
+	Map<String, Object> selectApprovalDocOne(String approvalDocNo);
 }
