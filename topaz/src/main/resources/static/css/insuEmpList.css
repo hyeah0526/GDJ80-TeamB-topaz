@@ -127,8 +127,32 @@ h1.titleH1 {
     --bs-pagination-color: #4154f1;
 }
 
-/* ID */
+.remaining-leave {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top:10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.remaining-leave .leave-type {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.remaining-leave .leave-type label {
+    margin-right: 10px;
+}
+
+.remaining-leave .leave-type span {
+    color: #007bff;
+}
+
 #paginationUl {
     display: flex;
     justify-content: center;    
 }
+

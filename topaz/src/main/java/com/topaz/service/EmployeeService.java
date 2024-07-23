@@ -159,6 +159,7 @@ public class EmployeeService {
 		return resultMap;
 	} 
 	
+	
 	/*
 	 * 분류번호: #4 - 직원상세 조회
 	 * 시작 날짜: 2024-07-07
@@ -315,6 +316,43 @@ public class EmployeeService {
 		return empList;
 	} 
 	
+
+	/*
+	 * 분류번호: #4 - 나의 휴가 조회
+	 * 시작 날짜: 2024-07-23
+	 * 담당자: 김인수
+	*/
+	public Map<String, Object> selectMyLeave(Map<String, Object> paramMap) {
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / selectMyLeave / paramMap : " + paramMap);
+		
+		//조건에 맞는 직원 수 가져오기
+	    int totalCount = empMapper.selectMyLeaveCnt(paramMap);
+	    log.debug(Debug.KIS + "service / selectMyLeave / totalCount : " + totalCount);
+
+	    //마지막 페이지 계산
+	    int rowPerPage = (int) paramMap.get("rowPerPage");
+	    int lastPage =  (totalCount + rowPerPage - 1) / rowPerPage;
+	    log.debug(Debug.KIS + "service / selectMyLeave / lastPage : " + lastPage);
+	    
+
+	    //나의 휴가 사용 정보 가져오기
+	    List<Map<String, Object>> myLeaveList = empMapper.selectMyLeave(paramMap);
+	    log.debug(Debug.KIS + "service / selectMyLeave / myLeaveList : " + myLeaveList);
+
+	    //나의 휴가 정보 가져오기
+	    List<Map<String, Object>> myLeaveCnt = empMapper.selectLeaveCnt(paramMap);
+	    log.debug(Debug.KIS + "service / selectMyLeave / myLeaveCnt : " + myLeaveCnt);
+
+	    //결과를 맵에 담아서 반환
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("myLeaveList", myLeaveList);
+	    resultMap.put("lastPage", lastPage);
+	    resultMap.put("myLeaveCnt", myLeaveCnt);
+		
+		return resultMap;
+	} 
 	
 	//========== 쪽지 
 	

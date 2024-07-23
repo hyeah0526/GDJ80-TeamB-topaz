@@ -149,6 +149,68 @@ public class EmployeeRestController {
 	}
 	
 	
+	/*
+	 * 서비스명: #4 - 나의 휴가 조회
+	 * 시작 날짜: 2024-07-23
+	 * 담당자: 김인수
+	*/
+	@PostMapping("/groupware/myPage/myLeaveMain")
+	public Map<String, Object> myLeaveMain(
+			@RequestParam Map<String, Object> paramMap,
+			HttpServletRequest  req) {
+		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "controller / myLeaveMain / paramMap : " + paramMap);
+		log.debug(Debug.KIS + "controller / myLeaveMain / httpServletRequest : " + req);
+		
+		//HttpServletRequest를 사용하여 세션 가져오기
+		HttpSession session = req.getSession();
+		log.debug(Debug.KIS + "controller / myLeaveMain / session : " + session);
+		
+		//세션에서 strId(직원아이디)라는 속성 가져오기
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.KIS + "controller / myLeaveMain / empNo : " + empNo);
+	    
+		
+	    //기본 값 설정
+	    int currentPage = 1;
+	    int rowPerPage = 10;
+	    
+	    
+	    //페이징과 관련된 파라미터 설정
+	    if (paramMap.get("currentPage") != null) {
+	        currentPage = Integer.parseInt((String) paramMap.get("currentPage"));
+	    }
+
+	    if (paramMap.get("rowPerPage") != null) {
+	        rowPerPage = Integer.parseInt((String) paramMap.get("rowPerPage"));
+	    }
+	    
+	    //페이징 처리를 위한 설정
+	    paramMap.put("currentPage", (currentPage - 1) * rowPerPage);
+	    paramMap.put("rowPerPage", rowPerPage);
+	    paramMap.put("empNo", empNo);
+	    
+		//나의 휴가 사용 정보 가져오기
+	    Map<String, Object> resultMap = employeeService.selectMyLeave(paramMap);
+	    List<Map<String, Object>> myLeaveList = (List<Map<String, Object>>) resultMap.get("myLeaveList");
+	    log.debug(Debug.KIS + "controller / myLeaveMain / myLeaveList : " + myLeaveList);
+	    int lastPage = (int) resultMap.get("lastPage");
+	    
+	    List<Map<String, Object>> myLeaveCnt = (List<Map<String, Object>>) resultMap.get("myLeaveCnt");
+	    log.debug(Debug.KIS + "controller / myLeaveMain / myLeaveCnt : " + myLeaveCnt);
+	    
+		// 응답 데이터
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("myLeaveList", myLeaveList);
+	    response.put("lastPage", lastPage);
+	    response.put("currentPage", currentPage);
+	    response.put("myLeaveCnt", myLeaveCnt);
+	    
+		
+		return response;
+	}
+	
 
 	/*
 	 * 서비스명: #4 - 전체 휴가 조회

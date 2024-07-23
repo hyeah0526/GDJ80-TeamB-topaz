@@ -52,11 +52,21 @@ public interface EmpMapper {
 	public List<Map<String, Object>> selectEmpAttendance(Map<String, Object> empList);
 	
 	/* 분류 번호 :  #4 - 전체 근무수 조회 */
-	public  int selectEmpAttendanceAllCnt(Map<String, Object> paramMap);
+	public int selectEmpAttendanceAllCnt(Map<String, Object> paramMap);
 
 	/* 분류 번호 :  #2 - 쪽지 전송할 직원 조회 */
 	public List<Map<String, Object>> selectEmpName(String empName);
 	
+	/* 분류 번호 :  #2 - 나의 휴가 조회 */
+	public List<Map<String, Object>> selectMyLeave(Map<String, Object> paramMap);
+	
+	/* 분류 번호 :  #4 - 나의 휴가 사용 수 조회 */
+	public int selectMyLeaveCnt(Map<String, Object> paramMap);
+	
+	/* 분류 번호 :  #4 - 나의 휴가 사용 수 조회 */
+	public List<Map<String, Object>> selectLeaveCnt(Map<String, Object> paramMap);
+	
+
 	
 	/* ==== 쪽지 === */
 	
@@ -113,6 +123,5 @@ public interface EmpMapper {
 	
 	/* 분류 번호 :  #4 - 부서별 수신 쪽지 수 보기 */
 	public List<Map<String, Object>> selectDeptNoteRecCnt(String empNo);
-	
 	
 }

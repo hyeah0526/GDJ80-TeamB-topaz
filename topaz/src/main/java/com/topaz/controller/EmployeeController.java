@@ -271,6 +271,19 @@ public class EmployeeController {
 		return "redirect:/groupware/login";
 	}
 	
+	
+	
+	/*
+	 * 서비스명: myLeaveMain.jsp ( 나의 휴가 조회 )
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/myPage/myLeaveMain")
+	public String myLeaveMain() {
+		
+		return "groupware/myPage/myLeaveMain";
+	}
+	
 	//========== 조직도
 	
 	/*
