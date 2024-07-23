@@ -1,6 +1,7 @@
 package com.topaz.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -223,7 +224,7 @@ public class VolunteerService {
 		}
 		
 		// 상태 변경 성공 -> 신청 가능 인원 변경 
-		String volAppPeople = volunteerApplication.getVolAppPeople();
+		String volAppNo = volunteerApplication.getVolAppNo();
 		String volNo = volunteerApplication.getVolNo();
 		log.debug(Debug.HEH + "VolunteerService volNo : "+ volNo + Debug.END);
 		
@@ -231,8 +232,13 @@ public class VolunteerService {
 		if(stateUpdateRow == 1 && ("3".equals(volunteerApplication.getVolAppState()) || "4".equals(volunteerApplication.getVolAppState()))) {
 			// VolState 디버깅
 			log.debug(Debug.HEH + "VolunteerService updateVolState volunteerApplication volAppState : " + volunteerApplication.getVolAppState() + Debug.END);
+			// map으로 값 전달
+	        Map<String, Object> volAppParam = new HashMap<>();
+	        volAppParam.put("volNo", volNo);
+	        volAppParam.put("volAppNo", volAppNo);
+			
 			// 봉사 신청 가능 인원 변경하기
-			int peopleUpdateRow = volunteerMapper.cancelVolPeople(volAppPeople, volNo);
+			int peopleUpdateRow = volunteerMapper.cancelVolPeople(volAppParam);
 			
 			if(peopleUpdateRow != 1) {
 				// 변경 실패일 경우

@@ -6,7 +6,6 @@
 <!-- ======= header <Head> 부분 ======= -->
 <jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
 <head>
-   <!-- hyeah CSS / JS -->
    <style>
        .clickable-row {
            cursor: pointer;
@@ -63,7 +62,7 @@
                     </div>
                 </form>
                 <h5 class="card-title"></h5>
-                <!-- 외주업체 목록 리스트 -->
+                <!-- 봉사 신청 정보 리스트 -->
                 <table class="table table-hover">
                     <thead>
                       <tr>
@@ -102,13 +101,9 @@
 			</div>
 			
 			<!-- 모달 봉사 신청 폼 -->
-			<form id="volunteerAppDetailForm" action="/topaz/groupware/volunteer/modifyVolAppState" method="post">
+			<form id="volunteerAppDetailForm" action="" method="post">
 				<div class="modal-body">
 					<div class="row mb-5">
-						<input type="hidden" name="volAppNo" id="volAppNo">
-						<input type="hidden" name="volAppState" id="volAppState">
-						<input type="hidden" name="volNo" id="volNo">
-						
 			             	<label for="volTime" class="col-3 mb-3 col-form-label">봉사 일시</label>
 			                <div class="col-9 form-group">
 			                 	<input type="text" name="volTime" id="volTime" class="form-control" readonly>
@@ -163,7 +158,14 @@
 						
 					</div>
 				</div>
-				
+			</form>
+			
+			<form id="volunteerAppDetailForm" action="/topaz/modifyVolAppState" method="post">
+					<input type="hidden" name="volAppNo" id="volAppNo">
+					<input type="hidden" name="volAppState" id="volAppState">
+					<input type="hidden" name="volPeople" id="volPeople">
+					<input type="hidden" name="volAppPeople" id="volAppPeople">
+					<input type="hidden" name="volNo" id="volNo">
 				<!-- 모달 일정 취소/등록버튼 -->
 				<div class="modal-footer justify-content-center">
 					<button type="submit" class="btn btn-success" id="accept_btn" onclick="submitForm(2)">수락</button>
@@ -323,6 +325,15 @@
                                    $('#gstGender').val(detailResponse.gstGender);
                                    $('#gstBirth').val(detailResponse.gstBirth);
                                    $('#gstPhone').val(formatPhoneNumber(detailResponse.gstPhone));
+                                   
+                                   // 상태가 '대기'일 때에만 수락/거절 버튼 활성화
+                                   if (detailResponse.volAppState == 1) {
+                                       $('#accept_btn').prop('disabled', false).removeClass('btn-secondary').addClass('btn-success');
+                                       $('#reject_btn').prop('disabled', false).removeClass('btn-secondary').addClass('btn-danger');
+                                   } else {
+                                       $('#accept_btn').prop('disabled', true).removeClass('btn-success').addClass('btn-secondary');
+                                       $('#reject_btn').prop('disabled', true).removeClass('btn-danger').addClass('btn-secondary');
+                                   }
                                    
                                    // 모달 열기
                                    $("#volunteerAppDetail").modal("show");

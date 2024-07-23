@@ -1,5 +1,7 @@
 package com.topaz.controller;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.topaz.service.CustomerService;
 import com.topaz.utill.Debug;
 
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -97,5 +102,22 @@ public class CustomerRestController {
 				
 		return num;
 	}
-
+	
+	/*
+	 * 분류 번호 : #16 - 내 봉사 신청 : 내가 신청한 봉사 신청 리스트
+	 * 시작 날짜: 2024-07-23
+	 * 담당자: 한은혜
+	 */
+	@GetMapping("/customer/myVolAppList")
+	public List<Map<String, Object>> myVolAppList(HttpServletRequest httpServletRequest){
+		HttpSession session = httpServletRequest.getSession();
+		String gstId = (String)session.getAttribute("gstId");
+		
+		// 봉사 신청 리스트 호출
+		List<Map<String, Object>> list = customerService.getMyVolApp(gstId);
+		log.debug(Debug.HEH + "CustomerRestController list " + list + Debug.END);
+		
+		return list;
+	}
+	
 }

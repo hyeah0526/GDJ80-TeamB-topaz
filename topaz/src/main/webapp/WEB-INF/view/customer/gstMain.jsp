@@ -51,7 +51,14 @@
           <li><a href="volunteerRqAdd">봉사 신청</a></li>
           <li><a href="newsList">알림마당</a></li>
           <!-- JavaScript로 동적으로 변경될 부분 -->
-          <li><a href="gstMyInfo" id="myInfoLink" class="active">내 정보</a></li>
+          <li class="dropdown">
+          	<span class="active">내 정보</span>
+          	<i class="bi bi-chevron-down toggle-dropdown"></i>
+            <ul>
+              <li><a href="gstMyInfo">마이페이지</a></li>
+              <li><a href="gstMyVolAppList">내 봉사활동</a></li>
+            </ul>
+          </li>
           <li><a href="gstLogin" id="loginLink" class="active">로그인</a></li>
           <li><a href="signUp" id="signUpLink" class="active">회원가입</a></li>
           <li><a href="${pageContext.request.contextPath}/gstLogout">로그아웃</a></li>

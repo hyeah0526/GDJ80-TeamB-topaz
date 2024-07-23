@@ -1,5 +1,6 @@
 package com.topaz.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -22,5 +23,8 @@ public interface CustomerMapper {
 
 	/* 분류 번호 :  #16 - 고객 회원 정보 수정 */
 	public int modifyGst(Guest guest);
+
+	/* 분류 번호 :  #16 - 고객 내 봉사 리스트 */
+	public List<Map<String, Object>> selectMyVolApp(String gstId);
 
 }

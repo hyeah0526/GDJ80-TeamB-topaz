@@ -100,5 +100,25 @@
 		WHERE gst_id = #{gstId};
 	</update>
 	
+	<!-- 분류 번호: #16 - 회원 내 봉사 신청 보기 -->
+	<select id="selectMyVolApp" parameterType="String" resultType="map">
+		SELECT 
+			v.vol_content volContent,
+			v.vol_people volPeople,
+			DATE_FORMAT(v.vol_starttime, '%Y-%m-%d %H:%i') volStartTime, 
+			DATE_FORMAT(v.vol_endtime, '%Y-%m-%d %H:%i') volEndTime, 
+			va.vol_app_no volAppNo, 
+			va.vol_no volNo,
+			va.gst_id gstId, 
+			va.vol_app_people volAppPeople, 
+			va.vol_app_comment volAppComment, 
+			(SELECT cd_nm FROM common_code WHERE crp_cd = 'W003' AND cd = va.vol_app_state) volAppState
+		FROM volunteer_application va 
+			INNER JOIN volunteer v 
+			ON va.vol_no = v.vol_no 
+		WHERE va.gst_id = #{gstId}
+		AND va.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		AND v.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y');
+	</select>
 
 </mapper>

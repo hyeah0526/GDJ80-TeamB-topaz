@@ -78,6 +78,12 @@ public class CustomerController {
 		return "/customer/gstPWModify";
 	}
 	
+	@GetMapping("/customer/gstMyVolAppList")
+	public String gstMyVolAppList() {
+		
+		return "/customer/gstMyVolAppList";
+	}
+	
 	/*
 	 * 서비스명: signUp 
 	 * 시작 날짜: 2024-07-10

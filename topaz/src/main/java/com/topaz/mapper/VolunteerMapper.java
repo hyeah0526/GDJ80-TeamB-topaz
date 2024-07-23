@@ -45,6 +45,6 @@ public interface VolunteerMapper {
 	int updateVolState(VolunteerApplication volunteerApplication);
 
 	/* 분류번호: #9, 16 - 봉사 신청하기  : 봉사 신청 가능 인원 계산하기(거절/취소 시) */
-	int cancelVolPeople(String volAppPeople, String volNo);
+	int cancelVolPeople(Map<String, Object> volAppParam);
 
 }

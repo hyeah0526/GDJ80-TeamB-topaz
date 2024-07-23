@@ -1,5 +1,7 @@
 package com.topaz.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +113,19 @@ public class CustomerService {
 		log.debug(Debug.HEH + "service modifyGst 수정 성공시 1 : " + row + Debug.END);
 	}
 	
+	/*
+	 * 분류 번호: #16 - 고객 내 봉사 리스트
+	 * 시작 날짜: 2024-07-23
+	 * 담당자: 한은혜
+	 */
+	public List<Map<String, Object>> getMyVolApp(String gstId) {
+		// 내 봉사 신청 리스트 호출
+		List<Map<String, Object>> myVolAppList = new ArrayList<>();
+		myVolAppList = customerMapper.selectMyVolApp(gstId);
+		log.debug(Debug.HEH + "getMyVolApp myVolAppList : " + myVolAppList + Debug.END);
+		
+		return myVolAppList;
+	}
 	
 
 }

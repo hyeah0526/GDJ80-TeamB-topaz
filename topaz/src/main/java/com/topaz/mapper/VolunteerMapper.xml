@@ -85,6 +85,7 @@
 		SELECT 
 			vol_app_no volAppNo,
 			vol_content volContent, 
+			vol_people volPeople,
 			DATE_FORMAT(vol_starttime, '%Y-%m-%d %H:%i') volStarttime ,
 			va.gst_id gstId, 
 			va.vol_app_people volAppPeople, 
@@ -193,12 +194,13 @@
 	</update>
 	
 	<!-- 분류번호: #9 - 봉사 신청 상세 페이지 : 봉사 신청 가능 인원 변경 (거절/취소 시) -->
-	<update id="cancelVolPeople" parameterType="String">
+	<update id="cancelVolPeople" parameterType="map">
 		UPDATE volunteer v
 			INNER JOIN volunteer_application va 
 			ON v.vol_no = va.vol_no
-		SET v.vol_people = v.vol_people + #{volAppPeople}
+		SET v.vol_people = v.vol_people + va.vol_app_people
 		WHERE v.vol_no = #{volNo}
+		AND va.vol_app_no = #{volAppNo}
 		AND v.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 	</update>
 	

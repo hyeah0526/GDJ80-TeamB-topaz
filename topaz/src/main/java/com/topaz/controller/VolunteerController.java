@@ -169,22 +169,23 @@ public class VolunteerController {
 	 * 시작 날짜: 2024-07-22
 	 * 담당자: 한은혜
 	 */
-	@PostMapping("/groupware/volunteer/modifyVolAppState")
+	@PostMapping("/modifyVolAppState")
 	public String modifyVolAppState(@RequestParam(name="volAppNo") String volAppNo, 
 									@RequestParam(name="volAppState") String volAppState,
 									@RequestParam(name="volNo") String volNo,
+									@RequestParam(name="gstId", required=false) String gstId, 
 									HttpServletRequest httpServletRequest, 
 									VolunteerApplication volunteerApplication) {
 		// 매개값 디버깅
 		log.debug(Debug.HEH + "controller modifyVolAppState volAppNo : " + volAppNo + Debug.END);
 		log.debug(Debug.HEH + "controller modifyVolAppState volAppState : " + volAppState + Debug.END);
 		log.debug(Debug.HEH + "controller modifyVolAppState volNo : " + volNo + Debug.END);
-		// 세션값에서 gstId와 strId 가져오기
+		log.debug(Debug.HEH + "controller modifyVolAppState gstId : " + gstId + Debug.END);
+		// 세션값에서 strId 가져오기
 	    HttpSession session = httpServletRequest.getSession();
-	    String gstId = (String) session.getAttribute("gstId");
 	    String empNo = (String) session.getAttribute("strId");
 
-	    // 사용 가능한 ID 결정
+	    // 사용할 ID 결정
 	    String idToUse = (gstId != null) ? gstId : empNo;
 	    // ID 디버깅
 	    log.debug(Debug.HEH + "controller modifyVolAppState idToUse : " + idToUse + Debug.END);
@@ -197,7 +198,13 @@ public class VolunteerController {
 
 	    volunteerService.updateVolState(volunteerApplication);
 		
-		return "redirect:/groupware/volunteer/volunteerList";
+	    // 리다이렉트 URL 
+	    if (gstId != null) {
+	        return "redirect:/customer/gstMyVolAppList";
+	    } else if(gstId == null){
+	        return "redirect:/groupware/volunteer/volunteerList";
+	    }
+		return idToUse;
 	}
 	
 	
