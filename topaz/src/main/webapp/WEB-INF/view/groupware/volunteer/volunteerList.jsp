@@ -261,10 +261,10 @@
         function volunteerList(currentPage) {
             // 검색 값 받아오기
             let searchDate = $('#searchDate').val();
-            console.log("searchDate 결과값--> ", searchDate);
+            console.log("searchDate 결과값 : ", searchDate);
             
             let searchWord = $('#searchWord').val();
-            console.log("searchWord 결과값--> ", searchWord);
+            console.log("searchWord 결과값 : ", searchWord);
             
             // Ajax 리스트 호출 
             $.ajax({

@@ -80,9 +80,7 @@
 							</form>
 						</div>
 						<br>
-						<form action="" method="get">
-							<button type="submit" class="btn btn-primary">작성</button>
-						</form>
+						<a href="/topaz/groupware/approval/approvalAdd" class="btn btn-primary">작성</a>
 						<table class="table table-hover">
 							<thead>
 								<tr>
@@ -162,6 +160,22 @@
 	    
 	        // 검색 버튼 클릭 시 첫번째 페이지로 조회하기
 	        $('#searchButton').click(function() {
+	        	// 검색 값 받아오기
+	            let searchDateStart = $('#searchDateStart').val();
+	            console.log("searchDateStart : ", searchDateStart);
+	            
+	            let searchDateEnd = $('#searchDateEnd').val();
+	            console.log("searchDateEnd : ", searchDateEnd);
+	        	
+	         	// 날짜 값이 있는지 확인
+                if (searchDateStart && searchDateEnd) {
+                    // 날짜 비교
+                    if (searchDateStart > searchDateEnd) {
+                        alert("검색 날짜를 다시 확인해 주세요.");
+                        return;
+                    }
+                }
+	        	
 	        	approvalList(1);
 	        });
 	    
@@ -176,13 +190,13 @@
 	        function approvalList(currentPage) {
 	            // 검색 값 받아오기
 	            let searchDateStart = $('#searchDateStart').val();
-	            console.log("searchDateStart 결과값--> ", searchDateStart);
+	            console.log("searchDateStart : ", searchDateStart);
 	            
 	            let searchDateEnd = $('#searchDateEnd').val();
-	            console.log("searchDateEnd 결과값--> ", searchDateEnd);
+	            console.log("searchDateEnd : ", searchDateEnd);
 	            
 	            let searchWord = $('#searchWord').val();
-	            console.log("searchWord 결과값--> ", searchWord);
+	            console.log("searchWord : ", searchWord);
 	            
 	            // Ajax 리스트 호출 
 	            $.ajax({
