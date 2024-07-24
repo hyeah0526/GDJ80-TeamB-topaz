@@ -137,27 +137,49 @@ $(document).ready(function(){
 	
 	/* 결재 상태 변경 함수 */
 	function stateChange(approvalNewState, approvalReason, firstApproval, finalApproval){
+		// 전체
 		let approvalDocNo = $('#approvalDocNo').val();
+		let empNo = $('#empNo').val();
+		let approvalType = $('#approvalType').val();
 		let approvalOldState = $('#approvalState').val();
+		// 휴가신청서(승인)
+		let leaveType = $('#leaveType').val();
+		let leaveCount = $('#leaveCount').val();
+		let startTime = $('#startTime').val();
+		let endTime = $('#endTime').val();
+		
 		
 		// 값 디버깅
 		console.log('approvalDocNo문서번호--> ', approvalDocNo);
+		console.log('신청자아이디--> ', empNo);
+		console.log('문서타입-> ', approvalType);
 		console.log('변경전 상태--> ', approvalOldState);
 		console.log('변경후 상태--> ', approvalNewState);
 		console.log('반려사유--> ', approvalReason);
 		console.log('중간결재자--> ', firstApproval);
 		console.log('최종결재자--> ', finalApproval);
+		console.log('휴가종류--> ', leaveType);
+		console.log('휴가일수--> ', leaveCount);
+		console.log('휴가시작--> ', startTime);
+		console.log('휴가종료--> ', endTime);
 		
 		// 데이터 전송하기
 		 $.ajax({
             url : "/topaz/approval/approvalStateModify",
             method : "POST",
             data : {approvalDocNo : approvalDocNo,
+            		empNo : empNo,
+            		approvalType : approvalType,
             		approvalOldState : approvalOldState,
             		approvalNewState : approvalNewState,
             		approvalReason : approvalReason,
             		firstApproval : firstApproval,
-            		finalApproval : finalApproval},
+            		finalApproval : finalApproval,
+            		leaveType : leaveType,
+            		leaveCount : leaveCount,
+            		startTime : startTime,
+            		endTime : endTime
+            		},
             success : function(result){
 				console.log('result--> ', result);
 				

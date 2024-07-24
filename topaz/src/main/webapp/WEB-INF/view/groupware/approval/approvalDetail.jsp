@@ -39,12 +39,21 @@
     <section class="section">
     <!-- 상세보기 변수 -->
     <c:set var="a" value="${approvalOne}"></c:set>
-    <input type="hidden" value="${a.approvalDocNo}" id="approvalDocNo"><!-- 문서번호 -->
-    <input type="hidden" value="${a.firstApproval}" id="firstApproval"><!-- 중간결재자 -->
-    <input type="hidden" value="${a.firstApprovalSign}" id="firstApprovalSign"><!-- 중간결재자 서명여부 -->
-    <input type="hidden" value="${a.finalApproval}" id="finalApproval"><!-- 최종결재자 -->
-    <input type="hidden" value="${a.finalApprovalSign}" id="finalApprovalSign"><!-- 최종결재자 서명여부 -->
-    <input type="hidden" value="${a.approvalState}" id=approvalState><!-- 문서상태 -->
+    
+    <!-- 상태변경에서 사용할 변수 -->
+    <input type="hidden" value="${a.empNo}" id="empNo">					<!-- 신청자 아이디 -->
+    <input type="hidden" value="${a.docFirstContent}" id="leaveType">	<!-- 휴가타입 가져오기 -->
+    <input type="hidden" value="${a.dayOffDays}" id="leaveCount">		<!-- 휴가타입 일수 -->
+    <input type="hidden" value="${a.startDate}" id="startTime">			<!-- 휴가 시작날짜 -->
+    <input type="hidden" value="${a.endDate}" id="endTime">				<!-- 휴가 종료날짜 -->
+    
+    <input type="hidden" value="${a.approvalDocNo}" id="approvalDocNo">	<!-- 문서번호 -->
+    <input type="hidden" value="${a.approvalType}" id="approvalType">	<!-- 문서타입 -->
+    <input type="hidden" value="${a.firstApproval}" id="firstApproval">	<!-- 중간결재자 -->
+    <input type="hidden" value="${a.firstApprovalSign}" id="firstApprovalSign">	<!-- 중간결재자 서명여부 -->
+    <input type="hidden" value="${a.finalApproval}" id="finalApproval">	<!-- 최종결재자 -->
+    <input type="hidden" value="${a.finalApprovalSign}" id="finalApprovalSign">	<!-- 최종결재자 서명여부 -->
+    <input type="hidden" value="${a.approvalState}" id=approvalState>	<!-- 문서상태 -->
     
     <div class="row justify-content-center"><div class="col-9">
 	    <div class="card"><div class="card-body">
@@ -95,7 +104,7 @@
 		    	 <table class="">
 			        <tr>
 			        	<th rowspan="3">신<br>청</th>
-			        	<td>${a.empName}<br>(${a.empDept})</td>
+			        	<td>${a.empName}&nbsp;${a.empGrade}<br>(${a.empDept})</td>
 			        	<th rowspan="3">승<br>인</th>
 			        	<td>${a.firstApprovalName}&nbsp;${a.firstApprovalGradeName}<br>(${a.firstApprovalDeptName})</td>
 			        	<td>${a.finalApprovalName}&nbsp;${a.finalApprovalGradeName}<br>(${a.finalApprovalDeptName})</td>
@@ -141,16 +150,16 @@
 	    				<tr>
 	    					<th>휴가종류</th>
 	    					<td>
-	    						<c:if test="${a.docFirstContent eq 'annual'}">
+	    						<c:if test="${a.docFirstContent eq 'A'}">
 	    							연차
 	    						</c:if>
-	    						<c:if test="${a.docFirstContent eq 'monthly'}">
+	    						<c:if test="${a.docFirstContent eq 'M'}">
 	    							월차
 	    						</c:if>
-	    						<c:if test="${a.docFirstContent eq 'halfMorning'}">
+	    						<c:if test="${a.docFirstContent eq 'AH'}">
 	    							오전 반차
 	    						</c:if>
-	    						<c:if test="${a.docFirstContent eq 'halfAfternoon'}">
+	    						<c:if test="${a.docFirstContent eq 'PH'}">
 	    							오후 반차
 	    						</c:if>
 	    					</td>

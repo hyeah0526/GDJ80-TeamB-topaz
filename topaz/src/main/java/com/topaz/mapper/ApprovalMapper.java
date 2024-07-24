@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.topaz.dto.ApprovalDoc;
 import com.topaz.dto.ApprovalDocModify;
 import com.topaz.dto.Employee;
+import com.topaz.dto.LeaveHistory;
 import com.topaz.dto.UploadFile;
 
 @Mapper
@@ -43,4 +44,7 @@ public interface ApprovalMapper {
 	
 	/* 분류 번호: #11 - 전자결재 상세 페이지 :: 결재 문서 상태 수정 */
 	int updateApprovalState(ApprovalDocModify approvalDocModify);
+	
+	/* 분류 번호: #11 - 전자결재 상세 페이지 :: 휴가신청서 '승인'상태 시 등록 */
+	int insertLeaveHistory(LeaveHistory leaveHistory);
 }

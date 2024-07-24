@@ -145,10 +145,10 @@
 							<label for="profileImage" class="col-lg-2 col-form-label">휴 가 종 류</label>
 							<div class="col-lg-4">
 								<select class="form-select" id="dayOffType" name="docFirstContent">
-									<option value="annual">연차</option>
-									<option value="monthly">월차</option>
-									<option value="halfMorning">오전 반차</option>
-									<option value="halfAfternoon">오후 반차</option>
+									<option value="A">연차</option>
+									<option value="M">월차</option>
+									<option value="AH">오전 반차</option>
+									<option value="PH">오후 반차</option>
 								</select>
 							</div>
 						</div>

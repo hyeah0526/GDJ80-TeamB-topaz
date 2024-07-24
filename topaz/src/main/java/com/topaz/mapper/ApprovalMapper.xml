@@ -265,4 +265,34 @@
 			approval_doc_no = #{approvalDocNo}
 		
 	</update>
+	
+	
+	<!-- 분류 번호: #11 - 전자결재 상세 페이지 :: 휴가신청서 '승인'상태 시 등록 -->
+	<insert id="insertLeaveHistory" parameterType="com.topaz.dto.LeaveHistory">
+		INSERT INTO leave_history(
+			  leave_history_no
+			, emp_no
+			, leave_type
+			, leave_count
+			, start_time
+			, end_time
+			, reg_id
+			, regi_time
+			, mod_id
+			, mod_time
+			, use_yn
+		)VALUES(
+			  #{leaveHistoryNo}
+			, #{empNo}
+			, #{leaveType}
+			, #{leaveCount}
+			, #{startTime}
+			, #{endTime}
+			, #{regId}
+			, NOW()
+			, #{modId}
+			, NOW()
+			, #{useYn}
+		)
+	</insert>
 </mapper>

@@ -159,7 +159,7 @@ $(document).ready(function(){
 		$('#dayOffDate').empty();
 		
 		// 선택된 휴가 종류에 따라 해당하는 기간 입력 필드 보이기
-		if (selectedOption === 'annual' || selectedOption === 'monthly') {
+		if (selectedOption === 'A' || selectedOption === 'M') {
 			// 연차 , 월차 선택시
 			$('#dayOffDate').append('<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>' +
 							           '<div class="col-lg-2">' +
@@ -170,7 +170,7 @@ $(document).ready(function(){
 							           '    <input class="form-control" type="date" id="dayOffEndDate" name="endDate">' +
 							           '</div>')
 							           
-	    } else if (selectedOption === 'halfMorning' || selectedOption === 'halfAfternoon') {
+	    } else if (selectedOption === 'AH' || selectedOption === 'PH') {
 			// 오전반차, 오후반차 선택시
 	        $('#dayOffDate').append('<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>' +
 							           '<div class="col-lg-4">' +
@@ -408,7 +408,7 @@ $(document).ready(function(){
 			return false; 
 		}
 		
-		if($('#dayOffType').val() == 'annual' || $('#dayOffType').val() == 'monthly' ){
+		if($('#dayOffType').val() == 'A' || $('#dayOffType').val() == 'M' ){
 			// 종료날짜 유효성 검사
 			if($('#dayOffEndDate').val().length < 1){
 				console.log('종료날짜 유효성검사');

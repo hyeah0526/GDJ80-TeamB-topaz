@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.topaz.dto.ApprovalDoc;
@@ -16,6 +17,7 @@ import com.topaz.dto.ApprovalDocModify;
 import com.topaz.dto.ApprovalDocRequest;
 import com.topaz.dto.ApprovalSign;
 import com.topaz.dto.Employee;
+import com.topaz.dto.LeaveHistory;
 import com.topaz.dto.UploadFile;
 import com.topaz.mapper.ApprovalMapper;
 import com.topaz.utill.Debug;
@@ -23,6 +25,7 @@ import com.topaz.utill.Debug;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Transactional
 @Service
 public class ApprovalService {
 
@@ -117,6 +120,7 @@ public class ApprovalService {
 		
 		log.debug(Debug.PHA + "getEmpSign service empNo--> " + empNo + Debug.END);
 		
+		// 서명여부가져오기
 		Map<String, Object> map = approvalMapper.selectEmpSign(empNo);
 		
 		return map;
@@ -169,7 +173,7 @@ public class ApprovalService {
 	
 	
 	/*
-	 * 분류 번호: #11 - 신규 결재 :: 중간 결재자 리스트 가져오기
+	 * 분류 번호: #11 - 신규 결재 :: 결재자 리스트 가져오기
 	 * 시작 날짜: 2024-07-19
 	 * 담당자: 박혜아
 	*/
@@ -178,6 +182,7 @@ public class ApprovalService {
 		log.debug(Debug.PHA + "getFirstApprovalList service FirstApprovalName--> " + approvalType + Debug.END);
 		log.debug(Debug.PHA + "getFirstApprovalList service empGrade--> " + empGrade + Debug.END);
 		
+		// 결재자 리스트 가져오기
 		List<Map<String, Object>> list = approvalMapper.selectFirstApproval(approvalType, empGrade);
 		log.debug(Debug.PHA + "getFirstApprovalList service list--> " + list + Debug.END);
 		
@@ -200,8 +205,8 @@ public class ApprovalService {
 		int insertFileRow = 0;
 		String approvalDocNo = "";
 		
+		// 휴가 신청서 등록(파일X)
 		if(approvalDocRequest.getApprovalType().equals("1")) {
-			// 휴가 신청서 등록(파일X)
 			log.debug(Debug.PHA + "setApprovalDoc service 휴기 신청서 등록!" + Debug.END);
 			
 			// ApprovalDoc DTO에 바인딩
@@ -225,8 +230,8 @@ public class ApprovalService {
 			log.debug(Debug.PHA + "setApprovalDoc service approvalDocNo--> " + approvalDocNo + Debug.END);
 			
 			
+		// 기획 제안서, 경비 청구서 등록(파일O)
 		}else if(approvalDocRequest.getApprovalType().equals("2") || approvalDocRequest.getApprovalType().equals("3")) {
-			// 기획 제안서, 경비 청구서 등록(파일O)
 			log.debug(Debug.PHA + "setApprovalDoc service 기획 제안서, 경비 청구서 등록!" + Debug.END);
 			
 			// ApprovalDoc DTO에 바인딩
@@ -295,6 +300,7 @@ public class ApprovalService {
 		
 		log.debug(Debug.PHA + "getApprovalDocOne service approvalDocNo--> " + approvalDocNo + Debug.END);
 		
+		// 결재 상세 조회
 		Map<String, Object> map = approvalMapper.selectApprovalDocOne(approvalDocNo);
 		log.debug(Debug.PHA + "getApprovalDocOne service map--> " + map + Debug.END);
 		
@@ -311,6 +317,8 @@ public class ApprovalService {
 	public int modApprovalState(ApprovalDocModify approvalDocModify){
 		log.debug(Debug.PHA + "modApprovalState service approvalDocModify--> " + approvalDocModify + Debug.END);
 		
+		
+		// 결재 상태변경(공통 코드 S001(1:취소, 2:반려, 3: 대기 4:진행, 5:승인)
 		if(approvalDocModify.getApprovalNewState().equals("진행")) {
 			approvalDocModify.setApprovalNewState("4");
 			
@@ -325,10 +333,57 @@ public class ApprovalService {
 		}
 		
 		
-		
+		// 결재 상태변경
 		int updateRow = approvalMapper.updateApprovalState(approvalDocModify);
 		log.debug(Debug.PHA + "modApprovalState service updateRow--> " + updateRow + Debug.END);
+		// 1.결재 상태 변경에 성공하고 2.문서타입이 "휴가신청서"이면서 "승인"인것
+		int insertRow = 0;
 		
-		return updateRow;
+		if(updateRow == 1 
+				&& approvalDocModify.getApprovalType().equals("휴가") 
+				&& approvalDocModify.getApprovalNewState().equals("5")) {
+			log.debug(Debug.PHA + "modApprovalState service 휴가신청서 최종승인완료 insert작업" + Debug.END);
+			
+			// leaveHistory DTO에 바인딩
+			LeaveHistory leaveHistory = approvalDocModify.toLeaveHistory();
+			
+			// 반차(H)일 경우
+			if(leaveHistory.getLeaveType().equals("AH") 
+					|| leaveHistory.getLeaveType().equals("PH")) {
+				
+				// 오전 반차 / 오후 반차시간 세팅
+				if(leaveHistory.getLeaveType().equals("AH")) {
+					// 오전 반차 시간 설정
+					String amStart = " 09:00:00";
+					String amEnd = " 13:00:00";
+					leaveHistory.setStartTime(leaveHistory.getStartTime() + amStart);
+					leaveHistory.setEndTime(leaveHistory.getEndTime() + amEnd);
+					
+				}else if(leaveHistory.getLeaveType().equals("PH")) {
+					// 오후 반차 시간 설정 
+					String pmStart = " 14:00:00";
+					String pmEnd = " 18:00:00";
+					leaveHistory.setStartTime(leaveHistory.getStartTime() + pmStart);
+					leaveHistory.setEndTime(leaveHistory.getEndTime() + pmEnd);
+					
+				}
+				
+				// 공통코드 E003 반차(H)세팅
+				leaveHistory.setLeaveType("H");
+				// 0.5일 세팅
+				leaveHistory.setLeaveCount((float) 0.5);
+				
+			}
+			
+			log.debug(Debug.PHA + "modApprovalState service leaveHistory"+ leaveHistory + Debug.END);
+			
+			// leave_history테이블에 insert 등록하기
+			insertRow = approvalMapper.insertLeaveHistory(leaveHistory);
+		}
+		
+		log.debug(Debug.PHA + "modApprovalState service Row"+ insertRow+insertRow + Debug.END);
+		
+		
+		return updateRow+insertRow;
 	}
 }
