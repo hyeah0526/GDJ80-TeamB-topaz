@@ -81,10 +81,10 @@
 									<th>사원명</th>
 									<th>부서명</th>
 									<th>직위</th>
-									<th>연차</th>
-									<th>남은 연차</th>
-									<th>월차</th>
-									<th>남은 월차</th>
+									<th title="직위에 따른 연차">연차</th>
+									<th title="남은 연차 일수">남은 연차</th>
+									<th title="근무일에 따른 월차">월차</th>
+									<th title="남은 월차 일수">남은 월차</th>
 									<th>근무 유무</th>
 								</tr>				     		
 				     		</thead>

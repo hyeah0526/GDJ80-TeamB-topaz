@@ -118,7 +118,6 @@
 								<th scope="col">사원명</th>
 								<th scope="col">부서명</th>
 								<th scope="col">직위</th>
-								<th scope="col">잔여 휴가일</th>
 								<th scope="col">근무 유무</th>
 							</tr>
 						</thead>

@@ -49,8 +49,8 @@
                                 <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myNoteTrash'">휴지통 쪽지함</button>
                             </div>
                             
-                            <div style="margin-bottom: 20px;">
-                                <button type="button" id="sendButton">보내기</button>
+                            <div style="margin-bottom: 20px; display: flex; justify-content: flex-end;">
+                                <button type="button" id="sendButton">전송</button>
                                 <input type="hidden" id="senderId" value="${senderId}">
                             </div>
                             
@@ -74,10 +74,6 @@
                             <div class="form-group">
                                 <label>직원 목록</label>
                                 <div id="deptList"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <button type="button" id="sendButton" class="btn btn-success">전송</button>
                             </div>
                         </form>
 

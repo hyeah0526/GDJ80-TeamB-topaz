@@ -34,7 +34,7 @@ public class NoticeService {
 	/*
 	 * 분류 번호: #10 - 공지 사항 삭제
 	 * 시작 날짜: 2024-07-07
-	 * 담당자: 김지훈
+	 * 담당자: 김인수
 	*/
 	public int removeNotice(String newsNo) {
 		
@@ -48,7 +48,7 @@ public class NoticeService {
 	/*
 	 * 분류 번호: #10 - 공지 사항 수정
 	 * 시작 날짜: 2024-07-07
-	 * 담당자: 김지훈
+	 * 담당자: 김인수
 	*/
 	public int modifyNotice(NoticeRequest noticeRequest) {
 		
@@ -221,11 +221,11 @@ public class NoticeService {
 	*/
 	public Map<String, Object> getNoticeList(Map<String, Object> paramMap) {
 		// paramMap 디버깅
-		log.debug(Debug.KIS + " / Service / getNoticeList / paramMap: " + paramMap);
+		//log.debug(Debug.KIS + " / Service / getNoticeList / paramMap: " + paramMap);
 		
 		// notice의 개수
 		int noticeCnt = noticeMapper.noticeCnt(paramMap);
-		log.debug(Debug.KIS + " / Service / getNoticeList / noticeCnt : " + noticeCnt);
+		//log.debug(Debug.KIS + " / Service / getNoticeList / noticeCnt : " + noticeCnt);
 		
 		// 마지막 페이지 계산하기
 		int rowPerPage = (int) paramMap.get("rowPerPage");
@@ -234,7 +234,7 @@ public class NoticeService {
 		
 		// 공지 사항 리스트
 		List<Map<String, Object>> noticeList = noticeMapper.selectNoticeList(paramMap);
-		log.debug(Debug.KIS + " / service / getNoticeList" + noticeList);
+		//log.debug(Debug.KIS + " / service / getNoticeList" + noticeList);
 		
 		// 결과 맵에 담기
 		Map<String, Object> resultMap = new HashMap<>();

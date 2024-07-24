@@ -83,6 +83,17 @@ $(document).ready(function() {
             recipientNos.push($(this).data('empno'));
         });
 
+		 if (recipients.length === 0) {
+            alert('받는 사람을 선택해주세요.');
+            return;
+        }
+
+        if (!noteContent) {
+            alert('내용을 입력해주세요.');
+            return;
+        }
+
+
         if (recipients.length > 0 && noteContent) {
           	
             $.ajax({
@@ -105,7 +116,7 @@ $(document).ready(function() {
 						
 						 webSocket.send(msg);
 					}
-                    //window.location.href = '/topaz/groupware/myPage/myNoteList';
+                   
                 }
             });
         } else {

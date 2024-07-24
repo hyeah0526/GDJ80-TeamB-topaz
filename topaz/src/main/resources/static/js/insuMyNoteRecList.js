@@ -139,20 +139,25 @@ $(document).ready(function() {
 
 	//답장 버튼 클릭 시 선택된 체크박스 값 가져오기
     $('#replyButton').click(function() {
-        const selectedRecipients = [];
-        const selectedRecipientNos = [];
+        const selectedRecipientsSet = new Set();
+        const selectedRecipientNosSet = new Set();
+
         $('.noteCheckbox:checked').each(function() {
             const senderName = $(this).data('sender-name');
             const senderDept = $(this).data('sender-dept');
             const senderNo = $(this).data('sender-no');
-            selectedRecipients.push(`[${senderDept} - ${senderName}]`);
-            selectedRecipientNos.push(senderNo);
+            
+            const recipient = `[${senderDept} - ${senderName}]`;
+            if (!selectedRecipientsSet.has(recipient)) {
+                selectedRecipientsSet.add(recipient);
+                selectedRecipientNosSet.add(senderNo);
+            }
         });
 
-        if (selectedRecipients.length > 0) {
-            const recipientParam = selectedRecipients.join(',');
-            const recipientNosParam = selectedRecipientNos.join(',');
-           	window.location.href = `/topaz/groupware/myPage/myNoteRepAdd?recipients=${encodeURIComponent(recipientParam)}&recipientNos=${encodeURIComponent(recipientNosParam)}`;
+        if (selectedRecipientsSet.size > 0) {
+            const recipientParam = Array.from(selectedRecipientsSet).join(',');
+            const recipientNosParam = Array.from(selectedRecipientNosSet).join(',');
+            window.location.href = `/topaz/groupware/myPage/myNoteRepAdd?recipients=${encodeURIComponent(recipientParam)}&recipientNos=${encodeURIComponent(recipientNosParam)}`;
         } else {
             alert('답장할 쪽지를 선택해주세요.');
         }

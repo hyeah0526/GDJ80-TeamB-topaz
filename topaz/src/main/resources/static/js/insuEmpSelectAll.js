@@ -39,7 +39,6 @@ $(document).ready(function() {
                             <td>${emp.empName}</td>
                             <td>${emp.empDept}</td>
                             <td>${emp.empGrade}</td>
-                            <td>${emp.yearCnt}</td>
                             <td>${emp.useYn}</td>
                         </tr>
                     `);
