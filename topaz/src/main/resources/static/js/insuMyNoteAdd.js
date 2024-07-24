@@ -83,16 +83,21 @@ $(document).ready(function() {
             recipientNos.push($(this).data('empno'));
         });
 
-		 if (recipients.length === 0) {
+        
+		if (recipients.length === 0) {
             alert('받는 사람을 선택해주세요.');
             return;
         }
 
-        if (!noteContent) {
+        if (!noteContent.trim()) {
             alert('내용을 입력해주세요.');
             return;
         }
-
+        
+	    if (noteContent.length > 500) {
+			alert('답장 내용은 최대 500자까지 입력 가능합니다.');
+			return;
+        }
 
         if (recipients.length > 0 && noteContent) {
           	
@@ -116,7 +121,13 @@ $(document).ready(function() {
 						
 						 webSocket.send(msg);
 					}
-                   
+					
+                   	window.location.href = '/topaz/groupware/myPage/myNoteList';
+                },
+                 error: function(xhr) {
+                    const response = JSON.parse(xhr.responseText);
+                    $('#recipientsMsg').text(response.recipientsMsg || '');
+                    $('#noteContentMsg').text(response.noteContentMsg || '');
                 }
             });
         } else {

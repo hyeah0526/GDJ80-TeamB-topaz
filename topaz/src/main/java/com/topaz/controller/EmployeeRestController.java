@@ -573,6 +573,28 @@ public class EmployeeRestController {
         //empNo를 paramMap에 추가
         paramMap.put("senderId", empNo);
 
+        //유효성 검사
+        String noteContent = (String) paramMap.get("noteContent");
+        List<String> recipients = (List<String>) paramMap.get("recipients");
+        
+        //응답 데이터
+        Map<String, Object> response = new HashMap<>();
+        
+        if (noteContent.isEmpty()) {
+            response.put("noteContentMsg", "답장 내용을 입력해주세요.");
+            return response;
+        }
+        
+        if (recipients.isEmpty()) {
+            response.put("recipientsMsg", "받는 사람을 선택해주세요.");
+            return response;
+        }
+        
+        if (noteContent.length() > 500) {
+            response.put("recipientsMsg", "내용은 최대 500자까지 입력 가능합니다.");
+            return response;
+        }
+        
         //쪽지 전송 로직 실행
         int result = employeeService.insertNote(paramMap);
 
@@ -582,8 +604,6 @@ public class EmployeeRestController {
             notificationService.sendNotification(recipient, message);
         }
         
-        //응답 데이터
-        Map<String, Object> response = new HashMap<>();
         response.put("result", result);
 
         return response;
@@ -611,14 +631,34 @@ public class EmployeeRestController {
         String empNo = (String) session.getAttribute("strId");
         log.debug(Debug.KIS + "controller / insertRepNote / empNo : " + empNo);
 
+        //유효성 검사
+        String noteContent = (String) paramMap.get("noteContent");
+        List<String> recipients = (List<String>) paramMap.get("recipients");
+
+        // 응답 데이터
+        Map<String, Object> response = new HashMap<>();
+
+        if (noteContent.isEmpty()) {
+            response.put("noteContentMsg", "답장 내용을 입력해주세요.");
+            return response;
+        }
+        
+        if (recipients.isEmpty()) {
+            response.put("recipientsMsg", "받는 사람을 선택해주세요.");
+            return response;
+        }
+        
+        if (noteContent.length() > 500) {
+            response.put("recipientsMsg", "내용은 최대 500자까지 입력 가능합니다.");
+            return response;
+        }
+        
         // empNo를 paramMap에 추가
         paramMap.put("senderId", empNo);
 
         // 쪽지 전송 로직 실행
         int result = employeeService.insertRepNote(paramMap);
 
-        // 응답 데이터
-        Map<String, Object> response = new HashMap<>();
         response.put("result", result);
 
         return response;
