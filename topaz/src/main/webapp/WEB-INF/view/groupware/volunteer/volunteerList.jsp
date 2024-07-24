@@ -197,9 +197,9 @@
     
         // 첫 페이지로 이동하는 버튼 추가(첫페이지일 경우 비활성화)
         if (currentPage === 1) {
-            paginationUl.append('<li class="page-item disabled"><span class="page-link">처음</span></li>');
+            paginationUl.append('<li class="page-item disabled"><span class="page-link">&laquo;</span></li>');
         } else {
-            paginationUl.append('<li class="page-item"><a class="page-link bpoListPage" href="#" data-page="1">처음</a></li>');
+            paginationUl.append('<li class="page-item"><a class="page-link bpoListPage" href="#" data-page="1">&laquo;</a></li>');
         }
     
         
@@ -215,9 +215,9 @@
         
         // 마지막 페이지로 이동하는 버튼 추가(마지막 페이징ㄹ경우 비활성화)
         if (currentPage === lastPage) {
-            paginationUl.append('<li class="page-item disabled"><span class="page-link">마지막</span></li>');
+            paginationUl.append('<li class="page-item disabled"><span class="page-link">&raquo;</span></li>');
         } else {
-            paginationUl.append('<li class="page-item"><a class="page-link bpoListPage" href="#" data-page="' + lastPage + '">마지막</a></li>');
+            paginationUl.append('<li class="page-item"><a class="page-link bpoListPage" href="#" data-page="' + lastPage + '">&raquo;</a></li>');
         }
     }
     

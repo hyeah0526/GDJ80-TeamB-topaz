@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topaz.mapper.ApprovalMapper222">
+
+	
+	<select id="selectApprovalList" resultType="map">
+		SELECT 
+			approval_doc_no approvalDocNo,
+			(SELECT cd_nm FROM common_code WHERE crp_cd = 'S002' AND cd = approval_type) approvalType , 
+			(SELECT cd_nm FROM common_code WHERE crp_cd = 'S001' AND cd = approval_state) approvalState,
+			(SELECT emp_name FROM employee e WHERE e.emp_no = ad.emp_no) empNo, 
+			doc_title docTitle, 
+			DATE_FORMAT(reg_time, '%Y-%m-%d %H:%i') regTime
+		FROM approval_doc ad
+		<where>
+			1=1
+			<if test="searchWord != null and searchWord != ''">
+				AND doc_title LIKE CONCAT('%', #{searchWord},'%')
+			</if>
+			<if test="searchDateStart != null and searchDateStart != ''">
+				AND reg_time >= DATE_FORMAT(#{searchDateStart}, '%Y%m%d')
+			</if>
+			<if test="searchDateEnd != null and searchDateEnd != ''">
+				AND reg_time &lt; DATE_ADD(DATE_FORMAT(#{searchDateEnd}, '%Y%m%d'), INTERVAL +1 DAY)
+			</if>
+		</where>
+		ORDER BY reg_time DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	
+	
+	<select id="selectApprovalListTotalRow" resultType="int">
+		SELECT COUNT(*) cnt 
+		FROM approval_doc ad 
+		<where>
+			1=1
+			<if test="searchWord != null and searchWord != ''">
+				AND doc_title LIKE CONCAT('%', #{searchWord},'%')
+			</if>
+			<if test="searchDateStart != null and searchDateStart != ''">
+				AND reg_time >= DATE_FORMAT(#{searchDateStart}, '%Y%m%d')
+			</if>
+			<if test="searchDateEnd != null and searchDateEnd != ''">
+				AND reg_time &lt; DATE_ADD(DATE_FORMAT(#{searchDateEnd}, '%Y%m%d'), INTERVAL +1 DAY)
+			</if>
+		</where>
+	</select>
+	
+	
+
+</mapper>

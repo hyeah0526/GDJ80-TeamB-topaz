@@ -96,10 +96,10 @@
 			ON va.vol_no = v.vol_no 
 		<where>
 			va.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
-			<if test="searchWord != null">
+			<if test="searchWord != null and searchWord != ''">
 				AND v.vol_content LIKE CONCAT('%', #{searchWord},'%')
 			</if>
-			<if test="searchDate != null">
+			<if test="searchDate != null and searchDate != ''">
 				AND v.vol_starttime LIKE CONCAT('%', #{searchDate},'%')
 			</if>
 		</where>
