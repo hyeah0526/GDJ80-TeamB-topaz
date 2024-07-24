@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -154,24 +155,15 @@ public class EmployeeRestController {
 	 * 시작 날짜: 2024-07-23
 	 * 담당자: 김인수
 	*/
-	@PostMapping("/groupware/myPage/myLeaveMain")
+	@RequestMapping("/groupware/myPage/myLeaveMain")
 	public Map<String, Object> myLeaveMain(
 			@RequestParam Map<String, Object> paramMap,
-			HttpServletRequest  req) {
+			@RequestParam("empNo") String empNo) {
 		
 		//매개변수 디버깅
 	    log.debug(Debug.KIS + "controller / myLeaveMain / paramMap : " + paramMap);
-		log.debug(Debug.KIS + "controller / myLeaveMain / httpServletRequest : " + req);
-		
-		//HttpServletRequest를 사용하여 세션 가져오기
-		HttpSession session = req.getSession();
-		log.debug(Debug.KIS + "controller / myLeaveMain / session : " + session);
-		
-		//세션에서 strId(직원아이디)라는 속성 가져오기
-		String empNo = (String)session.getAttribute("strId");
-		log.debug(Debug.KIS + "controller / myLeaveMain / empNo : " + empNo);
+	    log.debug(Debug.KIS + "controller / myLeaveMain / empNo : " + empNo);
 	    
-		
 	    //기본 값 설정
 	    int currentPage = 1;
 	    int rowPerPage = 10;
@@ -224,11 +216,9 @@ public class EmployeeRestController {
 		//매개변수 디버깅
 	    log.debug(Debug.KIS + "controller / empLeave / paramMap : " + paramMap);
 		
-		
 	    //기본 값 설정
 	    int currentPage = 1;
 	    int rowPerPage = 10;
-	    
 	    
 	    //페이징과 관련된 파라미터 설정
 	    if (paramMap.get("currentPage") != null) {
@@ -256,7 +246,6 @@ public class EmployeeRestController {
 		
 		return response;
 	}
-	
 	
 	/*
 	 * 서비스명: selectEmpName ( 쪽지 전송할 직원 조회 )

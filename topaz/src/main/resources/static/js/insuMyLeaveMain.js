@@ -35,17 +35,21 @@ $(document).ready(function() {
                             <td>${emp.empDept}</td>
                             <td>${emp.startTime}</td>
                             <td>${emp.endTime}</td>
-                            <td>${emp.leaveDays}</td>
+                            <td>${emp.leaveCount}</td>
                             <td>${emp.leaveContent}</td>
                         </tr>
                     `);
                 });
 				
 				//남은 휴가 계산
-				const myLeaveCnt = response.myLeaveCnt[0];
-                $('#yearLeaveCnt').text(myLeaveCnt.yearCnt);
-                $('#monthLeaveCnt').text(myLeaveCnt.monthCnt);
-                $('#halfLeaveCnt').text(myLeaveCnt.halfCnt);
+				 const myLeaveCnt = response.myLeaveCnt[0];
+                if (myLeaveCnt) {
+                    $('#yearLeaveCnt').text(myLeaveCnt.yearCnt);
+                    $('#monthLeaveCnt').text(myLeaveCnt.monthCnt);
+                } else {
+                    $('#yearLeaveCnt').text("0");
+                    $('#monthLeaveCnt').text("0");
+                }
 				
                 //페이지 정보 업데이트
                 const currentPage = response.currentPage;

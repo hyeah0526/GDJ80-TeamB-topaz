@@ -47,7 +47,7 @@
 				     <div class="mainContent">
 				     
 				     	<form id="searchForm" action="/topaz/groupware/myPage/myLeaveMain" method="post"  >
-				     	
+				     		<input type="hidden" name="empNo" value="${empNo}">
 				     		<div style="margin-bottom: 20px;">
                		            <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myInfo'">내 정보 조회</button>
 	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myPwModify?empNo=${empDetail.empNo}'">비밀번호 수정</button>
@@ -71,10 +71,6 @@
 							    <div class="leave-type">
 							        <label>월차:</label>
 							        <span id="monthLeaveCnt"></span>
-							    </div>
-							    <div class="leave-type">
-							        <label>반차:</label>
-							        <span id="halfLeaveCnt"></span>
 							    </div>
 							</div>
 							

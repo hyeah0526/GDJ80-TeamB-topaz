@@ -182,10 +182,7 @@
 			emp_dept.cd_nm empDept,
 			DATE_FORMAT(lh.start_time, '%Y-%m-%d') startTime, 
 			DATE_FORMAT(lh.end_time, '%Y-%m-%d') endTime,
-		CASE 
-		     WHEN lh.leave_content = 'H' THEN 0.5
-		     ELSE TIMESTAMPDIFF(DAY, lh.start_time, lh.end_time) +1
-		 END AS leaveDays,
+			lh.leave_count leaveCount,
 			leave_content.cd_nm leaveContent	
 		FROM
 			leave_history AS lh
@@ -196,7 +193,7 @@
 		LEFT JOIN
 			common_code AS leave_content
 		ON
-			leave_content.cd = lh.leave_content AND
+			leave_content.cd = lh.leave_type AND
 			leave_content.crp_cd = 'E003'
 		LEFT JOIN
 			common_code AS emp_dept
@@ -207,10 +204,10 @@
 			e.emp_no = #{empNo} AND
 			lh.use_yn = 'Y'
 	 	<if test="startDate != null and startDate != ''">
-		    AND lh.start_time &gt;= #{startDate}
+		    AND DATE(lh.start_time) &gt;= #{startDate}
 		</if>
 		<if test="endDate != null and endDate != ''">
-		    AND lh.end_time &lt;= #{endDate}
+		    AND DATE(lh.end_time) &lt;= #{endDate}
 	    </if>
 	    ORDER BY lh.leave_history_no DESC
 	    LIMIT #{currentPage}, #{rowPerPage}
@@ -223,28 +220,34 @@
 			COUNT(*)
 		FROM
 			leave_history AS lh
-		WHERE
+		WHERE 
 			lh.emp_no = #{empNo} AND
 			lh.use_yn = 'Y'
 	 	<if test="startDate != null and startDate != ''">
-		    AND lh.start_time &gt;= #{startDate}
+		    AND DATE(lh.start_time) &gt;= #{startDate}
 		</if>
 		<if test="endDate != null and endDate != ''">
-		    AND lh.end_time &lt;= #{endDate}
+		    AND DATE(lh.end_time) &lt;= #{endDate}
 	    </if>
 	 </select>
 	 
 	 
-	 <!--  분류 번호 :  #4 - 나의 휴가 수 조회 -->
+	 <!--  분류 번호 :  #4 - 나의 남은 휴가 수 조회 -->
 	 <select id="selectLeaveCnt" parameterType="Map"  resultType="Map">
 	 	SELECT 
-			year_count yearCnt,
-			month_count monthCnt,
-			half_count halfCnt 
+		   l.year_count - COALESCE(SUM(CASE WHEN lh.leave_type IN ('Y', 'H')THEN lh.leave_count ELSE 0 END), 0) AS yearCnt,
+		   l.month_count - COALESCE(SUM(CASE WHEN lh.leave_type = 'M' THEN lh.leave_count ELSE 0 END), 0) AS monthCnt
 		FROM 
-			`leave`
-		WHERE
-			emp_no = #{empNo}
+		   `leave` l
+		LEFT JOIN 
+		   leave_history lh 
+		ON 
+		   l.emp_no = lh.emp_no AND
+		   lh.start_time &gt;= DATE_FORMAT(NOW() ,'%Y-01-01 00:00:00') AND 
+		   lh.end_time &lt;= DATE_FORMAT(NOW() ,'%Y-12-31 23:59:59')
+		WHERE 
+		   l.use_yn = 'Y' AND
+		   l.emp_no = #{empNo}
 	 </select>
 	 
 	 
@@ -396,7 +399,7 @@
 		WHERE
         1=1
        	<if test="startDateHidden  != null and startDateHidden  != ''">
-		    AND ch.start_time &gt;= #{startDateHidden }
+		    AND ch.start_time &gt;= #{startDateHidden}
 		</if>
 		<if test="endDateHidden  != null and endDateHidden  != ''">
 		    AND ch.end_time &lt;= #{endDateHidden} 
@@ -444,12 +447,19 @@
 			e.emp_name empName,
 			dept.cd_nm empDept,
 			grade.cd_nm empGrade,
-			COALESCE(l.year_count, 0) yearCount,
-	   		COALESCE(l.month_count, 0) monthCount, 
-   			COALESCE(l.half_count, 0) halfCount, 
+			l.year_count curYearLeave,
+			l.month_count curMonthLeave,
+			l.year_count - COALESCE(SUM(CASE WHEN lh.leave_type IN ('Y', 'H') THEN lh.leave_count ELSE 0 END), 0) AS yearCnt,
+			l.month_count - COALESCE(SUM(CASE WHEN lh.leave_type = 'M' THEN lh.leave_count ELSE 0 END), 0) AS monthCnt,
 			e.use_yn useYN
-		FROM
-			`leave` AS l
+		FROM 
+		   `leave` l
+		LEFT JOIN 
+		   leave_history lh 
+		ON 
+		   l.emp_no = lh.emp_no 
+			AND lh.start_time &gt;= DATE_FORMAT(NOW() ,'%Y-01-01 00:00:00') 
+			AND lh.end_time &lt;= DATE_FORMAT(NOW() ,'%Y-12-31 23:59:59')
 		LEFT JOIN
 			employee AS e
 		ON
@@ -465,13 +475,15 @@
 			grade.cd = e.emp_grade AND
 			grade.crp_cd = 'E002'
 		WHERE
-			1=1
-		 <if test="empNo != null and empNo != ''">
+			l.use_yn = 'Y'
+		<if test="empNo != null and empNo != ''">
             AND e.emp_no = #{empNo}
         </if>
         <if test="empName != null and empName != ''">
             AND e.emp_name = #{empName}
         </if>
+        GROUP BY
+   			e.emp_no, e.emp_name, dept.cd_nm, grade.cd_nm, l.year_count, l.month_count, e.use_yn
 		ORDER BY e.emp_hiredate DESC
         LIMIT #{currentPage}, #{rowPerPage}
 	</select>

@@ -320,8 +320,17 @@ public class EmployeeController {
 	 * 담당자: 김인수
 	*/
 	@GetMapping("/groupware/myPage/myLeaveMain")
-	public String myLeaveMain() {
+	public String myLeaveMain(
+			@RequestParam Map<String, Object> paramMap,
+			Model model) {
 		
+		//매개변수 디버깅
+	    log.debug(Debug.KIS + "controller / myLeaveMain / paramMap : " + paramMap);
+	    
+	    String empNo = (String)paramMap.get("empNo");
+	    
+	    model.addAttribute("empNo", empNo);
+	    
 		return "groupware/myPage/myLeaveMain";
 	}
 	

@@ -30,14 +30,15 @@ $(document).ready(function() {
                 empList.forEach(emp => {
 					
                     empLeaveListContainer.append(`
-                        <tr onclick="window.location.href='/topaz/groupware/emp/empDetail?empNo=${emp.empNo}'" style="cursor:pointer;">
+                        <tr onclick="window.location.href='/topaz/groupware/myPage/myLeaveMain?empNo=${emp.empNo}'" style="cursor:pointer;">
                             <td>${emp.empNo}</td>
                             <td>${emp.empName}</td>
                             <td>${emp.empDept}</td>
                             <td>${emp.empGrade}</td>
-                         	<td>${emp.yearCount}</td>
-                          	<td>${emp.monthCount}</td>
-                            <td>${emp.halfCount}</td>
+                          	<td>${emp.curYearLeave}</td>
+                         	<td>${emp.yearCnt}</td>
+                          	<td>${emp.curMonthLeave}</td>
+                          	<td>${emp.monthCnt}</td>
                             <td>${emp.useYN}</td>
                         </tr>
                     `);

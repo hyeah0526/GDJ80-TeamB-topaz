@@ -70,7 +70,7 @@ public interface EmpMapper {
 	/* 분류 번호 :  #4 - 나의 휴가 사용 수 조회 */
 	public int selectMyLeaveCnt(Map<String, Object> paramMap);
 	
-	/* 분류 번호 :  #4 - 나의 휴가 수 조회 */
+	/* 분류 번호 :  #4 - 나의 남은 휴가 수 조회 */
 	public List<Map<String, Object>> selectLeaveCnt(Map<String, Object> paramMap);
 	
 
