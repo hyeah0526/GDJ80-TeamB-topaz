@@ -125,7 +125,7 @@
 	                                    <!-- 우편번호 -->
 	                                    <label>우편번호</label>
 	                                    <div>
-		                                    <input name="postNo" class="step" value="${empDetail.postNo}" readonly style="background-color: #c8c8c8;">
+		                                    <input name="postNo" class="step" value="${empDetail.postNo}" readonly style="background-color: #c8c8c8; width:200px;">
 		                                    <textarea name="firstAddress" class="step addressTextarea" readonly style="background-color: #c8c8c8;">${empDetail.address}</textarea>
 	                                    </div>
 	                                </div>

@@ -580,13 +580,13 @@ public class EmployeeRestController {
         //응답 데이터
         Map<String, Object> response = new HashMap<>();
         
-        if (noteContent.isEmpty()) {
-            response.put("noteContentMsg", "답장 내용을 입력해주세요.");
-            return response;
+        if (recipients.isEmpty()) {
+        	response.put("recipientsMsg", "받는 사람을 선택해주세요.");
+        	return response;
         }
         
-        if (recipients.isEmpty()) {
-            response.put("recipientsMsg", "받는 사람을 선택해주세요.");
+        if (noteContent.isEmpty()) {
+            response.put("noteContentMsg", "답장 내용을 입력해주세요.");
             return response;
         }
         
@@ -638,13 +638,13 @@ public class EmployeeRestController {
         // 응답 데이터
         Map<String, Object> response = new HashMap<>();
 
-        if (noteContent.isEmpty()) {
-            response.put("noteContentMsg", "답장 내용을 입력해주세요.");
-            return response;
+        if (recipients.isEmpty()) {
+        	response.put("recipientsMsg", "받는 사람을 선택해주세요.");
+        	return response;
         }
         
-        if (recipients.isEmpty()) {
-            response.put("recipientsMsg", "받는 사람을 선택해주세요.");
+        if (noteContent.isEmpty()) {
+            response.put("noteContentMsg", "답장 내용을 입력해주세요.");
             return response;
         }
         

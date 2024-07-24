@@ -83,7 +83,6 @@ $(document).ready(function() {
             recipientNos.push($(this).data('empno'));
         });
 
-        
 		if (recipients.length === 0) {
             alert('받는 사람을 선택해주세요.');
             return;
@@ -109,25 +108,30 @@ $(document).ready(function() {
                     noteContent: noteContent,
                     recipients: recipients
                 }),
-                success: function() {
-                    alert('쪽지가 전송되었습니다.');
-                    
-                    console.debug("MyNoteAdd :: socket >> ",webSocket)
-                    
-                    if(webSocket){
-						
-						const msg = senderId + "," + recipientNos.join(',') + "," + noteContent;
-						console.log("msg : " + msg);
-						
-						 webSocket.send(msg);
-					}
+                success: function(response) {
 					
-                   	window.location.href = '/topaz/groupware/myPage/myNoteList';
-                },
-                 error: function(xhr) {
-                    const response = JSON.parse(xhr.responseText);
-                    $('#recipientsMsg').text(response.recipientsMsg || '');
-                    $('#noteContentMsg').text(response.noteContentMsg || '');
+					//유효성 검사
+				 	if (response.noteContentMsg || response.recipientsMsg) {
+						
+	                    $('#noteContentMsg').text(response.noteContentMsg || '');
+	                    $('#recipientsMsg').text(response.recipientsMsg || '');
+	                    
+	                } else{
+	                    alert('쪽지가 전송되었습니다.');
+	                    
+	                    console.debug("MyNoteAdd :: socket >> ",webSocket)
+	                    
+	                    if(webSocket){
+							
+							const msg = senderId + "," + recipientNos.join(',') + "," + noteContent;
+							console.log("msg : " + msg);
+							
+							 webSocket.send(msg);
+						}
+						
+	                   	window.location.href = '/topaz/groupware/myPage/myNoteList';
+	
+					}
                 }
             });
         } else {

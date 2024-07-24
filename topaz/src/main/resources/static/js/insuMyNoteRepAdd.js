@@ -38,24 +38,29 @@ $(document).ready(function() {
                     noteContent: noteContent,
                     recipients: recipients
                 }),
-                success: function() {
-	               alert('답장이 전송되었습니다.');
-	                
-	                if(webSocket){
+                success: function(response) {
 					
-						const msg = senderId + "," + recipientNos.join(',') + "," + noteContent;
-						console.log("msg : " + msg);
+					//유효성 검사
+					if (response.noteContentMsg || response.recipientsMsg) {
 						
-						webSocket.send(msg);
+						$('#noteContentMsg').text(response.noteContentMsg || '');
+	                    $('#recipientsMsg').text(response.recipientsMsg || '');
+	                    
+					}else{
+						
+		               alert('답장이 전송되었습니다.');
+		                
+		                if(webSocket){
+						
+							const msg = senderId + "," + recipientNos.join(',') + "," + noteContent;
+							console.log("msg : " + msg);
+							
+							webSocket.send(msg);
+						}
+		                
+		             	window.location.href = '/topaz/groupware/myPage/myNoteList';
+						
 					}
-	                
-	             	window.location.href = '/topaz/groupware/myPage/myNoteList';
- 
-                },
-                 error: function(xhr) {
-                    const response = JSON.parse(xhr.responseText);
-                    $('#recipientsMsg').text(response.recipientsMsg || '');
-                    $('#noteContentMsg').text(response.noteContentMsg || '');
                 }
             });
         } else {

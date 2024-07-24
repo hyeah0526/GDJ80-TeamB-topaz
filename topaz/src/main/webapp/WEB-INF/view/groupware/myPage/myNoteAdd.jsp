@@ -57,13 +57,13 @@
                             <div class="form-group">
                                 <label for="recipients">받는 사람</label>
                                 <textarea id="recipients" name="recipients" class="form-control" placeholder="받는 사람을 입력하세요" required readonly rows="3" style="resize: none;"></textarea>
-                            	 <span id="recipientsMsg" class="validMsg"></span>
+                            	 <span id="recipientsMsg" class="validMsg" style="color:red;"></span>
                             </div>
                             
                             <div class="form-group" style="margin-top: 20px">
                                 <label for="noteContent">내용</label>
                                 <textarea id="noteContent" name="noteContent" class="form-control" rows="5" required></textarea>
-                            	<span id="noteContentMsg" class="validMsg"></span>
+                            	<span id="noteContentMsg" class="validMsg" style="color:red;"></span>
                             </div>
                             
                             <div class="form-group" style="margin-top: 40px">
