@@ -7,6 +7,38 @@
 	margin-top: 30px;
     text-align: center;
 }
+
+.searchBtn{
+	display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.btn-outline-primary {
+	border-radius: 0;
+	width: 150px; /* 라벨의 가로 크기 설정 */
+	height: 40px; /* 라벨의 세로 크기 설정 */
+	line-height: 38px; /* 라벨 내부 텍스트의 세로 정렬 */
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+}
+
+.btn-outline-primary:first-of-type {
+	border-top-left-radius: .25rem;
+	border-bottom-left-radius: .25rem; 
+}
+
+.btn-outline-primary:last-of-type {
+	border-top-right-radius: .25rem; 
+	border-bottom-right-radius: .25rem; 
+}
+
+.btn-check:checked + .btn-outline-primary {
+	z-index: 1; 
+}
+
 .searchBox {
 	text-align: center;
 	width: 300px;

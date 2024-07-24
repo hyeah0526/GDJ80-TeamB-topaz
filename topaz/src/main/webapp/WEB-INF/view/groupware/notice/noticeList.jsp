@@ -14,7 +14,7 @@
 <head>
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-	<link href="/topaz/css/jihoon.css" rel="stylesheet">
+	<link href="/topaz/css/jihoon.css" rel="stylesheet"><!-- CSS -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
 </head>	
 	
@@ -47,13 +47,15 @@
 
 						<!-- Table with stripped rows -->
 						<form id="searchForm" action="/topaz/groupware/notice/noticeList" method="get">
-							<div class="searchContainer">
-								<input type="radio" name="noticeType" value="필독">
-								<label>필독</label>
-								<input type="radio" name="noticeType" value="이벤트">
-								<label>이벤트</label>
-								<input type="radio" name="noticeType" value="일반">
-								<label>일반</label>
+							<div class="btn-group searchBtn" role="group" aria-label="Basic radio toggle button group">
+								<div style="display: flex; justify-content: center;">
+									<input type="radio" name="noticeType" value="필독"  class="btn-check" id="btnradio1" autocomplete="off">
+									<label class="btn btn-outline-primary" for="btnradio1">필독</label>
+									<input type="radio" name="noticeType" value="이벤트" class="btn-check" id="btnradio2" autocomplete="off">
+									<label class="btn btn-outline-primary" for="btnradio2">이벤트</label>
+									<input type="radio" name="noticeType" value="일반" class="btn-check" id="btnradio3" autocomplete="off">
+									<label class="btn btn-outline-primary" for="btnradio3">일반</label>
+								</div>
 							</div>
 							<div class="searchContainer">
 								<input type="text" placeholder="제목 또는 내용을 검색해 주세요" name="searchWord" class="searchBox">
