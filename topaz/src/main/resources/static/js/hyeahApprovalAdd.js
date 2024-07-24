@@ -26,7 +26,33 @@ $(document).ready(function(){
 	$('#myTabjustified a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
                 var target = $(e.target).attr("data-bs-target");
                 $(target + ' input').val(''); // 해당 탭 내의 모든 input 값을 초기화
-	});						           
+	});
+	
+	
+	/* 종료일이 시작일보다 먼저일 수 없게 예외처리
+	// 시작일 먼저 입력시 유효성검사
+	$('#contractStart').change(function() {
+	    validateDateRange();
+	});
+	
+	// 종료일 먼저 입력시 유효성검사
+	$('#contractEnd').change(function() {
+	    validateDateRange();
+	});
+	
+	function validateDateRange() {
+	    // 시작일, 종료일 값 
+	    var startDateValue = new Date($('#eventStartDate').val());
+	    var endDateValue = new Date($('#eventStartDate').val());
+	
+	    // 종료일이 시작일보다 이른 경우
+	    if ($('#contractEnd').val() !== '' && endDateValue < startDateValue) {
+	        // 안내
+	        alert('종료일은 시작일 이후여야 합니다.');
+	    }
+	}
+	 */
+	
 	/* ====================서명 등록==================== */
 	// 서명패드 신규 버튼 클릭시 모달 창 띄우기
 	$('#approvalSignAddBtn').click(function() {
@@ -378,6 +404,7 @@ $(document).ready(function(){
 			return false;
 		}
 		
+		
 		// 중간 결재자 유효성 검사
 		if($('#dayOffFirstApprovalName').val() == null || $('#dayOffFirstApprovalName').val() == ''){
 			console.log('중간 결재자 유효성검사');
@@ -419,6 +446,19 @@ $(document).ready(function(){
 				return false; 
 			}
 		}
+		
+		// 시작일, 종료일 값 
+	    var startDateValue = new Date($('#dayOffStartDate').val());
+	    var endDateValue = new Date($('#dayOffEndDate').val());
+	
+	    // 종료일이 시작일보다 이른 경우
+	    if (endDateValue < startDateValue) {
+			console.log('시간검사');
+	        // 안내
+	        alert('종료일은 시작일 이후여야 합니다.');
+	        $('#dayOffEndDate').focus();
+	        return false; 
+	    }
 		
 		// 비상연락망 유효성 검사
 		if($('#dayOFfSecond').val().length < 1){
@@ -508,6 +548,19 @@ $(document).ready(function(){
 			$('#eventEndDate').focus();
 			return false; 
 		}
+		
+		// 시작일, 종료일 값 
+	    var startDateValue = new Date($('#eventStartDate').val());
+	    var endDateValue = new Date($('#eventEndDate').val());
+	
+	    // 종료일이 시작일보다 이른 경우
+	    if (endDateValue < startDateValue) {
+			console.log('시간검사');
+	        // 안내
+	        alert('종료일은 시작일 이후여야 합니다.');
+	        $('#eventEndDate').focus();
+	        return false; 
+	    }
 		
 		// 첨부파일 유효성 검사
 		if(!$('#eventUploadFile').val()){

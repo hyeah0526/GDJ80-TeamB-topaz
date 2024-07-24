@@ -73,6 +73,30 @@
 				</div>
 			</c:if>
 			
+			<!-- 상태가 반려일경우, 반려사유 출력 -->
+	    	<c:if test="${a.approvalStateName eq '취소'}">
+		    	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+	                <i class="bi bi-exclamation-octagon me-1"></i>
+	                기안자 요청으로 결재가 취소 된 문서입니다.
+				</div>
+			</c:if>
+			
+			<!-- 상태가 승인일경우, 결재완료된 문서임을 출력 -->
+	    	<c:if test="${a.approvalStateName eq '승인'}">
+		    	<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<i class="bi bi-check-circle me-1"></i>
+					최종적으로 결재가 승인 된 문서입니다.
+				</div>
+			</c:if>
+			
+			<!-- 상태가 대기 혹은 진행일경우, 기안자에게만 진행중 안내문구 출력 -->
+	    	<c:if test="${a.approvalStateName eq '대기' || a.approvalStateName eq '진행' && a.empNo eq loginUser}">
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+					<i class="bi bi-info-circle me-1"></i>
+					현재 승인 대기중인 결재문서입니다.
+				</div>
+			</c:if>
+			
 			<!-- 기안자 정보 -->
 	    	<div class="approvalSignShowLeft">
 	    		<table>

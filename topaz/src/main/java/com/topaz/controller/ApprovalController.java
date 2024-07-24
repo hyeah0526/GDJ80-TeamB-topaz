@@ -81,7 +81,7 @@ public class ApprovalController {
 		String insertApprovalDocNo = approvalService.setApprovalDoc(approvalDocRequest);
 		log.debug(Debug.PHA + "approvalAdd Controller insertApprovalDocNo--> " + insertApprovalDocNo + Debug.END);
 		
-		return "redirect:/groupware/approval/approvalAdd";
+		return "redirect:/groupware/approval/approvalList";
 	}
 	
 	
