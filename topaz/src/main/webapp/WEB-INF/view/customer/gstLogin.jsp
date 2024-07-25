@@ -33,36 +33,7 @@
 
 <body class="contact-page">
   <!-- Header -->
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="gstMain" class="logo d-flex align-items-center">
-        <!-- 로고 이미지 -->
-        <img src="/topaz/assets/img/TOPAZ_logo.png" alt="">
-        <h1 class="sitename">TOPAZ.</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="gstMain">Home</a></li>
-          <li><a href="infoCompany">회사소개</a></li>
-          <li><a href="infoPrograms">프로그램</a></li>
-          <li class="dropdown"><a href="infoRegident"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="infoRegidentA">A동</a></li>
-              <li><a href="#">B동</a></li>
-              <li><a href="#">C동</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <li><a href="volunteerRqAdd">봉사 신청</a></li>
-          <li><a href="newsList">알림마당</a></li>
-          <li><a href="gstLogin" class="active">로그인</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header><!-- Header 끝 -->
+  <jsp:include page="inc/header.jsp"></jsp:include>
 
   <main class="main">
     <!-- 입력 폼 -->
@@ -93,7 +64,7 @@
 		              <div class="text-center mb-3 mt-3"><button type="submit">Login</button></div>
 				</form>
 	            <div class="row php-email-form mb-5">
-	            	<div class="col"><button type="button"><a href="" style="color: white;">비밀번호 찾기</a></button></div>
+	            	<div class="col"><button type="button"><a href="gstPWModify" style="color: white;">비밀번호 찾기</a></button></div>
 	            	<div class="col mb-5"><button type="button"><a href="signUp" style="color: white;">회원가입</a></button></div>
 	            </div>
 	          </div><!-- End Contact Form -->

@@ -80,16 +80,16 @@
                  </table>
               
                 <!-- 페이징 -->
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination" id="paginationUl">
-                       <!-- 페이징 버튼 추가되는 자리 -->
-                   </ul>
-                </nav>
+                <div class="pagination-container justify-content-center" style="text-align: center; display: flex;">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination" id="paginationUl">
+			           </ul>
+					</nav>				
+				</div>
             </div>
         </div>
     </section><!-- section 종료 -->
-    
-    
+       
     <!-- Modal -->
 	<!-- 모달창 : 봉사 신청 폼 -->
 	<div class="modal fade" id="volunteerAppDetail" tabindex="-1">
@@ -175,7 +175,6 @@
 			</form>
 		</div></div>
 	</div><!-- End addSchedule Modal-->
-	
 
    </main><!-- End #main -->
    <!-- =============================== Main 메인 끝 부분 ================================ -->
@@ -200,8 +199,7 @@
             paginationUl.append('<li class="page-item disabled"><span class="page-link">&laquo;</span></li>');
         } else {
             paginationUl.append('<li class="page-item"><a class="page-link bpoListPage" href="#" data-page="1">&laquo;</a></li>');
-        }
-    
+        }  
         
         // 최대 5개까지 페이징 만들기
         for (let i = startPage; i <= endPage; i++) {
@@ -211,8 +209,7 @@
                 paginationUl.append('<li class="page-item"><a class="page-link bpoListPage" href="#" data-page="' + i + '">' + i + '</a></li>');
             }
         }
-    
-        
+         
         // 마지막 페이지로 이동하는 버튼 추가(마지막 페이징ㄹ경우 비활성화)
         if (currentPage === lastPage) {
             paginationUl.append('<li class="page-item disabled"><span class="page-link">&raquo;</span></li>');

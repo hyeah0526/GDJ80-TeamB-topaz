@@ -32,40 +32,7 @@
 
 <body class="team-page">
   <!-- Header -->
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="gstMain" class="logo d-flex align-items-center">
-        <!-- 로고 이미지 -->
-        <img src="/topaz/assets/img/TOPAZ_logo.png" alt="">
-        <h1 class="sitename">TOPAZ.</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="gstMain">Home</a></li>
-          <li><a href="infoCompany">회사소개</a></li>
-          <li><a href="infoPrograms">프로그램</a></li>
-          <li class="dropdown"><a href="infoRegident"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="infoRegidentA">A동</a></li>
-              <li><a href="#">B동</a></li>
-              <li><a href="#">C동</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <li><a href="volunteerRqAdd">봉사 신청</a></li>
-          <li><a href="newsList">알림마당</a></li>
-          <!-- JavaScript로 동적으로 변경될 부분 -->
-          <li><a href="gstMyInfo" id="myInfoLink" class="active">내 정보</a></li>
-          <li><a href="gstLogin" id="loginLink" class="active">로그인</a></li>
-          <li><a href="signUp" id="signUpLink" class="active">회원가입</a></li>
-          <li><a href="${pageContext.request.contextPath}/gstLogout">로그아웃</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header><!-- Header 끝 -->
+  <jsp:include page="inc/header.jsp"></jsp:include>
 
   <main class="main">
 
@@ -91,112 +58,33 @@
           <div class="col-lg-6">
           <!-- 폼 이름 입력 -->
             <form action="" method="post" role="form" class="php-email-form">
-              <div class="form-group mt-3">
-               	ID
-                <input type="text" name="gstId" value="${gstDetail.gstId}" readonly style="background-color: #F6F6F6;" class="form-control">
-              </div>
-              <div class="row justify-content-center">
-                <div class="col-md-8 form-group">
-                  PW
-				<input type="password" value="${gstDetail.gstPw}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstPw">				  <div class="id-message hide"></div>
+              <div class="row">
+                <div class="col-8 form-group">
+                  <input type="text" name="gstId" id="gstId" class="form-control" placeholder="ID 4자 이상 입력">
+				  <div class="id-message hide"></div>
                 </div>
-                <div class="col text-center mt-4">
-                	<button type="button" id="passwordModify_btn" onclick="window.location.href='${pageContext.request.contextPath}/customer/gstPWModify'">비밀번호 수정</button>
+                <div class="col text-center">
+                	<button type="button" id="idCheck_btn">ID 확인</button>
                 </div>
               </div>
-              <div class="form-group mt-3">
-              	이름
-                <input type="text" value="${gstDetail.gstName}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstName">
-              </div>
-              <div class="form-group mt-3">
-              	Email
-                <input type="text" value="${gstDetail.gstEmail}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstEmail">
-              </div>
-              <div class="form-group mt-3">
-              	성별
-                <input type="text" value="${gstDetail.gstGender}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstGender">
-              </div>
-              <div class="form-group mt-3">
-              	생년월일
-                <input type="text" value="${gstDetail.gstBirth}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstBirth">
-              </div>
-              <div class="form-group mt-3">
-             	연락처
-                <input type="text" value="${gstDetail.gstPhone}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstPhone">
-              </div>
-              <div class="form-group mt-3">
-              	고객 타입
-                <input type="text" value="${gstDetail.gstType}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstType">
-              </div>
-              <div class="form-group mt-3">
-              	주소
-                <input type="text" value="${gstDetail.postNo}" readonly style="background-color: #F6F6F6; margin-bottom: 10px;" class="form-control" name="postNo">
-                <input type="text" value="${gstDetail.address}" readonly style="background-color: #F6F6F6;" class="form-control" name="address">
+              
+              <div class="col form-group">
+              	<input type="text" name="oldPw" id="oldPw" class="form-control" placeholder="현재 비밀번호">
+				<div class="oldPw-message hide"></div>
               </div>
               
-            <!-- Null 일 경우 안보이도록 처리 예정 -->
-            <c:if test="${not empty gstDetail.roomNo}">
-			  <div class="form-group mt-3">
-			  	룸 번호
-			    <input type="text" value="${gstDetail.roomNo}" readonly style="background-color: #F6F6F6;" class="form-control" name="roomNo">
-			  </div>
-			</c:if>
-			
-			<c:if test="${not empty gstDetail.roomType}">
-			  <div class="form-group mt-3">
-			  	룸 타입
-			    <input type="text" value="${gstDetail.roomType}" readonly style="background-color: #F6F6F6;" class="form-control" name="roomType">
-			  </div>
-			</c:if>
-			
-			<c:if test="${not empty gstDetail.roomDong}">
-			  <div class="form-group mt-3">
-			  	룸 주소
-			    <input type="text" value="${gstDetail.roomDong}" readonly style="background-color: #F6F6F6; margin-bottom: 10px;" class="form-control" name="roomDong">
-			    <input type="text" value="${gstDetail.roomHo}" readonly style="background-color: #F6F6F6;" class="form-control" name="roomDong">
-			  </div>
-			</c:if>
-			
-			<c:if test="${not empty gstDetail.roomAmenity}">
-			  <div class="form-group mt-3">
-			  	어메니티 신청
-			    <input type="text" value="${gstDetail.roomAmenity}" readonly style="background-color: #F6F6F6;" class="form-control" id="roomAmenity" name="roomAmenity">
-			  </div>
-			</c:if>
-			
-			<c:if test="${not empty gstDetail.residentNote}">
-			  <div class="form-group mt-3">
-			  	입주자 전달사항
-			    <input type="text" value="${gstDetail.residentNote}" readonly style="background-color: #F6F6F6;" class="form-control" name="residentNote">
-			  </div>
-			</c:if>
-			
-			<c:if test="${not empty gstDetail.protectorName}">
-			  <div class="form-group mt-3">
-			  	보호자 이름
-			    <input type="text" value="${gstDetail.protectorName}" readonly style="background-color: #F6F6F6;" class="form-control" name="protectorName">
-			  </div>
-			</c:if>
-			
-			<c:if test="${not empty gstDetail.protectorPhone}">
-			  <div class="form-group mt-3">
-			  	보호자 연락처
-			    <input type="text" value="${gstDetail.protectorPhone}" readonly style="background-color: #F6F6F6;" class="form-control" name="protectorPhone">
-			  </div>
-			</c:if>
-			
-			<c:if test="${not empty gstDetail.protectorRelation}">
-			  <div class="form-group mt-3">
-			  	보호자와의 관계
-			    <input type="text" value="${gstDetail.protectorRelation}" readonly style="background-color: #F6F6F6;" class="form-control" name="protectorRelation">
-			  </div>
-			</c:if>
+              <div class="col form-group">
+                <input type="text" name="newPw" id="newPw" class="form-control" placeholder="새 비밀번호">
+		  		<div class="newPw-message hide"></div>
+              </div>
+            
+              <div class="col form-group">
+                <input type="text" name="newPwCk" id="newPwCk" class="form-control" placeholder="새 비밀번호 확인 ">
+		  		<div class="newPwCk-message hide"></div>
+              </div>
               
-       		
-       
               <div class="row justify-content-center">
-              	<div class="col-md-6 mt-3 text-center"><button type="button" id="deleteGst_btn">탈퇴하기</button></div>
-              	<div class="col-md-6 mt-3 text-center"><button type="button" onclick="window.location.href='${pageContext.request.contextPath}/customer/gstMyInfoModify'">수정하기</button></div>
+              	<div class="col-md-6 mt-3 text-center"><button type="button" onclick="window.location.href='${pageContext.request.contextPath}/customer/gstMyInfo'">수정하기</button></div>
               </div>
             </form>
             
@@ -216,15 +104,16 @@
 				<div class="modal-body">
 					<div class="row mb-5">
 						<div class="col mt-5 text-center">
-							<span>TOPAZ 회원을 탈퇴하시겠습니까? </span>
+						
+						
 						</div>
 					</div>
 				</div>
 				
 				<!-- 모달 탈퇴 취소/탈퇴버튼 -->
 				<div class="modal-footer justify-content-center">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-					<a><button id="deleteCheck_btn" type="submit" style="background-color: #34bf49; border-color: #34bf49;" class="btn btn-primary">탈퇴</button></a>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					<a><button id="deleteCheck_btn" type="submit" style="background-color: #34bf49; border-color: #34bf49;" class="btn btn-primary">저장</button></a>
 				</div>
 			</form>
 		</div></div>
@@ -251,10 +140,53 @@
   <script src="/topaz/assets/vendorGST/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="/topaz/assets/vendorGST/isotope-layout/isotope.pkgd.min.js"></script>
 
-  <script src="<c:url value='/js/eunhyeGstMyInfo.js'/>"></script>
-
   <!-- Main JS File -->
   <script src="/topaz/assets/js/mainGST.js"></script>
+  <script type="text/javascript">
+  
+  $(document).ready(function(){
+	// ID 중복확인 버튼 클릭시 이벤트
+    $('#idCheck_btn').click(function(){
+        console.log('idCheck_btn 클릭');
+        // ID 유효성 검사
+        const gstId = $('#gstId').val().trim();
+        const idPattern = /^[a-zA-Z0-9]{4,20}$/;
+        
+        if(gstId === ""){
+            alert("ID를 입력해주세요.");
+            $('#gstId').focus();
+            return false;
+        } else if(!idPattern.test(gstId)){
+            alert("ID는 영어와 숫자를 사용하여 4-20자 입력해야합니다.");
+            return false;
+        }
+
+        // idCheck 호출
+        $.ajax({
+            url:'/topaz/customer/idCheck',
+            method:'post',
+            data: { gstId: gstId },
+            success:function(data){
+                if(data == 0){
+                    $('.id-message').removeClass('hide').text(' 존재하지 않는 ID입니다.').css('color', 'red');
+                } else {
+                    $('.id-message').removeClass('hide').text(' 존재하는 ID입니다.').css('color', 'green');
+                    $('#gstId').focus();
+                }
+            }
+        });
+     });
+	
+	
+	
+	
+	
+	
+	
+  });
+  
+  
+  </script>
 
 </body>
 

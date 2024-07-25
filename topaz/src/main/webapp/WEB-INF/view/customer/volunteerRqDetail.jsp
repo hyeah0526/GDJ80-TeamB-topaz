@@ -44,39 +44,7 @@
     }
 %>
   <!-- Header -->
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="gstMain" class="logo d-flex align-items-center">
-        <!-- 로고 이미지 -->
-        <img src="/topaz/assets/img/TOPAZ_logo.png" alt="">
-        <h1 class="sitename">TOPAZ.</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="gstMain" class="active">Home</a></li>
-          <li><a href="infoPrograms">서비스 및 프로그램</a></li>&nbsp;&nbsp;&nbsp;
-          <li class="dropdown"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
-            <ul>
-              <li><a href="infoRegidentDiamond">다이아몬드동</a></li>
-              <li><a href="infoRegidentSilver">실버동</a></li>
-              <li><a href="infoStep">입주 절차</a></li>
-            </ul>
-          </li>&nbsp;&nbsp;
-          <li><a href="volunteerRqAdd">봉사 신청</a></li>
-          <li><a href="newsList">알림마당</a></li>
-          <!-- JavaScript로 동적으로 변경될 부분 -->
-          <li><a href="gstMyInfo" id="myInfoLink" class="active">내 정보</a></li>
-          <li><a href="gstLogin" id="loginLink" class="active">로그인</a></li>
-          <li><a href="signUp" id="signUpLink" class="active">회원가입</a></li>
-          <li><a href="${pageContext.request.contextPath}/gstLogout">로그아웃</a></li>
-
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header><!-- Header 끝 -->
+  <jsp:include page="inc/header.jsp"></jsp:include>
 
   <main class="main">
 
@@ -97,9 +65,7 @@
     
     <!-- 입력 폼 -->
     <section id="contact" class="contact section">
-
       <div class="container" data-aos="fade">
-
         <div class="row justify-content-center gy-5 gx-lg-5">
           <div class="col-6">
           	<div class="mb-5">
@@ -139,13 +105,9 @@
             </form>
             
           </div><!-- End Contact Form -->
-
         </div>
-
       </div>
-
-    </section><!-- 입력 폼 끝 -->   
-    
+    </section><!-- 입력 폼 끝 -->      
     
     <!-- Modal -->
 	<!-- addSchedule 모달창 : 봉사 신청 폼 -->
@@ -184,8 +146,6 @@
 			</form>
 		</div></div>
 	</div><!-- End addSchedule Modal-->
-    
-    
     
   </main>
 
@@ -226,9 +186,9 @@
   	 // 폼 제출 이벤트 처리
     $("#addVolunteerApp").on("submit", function(event) {
         event.preventDefault();
-
         var formData = $(this).serialize(); // 폼 데이터 직렬화
-
+		
+		// AJAX 신청 메서드 호출
         $.ajax({
             type: "POST",
             url: $(this).attr("action"),
@@ -245,7 +205,7 @@
         });
     });
   	
-	 // 신청 내용 글자 수 세기
+	// 신청 내용 글자 수 세기
     $("#volAppComment").on("input", function() {
         var maxLength = 100;
         var currentLength = $(this).val().length;
@@ -256,7 +216,6 @@
             $("#chatHelper").text(maxLength);
         }
     });
-  
 	 
 	// 입력값 유효성 검사 
 	$('#AddVolApp_btn').click(function(){
@@ -265,30 +224,20 @@
 			alert('신청 인원을 입력해주세요.');
 			$('#volAppPeople').focus();
 			return false; 
-		}
-		
+		}	
 		// 신청 내용
 		if($('#volAppComment').val().length < 1){
 			alert('신청 내용을 입력해주세요.');
 			$('#volAppComment').focus();
 			return false; 
 		}
-		
 		// 신청 인원이 신청 가능 인원보다 많은 경우
 		if(parseInt($('#volAppPeople').val()) > parseInt($('#volPeople').val())){
 			alert('신청 가능 인원보다 많습니다. 다시 확인해주세요.');
 			$('#volAppPeople').focus();
 			return false; 
-		}
-		
-		
-		
-		
+		}		
 	});
-  
-	
-	
-	
   </script>
   
 </body>

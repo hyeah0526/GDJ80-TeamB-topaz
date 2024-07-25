@@ -23,39 +23,7 @@
 </head>
 <body class="about-page">
   <!-- Header -->
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="gstMain" class="logo d-flex align-items-center">
-        <!-- 로고 이미지 -->
-        <img src="/topaz/assets/img/TOPAZ_logo.png" alt="">
-        <h1 class="sitename">TOPAZ.</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="gstMain">Home</a></li>
-          <li><a href="infoPrograms">서비스 및 프로그램</a></li>&nbsp;&nbsp;&nbsp;
-          <li class="dropdown"><span>세대 안내</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
-            <ul>
-              <li><a href="infoRegidentDiamond">다이아몬드동</a></li>
-              <li><a href="infoRegidentSilver">실버동</a></li>
-              <li><a href="infoStep">입주 절차</a></li>
-            </ul>
-          </li>&nbsp;&nbsp;
-          <li><a href="volunteerRqAdd">봉사 신청</a></li>
-          <li><a href="newsList" class="active">알림마당</a></li>
-          <!-- JavaScript로 동적으로 변경될 부분 -->
-          <li><a href="gstMyInfo" id="myInfoLink" class="active">내 정보</a></li>
-          <li><a href="gstLogin" id="loginLink" class="active">로그인</a></li>
-          <li><a href="signUp" id="signUpLink" class="active">회원가입</a></li>
-          <li><a href="${pageContext.request.contextPath}/gstLogout">로그아웃</a></li>
-
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header><!-- Header 끝 -->
+  <jsp:include page="inc/header.jsp"></jsp:include>
   
     <main class="main">
         <!-- Page Title -->
