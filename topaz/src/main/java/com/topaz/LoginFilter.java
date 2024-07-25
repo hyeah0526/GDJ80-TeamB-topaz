@@ -62,27 +62,26 @@ public class LoginFilter implements Filter {
                     return;
                 }
             
-		        // 직원 : 직원 관리 메뉴에 대한 접근 권한 설정
+    	        // 직원 : 직원 관리에 대한 접근 권한 설정
 		        if(requestURI.matches(".*/emp/(empList|empLeave|empAttendance)")) {
 		            Map<String, Object> employee = (Map<String, Object>) session.getAttribute("employee");
 
 		            if (employee != null) {
-			            Integer empGrade = (Integer) employee.get("empgrade");
-			            String empDept = (String) employee.get("empdept");
-			            strId = (String) session.getAttribute("strId");
-		    	        log.debug(Debug.HEH + "LoginFilter empGrade " + empGrade + Debug.END);
-		    	        log.debug(Debug.HEH + "LoginFilter empDept " + empDept + Debug.END);
-		    	        log.debug(Debug.HEH + "LoginFilter strId " + strId + Debug.END);
-
-		    	        if (strId == null || !strId.equals("admin")) {
-			                if (empGrade == null || empDept == null || (empGrade < 3 && !"E".equals(empDept))) {
-			                    httpResponse.setContentType("text/html; charset=UTF-8");
-			                    httpResponse.getWriter().write("<script>alert('접근 권한이 없습니다.'); window.history.back();</script>");                        
-			                    return;
-			                }
+		            	String empGradeStr = (String) employee.get("empGrade");
+			            String empDept = (String) employee.get("empDept");
+			            
+			            Integer empGrade = null;
+			            if (empGradeStr != null) {
+			                empGrade = Integer.parseInt(empGradeStr);
 			            }
-		            }
-		        } 
+		            
+			            if (empGrade == null || empDept == null || empGrade < 3 || !"E".equals(empDept)) {
+			            	httpResponse.setContentType("text/html; charset=UTF-8");
+			                httpResponse.getWriter().write("<script>alert('접근 권한이 없습니다.'); window.history.back();</script>");                        
+			                return;
+			            }
+			        }
+		        }
             }
             // 직원 : 세션이 없는 경우 그룹웨어 로그인 페이지로 redirect
             if (session == null || session.getAttribute("strId") == null) {
