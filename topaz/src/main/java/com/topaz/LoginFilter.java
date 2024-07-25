@@ -62,7 +62,7 @@ public class LoginFilter implements Filter {
                     return;
                 }
             
-		        // 직원 : 직원 관리에 대한 접근 권한 설정
+		        // 직원 : 직원 관리 메뉴에 대한 접근 권한 설정
 		        if(requestURI.matches(".*/emp/(empList|empLeave|empAttendance)")) {
 		            Map<String, Object> employee = (Map<String, Object>) session.getAttribute("employee");
 
