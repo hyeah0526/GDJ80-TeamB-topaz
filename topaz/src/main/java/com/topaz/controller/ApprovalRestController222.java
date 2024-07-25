@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.topaz.service.ApprovalService222;
 import com.topaz.utill.Debug;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -31,13 +33,13 @@ public class ApprovalRestController222 {
 	 * 담당자: 한은혜
 	 */
 	@GetMapping("/approval/approvalList")
-	public Map<String, Object> approvalList(@RequestParam(name="currentPage", defaultValue="1") int currentPage,
-			@RequestParam(name="rowPerPage", defaultValue="10") int rowPerPage,
-			@RequestParam(name="searchDateStart", defaultValue="") String searchDateStart,
-			@RequestParam(name="searchDateEnd", defaultValue="") String searchDateEnd,
-			@RequestParam(name="approvalCategory", defaultValue="") String approvalCategory,
-			@RequestParam(name="searchWord", defaultValue="") String searchWord ){
-		
+	public Map<String, Object> approvalList(HttpServletRequest httpServletRequest,
+								@RequestParam(name="currentPage", defaultValue="1") int currentPage,
+								@RequestParam(name="rowPerPage", defaultValue="10") int rowPerPage,
+								@RequestParam(name="searchDateStart", defaultValue="") String searchDateStart,
+								@RequestParam(name="searchDateEnd", defaultValue="") String searchDateEnd,
+								@RequestParam(name="approvalCategory", defaultValue="") String approvalCategory,
+								@RequestParam(name="searchWord", defaultValue="") String searchWord ){
 		// 매개값 디버깅
 		log.debug(Debug.HEH + " approvalList currentPage : " + currentPage + Debug.END);
 		log.debug(Debug.HEH + " approvalList rowPerPage : " + rowPerPage + Debug.END);
@@ -46,8 +48,10 @@ public class ApprovalRestController222 {
 		log.debug(Debug.HEH + " approvalList approvalCategory : " + approvalCategory + Debug.END);
 		log.debug(Debug.HEH + " approvalList searchWord : " + searchWord + Debug.END);
 		
-		String empNo = "Es1a1s2f5";
-		
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.HEH + " approvalList empNo : " + empNo + Debug.END);
+
 		List<Map<String, Object>> list = approvalService.getApprovalList(currentPage, rowPerPage, searchDateStart, searchDateEnd, approvalCategory, searchWord, empNo);
 		log.debug(Debug.HEH + " approvalList list : " + list + Debug.END);
 		// 마지막페이지 구하기
@@ -61,7 +65,6 @@ public class ApprovalRestController222 {
 		map.put("lastPage", lastPage);
 		
 		log.debug(Debug.HEH + " approvalList map : " + map + Debug.END);
-		
 		return map;
 	}
 	
