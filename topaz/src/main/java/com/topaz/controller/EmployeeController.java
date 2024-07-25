@@ -225,8 +225,37 @@ public class EmployeeController {
 			return "groupware/emp/empModify";
 		}
 		
+		//저장 객체 생성
+		Map<String, Object> leaveMap = new HashMap<>();
+		leaveMap.put("empNo", employeeRequest.getEmpNo());
+		leaveMap.put("empGrade", employeeRequest.getEmpGrade());
+		
+		//empGrade에 따라 휴가 설정
+		int yearCnt = 0; // 기본값
+		int monthCnt = 0; 
+		int empGrade = Integer.parseInt(employeeRequest.getEmpGrade());
+		 
+		if (empGrade == 1) {
+	        yearCnt = 10; // 사원
+	    } else if (empGrade == 2) {
+	        yearCnt = 12; // 대리
+	    } else if (empGrade == 3) {
+	        yearCnt = 15; // 팀장
+	    } else if (empGrade == 4) {
+	        yearCnt = 18; // 부장
+	    }
+		
+	    leaveMap.put("yearCnt", yearCnt);
+		
+		//디버깅
+		log.debug(Debug.KIS + "controller / empModify / leaveMap : " + leaveMap);
+		
+		
 		//서비스 레이어로 수정될 직원정보 이동
 		employeeService.modifyEmpOne(employeeRequest);
+		
+		//서비스 레이어로 휴가정보 이동
+		employeeService.updateEmpLeave(leaveMap);
 		
 		return "redirect:/groupware/emp/empDetail?empNo="+employeeRequest.getEmpNo();
 	}

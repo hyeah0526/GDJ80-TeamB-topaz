@@ -201,6 +201,28 @@ public class EmployeeService {
 	}
 	
 	/*
+	 * 분류번호: #4 - 직원 휴가 정보 수정
+	 * 시작 날짜: 2024-07-25
+	 * 담당자: 김인수
+	*/
+	public int updateEmpLeave(Map<String, Object> paramMap) {
+
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / updateEmpLeave / paramMap : " + paramMap);
+		
+		//직원 정보 저장
+		int row = empMapper.updateEmpLeave(paramMap);
+		log.debug(Debug.KIS + "service / updateEmpLeave / row : " + row);
+
+		if(row != 1) {
+			throw new RuntimeException();
+		}
+		
+		return row;
+	}
+	
+	
+	/*
 	 * 분류번호: #4 - 직원 정보 삭제
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
