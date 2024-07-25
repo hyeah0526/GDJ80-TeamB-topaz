@@ -3,7 +3,7 @@
 <mapper namespace="com.topaz.mapper.LoginMapper">
 
 	<!-- #1 - 직원 로그인 -->
-	<select id="doEmpLogin" resultType="com.topaz.dto.Employee">
+	<select id="doEmpLogin" resultType="map">
 		SELECT emp_no empNo, emp_pw empPw, emp_name empName, emp_dept empDept, emp_grade empGrade, use_yn useYN
 		FROM employee
 		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
@@ -11,7 +11,7 @@
 	</select>
 
 	<!-- #12 - 외주업체 로그인 -->
-	<select id="doOutsourcingLogin" resultType="com.topaz.dto.Outsourcing">
+	<select id="doOutsourcingLogin" resultType="map">
 		SELECT outsourcing_no outsourcingNo, outsourcing_pw outsourcingPw, outsourcing_name outsourcingName, 
 				outsourcing_state outsourcingState, outsourcing_type outsourcingType
 		FROM outsourcing 
@@ -20,7 +20,7 @@
 	</select> 
 
 	<!-- #15 - 고객 로그인 -->
-	<select id="doGuestLogin" resultType="com.topaz.dto.Guest">
+	<select id="doGuestLogin" resultType="map">
 		SELECT gst_id gstId, gst_pw gstPw, gst_name gstName
 		FROM guest
 		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')

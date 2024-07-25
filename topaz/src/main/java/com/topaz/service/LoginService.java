@@ -1,13 +1,11 @@
 package com.topaz.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.topaz.dto.Employee;
-import com.topaz.dto.Guest;
-import com.topaz.dto.Outsourcing;
 import com.topaz.mapper.LoginMapper;
 import com.topaz.utill.Debug;
 import com.topaz.utill.PasswordHash;
@@ -28,43 +26,92 @@ public class LoginService {
 	 * 시작 날짜 : 2024-07-07
 	 * 담당자: 한은혜
 	 */
-	public String doEmpLogin(String strId, String strPw) {
-		// PW 암호화 메서드 호출
-        String hashedPw = PasswordHash.hashPassword(strPw);
-        // 직원 로그인 매퍼 호출
-        Employee employee = loginMapper.doEmpLogin(strId);
-        // ID 불일치인 경우
-        if (employee == null) {
-            return "ID가 유효하지 않습니다.";
-        }
-        // PW 불일치인 경우
-        if (!hashedPw.equals(employee.getEmpPw())) {
-            return "비밀번호가 일치하지 않습니다.";
-        }
-        
-        return null; // 로그인 성공
+	public Map<String, Object> doEmpLogin(String strId, String strPw) { 
+		// 매개값 디버깅
+	    log.debug(Debug.HEH + "strId : " + strId + Debug.END);
+	    log.debug(Debug.HEH + "strPw : " + strPw + Debug.END);
+	    // 에러를 담을 맵
+		Map<String, Object> result = new HashMap<>();
+		 
+		// ID 입력 확인
+	    if (strId == null || strId.isEmpty()) {
+	        result.put("error", "ID를 입력하세요.");
+	        return result;
+	    }
+		// 비밀번호 입력 확인
+	    if (strPw == null || strPw.isEmpty()) {
+	        result.put("error", "비밀번호를 입력하세요.");
+	        return result;
+	    }
+	    
+        // PW 암호화 메서드 호출
+	    String hashedPw = PasswordHash.hashPassword(strPw);
+	    
+	    // 직원 로그인 매퍼 호출
+	    Map<String, Object> employeeMap = loginMapper.doEmpLogin(strId);
+	    log.debug(Debug.HEH + "employeeMap : " + employeeMap + Debug.END);
+	    
+	    // ID 불일치인 경우
+	    if (employeeMap == null || employeeMap.isEmpty()) {
+		    log.debug(Debug.HEH + "result : " + result + Debug.END);
+	        result.put("error", "ID가 유효하지 않습니다.");
+	        
+	        return result;
+	    }
+	    // PW 불일치인 경우
+	    String empPw = (String) employeeMap.get("empPw");
+	    if (!hashedPw.equals(empPw)) {
+		    log.debug(Debug.HEH + "result : " + result + Debug.END);
+	        result.put("error", "비밀번호가 일치하지 않습니다.");
+	        
+	        return result;
+	    }
+	    // 로그인 성공
+	    return employeeMap;
     }
-
 	/*
 	 * 분류번호: #12 - 외주업체 로그인
 	 * 시작 날짜 : 2024-07-08
 	 * 담당자: 한은혜
 	 */
-	public String doOutsourcingLogin(String strId, String strPw) {
+	public Map<String, Object> doOutsourcingLogin(String strId, String strPw) {
+		// 매개값 디버깅
+	    log.debug(Debug.HEH + "strId : " + strId + Debug.END);
+	    log.debug(Debug.HEH + "strPw : " + strPw + Debug.END);
+	    // 에러를 담을 맵
+		Map<String, Object> result = new HashMap<>();
+		 
+		// ID 입력 확인
+	    if (strId == null || strId.isEmpty()) {
+	        result.put("error", "ID를 입력하세요.");
+	        return result;
+	    }
+		// 비밀번호 입력 확인
+	    if (strPw == null || strPw.isEmpty()) {
+	        result.put("error", "비밀번호를 입력하세요.");
+	        return result;
+	    }
 		// PW 암호화 메서드 호출
         String hashedPw = PasswordHash.hashPassword(strPw);
         // 외주업체 로그인 매퍼 호출
-        Outsourcing outsourcing = loginMapper.doOutsourcingLogin(strId);
+        Map<String, Object> outsourcingMap = loginMapper.doOutsourcingLogin(strId);
         // ID 불일치인 경우
-        if (outsourcing == null) {
-            return "ID가 유효하지 않습니다.";
-        }
-        // PW 불일치인 경우
-        if (!hashedPw.equals(outsourcing.getOutsourcingPw())) {
-            return "비밀번호가 일치하지 않습니다.";
-        }
-        
-        return null; // 로그인 성공
+	    if (outsourcingMap == null || outsourcingMap.isEmpty()) {
+		    log.debug(Debug.HEH + "result : " + result + Debug.END);
+	        result.put("error", "ID가 유효하지 않습니다.");
+	        
+	        return result;
+	    }
+	    // PW 불일치인 경우
+	    String outsourcingPw = (String) outsourcingMap.get("outsourcingPw");
+	    if (!hashedPw.equals(outsourcingPw)) {
+		    log.debug(Debug.HEH + "result : " + result + Debug.END);
+	        result.put("error", "비밀번호가 일치하지 않습니다.");
+	        
+	        return result;
+	    }
+	    // 로그인 성공
+	    return outsourcingMap; // 로그인 성공
     }
 
 	/*
@@ -72,21 +119,44 @@ public class LoginService {
 	 * 시작 날짜 : 2024-07-08
 	 * 담당자: 한은혜
 	 */
-	public String doGuestLogin(String strId, String strPw) {
+	public Map<String, Object> doGuestLogin(String strId, String strPw) {
+		// 매개값 디버깅
+	    log.debug(Debug.HEH + "strId : " + strId + Debug.END);
+	    log.debug(Debug.HEH + "strPw : " + strPw + Debug.END);
+	    // 에러를 담을 맵
+		Map<String, Object> result = new HashMap<>();
+		 
+		// ID 입력 확인
+	    if (strId == null || strId.isEmpty()) {
+	        result.put("error", "ID를 입력하세요.");
+	        return result;
+	    }
+		// 비밀번호 입력 확인
+	    if (strPw == null || strPw.isEmpty()) {
+	        result.put("error", "비밀번호를 입력하세요.");
+	        return result;
+	    }
 		// PW 암호화 메서드 호출
         String hashedPw = PasswordHash.hashPassword(strPw);
         // 고객 로그인 매퍼 호출
-        Guest guest = loginMapper.doGuestLogin(strId);
+        Map<String, Object> guestMap = loginMapper.doGuestLogin(strId);
         // ID 불일치인 경우
-        if (guest == null) {
-            return "ID가 유효하지 않습니다.";
-        }
-        // PW 불일치인 경우
-        if (!hashedPw.equals(guest.getGstPw())) {
-            return "비밀번호가 일치하지 않습니다.";
-        }
-        
-		return null; // 로그인 성공
+	    if (guestMap == null || guestMap.isEmpty()) {
+		    log.debug(Debug.HEH + "result : " + result + Debug.END);
+	        result.put("error", "ID가 유효하지 않습니다.");
+	        
+	        return result;
+	    }
+	    // PW 불일치인 경우
+	    String gstPw = (String) guestMap.get("gstPw");
+	    if (!hashedPw.equals(gstPw)) {
+		    log.debug(Debug.HEH + "result : " + result + Debug.END);
+	        result.put("error", "비밀번호가 일치하지 않습니다.");
+	        
+	        return result;
+	    }
+	    // 로그인 성공
+	    return guestMap; // 로그인 성공
 	}
 
 	

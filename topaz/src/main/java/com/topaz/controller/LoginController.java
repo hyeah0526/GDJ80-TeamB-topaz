@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topaz.dto.Employee;
 import com.topaz.service.LoginService;
 import com.topaz.service.ScheduleService;
 import com.topaz.utill.Debug;
@@ -68,8 +69,7 @@ public class LoginController {
 	    return list;
 	}
 	
-	
-	 // 로그인
+	// 로그인
 	@PostMapping("/loginPost")
     public String loginPost(@RequestParam(name = "id") String strId,
                             @RequestParam(name = "pw") String strPw,
@@ -82,47 +82,65 @@ public class LoginController {
         log.debug(Debug.HEH + "strPw : " + strPw + Debug.END);
         log.debug(Debug.HEH + "userType : " + strUserType + Debug.END);
         
+        // 로그인 처리
+        Map<String, Object> loginMap = null;
         String errMsg = "";
-        
-        // 직원 로그인
+
         if ("employee".equals(strUserType)) {
-            errMsg = loginService.doEmpLogin(strId, strPw);
-            
-            if (errMsg == null) { // 로그인 성공
+        // 직원 로그인
+            loginMap = loginService.doEmpLogin(strId, strPw);
+            if (loginMap.containsKey("error")) { // 로그인 실패
+                errMsg = (String) loginMap.get("error");
+                model.addAttribute("errMsg", errMsg);
+                
+                return "/groupware/login";
+            } else { // 로그인 성공
                 HttpSession session = req.getSession();
                 session.setAttribute("strId", strId);
+                session.setAttribute("employee", loginMap); // employeeMap을 세션에 저장
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
+                
                 return "redirect:/groupware/empMain";
             }
+            
         } else if ("outsourcing".equals(strUserType)) {
         // 외주업체 로그인
-            errMsg = loginService.doOutsourcingLogin(strId, strPw);
-            
-            if (errMsg == null) { // 로그인 성공
+        	loginMap = loginService.doOutsourcingLogin(strId, strPw);
+        	if (loginMap.containsKey("error")) { // 로그인 실패
+	             errMsg = (String) loginMap.get("error");
+	             model.addAttribute("errMsg", errMsg);
+	             
+	             return "/groupware/login";
+        	} else { // 로그인 성공
                 HttpSession session = req.getSession();
                 session.setAttribute("strId", strId);
+                session.setAttribute("outsourcing", loginMap); // outsourcingMap을 세션에 저장
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
-                return "redirect:/groupware/bpo/bpoMainOut";
+                
+                return "redirect:/groupware/empMain";
             }
+        	
         } else if("guest".equals(strUserType)) {
         // 고객 로그인
-        	errMsg = loginService.doGuestLogin(strId, strPw);
-        	
-        	if (errMsg == null) { // 로그인 성공
+        	loginMap = loginService.doGuestLogin(strId, strPw);
+        	if (loginMap.containsKey("error")) { // 로그인 실패
+	             errMsg = (String) loginMap.get("error");
+	             model.addAttribute("errMsg", errMsg);
+	             
+	             return "/customer/gstLogin";
+        	} else { // 로그인 성공
                 HttpSession session = req.getSession();
-                session.setAttribute("gstId", strId);
+                session.setAttribute("strId", strId);
+                session.setAttribute("guest", loginMap); // guestMap을 세션에 저장
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
+                
                 return "redirect:/customer/gstMain";
-            } else if(errMsg != null) {
-            	model.addAttribute("errMsg", errMsg);
-                return "/customer/gstLogin";
             }
-            	
+        	
         } else if (strUserType == null || strUserType.isEmpty()) {
         // 선택을 안 했을 경우
             errMsg = "사용자 유형을 선택해주세요.";
         }
-        
         model.addAttribute("errMsg", errMsg);
         return "/groupware/login";
     }
@@ -140,7 +158,6 @@ public class LoginController {
 		if(session != null){
 	            session.invalidate();
 	    }
-		
 		return "redirect:/groupware/login";
 	}
 
@@ -151,7 +168,6 @@ public class LoginController {
 		if(session != null){
 	            session.invalidate();
 	    }
-		
 		return "redirect:/customer/gstLogin";
 	}
 }

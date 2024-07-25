@@ -12,13 +12,13 @@ import com.topaz.dto.Guest;
 public interface LoginMapper {
 
 	/* 분류번호: #1 - 직원 로그인 */
-	Employee doEmpLogin(String strId);
+	Map<String, Object> doEmpLogin(String strId);
 
 	/* 분류번호: #12 - 외주업체 로그인 */
-	Outsourcing doOutsourcingLogin(String strId);
+	Map<String, Object> doOutsourcingLogin(String strId);
 
 	/* 분류번호: #15 - 고객 로그인 */
-	Guest doGuestLogin(String strId);
+	Map<String, Object> doGuestLogin(String strId);
 
 	/* 분류 번호 :  #3 - 출근 등록*/
 	public int insertStrWork(String empNo);
