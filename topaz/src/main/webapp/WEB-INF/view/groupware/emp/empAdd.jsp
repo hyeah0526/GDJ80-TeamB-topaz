@@ -65,78 +65,79 @@
 					     	
 			     			<!-- 이름 -->
 			     			<label>이름</label>
-			     			<input type="text" name="empName" class="step" data-step="1" placeholder="이름" maxlength="20">
+			     			<input type="text" name="empName" class="step" data-step="1" placeholder="이름" maxlength="20" value="${employeeRequest.empName}">
 			     			<div class="validMsg">${empNameMsg}</div>
 			     			
 			     			<!-- 부서 -->
 			     			<label>부서</label>
 			     			<select name="empDept" class="step"  data-step="2">
-			     				<option value="E">인사부</option>
-			     				<option value="M">마케팅부</option>
-			     				<option value="W">행정부</option>
-			     				<option value="C">고객관리부</option>
+			     				<option value="E" <c:if test="${employeeRequest.empDept == 'E'}">selected</c:if>>인사부</option>
+							    <option value="M" <c:if test="${employeeRequest.empDept == 'M'}">selected</c:if>>마케팅부</option>
+							    <option value="W" <c:if test="${employeeRequest.empDept == 'W'}">selected</c:if>>행정부</option>
+							    <option value="C" <c:if test="${employeeRequest.empDept == 'C'}">selected</c:if>>고객관리부</option>
 			     			</select>
 			     			
 			     			<!-- 직위 -->
 			     			<label>직위</label>
 			     			<select name="empGrade" class="step"  data-step="3">
-			     				<option value="1">사원</option>
-			     				<option value="2">대리</option>
-			     				<option value="3">팀장</option>
-			     				<option value="4">부장</option>
+			     				<option value="1" <c:if test="${employeeRequest.empGrade == '1'}">selected</c:if>>사원</option>
+							    <option value="2" <c:if test="${employeeRequest.empGrade == '2'}">selected</c:if>>대리</option>
+							    <option value="3" <c:if test="${employeeRequest.empGrade == '3'}">selected</c:if>>팀장</option>
+							    <option value="4" <c:if test="${employeeRequest.empGrade == '4'}">selected</c:if>>부장</option>
 			     			</select>			
    			     			
    			     			<!-- 직원번호 -->
 			     			<label>직원번호</label>
    			     			<div>
-				     			<input type="text" name="empNo" class="step" data-step="4"  readonly>
+				     			<input type="text" name="empNo" class="step" data-step="4"  readonly value="${employeeRequest.empNo}">
 	   			     			<div class="validMsg">${empNoMsg}</div>	
 				     			<button type="button" id="empNoBtn" class="step" data-step="4" >직원 번호 생성</button>
    			     			</div>
    			     			
 			     			<!-- 비밀번호 -->
 			     			<label>비밀번호</label>
-			     			<input type="password" name="empPw" class="step"  data-step="5" placeholder="비밀번호" maxlength="20">
+			     			<input type="password" name="empPw" class="step"  data-step="5" placeholder="비밀번호" maxlength="20" value="${employeeRequest.empPw}">
 			     			<div class="validMsg">${empPwMsg}</div>
    			     			
    			     			<!-- 생일 -->
    			     			<label>생일</label>
-   			     			<input type="date" name="empBirth" class="step"  data-step="6">
+   			     			<input type="date" name="empBirth" class="step"  data-step="6"  value="${employeeRequest.empBirth}">
 			     			<div class="validMsg">${empBirthMsg}</div>
 			     			
 			     			<!-- 전화번호 -->
 			     			<label>전화번호</label>
 			     			<div class="phoneNumber">
-	   			     			<input type="text" name="firstPhNumber" class="step"  data-step="7" placeholder="010" maxlength="3" pattern="\d*">
+	   			     			<input type="text" name="firstPhNumber" class="step"  data-step="7" placeholder="010" maxlength="3" pattern="\d*" value="${employeeRequest.empPhoneNumber.substring(0, 3)}">
 	   			     			<label>-</label>
-				     			<input type="text" name="secondPhNumber" class="step"  data-step="8" placeholder="1234" maxlength="4" pattern="\d*">
+				     			<input type="text" name="secondPhNumber" class="step"  data-step="8" placeholder="1234" maxlength="4" pattern="\d*"  value="${employeeRequest.empPhoneNumber.substring(3, 7)}">
 				     			<label>-</label>
-				     			<input type="text" name="thirdPhNumber" class="step"  data-step="9" placeholder="1234" maxlength="4" pattern="\d*">
+				     			<input type="text" name="thirdPhNumber" class="step"  data-step="9" placeholder="1234" maxlength="4" pattern="\d*" value="${employeeRequest.empPhoneNumber.substring(7)}">
 				     			<input type="hidden" id="empPhoneNumber" name="empPhoneNumber">
 			     			</div>
+			     			<div class="validMsg">${empPhoneNumberMsg}</div>
 			     			
 			     			<!-- 우편번호 -->
 			     			<div class="postInput">
 			     				<label>우편번호</label>
 			     				<button class="step" type="button" data-step="10"   onclick="openPostcode('postNo','firstAddress')">우편번호 검색</button>
 			     			</div>
-							<input name="postNo"  class="step" data-step="11" placeholder="우편번호" maxlength="5">
+							<input name="postNo"  class="step" data-step="11" placeholder="우편번호" maxlength="5" value="${employeeRequest.postNo}">
 			     			<div class="validMsg">${postNoMsg}</div>
-			     			<input name="firstAddress" class="step" data-step="12" placeholder="주소">
+			     			<input name="firstAddress" class="step" data-step="12" placeholder="주소" value="${employeeRequest.address}">
 			     			<input name="addressDetail" class="step" data-step="13" placeholder="상세 주소">
 			     			<input type="hidden" id="address" name="address">
 			     			<div class="validMsg">${addressMsg}</div>
 			     			
 			     			<!-- 입사일 -->
 			     			<label>입사일</label>
-			     			<input type="date" name="empHireDate" class="step" data-step="14"> 
+			     			<input type="date" name="empHireDate" class="step" data-step="14" value="${employeeRequest.empHireDate}"> 
 			     			<div class="validMsg">${empHireDateMsg}</div>
 			     			
 			     			 <!-- 성별 -->
 			     			 <div>
 				     			 <label>성별 : </label>
-				     			 <input type="radio" name="empGender" value="F" data-step="15">여자
-				     			 <input type="radio" name="empGender" value="M" data-step="15">남자
+				     			 <input type="radio" name="empGender" value="F" data-step="15"<c:if test="${employeeRequest.empGender == 'F'}">checked</c:if>>여자
+				     			 <input type="radio" name="empGender" value="M" data-step="15"<c:if test="${employeeRequest.empGender == 'M'}">checked</c:if>>남자
 				     			 <div class="validMsg">${empGenderMsg}</div>
 			     			 </div>
 			     			 

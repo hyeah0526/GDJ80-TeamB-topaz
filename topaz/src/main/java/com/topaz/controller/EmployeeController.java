@@ -78,6 +78,9 @@ public class EmployeeController {
 				// "이름+Msg"에 메세지를 담아 모델에 추가
 				model.addAttribute(e.getField()+"Msg", e.getDefaultMessage());
 			}
+			
+			 // 기존 입력 값도 모델에 담기
+	        model.addAttribute("employeeRequest", employeeRequest);
 			return "groupware/emp/empAdd"; 
 		}
 		
@@ -310,10 +313,27 @@ public class EmployeeController {
 		//매개변수 디버깅
 		log.debug(Debug.KIS + "controller / myPwModify / paramMap : " + paramMap);
 		
+		//input 값 
+		String currentPw = (String) paramMap.get("currentPw");
+	    String newPw = (String) paramMap.get("newPw");
+	    String newPwCheck = (String) paramMap.get("newPwCheck");
+		
+	    //애러 메세지
+	    String message = null;
+	    
+	    //input 값 유효성 검사
+	    if (currentPw == null || currentPw.isEmpty() ||
+            newPw == null || newPw.isEmpty() ||
+            newPwCheck == null || newPwCheck.isEmpty()) {
+	    	
+            message = "비밀번호를 입력해 주세요.";
+            
+        }
+		
 		//서비스 레이어로 비밀번호 정보 이동
 		int row = employeeService.modifyMyPw(paramMap);
 		
-		String message = "비밀번호 변경 실패 입니다.";
+		message = "비밀번호 변경 실패";
 		
 		if(row > 0) {
 			return "redirect:/login";
