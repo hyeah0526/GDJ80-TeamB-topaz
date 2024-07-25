@@ -43,14 +43,16 @@
 						
 						<!-- Table with stripped rows -->
 						<div id="searchFormContainer" style="margin-top: 20px;">
+							
+						
 							<form action="/topaz/groupware/approval/approvalList" id="searchForm" method="post">
 								<div id="approvalStateContainer" style="margin-bottom: 30px;">
-									<button type="button" class="btn btn-primary" value="">전체</button>
-									<button type="button" class="btn btn-primary" value="4">기안함</button>
-									<button type="button" class="btn btn-primary" value="3">수신함</button>
-									<button type="button" class="btn btn-primary" value="2">완료함</button>
-									<button type="button" class="btn btn-primary" value="1">반려함</button>
-									<button type="button" class="btn btn-primary" value="1">결재함</button>
+									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="">전체</button>
+									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c1">기안함</button>
+									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c2">수신함</button>
+									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c3">승인함</button>
+									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c4">취소/반려함</button>
+									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c5">결재함</button>
 								</div>
 								<div class="container">
                                     <div class="row justify-content-center form-group g-3 align-items-center">
@@ -80,14 +82,14 @@
 							</form>
 						</div>
 						<br>
-						<a href="/topaz/groupware/approval/approvalAdd" class="btn btn-primary">작성</a>
+						<a href="/topaz/groupware/approval/approvalAdd" class="btn btn-primary">신규 작성</a>
 						<table class="table table-hover">
 							<thead>
 								<tr>
 									<th scope="col">결재 종류</th>
 									<th scope="col">제목</th>
-									<th scope="col">상태</th>
 									<th scope="col">작성자</th>
+									<th scope="col">상태</th>
 									<th scope="col">신청 날짜</th>
 								</tr>	
 								
@@ -106,9 +108,6 @@
 			</div>
 		</div>
     
-    
-    
-    
     </section><!-- section 종료 -->
 
 	</main><!-- End #main -->
@@ -117,6 +116,9 @@
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 	<script>
+	
+		let approvalCategory = '';
+	
 		/* 페이징 버튼 업데이트 */
 	    function updatePagination(currentPage, lastPage) {
 	        let paginationUl = $('#paginationUl');
@@ -155,9 +157,18 @@
 	
 	    $(document).ready(function() {
 	        // 페이지 로드 시 1페이지 불러오기
-	        approvalList(1);
+	        approvalList(1, approvalCategory);
 	        console.log("approvalList page load ");
 	    
+	        // 결재 카테고리 클릭 시
+	        $('.approval-category').click(function() {
+	            approvalCategory = $(this).data('category'); // data-category에서 값 읽기
+	            console.log("approvalCategory : ", typeof approvalCategory);
+
+	            approvalList(1, approvalCategory); // AJAX 요청으로 데이터 로드
+	            
+	        });
+	        
 	        // 검색 버튼 클릭 시 첫번째 페이지로 조회하기
 	        $('#searchButton').click(function() {
 	        	// 검색 값 받아오기
@@ -167,27 +178,26 @@
 	            let searchDateEnd = $('#searchDateEnd').val();
 	            console.log("searchDateEnd : ", searchDateEnd);
 	        	
-	         	// 날짜 값이 있는지 확인
+	         	// 날짜 유효성 검사
                 if (searchDateStart && searchDateEnd) {
-                    // 날짜 비교
                     if (searchDateStart > searchDateEnd) {
                         alert("검색 날짜를 다시 확인해 주세요.");
                         return;
                     }
                 }
 	        	
-	        	approvalList(1);
+	        	approvalList(1, approvalCategory);
 	        });
 	    
 	        // 페이징 버튼 클릭 시
 	        $('#paginationUl').on('click', '.approvalListPage', function(e) {
 	            e.preventDefault(); // 링크 기본 동작 방지
 	            let currentPage = $(this).data('page');
-	            approvalList(currentPage); // 클릭한 페이지 번호로 조회
+	            approvalList(currentPage, approvalCategory); // 클릭한 페이지 번호로 조회
 	        });
 	    
 	        // Ajax 호출
-	        function approvalList(currentPage) {
+	        function approvalList(currentPage, approvalCategory) {
 	            // 검색 값 받아오기
 	            let searchDateStart = $('#searchDateStart').val();
 	            console.log("searchDateStart : ", searchDateStart);
@@ -198,6 +208,9 @@
 	            let searchWord = $('#searchWord').val();
 	            console.log("searchWord : ", searchWord);
 	            
+	            console.log("approvalCategory : ", approvalCategory);
+	            console.log("approvalCategory : ", typeof approvalCategory);
+
 	            // Ajax 리스트 호출 
 	            $.ajax({
 	                url: '/topaz/approval/approvalList',
@@ -206,7 +219,8 @@
 	                	"currentPage": currentPage,
 	                    "searchWord": searchWord,
 	                    "searchDateStart": searchDateStart,
-	                    "searchDateEnd": searchDateEnd
+	                    "searchDateEnd": searchDateEnd,
+	                    "approvalCategory": approvalCategory
 	                },
 	                success: function(response) {
 	                    console.log("response : ", response)

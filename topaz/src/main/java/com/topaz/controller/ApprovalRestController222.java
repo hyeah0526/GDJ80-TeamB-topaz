@@ -35,6 +35,7 @@ public class ApprovalRestController222 {
 			@RequestParam(name="rowPerPage", defaultValue="10") int rowPerPage,
 			@RequestParam(name="searchDateStart", defaultValue="") String searchDateStart,
 			@RequestParam(name="searchDateEnd", defaultValue="") String searchDateEnd,
+			@RequestParam(name="approvalCategory", defaultValue="") String approvalCategory,
 			@RequestParam(name="searchWord", defaultValue="") String searchWord ){
 		
 		// 매개값 디버깅
@@ -42,12 +43,15 @@ public class ApprovalRestController222 {
 		log.debug(Debug.HEH + " approvalList rowPerPage : " + rowPerPage + Debug.END);
 		log.debug(Debug.HEH + " approvalList searchDateStart : " + searchDateStart + Debug.END);
 		log.debug(Debug.HEH + " approvalList searchDateEnd : " + searchDateEnd + Debug.END);
+		log.debug(Debug.HEH + " approvalList approvalCategory : " + approvalCategory + Debug.END);
 		log.debug(Debug.HEH + " approvalList searchWord : " + searchWord + Debug.END);
-			
-		List<Map<String, Object>> list = approvalService.getApprovalList(currentPage, rowPerPage, searchDateStart, searchDateEnd, searchWord);
+		
+		String empNo = "Es1a1s2f5";
+		
+		List<Map<String, Object>> list = approvalService.getApprovalList(currentPage, rowPerPage, searchDateStart, searchDateEnd, approvalCategory, searchWord, empNo);
 		log.debug(Debug.HEH + " approvalList list : " + list + Debug.END);
 		// 마지막페이지 구하기
-		int lastPage = approvalService.getApprovalListLastPage(rowPerPage, searchDateEnd, searchDateStart, searchWord);
+		int lastPage = approvalService.getApprovalListLastPage(rowPerPage, searchDateEnd, searchDateStart, approvalCategory, searchWord, empNo);
 		log.debug(Debug.HEH + " approvalList lastPage : " + lastPage + Debug.END);
 
 		// 값 담아주기

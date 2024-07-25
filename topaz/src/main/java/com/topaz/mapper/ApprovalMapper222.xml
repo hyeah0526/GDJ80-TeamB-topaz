@@ -3,7 +3,7 @@
 <mapper namespace="com.topaz.mapper.ApprovalMapper222">
 
 	
-	<select id="selectApprovalList" resultType="map">
+	<select id="selectApprovalList" parameterType="String" resultType="map">
 		SELECT 
 			approval_doc_no approvalDocNo,
 			(SELECT cd_nm FROM common_code WHERE crp_cd = 'S002' AND cd = approval_type) approvalType , 
@@ -23,6 +23,31 @@
 			<if test="searchDateEnd != null and searchDateEnd != ''">
 				AND reg_time &lt; DATE_ADD(DATE_FORMAT(#{searchDateEnd}, '%Y%m%d'), INTERVAL +1 DAY)
 			</if>
+			<if test="approvalCategory == null or approvalCategory == ''">
+				AND (emp_no = #{empNo}
+					OR first_approval = #{empNo} 
+					OR final_approval = #{empNo})
+			</if>
+			<if test="approvalCategory != null and approvalCategory != ''">
+            <choose>
+                <when test="approvalCategory == 'c1'">
+                    AND emp_no = #{empNo}
+                </when>
+                <when test="approvalCategory == 'c2'">
+                    AND (first_approval = #{empNo} OR final_approval = #{empNo})
+                </when>
+                <when test="approvalCategory == 'c3'">
+                	AND (emp_no = #{empNo} OR first_approval = #{empNo} OR final_approval = #{empNo}) 
+					AND approval_state = '5'
+				</when>
+				<when test="approvalCategory == 'c4'">
+					AND (emp_no = #{empNo} OR first_approval = #{empNo} OR final_approval = #{empNo}) 
+					AND (approval_state = '1' OR approval_state = '2')
+				</when>
+				
+            </choose>
+            
+        	</if>
 		</where>
 		ORDER BY reg_time DESC
 		LIMIT #{beginRow}, #{rowPerPage}
@@ -30,7 +55,7 @@
 	
 	
 	
-	<select id="selectApprovalListTotalRow" resultType="int">
+	<select id="selectApprovalListTotalRow" parameterType="String" resultType="int">
 		SELECT COUNT(*) cnt 
 		FROM approval_doc ad 
 		<where>
@@ -44,6 +69,16 @@
 			<if test="searchDateEnd != null and searchDateEnd != ''">
 				AND reg_time &lt; DATE_ADD(DATE_FORMAT(#{searchDateEnd}, '%Y%m%d'), INTERVAL +1 DAY)
 			</if>
+			<if test="approvalCategory != null and approvalCategory != ''">
+            <choose>
+                <when test="approvalCategory == 'c1'">
+                    AND emp_no = #{empNo}
+                </when>
+                <when test="approvalCategory == 'c2'">
+                    AND (first_approval = #{empNo} OR final_approval = #{empNo})
+                </when>
+            </choose>
+        	</if>
 		</where>
 	</select>
 	

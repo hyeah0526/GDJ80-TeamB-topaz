@@ -27,18 +27,19 @@ public class ApprovalService222 {
 	 * 담당자: 한은혜 
 	 */
 	public List<Map<String, Object>> getApprovalList(int currentPage, int rowPerPage, 
-													String searchDateStart, String searchDateEnd, String searchWord) {
+													String searchDateStart, String searchDateEnd, String approvalCategory,  String searchWord, String empNo) {
 		// 매개값 디버깅
 		log.debug(Debug.HEH + " getApprovalList currentPage : " + currentPage + Debug.END);
 		log.debug(Debug.HEH + " getApprovalList rowPerPage : " + rowPerPage + Debug.END);
 		log.debug(Debug.HEH + " getApprovalList searchDateStart : " + searchDateStart + Debug.END);
 		log.debug(Debug.HEH + " getApprovalList searchDateEnd : " + searchDateEnd + Debug.END);
+		log.debug(Debug.HEH + " getApprovalList approvalCategory : " + approvalCategory + Debug.END);
 		log.debug(Debug.HEH + " getApprovalList searchWord : " + searchWord + Debug.END);
 		
 		// beginRow 계산하기
 		int beginRow = (currentPage - 1) * rowPerPage;
 		
-		List<Map<String, Object>> approvalList = approvalMapper.selectApprovalList(beginRow, rowPerPage, searchDateStart, searchDateEnd, searchWord);
+		List<Map<String, Object>> approvalList = approvalMapper.selectApprovalList(beginRow, rowPerPage, searchDateStart, searchDateEnd, approvalCategory, searchWord, empNo);
 		log.debug(Debug.HEH + " getApprovalList approvalList : " + approvalList + Debug.END);
 		
 		return approvalList;
@@ -50,9 +51,9 @@ public class ApprovalService222 {
 	 * 시작 날짜: 2024-07-24
 	 * 담당자: 한은혜 
 	 */
-	public int getApprovalListLastPage(int rowPerPage, String searchDateEnd, String searchDateStart, String searchWord) {
+	public int getApprovalListLastPage(int rowPerPage, String searchDateEnd, String searchDateStart, String searchWord, String approvalCategory, String empNo) {
 		// 전체 행 수
-		int totalRow = approvalMapper.selectApprovalListTotalRow(searchDateEnd, searchDateStart, searchWord);
+		int totalRow = approvalMapper.selectApprovalListTotalRow(searchDateEnd, searchDateStart, approvalCategory, searchWord, empNo);
 		log.debug(Debug.HEH + " getApprovalListLastPage totalRow : " + totalRow + Debug.END);
 		// 마지막 페이지 계산
 		int lastPage = totalRow /rowPerPage;
