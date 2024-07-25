@@ -1,4 +1,6 @@
 /* #5 - 외주업체 등록 페이지 (bpoAdd.jsp) */
+// chkId버튼이 클릭됐는지 확인하는 변수
+let isChkIdClicked = false;
 
 /* 직원 검색 버튼 */
 $('#chkEmp').click(function() {
@@ -151,14 +153,12 @@ $('#chkId').click(function() {
 				$('#outsourcingNo').val("");
 			}else{
 				// 사용 가능한 아이디일 경우 사용여부 확인
-            	if(confirm("사용 가능한 아이디 입니다. 사용하시겠습니까?")) {
-                	// 확인 누를경우 아이디 전체 값 넣어주고 readonly로 변경
-                	$('#outsourcingNo').val(OutsourcingIdAll).prop('readonly', true);
+				alert('사용 가능한 아이디 입니다!');
+				// 버튼 클릭여부 true로 바꿔주기
+				isChkIdClicked = true;
+            	// 확인 누를경우 아이디 전체 값 넣어주고 readonly로 변경
+            	$('#outsourcingNo').val(OutsourcingIdAll).prop('readonly', true);
                 	
-				} else {
-	                // 취소할경우 내용 비워주기
-	                $('#outsourcingNo').val("");
-            	}
 			}
 		}
 	});
@@ -198,6 +198,13 @@ function validateDateRange() {
 /* submit 등록폼 전송 버튼 */
 $('#addBpoBtn').click(function() {
 	console.log('등록폼 submit버튼 클릭');
+	
+	// 아이디 중복검사 클릭여부
+	if(!isChkIdClicked){
+		alert('아이디를 중복검사를 진행해주세요');
+		$('#outsourcingNo').focus();
+		return false;
+	}
 	
 	// 주소 address에 값 담기
 	let firstAddress = $('#firstAddress').val();
