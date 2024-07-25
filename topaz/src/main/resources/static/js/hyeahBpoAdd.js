@@ -89,6 +89,16 @@ $('#chkId').click(function() {
 		return false; 
 	}
 	
+	// 아이디 글자수 제한
+	if($('#outsourcingNo').val().length > 8){
+		console.log('아이디 글자수 제한');
+			
+		alert('아이디는 8자 미만으로 작성해주세요');
+		$('#outsourcingNo').focus();
+		return false; 
+	}
+	
+	
 	// 대문자만 허용
     if (!/^[A-Z]+$/.test($('#outsourcingNo').val())) {
         alert('아이디는 영어 대문자로만 입력해주세요');

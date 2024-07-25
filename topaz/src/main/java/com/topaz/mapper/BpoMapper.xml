@@ -327,7 +327,7 @@
 			, o.use_yn useYn
 		FROM 
 			outsourcing o
-		INNER JOIN file_upload f 
+		LEFT JOIN file_upload f 
 			ON o.outsourcing_no = f.reference_no
 		WHERE 
 			o.outsourcing_no = #{outsourcingNo}

@@ -68,7 +68,7 @@
               
 		<!-- 페이징 -->
 		<nav aria-label="Page navigation example">
-			<ul class="pagination" id="paginationUl">
+			<ul class="pagination mt-4" id="paginationUl" style="justify-content: center;">
                <!-- 페이징 버튼 추가되는 자리(bpoList()) -->
            </ul>
 		</nav>

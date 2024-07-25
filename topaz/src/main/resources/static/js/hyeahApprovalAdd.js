@@ -29,30 +29,6 @@ $(document).ready(function(){
 	});
 	
 	
-	/* 종료일이 시작일보다 먼저일 수 없게 예외처리
-	// 시작일 먼저 입력시 유효성검사
-	$('#contractStart').change(function() {
-	    validateDateRange();
-	});
-	
-	// 종료일 먼저 입력시 유효성검사
-	$('#contractEnd').change(function() {
-	    validateDateRange();
-	});
-	
-	function validateDateRange() {
-	    // 시작일, 종료일 값 
-	    var startDateValue = new Date($('#eventStartDate').val());
-	    var endDateValue = new Date($('#eventStartDate').val());
-	
-	    // 종료일이 시작일보다 이른 경우
-	    if ($('#contractEnd').val() !== '' && endDateValue < startDateValue) {
-	        // 안내
-	        alert('종료일은 시작일 이후여야 합니다.');
-	    }
-	}
-	 */
-	
 	/* ====================서명 등록==================== */
 	// 서명패드 신규 버튼 클릭시 모달 창 띄우기
 	$('#approvalSignAddBtn').click(function() {

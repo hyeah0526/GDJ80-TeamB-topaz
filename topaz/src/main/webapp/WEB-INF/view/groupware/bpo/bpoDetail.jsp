@@ -40,7 +40,12 @@
 		<div class="row bpoLabel">
 			<div class="col-xl-4"><div class="card">
 				<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-	              	<img src="/topaz/assets/img/bpo/${b.fileName}" class="rounded-circle bpoPic" width="250px">
+					<c:if test="${b.fileName eq null}">
+						<img src="/topaz/assets/img/bpo/bpoPaging.png" class="rounded-circle bpoPic" width="250px">
+					</c:if>
+					<c:if test="${b.fileName ne null}">
+	              		<img src="/topaz/assets/img/bpo/${b.fileName}" class="rounded-circle bpoPic" width="250px">
+	              	</c:if>
 	             	<h2>${b.outsourcingName}</h2>
 	             	<input type="hidden" value="${b.useYn}" name="useYn" id="useYn">
 	             	<c:if test="${b.useYn eq 'Y'}">
