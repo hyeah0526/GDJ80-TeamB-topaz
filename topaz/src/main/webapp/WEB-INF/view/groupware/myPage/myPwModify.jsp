@@ -85,6 +85,13 @@
                                 </div>                                    
                             </div>
                             
+                            <!-- 메시지 표시 -->
+                            <c:if test="${not empty message}">
+                                <div class="alert alert-danger">
+                                    ${message}
+                                </div>
+                            </c:if>
+                            
                              <!-- 버튼 -->
                              <div class="formBtn">
                                 <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myInfo'">뒤로가기</button>
@@ -101,5 +108,5 @@
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 </body>
-	<script src="<c:url value='/js/insuMyPwModify.js'/>"></script>
+	<script src="/topaz/js/insuMyPwModify.js"></script>
 </html>

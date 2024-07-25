@@ -88,6 +88,7 @@ public class EmployeeController {
 		
 		//empGrade에 따라 휴가 설정
 		int yearCnt = 0; // 기본값
+		int monthCnt = 0; 
 		int empGrade = Integer.parseInt(employeeRequest.getEmpGrade());
 		 
 		if (empGrade == 1) {
@@ -101,6 +102,7 @@ public class EmployeeController {
 	    }
 		
 	    leaveMap.put("yearCnt", yearCnt);
+	    leaveMap.put("monthCnt", monthCnt);
 		
 		//디버깅
 		log.debug(Debug.KIS + "controller / empAdd / leaveMap : " + leaveMap);
@@ -301,15 +303,26 @@ public class EmployeeController {
 	 * 담당자: 김인수
 	*/
 	@PostMapping("/groupware/myPage/myPwModify")
-	public String myPwModify(@RequestParam Map<String, Object> paramMap) {
+	public String myPwModify(
+			@RequestParam Map<String, Object> paramMap,
+			Model model) {
 		
 		//매개변수 디버깅
 		log.debug(Debug.KIS + "controller / myPwModify / paramMap : " + paramMap);
 		
 		//서비스 레이어로 비밀번호 정보 이동
-		employeeService.modifyMyPw(paramMap);
+		int row = employeeService.modifyMyPw(paramMap);
 		
-		return "redirect:/groupware/login";
+		String message = "비밀번호 변경 실패 입니다.";
+		
+		if(row > 0) {
+			return "redirect:/login";
+		}else {
+			model.addAttribute("message",message);			
+		}
+		
+		
+		return "groupware/myPage/myPwModify";
 	}
 	
 	

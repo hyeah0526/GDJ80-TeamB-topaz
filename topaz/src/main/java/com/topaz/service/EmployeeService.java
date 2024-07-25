@@ -246,8 +246,6 @@ public class EmployeeService {
 				changePw = empMapper.modifyEmpPw(paramMap);
 				log.debug(Debug.KIS + "service / modifyMyPw / changePw : " + changePw);
 			}
-		}else {
-			throw new RuntimeException();
 		}
 		
 		return changePw;
