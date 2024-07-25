@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -386,6 +387,26 @@ public class EmployeeService {
 		return resultMap;
 	} 
 	
+	
+
+	/*
+	 * 분류번호: #3 - 월차 자동 입력
+	 * 시작 날짜: 2024-07-25
+	 * 담당자: 김인수
+	*/
+	@Scheduled(cron = "0 0 0 L * ?") // 매달 마지막 날 자정에 실행
+	public void updateMonthLeave() {
+		
+		//월차 자동입력 결과
+		int updateCount = empMapper.updateMonthLeave();
+		
+		if(updateCount > 0) {
+			log.info(Debug.KIS + "service / updateMonthLeave / updateCount : " + updateCount + " 성공했습니다. ");
+		}else {
+			log.warn(Debug.KIS + "service / updateMonthLeave / updateCount : " + updateCount + " 실패했습니다. ");
+		}
+		
+	}
 	
 	
 	//========== 쪽지 

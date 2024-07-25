@@ -516,6 +516,29 @@
    		</if>
 	</select>
 	
+	
+	<!--  분류 번호 :  #3 - 월차 자동 입력  -->
+	<update id="updateMonthLeave" >
+		UPDATE leave l
+		JOIN (
+		    SELECT
+		        emp_no,
+		        COUNT(*) AS workDay
+		    FROM
+		        commute_history
+		    WHERE
+		        DATE_FORMAT(start_time, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m') AND
+		        DAYOFWEEK(start_time) BETWEEN 2 AND 6
+		    GROUP BY emp_no
+		) c
+		ON l.emp_no = c.emp_no
+		SET l.month_count = CASE
+		    WHEN l.month_count IS NULL THEN 1
+		    ELSE l.month_count + 1
+		END
+		WHERE c.workDay >= 18;
+	</update>
+	
 	<!-- ========= 쪽지 ========= -->
 	
 	
