@@ -82,7 +82,11 @@
 							</form>
 						</div>
 						<br>
-						<a href="/topaz/groupware/approval/approvalAdd" class="btn btn-primary">신규 작성</a>
+						
+						<div class="button-container" style="display: flex; justify-content: flex-end;">
+							<a href="/topaz/groupware/approval/approvalAdd" class="btn btn-primary">신규 작성</a>
+						</div>						
+						
 						<table class="table table-hover">
 							<thead>
 								<tr>
@@ -118,7 +122,9 @@
 	<script>
 	
 		let approvalCategory = '';
-	
+		// empGrade 값 세션에서 가져오기
+		let empGrade = ${sessionScope.employee.empGrade};
+		
 		/* 페이징 버튼 업데이트 */
 	    function updatePagination(currentPage, lastPage) {
 	        let paginationUl = $('#paginationUl');
@@ -156,6 +162,16 @@
 	    }
 	
 	    $(document).ready(function() {
+	    	
+	    	// 결재함 접근 권한 제어
+            if (empGrade >= 4) {
+                // empGrade가 4 이상일 때만 관련 UI 요소 표시
+                $('.approval-category[data-category="c5"]').show();
+            } else {
+                // 그렇지 않으면 숨김
+                $('.approval-category[data-category="c5"]').hide();
+            }
+	    	
 	        // 페이지 로드 시 1페이지 불러오기
 	        approvalList(1, approvalCategory);
 	        console.log("approvalList page load ");
@@ -263,14 +279,15 @@
 	                    updatePagination(response.currentPage, response.lastPage);
 	                }
 	            });
+	         
 	        }
+	     	// 카테고리 버튼 클릭 시 검색 폼 값 초기화
+	        $('.approval-category').on('click', function() {
+	            $('#searchDateStart').val(''); // 시작 날짜 초기화
+	            $('#searchDateEnd').val(''); // 종료 날짜 초기화
+	            $('#searchWord').val(''); // 검색어 초기화
+	        });
 	    });
-	    
-
-	
-	
-	
-	
 	</script>
 </body>
 
