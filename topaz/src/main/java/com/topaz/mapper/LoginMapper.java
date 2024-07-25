@@ -4,10 +4,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.topaz.dto.Employee;
-import com.topaz.dto.Outsourcing;
-import com.topaz.dto.Guest;
-
 @Mapper
 public interface LoginMapper {
 

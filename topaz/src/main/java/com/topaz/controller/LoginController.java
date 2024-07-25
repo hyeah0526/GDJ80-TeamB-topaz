@@ -38,10 +38,10 @@ public class LoginController {
 	 */
 
 	// 로그인 페이지 매핑
-	@GetMapping("/groupware/login")
+	@GetMapping("/login")
 	public String loginCon() {
 		
-		return "/groupware/login";
+		return "/login";
 	}
 	
 	
@@ -93,7 +93,7 @@ public class LoginController {
                 errMsg = (String) loginMap.get("error");
                 model.addAttribute("errMsg", errMsg);
                 
-                return "/groupware/login";
+                return "/login";
             } else { // 로그인 성공
                 HttpSession session = req.getSession();
                 session.setAttribute("strId", strId);
@@ -110,14 +110,14 @@ public class LoginController {
 	             errMsg = (String) loginMap.get("error");
 	             model.addAttribute("errMsg", errMsg);
 	             
-	             return "/groupware/login";
+	             return "/login";
         	} else { // 로그인 성공
                 HttpSession session = req.getSession();
                 session.setAttribute("strId", strId);
                 session.setAttribute("outsourcing", loginMap); // outsourcingMap을 세션에 저장
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
                 
-                return "redirect:/groupware/empMain";
+                return "redirect:/outsourcing/bpoMainOut";
             }
         	
         } else if("guest".equals(strUserType)) {
@@ -130,7 +130,7 @@ public class LoginController {
 	             return "/customer/gstLogin";
         	} else { // 로그인 성공
                 HttpSession session = req.getSession();
-                session.setAttribute("strId", strId);
+                session.setAttribute("gstId", strId);
                 session.setAttribute("guest", loginMap); // guestMap을 세션에 저장
                 log.debug(Debug.HEH + "session : " + session + Debug.END);
                 
@@ -142,7 +142,7 @@ public class LoginController {
             errMsg = "사용자 유형을 선택해주세요.";
         }
         model.addAttribute("errMsg", errMsg);
-        return "/groupware/login";
+        return "/login";
     }
 
 	/*
@@ -158,7 +158,7 @@ public class LoginController {
 		if(session != null){
 	            session.invalidate();
 	    }
-		return "redirect:/groupware/login";
+		return "redirect:/login";
 	}
 
 	// 고객 로그아웃

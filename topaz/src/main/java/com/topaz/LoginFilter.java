@@ -2,6 +2,8 @@ package com.topaz;
 
 import java.io.IOException;
 
+import com.topaz.utill.Debug;
+
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import com.topaz.utill.Debug;
 
 /*
  * 서비스명: - 
@@ -20,7 +21,8 @@ import com.topaz.utill.Debug;
  * 담당자: 한은혜
  */
 
-@WebFilter({"/groupware/*", "/customer/gstMyInfo"})
+@WebFilter({"/groupware/*","/outsourcing/*", 
+			"/customer/gstMyInfo", "/customer/gstMyInfoModify", "/customer/gstPWModify", "/customer/gstMyVolAppList"})
 @Slf4j
 public class LoginFilter implements Filter {
 	
@@ -37,7 +39,6 @@ public class LoginFilter implements Filter {
         log.debug(Debug.HEH + "LoginFilter requestURI : " + requestURI + Debug.END);
         log.debug(Debug.HEH + "LoginFilter session : " + session + Debug.END);
         
-        
         // 로그인 페이지와 관련된 URI는 필터링하지 않도록 설정
         if (requestURI.endsWith("/login") || requestURI.endsWith("/login/submit") || requestURI.endsWith("/gstLogin")) {
 	        log.debug(Debug.HEH + "LoginFilter 필터 통과 " + Debug.END);
@@ -47,15 +48,50 @@ public class LoginFilter implements Filter {
 
         // 세션이 없을 시 경로 설정
         if (requestURI.startsWith(httpRequest.getContextPath() + "/groupware")) {
-            // 그룹웨어 : 세션이 없는 경우 그룹웨어 로그인 페이지로 redirect
+        	// 직원 : 세션이 있는 경우 ID의 시작이 'B'인지 검사
+            if (session != null && session.getAttribute("strId") != null) {
+            	String strId = (String) session.getAttribute("strId");
+    	        log.debug(Debug.HEH + "LoginFilter 직원 strId : " + strId + Debug.END);
+    	        if(strId.startsWith("B")) {
+    	        	// B이면 권한 없음
+    	        	session.invalidate();
+                    httpResponse.setContentType("text/html; charset=UTF-8");
+                    httpResponse.getWriter().write("<script>alert('접근 권한이 없습니다.'); location.href='" 
+                    + httpRequest.getContextPath() + "/login';</script>");
+                    return;
+                }
+            }
+            // 직원 : 세션이 없는 경우 그룹웨어 로그인 페이지로 redirect
             if (session == null || session.getAttribute("strId") == null) {
-    	        log.debug(Debug.HEH + "LoginFilter 그룹웨어 세션 X " + Debug.END);
+    	        log.debug(Debug.HEH + "LoginFilter 직원 세션 X " + Debug.END);
                 httpResponse.setContentType("text/html; charset=UTF-8");
                 httpResponse.getWriter().write("<script>alert('로그인 해주세요.'); location.href='" 
-                + httpRequest.getContextPath() + "/groupware/login';</script>");            
+                + httpRequest.getContextPath() + "/login';</script>");            
                 return;
             }
-            
+        } // 세션이 없을 시 경로 설정
+        if (requestURI.startsWith(httpRequest.getContextPath() + "/outsourcing")) {
+            // 아웃소싱 : 세션이 있는 경우 ID의 시작이 'B'인지 검사
+            if (session != null && session.getAttribute("strId") != null) {
+            	String strId = (String) session.getAttribute("strId");
+    	        log.debug(Debug.HEH + "LoginFilter 외주업체 strId : " + strId + Debug.END);
+    	        if(!strId.startsWith("B")) {
+    	        	// B가 아니면 권한 없음
+    	        	session.invalidate();
+                    httpResponse.setContentType("text/html; charset=UTF-8");
+                    httpResponse.getWriter().write("<script>alert('접근 권한이 없습니다.'); location.href='" 
+                    + httpRequest.getContextPath() + "/login';</script>");
+                    return;
+                }
+            }
+            // 아웃소싱 : 세션이 없는 경우 그룹웨어 로그인 페이지로 리다이렉트
+            if (session == null || session.getAttribute("strId") == null) {
+                log.debug(Debug.HEH + "LoginFilter 외주업체 세션 X " + Debug.END);
+                httpResponse.setContentType("text/html; charset=UTF-8");
+                httpResponse.getWriter().write("<script>alert('로그인 해주세요.'); location.href='" 
+                + httpRequest.getContextPath() + "/login';</script>");
+                return;
+            }
         } else if (requestURI.startsWith(httpRequest.getContextPath() + "/customer/gstMyInfo")) {
             // 고객페이지 : 세션이 없는 경우 고객 로그인 페이지로 redirect
             if (session == null || session.getAttribute("gstId") == null) {
