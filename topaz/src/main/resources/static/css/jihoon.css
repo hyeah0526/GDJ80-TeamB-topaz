@@ -58,7 +58,7 @@
 	height: 50px;
 }
 
-.pagenation {
+.pagination {
     display: flex;
     justify-content: center;
 }

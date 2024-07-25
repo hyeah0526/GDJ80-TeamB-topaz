@@ -288,22 +288,20 @@
 				emp_grade,
 				year_count,
 				month_count,
-				half_count,
-				reg_time,
-				mod_time,
 				reg_id,
+				reg_time,
 				mod_id,
+				mod_time,
 				use_yn
 			)VALUES(
 				#{empNo},
 				#{empGrade},
 				#{yearCnt},
 				#{monthCnt},
-				#{halfCnt},
-				NOW(),
+				#{empNo},
 				NOW(),
 				#{empNo},
-				#{empNo},
+				NOW(),
 				'Y'
 			)
 	</insert>

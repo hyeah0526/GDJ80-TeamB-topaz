@@ -20,7 +20,7 @@ public class EmployeeRequest {
 	private String empNo;
 	
 	@NotBlank(message = "비밀번호는 필수 입력 값입니다.")
-	@Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()_+|<>?:{}]{8,64}$", message = "비밀번호는 8자 이상 문자, 숫자 및 특수문자 조합이어야 합니다.")
+	@Pattern(regexp = "^[0-9]{1,20}$", message = "비밀번호는 숫자만 입력할 수 있습니다.")
 	private String empPw;
 	
 

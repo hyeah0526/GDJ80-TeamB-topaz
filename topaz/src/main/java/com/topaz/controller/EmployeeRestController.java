@@ -287,7 +287,7 @@ public class EmployeeRestController {
 	//========== 쪽지 
 
 	/*
-	 * 서비스명: selectNoteReceived ( 받은 쪽지 ) 
+	 * 서비스명: selectNoteReceived ( 수신 쪽지 조회 ) 
 	 * 시작 날짜: 2024-07-12
 	 * 담당자: 김인수
 	*/
@@ -490,7 +490,7 @@ public class EmployeeRestController {
 	}
 	
 	/*
-	 * 서비스명: selectNoteReceived ( 받은 쪽지 ) 
+	 * 서비스명: selectNoteReceived ( 발신 쪽지 조회 ) 
 	 * 시작 날짜: 2024-07-12
 	 * 담당자: 김인수
 	*/
