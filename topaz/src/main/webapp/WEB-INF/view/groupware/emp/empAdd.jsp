@@ -107,11 +107,11 @@
 			     			<!-- 전화번호 -->
 			     			<label>전화번호</label>
 			     			<div class="phoneNumber">
-	   			     			<input type="text" name="firstPhNumber" class="step"  data-step="7" placeholder="010" maxlength="3" pattern="\d*" value="${employeeRequest.empPhoneNumber.substring(0, 3)}">
+	   			     			<input type="text" name="firstPhNumber" class="step"  data-step="7" placeholder="010" maxlength="3" pattern="\d*" value="${firstPhNumber}">
 	   			     			<label>-</label>
-				     			<input type="text" name="secondPhNumber" class="step"  data-step="8" placeholder="1234" maxlength="4" pattern="\d*"  value="${employeeRequest.empPhoneNumber.substring(3, 7)}">
+				     			<input type="text" name="secondPhNumber" class="step"  data-step="8" placeholder="1234" maxlength="4" pattern="\d*"  value="${secondPhNumber}">
 				     			<label>-</label>
-				     			<input type="text" name="thirdPhNumber" class="step"  data-step="9" placeholder="1234" maxlength="4" pattern="\d*" value="${employeeRequest.empPhoneNumber.substring(7)}">
+				     			<input type="text" name="thirdPhNumber" class="step"  data-step="9" placeholder="1234" maxlength="4" pattern="\d*" value="${thirdPhNumber}">
 				     			<input type="hidden" id="empPhoneNumber" name="empPhoneNumber">
 			     			</div>
 			     			<div class="validMsg">${empPhoneNumberMsg}</div>

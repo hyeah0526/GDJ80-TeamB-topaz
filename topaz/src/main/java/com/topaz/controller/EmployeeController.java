@@ -79,6 +79,14 @@ public class EmployeeController {
 				model.addAttribute(e.getField()+"Msg", e.getDefaultMessage());
 			}
 			
+			//전화번호 가져오기
+	        String phoneNumber = employeeRequest.getEmpPhoneNumber();
+			if(phoneNumber != null) {
+				model.addAttribute("firstPhNumber", phoneNumber.substring(0, 3));
+	            model.addAttribute("secondPhNumber", phoneNumber.substring(3, 7));
+	            model.addAttribute("thirdPhNumber", phoneNumber.substring(7));
+			}
+			
 			 // 기존 입력 값도 모델에 담기
 	        model.addAttribute("employeeRequest", employeeRequest);
 			return "groupware/emp/empAdd"; 
