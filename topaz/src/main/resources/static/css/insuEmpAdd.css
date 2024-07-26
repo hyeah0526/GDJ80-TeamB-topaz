@@ -159,6 +159,11 @@ button:hover,
     color: var(--bs-form-invalid-color);
 }
 
+.postInput button{
+	width: 150px; 
+	height: 40px; 
+	margin-left: 10px;
+}
 
 #preview {
    	width: 150px;
@@ -166,4 +171,12 @@ button:hover,
     margin-top: 10px;
     border: 1px solid #ddd;
     padding: 5px;
+}
+#empNoBtn{
+	width: 200px;
+}
+
+#empNoBtn.disabled {
+    background-color: grey;
+    color: white; 
 }
