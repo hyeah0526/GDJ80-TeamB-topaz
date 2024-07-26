@@ -53,7 +53,7 @@
                             <div class="imageNameDiv">
                                 <!-- 이미지 -->
                                 <div id="previewContainer" class="imagePreviewContainer">
-                                    <img id="preview" src="<c:url value='/images/${empDetail.fileName}'/>" alt="Image">
+                                    <img id="preview" src="<c:url value='/upload/${empDetail.fileName}'/>" alt="Image">
                                 </div>
                                 
                                 <!-- 이름 -->
