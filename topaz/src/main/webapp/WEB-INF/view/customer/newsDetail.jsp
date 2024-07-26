@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -53,8 +55,10 @@
           <section id="blog-details" class="blog-details section">
             <div class="container">
             	<div>
-                  <a href="/topaz/customer/newsModify?newsNo=${newsOne.newsNo }" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 수정</a>
-                  <a href="/topaz/customer/newsDelete?newsNo=${newsOne.newsNo }&fileName=${newsOne.fileName}" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 삭제</a>
+		            <c:if test="${gstId == 'admin'}">
+	                  <a href="/topaz/customer/newsModify?newsNo=${newsOne.newsNo }" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 수정</a>
+	                  <a href="/topaz/customer/newsDelete?newsNo=${newsOne.newsNo }&fileName=${newsOne.fileName}" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 삭제</a>
+                	</c:if>
                 </div>
                 <br>
 				<article class="article" style="text-align: center; margin-auto" >
@@ -65,7 +69,7 @@
 		                  <img src="/topaz/assets/img/guest/${newsOne.fileName }" alt="" class="img-fluid" width="600px">
 		                </div>
 		                <p>
-		                <textarea class="form-control" rows="7" cols="20" readonly >${newsOne.content }</textarea>
+		                <textarea class="form-control" rows="7" cols="20" readonly style="text-align: center">${newsOne.content }</textarea>
 		                </p>
 		                <p>
 		                 등록자/등록시간 <br>

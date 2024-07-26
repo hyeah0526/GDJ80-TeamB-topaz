@@ -47,30 +47,29 @@
 		<div class="card">
 			<div class="card-body">
 		    	<h5 class="card-title">
-		    		<!-- 등록 버튼 -->
-	      			<a href="/topaz/groupware/resident/residentAdd" class="ml-2 btn btn-primary" title="Add New">입주자 등록</a>
 		    	</h5>
 		    	<div class="container">
 				    <div class="row mb-3 align-items-center">
 				        <div class="col-md-3 form-group">
-				            <label for="dong" class="form-label">동</label>
 				            <select id="dong" class="form-select" aria-label="Select dong">
 								<option value = "">동을 선택하세요 </option>
 				            </select>
 				        </div>
 				        <div class="col-md-3 form-group">
-				            <label for="type" class="form-label">타입</label>
 				           	<select id="type" class="form-select" aria-label="Select ho number">
 								<option value ="">타입을 선택하세요</option>
 				            </select>
 				        </div>
 				        <div class="col-md-3 form-group">
-				            <label for="ho" class="form-label">호수</label>
 				            <select id="ho" class="form-select" aria-label="Select second ho number">
 				                <option value ="">호수를 선택하세요</option>
 				            </select>
 				        </div>
-					</div>
+				        <div class="col-md-3 form-group" style="padding-left: 50px;">
+				        	<!-- 등록 버튼 -->
+	      					<a href="/topaz/groupware/resident/residentAdd" class="ml-2 btn btn-primary form-control" title="Add New" style="width: auto;">입주자 등록</a>
+				        </div>
+					</div>	
 						
 				</div>
 	<br>

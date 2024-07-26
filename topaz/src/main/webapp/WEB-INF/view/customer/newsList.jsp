@@ -45,8 +45,10 @@
                 <div class="container">
 	                <div>
 	                	<div>
-	                      <a href="/topaz/customer/newsAdd" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 등록</a>
-	                    </div>
+		                	<c:if test="${gstId == 'admin' }">
+		                      	<a href="/topaz/customer/newsAdd" type="submit" class="btn submitBtn" style="background-color: var(--accent-color); color: white;">알림마당 등록</a>
+		                    </c:if>
+		               	</div>
 	                </div>
 	                <hr>
                     <div class="slider-nav d-flex justify-content-end mb-3">
@@ -92,7 +94,7 @@
                                 <div class="swiper-slide">
                                     <div class="team">
                                         <div class="pic">
-                                            <img src="/topaz/assets/img/guest/${newsItem.fileName}" alt="Image" class="img-fluid">
+                                            <a href="/topaz/customer/newsDetail?newsNo=${newsItem.newsNo }"><img src="/topaz/assets/img/guest/${newsItem.fileName}" alt="Image" class="img-fluid" style="width: 400px; height: 300px"></a>
                                         </div>
                                         <h3 class="">
                                             <a href="/topaz/customer/newsDetail?newsNo=${newsItem.newsNo }"><span class="">${newsItem.title}</span></a>

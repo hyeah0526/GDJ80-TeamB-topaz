@@ -37,12 +37,15 @@
 	<!-- 분류번호: #8 - 객실 관리 페이지 : 객실 상태 초기화 -->
 	<update id="resetStatus" parameterType="com.topaz.dto.Cleaning">
 		UPDATE 
-			cleaning
-		<set>
-			room_status = 'D',
-			cleaning_schedule = DATE_ADD(CURDATE(), INTERVAL 35 HOUR)
-		</set>
+		    cleaning c
+		JOIN 
+		    room r ON c.room_no = r.room_no
+		SET 
+		    c.room_status = 'D',
+		    c.cleaning_schedule = DATE_ADD(CURDATE(), INTERVAL 35 HOUR)
 		WHERE 
-			use_yn = "Y"
+		    c.use_yn = "Y"
+		AND 
+			r.room_state = 1
 	</update>
 </mapper>

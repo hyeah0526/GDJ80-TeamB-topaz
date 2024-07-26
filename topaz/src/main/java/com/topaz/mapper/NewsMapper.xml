@@ -20,6 +20,8 @@
 			n.use_yn = 'Y'
 		AND 
 			n.grade = '3'
+		ORDER BY
+			n.reg_time DESC
 	</select>
 	
 	<!-- 분류 번호 :  #23 - 알림마당 : 알림마당 상세 보기 -->
