@@ -1,5 +1,8 @@
 package com.topaz.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 
@@ -92,6 +95,7 @@ public class LoginController {
         }else if(empDept.equals("C")) {
         	empDeptName = "고객관리부";
         }
+        
         
         log.debug(Debug.PHA + " controller / empMain / empGradeName " + empGradeName + Debug.END);
         log.debug(Debug.PHA + " controller / empMain / empDeptName " + empDeptName + Debug.END);

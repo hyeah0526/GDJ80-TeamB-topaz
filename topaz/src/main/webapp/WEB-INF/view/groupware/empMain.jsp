@@ -120,7 +120,7 @@
         <div class="col-lg-8"><div class="row">
 
             <!-- 로그인 한 유저의 정보 -->
-			<div class="col-xxl-8 col-md-7"><div class="card info-card sales-card">
+			<div class="col-xxl-8 col-md-7"><div class="card info-card sales-card" style="height: 300px;">
 				<div class="card-body">
 					<h5 class="card-title"></h5>
 					<div class="d-flex align-items-center">
@@ -129,9 +129,12 @@
 							<img src="/topaz/upload/${fileName}" width="200px;" height="200px;" class="rounded-circle">
 						</div>
 						<div class="ps-3">
-							<h6>${empName}&nbsp;(${empNo})</h6>
-							<span style="color: #012970;" class="small pt-1 fw-bold">${empDeptName}</span> 
-							<span class="text-muted small pt-2 ps-1">${empGradeName}</span>
+							<h5 class="small pt-1 fw-bold"><span class="text-muted pt-1 mb-1">입사 : ${empHiredate}</span></h5>
+							<h6 class="card-title">${empName}&nbsp;(${empNo})</h6>
+							<h5 style="color: #012970;" class="small pt-1 fw-bold">
+								${empDeptName}
+								<span class="text-muted pt-1">${empGradeName}</span><br>
+							</h5>
 						</div>
 					</div>
 				</div>
@@ -139,7 +142,7 @@
             
             
             <!-- 출/퇴근정보 -->
-			<div class="col-xxl-4 col-md-7"><div class="card info-card revenue-card" style="height: 90%;">
+			<div class="col-xxl-4 col-md-7"><div class="card info-card revenue-card" style="height: 300px;">
 				<div class="card-body">
 					<!-- 출근 -->
 					<h5 class="card-title"></h5>
