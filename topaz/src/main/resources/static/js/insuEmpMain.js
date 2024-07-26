@@ -11,29 +11,31 @@ $(document).ready(function() {
 
                 const noticeList = response.noticeList;
                 const topNoticeContainer = $('#topNoticeContainer');
-                const normalNoticeContainer = $('#normalNoticeContainer');
 
                 topNoticeContainer.empty();
-                normalNoticeContainer.empty();
 
                 let noticesHTML = '';
 
                 noticeList.forEach(n => {
-                    const title = (n.category === '필독') ? '&#128227; [필독] ' + n.title : 
-                                  (n.category === '이벤트') ? '&#127881; [이벤트] ' + n.title : n.title;
 
                     const noticeHTML = `
-                        <tr onclick="window.location.href='/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}'" style="cursor:pointer;">
-                            <td>${n.no}</td>
-                            <td>${title}</td>
-                            <td>${n.empName}</td>
-                        </tr>
+	                    <div class="activity-item d-flex">
+	                    	<div class="" id="e1e1"><a href="#" class="fw-bold text-dark">${n.category}</a></div>
+		                  	<div class="activity-content" id="e2e2" style="display: flex; justify-content: space-between; width: 80%;">
+		                    	<span style="text-align: left;">
+		                    		<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}" style="color:#444444;">
+		                    			${n.titleSub}...
+		                    		</a>
+		                    	</span>
+		                    	<span style="text-align: right;">${n.regTime}</span>
+		                  	</div>
+		               	</div>
                     `;
 
                     noticesHTML += noticeHTML;
                 });
 
-                normalNoticeContainer.append(noticesHTML);
+                topNoticeContainer.append(noticesHTML);
 
                 const currentPage = response.currentPage;
                 const lastPage = response.lastPage;

@@ -39,7 +39,7 @@
 			  
 			  <c:set var="r" value="${bpoOutRsvnOne}"></c:set>
               <!-- 예약 상세 및 수정폼  -->
-              <form id="modRsvnForm" method="post" action="${pageContext.request.contextPath}/groupware/bpo/bpoRsvnModify">
+              <form id="modRsvnForm" method="post" action="${pageContext.request.contextPath}/bpo/bpoRsvnModify">
                 <input type="hidden" name="rsvnNo" value="${r.rsvnNo}">
               
                 <div class="row mb-3">

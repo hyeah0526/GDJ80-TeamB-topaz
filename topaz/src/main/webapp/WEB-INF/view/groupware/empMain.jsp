@@ -2,19 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<!-- 
-	 * 분류 번호 :  #3 - 메인 페이지
-	 * 시작 날짜 : 2024-07-09
-	 * 담당자 : 김인수
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>	
 	<!-- ======= header <Head> 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
-    <link rel="stylesheet" href="/topaz/css/insuEmpMain.css"> <!-- CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
+    
+    <style>
+		.icon-button {
+		  background: none;
+		  border: none;
+		  padding: 8px;
+		}
+	</style>
     
     <!-- Fullcalendar -->
     <script src="/topaz/fullcalendar-6.1.14/dist/index.global.js"></script>
@@ -100,98 +101,134 @@
 
 	<!-- =============================== Main 메인 시작 부분 ================================ -->
 	<main id="main" class="main">
-    
-    	<!-- Title 시작 -->
-		<div class="pagetitle">
-		   <h1>메인</h1>
-		   <nav>
-		     <ol class="breadcrumb">
-		       <li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
-		       <li class="breadcrumb-item active">Main</li>
-		     </ol>
-		   </nav>
-		</div><!-- Title 종료 -->
-    
-        <div class="container">
-            <div class="colorDiv">
-				<div class="notice-and-checkin">
-					
-					<!-- 공지사항 -->
-					<div class="noticeDiv">
-						<table class="table" id="noticeTable">
-							<thead>
-								<tr>
-									<th>No</th>
-									<th>제목</th>
-									<th>작성자</th>
-								</tr>
-							</thead>
-							<!-- 상단 노출 공지사항 -->
-							<tbody class="topNoticeContainer" id="topNoticeContainer">
-							</tbody>
-							<!-- 전체 공지사항 (상단 노출 포함) -->
-							<tbody name="normalNoticeContainer" id="normalNoticeContainer">
-							</tbody>
-						</table>
-						
-						<nav aria-label="Page navigation example">
-							<ul class="pagination" id="paginationUl">
-				           </ul>
-						</nav>		
-					</div>
-					
-					<!-- 출퇴근 버튼 -->
-	            	<div>
-	            		<div>
-			            	<button id="checkInBtn" class="btns" >출근</button>
-			                <button id="checkOutBtn" class="btns" disabled>퇴근</button>
-	            		</div>
-	            		<div class="timeDiv">
-	            			 <div class="timeBox">
-	                            <span class="timeLabel">출근 시간:</span>
-	                            <span class="startTime"></span>
-	                        </div>
-	                        <div class="timeBox">
-	                            <span class="timeLabel">퇴근 시간:</span>
-	                            <span class="endTime"></span>
-	                        </div>
-	            		</div>
-	            	</div>
-				</div>
+	
+	<!-- 타이틀 -->
+	<div class="pagetitle">
+		<h1>Home</h1>
+		<nav>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active">Main</li>
+			</ol>
+      	</nav>
+	</div><!-- End Page Title -->
 
-				<!-- 사내일정 / 스케줄러 -->
-	         	<section class="section">
-					<div class="row">
-						<!-- 왼쪽 세션 -->
-						<div class="col-lg-8">
-							<div class="card">
-								<div class="card-body">
-									<h5 class="card-title col-md-4">
-										<select id="inputState" name="inputState" class="form-select">
-				                    		<option value="">전체</option>
-				                    		<option value="회의">회의</option>
-				                    		<option value="점검">점검</option>
-				                    		<option value="행사">행사</option>
-				                  		</select>
-									</h5>
-									
-									<!-- 캘린더 출력 -->
-									<div id='calendar'></div>
-							
-								</div>
-							</div>
+
+	<section class="section dashboard">
+		<div class="row">
+
+		<!-- Left side 왼쪽부분 -->
+        <div class="col-lg-8"><div class="row">
+
+            <!-- 로그인 한 유저의 정보 -->
+			<div class="col-xxl-8 col-md-7"><div class="card info-card sales-card">
+				<div class="card-body">
+					<h5 class="card-title"></h5>
+					<div class="d-flex align-items-center">
+						<div class="card-icon rounded-circle d-flex align-items-center justify-content-center" 
+	                    		style="width: 200px; height: 200px;">
+							<img src="/topaz/upload/${fileName}" width="200px;" height="200px;" class="rounded-circle">
+						</div>
+						<div class="ps-3">
+							<h6>${empName}&nbsp;(${empNo})</h6>
+							<span style="color: #012970;" class="small pt-1 fw-bold">${empDeptName}</span> 
+							<span class="text-muted small pt-2 ps-1">${empGradeName}</span>
 						</div>
 					</div>
-				</section>
-            	
-            </div>
-        </div>
-    </main><!-- End #main -->
+				</div>
+			</div></div><!-- End 로그인 한 유저의 정보 -->
+            
+            
+            <!-- 출/퇴근정보 -->
+			<div class="col-xxl-4 col-md-7"><div class="card info-card revenue-card" style="height: 90%;">
+				<div class="card-body">
+					<!-- 출근 -->
+					<h5 class="card-title"></h5>
+					<div class="d-flex align-items-center">
+						<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+							<button class="icon-button rounded-circle card-icon" id="checkInBtn">
+	                     		<i class="bi bi-box-arrow-in-right"></i>
+	                     	</button>
+	                    </div>
+	                    
+	                    <div class="ps-3">
+							<h6>
+								<span class="text-success small pt-1 fw-bold">출근</span>
+							</h6>
+							<span class="startTime text-success small pt-1 fw-bold"></span>
+	                   </div>
+                  </div>
+                </div>
+                
+                <!-- 퇴근 -->
+                <h5 class="card-title"></h5>
+				<div class="card-body customers-card"><div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <button class="icon-button rounded-circle card-icon" id="checkOutBtn">
+                      <i class="bi bi-box-arrow-left"></i>
+                      </button>
+                    </div>
+                    <div class="ps-3">
+                      <h6><span class="text-danger small pt-1 fw-bold">퇴근</span></h6>
+						<span class="endTime text-danger small pt-1 fw-bold"></span>
+                    </div>
+					</div></div>
+                  
+				</div>
+			</div><!-- End 출/퇴근정보 -->
+
+
+            <!-- 사내일정 캘린더 -->
+			<div class="col-12">
+				<div class="card"><div class="card-body">
+					<h5 class="card-title fw-bold">사내일정</h5>
+					<div class="col-md-5 mb-2">
+						<select id="inputState" name="inputState" class="form-select">
+	                   		<option value="">전체</option>
+	                   		<option value="회의">회의</option>
+	                   		<option value="점검">점검</option>
+	                   		<option value="행사">행사</option>
+                 		</select>
+					</div>
+					
+					<!-- 캘린더 출력 -->
+					<div id='calendar'></div>
+		
+				</div></div>
+			</div><!-- End 사내일정 캘린더 -->
+
+
+		</div></div><!-- End Left side columns -->
+
+        <!-- Right side 오른쪽부분 -->
+		<div class="col-lg-4">
+
+		<!-- 공지사항 -->
+		<div class="card"><div class="card-body">
+			<h5 class="card-title fw-bold">공지사항</h5>
+
+				<div class="activity" id="topNoticeContainer">
+              		<!-- 공지사항 출력되는 곳  -->
+				</div><br>
+				
+				<nav aria-label="Page navigation example">
+					<ul class="pagination" id="paginationUl" style="justify-content: center;">
+						<!-- 페이징 출력되는 곳  -->
+					</ul>
+				</nav>	
+		</div></div><!-- End 공지사항 -->
+
+
+
+        </div><!-- End Right side 오른쪽부분 -->
+		</div>
+    </section>
+
+	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->
 	
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 	<script src="/topaz/js/insuEmpMain.js"></script>
-	
 </body>
+
 </html>

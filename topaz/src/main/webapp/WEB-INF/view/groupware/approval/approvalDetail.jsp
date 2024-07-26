@@ -135,14 +135,16 @@
 			        </tr>
 			        <tr>
 			        	<td style="height:130px;">
+			        		<c:if test="${a.approvalStateName ne '취소'}">
 			        		<img src="/topaz/assets/img/approvalSign/${a.signFile}" height="100px;" width="100px;">
+			        		</c:if>
 			        	</td>
 			        	<td style="height:130px;">
 			        		<c:if test="${a.firstApprovalDate eq null && a.firstApproval eq loginUser && a.approvalStateName eq '대기'}">
 			        			<button type="button" class="btn btn-success mb-3" id="firstConfirm">승인</button>
 			        			<button type="button" class="btn btn-danger" id="firstReject">반려</button>
 			        		</c:if>
-			        		<c:if test="${a.firstApprovalDate ne null}">
+			        		<c:if test="${a.firstApprovalDate ne null && a.approvalStateName ne '반려' || a.approvalStateName ne '취소'}">
 			        			<img src="/topaz/assets/img/approvalSign/${a.firstApprovalSign}" height="100px;" width="100px;">
 			        		</c:if>
 			        	</td>
@@ -151,7 +153,7 @@
 			        			<button type="button" class="btn btn-success mb-3" id="finalConfirm">승인</button>
 			        			<button type="button" class="btn btn-danger" id="finalReject">반려</button>
 			        		</c:if>
-			        		<c:if test="${a.finalApprovalDate ne null && a.approvalStateName ne '반려'}">
+			        		<c:if test="${a.finalApprovalDate ne null && a.approvalStateName ne '반려' || a.approvalStateName ne '취소'}">
 			        			<img src="/topaz/assets/img/approvalSign/${a.finalApprovalSign}" height="100px;" width="100px;">
 			        		</c:if>
 			        	</td>

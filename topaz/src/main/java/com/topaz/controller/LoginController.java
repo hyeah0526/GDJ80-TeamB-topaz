@@ -48,10 +48,63 @@ public class LoginController {
 	/*
 	 * 서비스명: empMain.jsp 뷰
 	 * 시작 날짜 : 2024-07-22
-	 * 담당자: 김인수
+	 * 담당자: 김인수, 박혜아
 	 */
 	@GetMapping("/groupware/empMain")
-	public String empMain() {
+	public String empMain(Model model, HttpServletRequest  httpServletRequest) {
+		
+		// 로그인한 사람 정보 가져오기
+		HttpSession session = httpServletRequest.getSession();
+		Map<String, Object> employee = (Map<String, Object>) session.getAttribute("employee");
+		log.debug(Debug.PHA + " controller / empMain / employee " + employee + Debug.END);
+		
+		// 값 담기
+		String empGrade = (String) employee.get("empGrade");
+		String empGradeName = "";
+        String empDept = (String) employee.get("empDept");
+        String empDeptName = "";
+        
+        // 공통코드 E002(1:사원, 2:대리, 3:팀장, 4:부장)
+        if(empGrade.equals("1")) {
+        	empGradeName = "사원";
+        	
+        }else if(empGrade.equals("2")) {
+        	empGradeName = "대리";
+        	
+        }else if(empGrade.equals("3")) {
+        	empGradeName = "팀장";
+        	
+        }else if(empGrade.equals("4")) {
+        	empGradeName = "부장";
+        	
+        }
+        
+        // 공통코드 E001(E:인사부, M:마케팅부, W:행정부, C:고객관리부)
+        if(empDept.equals("E")) {
+        	empDeptName = "인사부";
+        	
+        }else if(empDept.equals("M")) {
+        	empDeptName = "마케팅부";
+        	
+        }else if(empDept.equals("W")) {
+        	empDeptName = "행정부";
+        	
+        }else if(empDept.equals("C")) {
+        	empDeptName = "고객관리부";
+        }
+        
+        log.debug(Debug.PHA + " controller / empMain / empGradeName " + empGradeName + Debug.END);
+        log.debug(Debug.PHA + " controller / empMain / empDeptName " + empDeptName + Debug.END);
+        log.debug(Debug.PHA + " controller / empMain / fileName " + employee.get("fileName") + Debug.END);
+        
+        // 값 담아주기
+        model.addAttribute("empName", employee.get("empName"));
+        model.addAttribute("empNo", employee.get("empNo"));
+        model.addAttribute("empHiredate", employee.get("empHiredate"));
+        model.addAttribute("fileName", employee.get("fileName"));
+        model.addAttribute("empGradeName", empGradeName);
+        model.addAttribute("empDeptName", empDeptName);
+
 		return "/groupware/empMain";
 	}
 	

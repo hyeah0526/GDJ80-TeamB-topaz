@@ -142,6 +142,7 @@
 	        ROW_NUMBER() OVER(ORDER BY nn.news_no DESC) no, 
 	        nn.news_no newsNo,
 	        nn.title title,
+	        SUBSTRING(nn.title, 1, 15) titleSub,
 	        e.emp_name empName,
 	        nn.content content,
 	        grade_comm.cd_nm grade,

@@ -107,7 +107,7 @@ public class BpoController {
 	}
 	
 	
-	@RequestMapping("/groupware/bpo/bpoRsvnModify")
+	@RequestMapping("/bpo/bpoRsvnModify")
 	public String bpoRsvnModify(OutsourcingRsvn outsourcingRsvn
 								, HttpServletRequest  httpServletRequest) {
 		// 세션가져와서 empNo세팅
