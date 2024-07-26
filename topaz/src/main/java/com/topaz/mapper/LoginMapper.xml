@@ -4,7 +4,7 @@
 
 	<!-- #1 - 직원 로그인 -->
 	<select id="doEmpLogin" resultType="map">
-		SELECT emp_no empNo, emp_pw empPw, emp_name empName, emp_dept empDept, emp_grade empGrade, use_yn useYN
+		SELECT emp_no empNo, emp_pw empPw, emp_name empName, emp_dept empDept, emp_grade empGrade, emp_hiredate empHiredate, use_yn useYN
 		FROM employee
 		WHERE use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
 		AND emp_no = #{strId}
