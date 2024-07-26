@@ -55,7 +55,7 @@
             <div class="card-body pt-3">
             	
                 <div class="tab-pane show profile-edit pt-3" id="profile-edit">
-					<form action="/topaz/customer/newsAdd" method="post" enctype="multipart/form-data">
+					<form action="/topaz/customer/newsAdd" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                 		
 						<div class="row" >
 	                    	<div class="col-lg-6 col-md-6" style="margin: auto" >
@@ -100,10 +100,32 @@
 
     </section><!-- 입력 폼 끝 -->   
   </main>
+  <script>
+  function validateForm() {
+      var title = document.querySelector('input[name="title"]');
+      var content = document.querySelector('textarea[name="content"]');
+      var fileInput = document.querySelector('input[name="uploadFile"]');
+
+      // 검사 조건들
+      if (title.value == "") {
+          alert("제목이 입력되지 않았습니다.");
+          return false;
+      }
+
+      if (content.value == "") {
+          alert("내용이 입력되지 않았습니다.");
+          return false;
+      }
+
+      if (fileInput.value == "") {
+          alert("파일이 선택되지 않았습니다.");
+          return false;
+      }
+  }
+  </script>
 
   <!-- footer -->
   <jsp:include page="inc/footer.jsp"></jsp:include>
-
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
