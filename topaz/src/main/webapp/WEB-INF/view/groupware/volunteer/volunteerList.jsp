@@ -5,12 +5,16 @@
 
 <!-- ======= header <Head> 부분 ======= -->
 <jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
+
 <head>
    <style>
        .clickable-row {
            cursor: pointer;
        }
    </style>
+   
+   	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>

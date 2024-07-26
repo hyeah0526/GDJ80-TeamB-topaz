@@ -18,7 +18,7 @@
 	<!-- Fullcalendar -->
     <script src="/topaz/fullcalendar-6.1.14/dist/index.global.js"></script>
 	<script src="/topaz/fullcalendar-6.1.14/dist/index.global.min.js"></script>
-    
+	
     <!-- 캘린더API  -->
 	<script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -75,7 +75,8 @@
 		}
 	  });
 	</script>
-	
+	<!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 	
 <body>
@@ -93,7 +94,7 @@
 			<nav>
 				<ol class="breadcrumb">
 	        		<li class="breadcrumb-item"><a href="/topaz/groupware/empMain">Home</a></li>
-	          		<li class="breadcrumb-item">Volunteer</li>
+	          		<li class="breadcrumb-item active">Volunteer</li>
 	        	</ol>
 	      	</nav>
 	    </div><!-- End Page Title -->
