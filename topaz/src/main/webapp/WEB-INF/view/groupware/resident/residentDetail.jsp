@@ -205,9 +205,11 @@
 										</div>
 										<div class="info-item mb-3">
 										    <span><label class="form-check-label label" for="roomAmenity">어메니티 여부</label></span>
-	    									<span><input type="hidden" name="roomAmenity" value="N"></span>
-											<span><input class="form-check-input" type="checkbox" id="roomAmenity" name="roomAmenity" ${resident.roomAmenity == 'Y' ? 'checked' : ''} value="Y" onchange="this.form.roomAmenity.value = this.checked ? 'Y' : 'N';"></span>
-	
+										    <span><input type="hidden" id="hiddenRoomAmenity" name="roomAmenity" value="${resident.roomAmenity == 'Y' ? 'Y' : 'N'}"></span>
+										    <span>
+										        <input class="form-check-input" type="checkbox" id="roomAmenityCheckbox" ${resident.roomAmenity == 'Y' ? 'checked' : ''} 
+										               onchange="document.getElementById('hiddenRoomAmenity').value = this.checked ? 'Y' : 'N';">
+									    </span>
 										</div>
 										<div class="info-item mb-3">
 										    <span class="label">보호자 성명</span>
