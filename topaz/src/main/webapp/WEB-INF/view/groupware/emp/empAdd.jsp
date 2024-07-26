@@ -71,6 +71,7 @@
 			     			<!-- 부서 -->
 			     			<label>부서</label>
 			     			<select name="empDept" class="step"  data-step="2">
+			     				<option value="">선택</option>
 			     				<option value="E" <c:if test="${employeeRequest.empDept == 'E'}">selected</c:if>>인사부</option>
 							    <option value="M" <c:if test="${employeeRequest.empDept == 'M'}">selected</c:if>>마케팅부</option>
 							    <option value="W" <c:if test="${employeeRequest.empDept == 'W'}">selected</c:if>>행정부</option>
@@ -80,6 +81,7 @@
 			     			<!-- 직위 -->
 			     			<label>직위</label>
 			     			<select name="empGrade" class="step"  data-step="3">
+			     				<option value="">선택</option>
 			     				<option value="1" <c:if test="${employeeRequest.empGrade == '1'}">selected</c:if>>사원</option>
 							    <option value="2" <c:if test="${employeeRequest.empGrade == '2'}">selected</c:if>>대리</option>
 							    <option value="3" <c:if test="${employeeRequest.empGrade == '3'}">selected</c:if>>팀장</option>
@@ -88,10 +90,10 @@
    			     			
    			     			<!-- 직원번호 -->
 			     			<label>직원번호</label>
-   			     			<div>
-				     			<input type="text" name="empNo" class="step" data-step="4"  readonly value="${employeeRequest.empNo}">
+   			     			<div style="display: flex; width: 500px; height: 50px;">
+				     			<input type="text" name="empNo" class="step" data-step="4" style=" width: 900px;"  readonly value="${employeeRequest.empNo}">
 	   			     			<div class="validMsg">${empNoMsg}</div>	
-				     			<button type="button" id="empNoBtn" class="step" data-step="4" >직원 번호 생성</button>
+				     			<button type="button" id="empNoBtn" class="step" data-step="4" >생성</button>
    			     			</div>
    			     			
 			     			<!-- 비밀번호 -->
@@ -119,7 +121,7 @@
 			     			<!-- 우편번호 -->
 			     			<div class="postInput">
 			     				<label>우편번호</label>
-			     				<button class="step" type="button" data-step="10"   onclick="openPostcode('postNo','firstAddress')">우편번호 검색</button>
+			     				<button class="step" type="button" data-step="10" onclick="openPostcode('postNo','firstAddress')">우편번호 검색</button>
 			     			</div>
 							<input name="postNo"  class="step" data-step="11" placeholder="우편번호" maxlength="5" value="${employeeRequest.postNo}">
 			     			<div class="validMsg">${postNoMsg}</div>
@@ -136,8 +138,8 @@
 			     			 <!-- 성별 -->
 			     			 <div>
 				     			 <label>성별 : </label>
-				     			 <input type="radio" name="empGender" value="F" data-step="15"<c:if test="${employeeRequest.empGender == 'F'}">checked</c:if>>여자
-				     			 <input type="radio" name="empGender" value="M" data-step="15"<c:if test="${employeeRequest.empGender == 'M'}">checked</c:if>>남자
+				     			 <input type="radio" name="empGender" class="step"  value="F" data-step="15" <c:if test="${employeeRequest.empGender == 'F'}">checked</c:if>>여자
+								 <input type="radio" name="empGender" class="step"  value="M" data-step="15" <c:if test="${employeeRequest.empGender == 'M'}">checked</c:if>>남자
 				     			 <div class="validMsg">${empGenderMsg}</div>
 			     			 </div>
 			     			 
