@@ -81,10 +81,15 @@ public class EmployeeController {
 			
 			//전화번호 가져오기
 	        String phoneNumber = employeeRequest.getEmpPhoneNumber();
-			if(phoneNumber != null) {
+			
+	        if(phoneNumber != null && phoneNumber.length() >= 11) {
 				model.addAttribute("firstPhNumber", phoneNumber.substring(0, 3));
 	            model.addAttribute("secondPhNumber", phoneNumber.substring(3, 7));
 	            model.addAttribute("thirdPhNumber", phoneNumber.substring(7,11));
+			}else {
+				model.addAttribute("firstPhNumber", "");
+	            model.addAttribute("secondPhNumber", "");
+	            model.addAttribute("thirdPhNumber", "");
 			}
 			
 			 // 기존 입력 값도 모델에 담기
