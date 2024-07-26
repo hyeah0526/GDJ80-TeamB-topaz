@@ -172,7 +172,7 @@ public class EmployeeController {
 	    
 	    //직원 리스트 가져오기
 	    Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
-	    log.debug(Debug.KIS + "controller / empDetail / empDetail : " + empDetail);
+	    log.debug(Debug.KIS + "controller / empDetail / empDetailOne : " + empDetail);
 	  
 	    
 	    //모델 객체에 데이터 추가

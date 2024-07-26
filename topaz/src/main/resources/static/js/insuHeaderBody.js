@@ -66,21 +66,3 @@ function connect() {
     };
 }
 
-
-/*
-	
-function updateNotificationCount() {
-    $.ajax({
-        url: '/topaz/groupware/myPage/selectEmpNotRecCnt',
-        type: 'GET',
-        success: function(response) {
-            
-            console.log(response);
-            let noteCount = response.result;
-            $('#notification-count').text(noteCount);
-            $('#notification-count-text').text(noteCount);
-        }
-    });
-}
-
- */
