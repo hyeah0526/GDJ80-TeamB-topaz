@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.topaz.dto.Employee;
 import com.topaz.dto.EmployeeRequest;
@@ -210,62 +211,85 @@ public class EmployeeController {
 	*/
 	@PostMapping("/groupware/emp/empModify")
 	public String empModify(
-			@Valid EmployeeRequest employeeRequest,
-			Errors errors,
+			@RequestParam Map<String, Object> paramMap,
 			Model model) {
 		
 		//매개변수 디버깅
-		log.debug(Debug.KIS + "controller / empModify / employee : " + employeeRequest);
-		
-		// 유효성 검사후 에러 발견시 true
-		log.debug("hassErrors :" + errors.hasErrors());
+		log.debug(Debug.KIS + "controller / empModify / paramMap : " + paramMap);
 		
 		
-		if(errors.hasErrors()) {
-			
-			for(FieldError e : errors.getFieldErrors()) {
-				// 커맨드 객체에서 에러 발생시 맵핑된 에러메세지 
-				log.debug(Debug.KIS + " controller / empModify / getDefaultMessage " +e.getDefaultMessage());
-				// "이름+Msg"에 메세지를 담아 모델에 추가
-				model.addAttribute(e.getField()+"Msg", e.getDefaultMessage());
-			}
-			model.addAttribute("employeeRequest", employeeRequest);
-			return "groupware/emp/empModify";
-		}
+		String empNo = (String) paramMap.get("empNo");
+		String postNo = (String) paramMap.get("postNo");
+		String address = (String) paramMap.get("address");
+	    String empGrade = (String) paramMap.get("empGrade");
+	    String empDept = (String) paramMap.get("empDept");
+	    String empPhoneNumber = (String) paramMap.get("empPhoneNumber");
+	    
+	    
+	    //애러 메세지
+	    String message = null;
+	    
+	    //input 값 유효성 검사
+	    if(empNo == null || empNo.isEmpty()) { 
+	    	message = "직원번호를 입력해 주세요.";
+	    }
+	    
+	    if(empGrade == null || empGrade.isEmpty()) { 
+	    	message = "직위를 선택해 주세요.";	    	
+	    }
+	    
+	    if(empDept == null || empDept.isEmpty()) { 
+	    	message = "부서를 선택해 주세요.";	    	
+	    }
+	   
+	    if(postNo == null || postNo.isEmpty() || !postNo.matches("^\\d{5}$")) {
+	    	message = "우편번호를 확인해 주세요";
+	    }
+
+	    if(address == null || address.isEmpty() || !address.matches("^[a-zA-Z가-힣0-9\\s!@#$%^&*()_+|<>?:{}]{1,50}$")) {
+	    	message = "주소를 확인해 주세요";
+	    }
+	    
+	    if(empPhoneNumber == null || empPhoneNumber.isEmpty() || !empPhoneNumber.matches("^\\d{11}$")) {
+	    	message = "전화번호를 확인해 주세요";
+	    }
 		
-		//저장 객체 생성
 		Map<String, Object> leaveMap = new HashMap<>();
-		leaveMap.put("empNo", employeeRequest.getEmpNo());
-		leaveMap.put("empGrade", employeeRequest.getEmpGrade());
+		leaveMap.put("empNo", empNo);
+		leaveMap.put("empGrade", empGrade);
 		
 		//empGrade에 따라 휴가 설정
 		int yearCnt = 0; // 기본값
 		int monthCnt = 0; 
-		int empGrade = Integer.parseInt(employeeRequest.getEmpGrade());
-		 
-		if (empGrade == 1) {
-	        yearCnt = 10; // 사원
-	    } else if (empGrade == 2) {
-	        yearCnt = 12; // 대리
-	    } else if (empGrade == 3) {
-	        yearCnt = 15; // 팀장
-	    } else if (empGrade == 4) {
-	        yearCnt = 18; // 부장
-	    }
+		int empNewGrade = Integer.parseInt(empGrade);
 		
-	    leaveMap.put("yearCnt", yearCnt);
+		if (empNewGrade == 1) {
+			yearCnt = 10; // 사원
+		} else if (empNewGrade == 2) {
+			yearCnt = 12; // 대리
+		} else if (empNewGrade == 3) {
+			yearCnt = 15; // 팀장
+		} else if (empNewGrade == 4) {
+			yearCnt = 18; // 부장
+		}
+		
+		leaveMap.put("yearCnt", yearCnt);
 		
 		//디버깅
 		log.debug(Debug.KIS + "controller / empModify / leaveMap : " + leaveMap);
 		
 		
 		//서비스 레이어로 수정될 직원정보 이동
-		employeeService.modifyEmpOne(employeeRequest);
 		
-		//서비스 레이어로 휴가정보 이동
-		employeeService.updateEmpLeave(leaveMap);
+		if(message == null) {
+			//서비스 레이어로 휴가정보 이동
+			employeeService.modifyEmpOne(paramMap);
+			employeeService.updateEmpLeave(leaveMap);
+		}else {
+			model.addAttribute("message",message);					
+		}
 		
-		return "redirect:/groupware/emp/empDetail?empNo="+employeeRequest.getEmpNo();
+		return "redirect:/groupware/emp/empDetail?empNo="+empNo;
 	}
 	
 	/*
@@ -286,6 +310,81 @@ public class EmployeeController {
 	}
 	
 
+	/*
+	 * 서비스명: empPwModify.jsp ( 직원 비밀번호 수정 뷰 )  
+	 * 시작 날짜: 2024-07-26
+	 * 담당자: 김인수
+	*/
+	@GetMapping("/groupware/emp/empPwModify")
+	public String empPwModify(
+			Model model,
+			@RequestParam(name = "empNo") String empNo) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / empPwModify / empNo : " + empNo);
+		
+		//내 정보 리스트 가져오기
+	    Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
+	    log.debug(Debug.KIS + "controller / empPwModify / empDetail : " + empDetail);
+	  
+	    //모델 객체에 데이터 추가
+	    model.addAttribute("empDetail", empDetail);
+	  
+		
+		return "groupware/emp/empPwModify";
+	}
+	
+	/*
+	 * 서비스명: modifyEmpPw ( 직원 비밀번호 수정 )
+	 * 시작 날짜: 2024-07-08
+	 * 담당자: 김인수
+	*/
+	@PostMapping("/groupware/emp/empPwModify")
+	public String empPwModify(
+			@RequestParam Map<String, Object> paramMap,
+			RedirectAttributes redirectAttributes) {
+		
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "controller / empPwModify / paramMap : " + paramMap);
+		
+		//input 값 
+		String empNo = (String) paramMap.get("empNo");
+	    String newPw = (String) paramMap.get("newPw");
+	    String newPwCheck = (String) paramMap.get("newPwCheck");
+		
+	    //애러 메세지
+	    String message = null;
+	    
+	    //input 값 유효성 검사
+	    if (newPw == null || newPw.isEmpty() ||
+            newPwCheck == null || newPwCheck.isEmpty()) {
+	    	
+            message = "비밀번호를 입력해 주세요.";
+            
+        }else if (!newPw.equals(newPwCheck)) {
+            message = "비밀번호가 일치하지 않습니다.";
+        } else {
+
+        	//서비스 레이어로 비밀번호 정보 이동
+        	int result = employeeService.modifyEmpPw(paramMap);
+
+            if (result == 1) {
+                return "redirect:/groupware/emp/empDetail?empNo=" + empNo;
+            } else if (result == 0) {
+                message = "새 비밀번호가 기존 비밀번호와 동일합니다.";
+            } else {
+                message = "비밀번호 변경 실패";
+            }
+        }
+		
+		
+	    redirectAttributes.addFlashAttribute("message", message);			
+		
+		
+		return "redirect:/groupware/emp/empPwModify?empNo="+empNo;
+	}
+	
+	
 	//========== 개인 정보
 
 	
@@ -313,7 +412,7 @@ public class EmployeeController {
 		
 	    //내 정보 리스트 가져오기
 	    Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
-	    log.debug(Debug.KIS + "controller / empDetail / empDetail : " + empDetail);
+	    log.debug(Debug.KIS + "controller / myinfo / empDetail : " + empDetail);
 	  
 	    //모델 객체에 데이터 추가
 	    model.addAttribute("empDetail", empDetail);
@@ -336,7 +435,7 @@ public class EmployeeController {
 		
 		//내 정보 리스트 가져오기
 	    Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
-	    log.debug(Debug.KIS + "controller / empDetail / empDetail : " + empDetail);
+	    log.debug(Debug.KIS + "controller / myPwModify / empDetail : " + empDetail);
 	  
 	    //모델 객체에 데이터 추가
 	    model.addAttribute("empDetail", empDetail);

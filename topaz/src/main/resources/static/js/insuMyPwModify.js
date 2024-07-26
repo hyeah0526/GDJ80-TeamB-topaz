@@ -12,7 +12,7 @@ $(document).ready(function() {
         // 비밀번호와 확인 입력 필드의 값이 비어있는지 체크
         if (!newPw || !newPwCheck) {
             $('.modifyBtn').prop('disabled', true);
-            alert('비밀번호와 비밀번호 확인을 모두 입력해 주세요.');
+            alert('비밀번호를 모두 입력해 주세요.');
         } else if (newPw !== newPwCheck) {
             $('.modifyBtn').prop('disabled', true);
             alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
@@ -27,7 +27,7 @@ $(document).ready(function() {
         let newPwCheck = $('input[name="newPwCheck"]').val();
         
         if (!newPw || !newPwCheck) {
-            alert('비밀번호와 비밀번호 확인을 모두 입력해 주세요.');
+            alert('비밀번호를 모두 입력해 주세요.');
             return false; // 폼 제출을 방지
         } else if (newPw !== newPwCheck) {
             alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');

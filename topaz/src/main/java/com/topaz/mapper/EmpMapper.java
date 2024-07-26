@@ -41,7 +41,7 @@ public interface EmpMapper {
 	public  Map<String, Object> selectEmpOne(String empNo);
 	
 	/* 분류 번호 :  #4 - 직원 정보 수정 */
-	public int modifyEmpOne(EmployeeRequest employeeRequest);
+	public int modifyEmpOne(Map<String, Object> paramMap);
 	
 	/* 분류 번호 :  #4 - 직원 정보 삭제 */
 	public int deleteEmpOne(Employee employee);

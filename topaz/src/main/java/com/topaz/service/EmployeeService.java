@@ -87,6 +87,18 @@ public class EmployeeService {
 
 	    if (row != 1) {
 	        throw new RuntimeException();
+	    }else {
+	    	
+	    	Map<String, Object> paramMap = new HashMap<>();
+	        paramMap.put("empNo", employee.getEmpNo());
+	        paramMap.put("newPw", employee.getEmpPw());
+	    	
+	        int insertPwRow = empMapper.insertNewPw(paramMap);
+	        log.debug(Debug.KIS + "service / insertEmp / insertPwRow : " + insertPwRow);
+	    	
+	        if(insertPwRow < 1) {
+	        	 throw new RuntimeException();
+	        }
 	    }
 
 	    return row;
@@ -184,13 +196,13 @@ public class EmployeeService {
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
-	public int modifyEmpOne(EmployeeRequest employeeRequest) {
+	public int modifyEmpOne(Map<String, Object> paramMap) {
 
 		//매개변수 디버깅
-		log.debug(Debug.KIS + "service / modifyEmpOne / employeeRequest : " + employeeRequest);
+		log.debug(Debug.KIS + "service / modifyEmpOne / employeeRequest : " + paramMap);
 		
 		//직원 정보 저장
-		int row = empMapper.modifyEmpOne(employeeRequest);
+		int row = empMapper.modifyEmpOne(paramMap);
 		log.debug(Debug.KIS + "service / modifyEmpOne / row : " + row);
 
 		if(row != 1) {
@@ -244,7 +256,7 @@ public class EmployeeService {
 	}
 	
 	/*
-	 * 분류번호: #2 - 비밀번호 수정
+	 * 분류번호: #2 - 직원 비밀번호 수정
 	 * 시작 날짜: 2024-07-08
 	 * 담당자: 김인수
 	*/
@@ -262,10 +274,10 @@ public class EmployeeService {
 		if(newPw == null) {
 			
 			//비밀번호 
-			int inserPw = empMapper.insertNewPw(paramMap);
-			log.debug(Debug.KIS + "service / modifyMyPw / inserPw : " + inserPw);
+			int insertPw = empMapper.insertNewPw(paramMap);
+			log.debug(Debug.KIS + "service / modifyMyPw / inserPw : " + insertPw);
 			
-			if(inserPw > 0) {
+			if(insertPw > 0) {
 				changePw = empMapper.modifyEmpPw(paramMap);
 				log.debug(Debug.KIS + "service / modifyMyPw / changePw : " + changePw);
 			}
@@ -274,7 +286,40 @@ public class EmployeeService {
 		return changePw;
 	}
 	
+	/*
+	 * 분류번호: #2 - 직원 비밀번호 수정
+	 * 시작 날짜: 2024-07-26
+	 * 담당자: 김인수
+	*/
+	public int modifyEmpPw(Map<String, Object> paramMap) {
 
+		//매개변수 디버깅
+		log.debug(Debug.KIS + "service / modifyEmpPw / paramMap : " + paramMap);
+		
+		//비밀번호 중복 사용 확인
+		String newPw = empMapper.selectNewPw(paramMap);
+		log.debug(Debug.KIS + "service / modifyMyPw / newPw : " + newPw);
+		
+		//비밀번호 중복확인
+		if(newPw != null) {
+			log.debug(Debug.KIS + "service / modifyMyPw / newPw : " + newPw);
+			return 0;
+		}
+		
+		//비밀번호 업데이트
+		int row = empMapper.modifyEmpPw(paramMap);
+		log.debug(Debug.KIS + "service / modifyMyPw / row : " + row);
+
+		if(row > 0) {
+			int insertPw = empMapper.insertNewPw(paramMap);
+			 log.debug(Debug.KIS + "service / modifyEmpPw / insertPw : " + insertPw);
+	        return insertPw > 0 ? 1 : -1; // 성공: 1, 실패: -1
+		}
+
+		return -1;
+	}
+	
+	
 	/*
 	 * 분류번호: #4 - 전체 직원 조회(조직도)
 	 * 시작 날짜: 2024-07-09

@@ -70,6 +70,7 @@
                                     <!-- 부서 -->
                                     <label>부서</label>
                                     <select name="empDept" class="step"  data-step="2">
+                                    	<option value="">선택</option>
 					     				<option value="E" <c:if test="${empDetail.empDept == '인사부'}">selected</c:if>>인사부</option>
 							            <option value="M" <c:if test="${empDetail.empDept == '마케팅부'}">selected</c:if>>마케팅부</option>
 							            <option value="W" <c:if test="${empDetail.empDept == '행정부'}">selected</c:if>>행정부</option>
@@ -81,6 +82,7 @@
                                     <!-- 직위 -->
                                     <label>직위</label>
                                     <select name="empGrade" class="step"  data-step="3">
+                                    	<option value="">선택</option>
 					     				<option value="1" <c:if test="${empDetail.empGrade == '사원'}">selected</c:if>>사원</option>
 					     				<option value="2" <c:if test="${empDetail.empGrade == '대리'}">selected</c:if>>대리</option>
 					     				<option value="3" <c:if test="${empDetail.empGrade == '팀장'}">selected</c:if>>팀장</option>
@@ -101,7 +103,10 @@
                                 <div class="formGroup">
                                     <!-- 비밀번호 -->
                                     <label>비밀번호</label>
-                                    <input type="text" name="empPw" class="step" value="${empDetail.empPw}">                            
+                                     <div>
+                                     	<input type="hidden" name="empPw" value="${empDetail.empPw}">
+	                                    <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empPwModify?empNo=${empDetail.empNo}'">비밀번호 변경</button>
+                                     </div>
                                 </div>
                             </div>
                             
@@ -127,8 +132,8 @@
                                     <!-- 우편번호 -->
                                     <label>우편번호</label>
                                     <div>
-                                    	<button class="step" type="button" data-step="10"   onclick="openPostcode('postNo','firstAddress')" style="margin-bottom: 10px;">우편번호 검색</button>
-	                                    <input type="text" name="postNo" class="step" value="${empDetail.postNo}" maxlength="5" pattern="\d*" >
+                                    	<button class="step" type="button" onclick="openPostcode('postNo','firstAddress')" style="margin-bottom: 10px;">우편번호 검색</button>
+	                                    <input type="text" name="postNo" class="step"  data-step="11" value="${empDetail.postNo}" maxlength="5" pattern="\d*" >
 	                                    <div class="validMsg">${postNoMsg}</div>
                                     	<input type="text" name="firstAddress" class="step " data-step="12" value="${empDetail.address}">
                                     	<input type="text" name="addressDetail" class="step" data-step="13" placeholder="상세 주소">
@@ -161,9 +166,9 @@
                              <div class="formRow">
                                 <div class="formGroup">
                                     <label>성별 : </label>
-							        <input type="radio" id="genderF" name="empGender" value="F" <c:if test="${empDetail.empGender == 'F'}">checked</c:if>>
+							        <input type="radio" id="genderF" name="empGender" value="F" disabled <c:if test="${empDetail.empGender == 'F'}">checked</c:if>>
 							        <label for="genderF">여자</label>
-							        <input type="radio" id="genderM" name="empGender" value="M" <c:if test="${empDetail.empGender == 'M'}">checked</c:if>>
+							        <input type="radio" id="genderM" name="empGender" value="M" disabled <c:if test="${empDetail.empGender == 'M'}">checked</c:if>>
 							        <label for="genderM">남자</label>
                                 </div>
                              </div>

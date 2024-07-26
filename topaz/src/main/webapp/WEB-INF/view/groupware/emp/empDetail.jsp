@@ -93,7 +93,7 @@
                                 <div class="formGroup">
                                     <!-- 비밀번호 -->
                                     <label>비밀번호</label>
-                                    <input type="text" name="empPw" class="step" value="${empDetail.empPw}" readonly style="background-color: #c8c8c8;">                                
+                                    <input type="password" name="empPw" class="step" value="${empDetail.empPw}" readonly style="background-color: #c8c8c8;">                                
                                 </div>
                             </div>
                             

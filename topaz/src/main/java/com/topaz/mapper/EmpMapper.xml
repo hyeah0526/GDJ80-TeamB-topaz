@@ -252,13 +252,12 @@
 	 
 	 
 	 <!-- 분류 번호 :  #4 - 직원 정보 수정 -->
-	<update id="modifyEmpOne" parameterType="com.topaz.dto.Employee">
+	<update id="modifyEmpOne" parameterType="Map">
 	 	UPDATE 
 			employee 
         SET
             emp_dept = #{empDept},
             emp_grade = #{empGrade},
-            emp_pw = SHA2(#{empPw}, 256),
             emp_phonenumber = #{empPhoneNumber},
             post_no = #{postNo},
             address = #{address},
@@ -324,7 +323,8 @@
 	 	UPDATE 
 			employee 
         SET
-           	emp_pw = SHA2(#{newPw}, 256)
+           	emp_pw = SHA2(#{newPw}, 256),
+           	mod_time = NOW()
         WHERE 
         	emp_no = #{empNo}
 	</update>
@@ -358,7 +358,7 @@
 				CURRENT_TIMESTAMP(5),
 				#{empNo},
 				'E',
-				SHA2(#{currentPw}, 256),
+				SHA2(#{newPw}, 256),
 				NOW(),
 				NOW(),
 				#{empNo},
