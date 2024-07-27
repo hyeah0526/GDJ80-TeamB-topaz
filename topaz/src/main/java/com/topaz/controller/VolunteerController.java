@@ -74,7 +74,7 @@ public class VolunteerController {
 		
 		volunteerService.modifyVolunteer(volunteer);
 		
-		return "redirect:/groupware/volunteer/volunteerDetail?volNo="+volNo;
+		return "redirect:/groupware/volunteer/volunteerMain";
 	}
 	
 	/*

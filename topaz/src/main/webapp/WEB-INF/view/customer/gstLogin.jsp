@@ -50,23 +50,27 @@
 						</div>
 		              	  <div class="form-group mt-3">
 		                	<label for="id" class="form-label">ID</label>
-		                 	<input type="text" name="id" class="form-control" id="id">
+		                 	<input type="text" name="id" class="form-control" id="id" value="G002">
 		                  </div>
 		              
 			              <div class="form-group mt-3 mb-3">
 			              	<label for="pw" class="form-label">PW</label>
-			                <input type="password" class="form-control" name="pw" id="pw">
+			                <input type="password" class="form-control" name="pw" id="pw" value="1234">
 			              </div>
 		              </div>
 		              <div>
 		              	<input type="hidden" name="userType" value="guest">
 		              </div>
 		              <div class="text-center mb-3 mt-3"><button type="submit">Login</button></div>
+		              <div class="row mb-5">
+			              <div class="col">
+			              	<a href="gstPWModify" style="color: white;"><button type="button">비밀번호 찾기</button></a>
+			              </div>
+			              <div class="col">
+			              	<a href="signUp" style="color: white; "><button type="button">회원가입</button></a>
+			              </div>
+		              </div>
 				</form>
-	            <div class="row php-email-form mb-5">
-<!-- 	            	<div class="col"><button type="button"><a href="gstPWModify" style="color: white;">비밀번호 찾기</a></button></div>
- -->	            	<div class="col mb-5"><button type="button"><a href="signUp" style="color: white;">회원가입</a></button></div>
-	            </div>
 	          </div><!-- End Contact Form -->
 			</div>
         </div>

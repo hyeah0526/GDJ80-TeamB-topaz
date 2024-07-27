@@ -94,7 +94,7 @@
 	                		삭제
 	                	</a>
 	                	<!-- 전페이지로 이동 버튼 -->
-	                	<button type="button" onclick="history.back()" class="btn btn-secondary">닫기</button>
+	                	<button type="button" onclick="window.location.href='/topaz/groupware/volunteer/volunteerMain'" class="btn btn-secondary">닫기</button>
 	                </div>
 				</form>
 			</div></div>

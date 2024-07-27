@@ -45,7 +45,7 @@
                 <h5 class="card-title"></h5>
          
                 <!-- 봉사 날짜, 내용 검색 -->
-                <form id="searchForm" action="/topaz/groupware/volunteer/volunteerList" method="post">
+                <form id="searchForm" action="/topaz/groupware/volunteer/volunteerList" method="get">
                     <div class="row justify-content-center d-flex align-items-center">
                         <div class="col-4">
                             <div class="row form-group d-flex align-items-center">

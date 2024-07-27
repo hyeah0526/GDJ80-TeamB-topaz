@@ -153,7 +153,7 @@
 					</div>
 					
 					<!-- 모달 일정 취소/등록버튼 -->
-					<div class="modal-footer">
+					<div class="modal-footer justify-content-center">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 						<button id="addVolunteer_btn" type="submit" class="btn btn-primary">저장</button>
 					</div>

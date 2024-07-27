@@ -97,7 +97,7 @@
 			address = #{address},
 			mod_id = #{modId},
 			mod_time = NOW()
-		WHERE gst_id = #{gstId};
+		WHERE gst_id = #{gstId}
 	</update>
 	
 	<!-- 분류 번호: #16 - 회원 내 봉사 신청 보기 -->
@@ -118,7 +118,8 @@
 			ON va.vol_no = v.vol_no 
 		WHERE va.gst_id = #{gstId}
 		AND va.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
-		AND v.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y');
+		AND v.use_yn = (SELECT cd FROM common_code WHERE crp_cd = 'A002' AND cd = 'Y')
+		ORDER BY va.reg_time DESC
 	</select>
 
 </mapper>
