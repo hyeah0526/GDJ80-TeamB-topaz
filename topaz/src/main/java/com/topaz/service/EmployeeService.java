@@ -248,7 +248,7 @@ public class EmployeeService {
 		int row = empMapper.deleteEmpOne(employee);
 		log.debug(Debug.KIS + "service / deleteEmpOne / row : " + row);
 
-		if(row != 1) {
+		if(row < 1) {
 			throw new RuntimeException();
 		}
 		

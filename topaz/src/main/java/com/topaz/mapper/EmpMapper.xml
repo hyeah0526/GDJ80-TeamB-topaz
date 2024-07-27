@@ -270,12 +270,32 @@
 	
 	<!-- 분류 번호 :  #4 - 직원 정보 삭제 -->
 	<update id="deleteEmpOne" parameterType="com.topaz.dto.Employee">
-	 	UPDATE 
-			employee 
-        SET
-           	use_yn = 'N'
-        WHERE 
-        	emp_no = #{empNo}
+		UPDATE
+			employee AS e
+		LEFT JOIN
+			commute_history AS ch
+		ON 
+			e.emp_no = ch.emp_no
+		LEFT JOIN
+			file_upload AS fu
+		ON
+			e.emp_no = fu.reference_no
+		LEFT JOIN
+			`leave` AS l
+		ON
+			e.emp_no = l.emp_no
+		LEFT JOIN
+			leave_history AS lh
+		ON
+			e.emp_no = lh.emp_no
+		SET
+			e.use_yn = 'N',
+			ch.use_yn = 'N',
+			fu.use_yn = 'N',
+			l.use_yn = 'N',
+			lh.use_yn = 'N'
+		WHERE
+			e.emp_no = #{empNo}
 	</update>
 	
 	
@@ -388,6 +408,8 @@
 		ON 
 			e.emp_dept = dept_code.cd
 			AND dept_code.crp_cd = 'E001'
+		WHERE
+			e.use_yn = 'Y'
 	</select>
 	
 	
@@ -485,7 +507,7 @@
 			grade.cd = e.emp_grade AND
 			grade.crp_cd = 'E002'
 		WHERE
-			l.use_yn = 'Y'
+			1=1
 		<if test="empNo != null and empNo != ''">
             AND e.emp_no LIKE CONCAT('%', #{empNo}, '%')
         </if>
