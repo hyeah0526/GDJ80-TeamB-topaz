@@ -281,6 +281,10 @@
 <script>
 	/* 고객 이름 검색 후 선택  */
 	$('#gstNameChk').click(function() {
+		// 초기화
+		$('#gstNameChk').val('');
+		$('#addGstName').prop('readonly', false);
+		
 		console.log('고객이름 확인');
 		//console.log('고객이름 확인', $('#addGstName').val());
 		
@@ -330,7 +334,10 @@
 			$('#addGstId').val(selectedGstId);
 			
 			// addGstName 필드를 읽기 전용으로 변경
-			$('#addGstName').prop('readonly', true);
+			if(selectedGstName != null && selectedGstName != ''){
+				console.log("읽기 전용으로 변경");
+				$('#addGstName').prop('readonly', true);
+			}
 			
 			// 두번째 모달 닫기
 			$("#gstChk").modal("hide");

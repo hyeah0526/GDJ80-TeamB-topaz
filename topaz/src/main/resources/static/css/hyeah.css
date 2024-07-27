@@ -112,7 +112,16 @@
 	font-weight: bolder;
 }
 
-/*  */
+#searchType{
+	width: 10%; 
+	display: inline;
+}
+
+#searchWord{
+	width: 15%; 
+	display: inline;
+}
+
 .validMsg{
 	width: 100%;
     margin-top: .25rem;
@@ -120,6 +129,9 @@
     color: var(--bs-form-invalid-color);
 }
 
+.bpoListSearchDiv{
+	text-align: right;
+}
 
 
 /* ==========외주업체 상세 - bpoDetail.jsp========== */

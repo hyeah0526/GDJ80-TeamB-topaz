@@ -33,7 +33,7 @@
 
 	<!-- section 시작 -->
     <section class="section">
-		<div class="row justify-content-center"><div class="col-lg-8">
+		<div class="row justify-content-center"><div class="col-lg-5">
 			<div class="card"><div class="card-body">
 				<h5 class="card-title">Outsourcing Registration Form</h5>
 	

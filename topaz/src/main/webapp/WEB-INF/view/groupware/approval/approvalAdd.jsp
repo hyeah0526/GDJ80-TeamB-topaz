@@ -34,7 +34,7 @@
 
 	<!-- section 시작 -->
     <section class="section">
-	    <div class="col-lg-12">
+	    <div class="row justify-content-center"><div class="col-lg-8">
 	    	<div class="card"><div class="card-body">
 	    		<!-- 서명 여부 조회(signFile/empGrade/empDeptName/empName/empNo) -->
 	    		<c:set var="s" value="${empSign}"></c:set>
@@ -388,7 +388,7 @@
 				</div><!-- End Default Tabs -->
 	
 			</div></div>
-	    </div>
+	    </div></div>
 	    
 	    
 	    <!-- 신규등록 서명패드 가져오는 모달 -->
