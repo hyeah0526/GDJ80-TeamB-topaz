@@ -93,14 +93,14 @@
 								<div class="row mb-3">
 									<label for="noticeStart" class="col-sm-2 col-form-label">게시 시작일</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="startDate" name="startDate" value='${noticeDetail.startDate}' readonly>
+										<input type="text" class="form-control" id="startDate" name="startDate" value="${fn:substring(noticeDetail.startDate, 0, 10)}" readonly>
 									</div>
 								</div>
 
 								<div class="row mb-3">
 									<label for="noticeEnd" class="col-sm-2 col-form-label">게시 종료일</label>
 									<div class="col-sm-4">
-										<input type="text" class="form-control" id="endDate" name="endDate" value='${noticeDetail.endDate}' readonly>
+										<input type="text" class="form-control" id="endDate" name="endDate" value="${fn:substring(noticeDetail.endDate, 0, 10)}"readonly>
 									</div>
 								</div>
 

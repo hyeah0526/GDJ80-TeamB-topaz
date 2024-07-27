@@ -62,7 +62,7 @@ public class EmployeeController {
 		//매개변수 디버깅
 		log.debug(Debug.KIS + "controller / empAdd / employeeRequest : " + employeeRequest);
 		
-		// 유효성 검사후 에러 발견시 true
+		//유효성 검사후 에러 발견시 
 		log.debug("hassErrors :" + errors.hasErrors());
 		
 		
@@ -74,9 +74,9 @@ public class EmployeeController {
 			}
 			
 			for(FieldError e : errors.getFieldErrors()) {
-				// 커맨드 객체에서 에러 발생시 맵핑된 에러메세지 
+				//커맨드 객체에서 에러 발생시 맵핑된 에러메세지 
 				log.debug(Debug.KIS + " controller / empAdd / getDefaultMessage " +e.getDefaultMessage());
-				// "이름+Msg"에 메세지를 담아 모델에 추가
+				//"이름+Msg"에 메세지를 담아 모델에 추가
 				model.addAttribute(e.getField()+"Msg", e.getDefaultMessage());
 			}
 			

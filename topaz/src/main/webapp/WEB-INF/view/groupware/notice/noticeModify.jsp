@@ -90,7 +90,7 @@
                                 <div class="row mb-3">
                                     <label for="modifyNoticeStart" class="col-sm-2 col-form-label">게시 시작일</label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control" id="startDate" name="startDate" value="<c:out value='${noticeDetail.startDate}' />">
+                                        <input type="date" class="form-control" id="startDate" name="startDate" value="${fn:substring(noticeDetail.startDate, 0, 10)}">
                                         <span class="validMsg">${startDateMsg}</span>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                 <div class="row mb-3">
                                     <label for="modifyNoticeEnd" class="col-sm-2 col-form-label">게시 종료일</label>
                                     <div class="col-sm-4">
-                                        <input type="date" class="form-control" id="endDate" name="endDate" value="<c:out value='${noticeDetail.endDate}' />">
+                                        <input type="date" class="form-control" id="endDate" name="endDate" value="${fn:substring(noticeDetail.endDate, 0, 10)}">
                                         <span class="validMsg">${endDateMsg}</span>
                                     </div>
                                 </div>
@@ -118,9 +118,6 @@
                                         <c:if test="${noticeDetail.filePath != null}">
                                             <div id="currentFile">
                                                 <p>기존 파일: <img src="<c:url value='/${noticeDetail.filePath}'/>" alt="첨부 이미지" style="max-width: 100%; height: auto;"></p>
-                                                <div>
-                                                    <button type="button" class="btn btn-danger" id="removeFileButton">파일 삭제</button>
-                                                </div>
                                             </div>
                                         </c:if>
                                         

@@ -1,5 +1,6 @@
 package com.topaz.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,10 +76,8 @@ public class NoticeController {
 			HttpServletRequest  req) {
 		
 		//디버깅
-		log.debug(Debug.KIS + " Controller / noticeAdd /  noticeRequest  : " + noticeRequest);
-		log.debug(Debug.KIS + " Controller / noticeAdd /  errors  : " + errors);
-		log.debug(Debug.KIS + " Controller / noticeAdd /  model  : " + model);
-		log.debug(Debug.KIS + " Controller / noticeAdd /  req  : " + req);
+		log.debug(Debug.KIS + " Controller / noticeModify /  noticeRequest  : " + noticeRequest);
+		log.debug(Debug.KIS + " Controller / noticeModify /  req  : " + req);
 		
 		//세션가져와서 empNo세팅
 		HttpSession session = req.getSession();
@@ -94,34 +93,42 @@ public class NoticeController {
 		String currentFilePath = req.getParameter("currentFilePath");
 		log.debug(Debug.KIS + " controller / noticeModify / currentFileName : " + currentFileName);
 		
-		//매개값 디버깅
-		log.debug(Debug.KIS + "/ Controller / noticeModify / noticeRequest: " +  noticeRequest.toString());
-		//에러 발생 시 true
-		log.debug(Debug.KIS + "/ Controller / noticeModify / noticeModify errors: " + errors.toString());
-		log.debug(Debug.KIS + "/ Controller / noticeModify / noticeModify hasErrors: " + errors.hasErrors());
-		//true의 개수 cnt
-		log.debug(Debug.KIS + "/Controller / noticeModify / noticeModify errorCnt: " + errors);
-
 		
 		if(errors.hasErrors()) {
-			
-			//업로드 파일 예외처리 
-			if(noticeRequest.getUploadFile() == null || noticeRequest.getUploadFile().isEmpty()) {
-				// 유효성 검사 실패 메세지 담기
-				model.addAttribute("uploadFileMsg", "업로드파일 선택해주세요");
-			}
 			
 		   for(FieldError e : errors.getFieldErrors()) {
 			   model.addAttribute(e.getField() + "Msg", e.getDefaultMessage());
 		   }
-		   return "forward:/WEB-INF/view/groupware/notice/noticeModify.jsp?newsNo=" + noticeRequest.getNewsNo();
+		   
+			// NoticeRequest 객체를 Map<String, Object>로 변환
+	        Map<String, Object> noticeDetail = new HashMap<>();
+	        noticeDetail.put("newsNo", noticeRequest.getNewsNo());
+	        noticeDetail.put("title", noticeRequest.getTitle());
+	        noticeDetail.put("content", noticeRequest.getContent());
+	        noticeDetail.put("grade", noticeRequest.getGrade());
+	        noticeDetail.put("category", noticeRequest.getCategory());
+	        noticeDetail.put("fileName", noticeRequest.getFileName());
+	        noticeDetail.put("startDate", noticeRequest.getStartDate());
+	        noticeDetail.put("endDate", noticeRequest.getEndDate());
+	        
+	        // filePath 설정
+	        String fileName = currentFileName;
+	        if (fileName != null && !fileName.isEmpty()) {
+	            String filePath = "/upload/" + fileName;
+	            noticeDetail.put("filePath", filePath);
+	        }
+	        
+	        model.addAttribute("noticeDetail", noticeDetail);
+	        log.debug(Debug.KIS + " Controller / noticeModify /  model  : " + model);
+		   
+	        return "forward:/WEB-INF/view/groupware/notice/noticeModify.jsp";
 		}
 		
-		 // 새로운 파일이 없으면 기존 파일 정보 사용
+		 //새로운 파일이 없으면 기존 파일 정보 사용
 	    if(noticeRequest.getUploadFile() == null || noticeRequest.getUploadFile().isEmpty()) {
 	        noticeRequest.setFileName(currentFilePath);
 	    } else {
-	        // 기존 파일의 상태 업데이트
+	        //기존 파일의 상태 업데이트
 	        if(currentFileName != null && !currentFileName.isEmpty()) {
 	            noticeService.updateFileState(currentFileName, empNo);
 	        }
@@ -129,8 +136,11 @@ public class NoticeController {
 		 
 		int row = noticeService.modifyNotice(noticeRequest);
 		log.debug(Debug.KIS + " Controller / noticeModify / row : " + row);	
+		
+		String newsNo = noticeRequest.getNewsNo();
+	    log.debug(Debug.KIS + " Controller / noticeModify / redirect URL: " + newsNo);
 		  
-        return "redirect:/groupware/notice/noticeDetail?newsNo=" + noticeRequest.getNewsNo();
+        return "redirect:/groupware/notice/noticeDetail?newsNo=" + newsNo;
 	}
 
 	/*
@@ -169,8 +179,6 @@ public class NoticeController {
 	   
 		//디버깅
 		log.debug(Debug.KIS + " Controller / noticeAdd /  noticeRequest  : " + noticeRequest);
-		log.debug(Debug.KIS + " Controller / noticeAdd /  errors  : " + errors);
-		log.debug(Debug.KIS + " Controller / noticeAdd /  model  : " + model);
 		log.debug(Debug.KIS + " Controller / noticeAdd /  req  : " + req);
 		
 		// 세션가져와서 empNo세팅
@@ -182,42 +190,25 @@ public class NoticeController {
 		noticeRequest.setRegId(empNo);
 		noticeRequest.setModId(empNo);	
 		
-		// 매개값 디버깅
-		log.debug(Debug.KIS + "/ Controller / noticeAdd / noticeRequest: " +  noticeRequest.toString());
-		// 에러 발생 시 true
-		log.debug(Debug.KIS + "/ Controller / noticeAdd / noticeAdd errors: " + errors.toString());
-		log.debug(Debug.KIS + "/ Controller / noticeAdd / noticeAdd hasErrors: " + errors.hasErrors());
-		// true의 개수 cnt
-		log.debug(Debug.KIS + "/Controller / noticeAdd / noticeAdd errorCnt: " + errors);
-
+		
 		if(errors.hasErrors()) {
-			
-			//업로드 파일 예외처리 
-			if(noticeRequest.getUploadFile() == null || noticeRequest.getUploadFile().isEmpty()) {
-				// 유효성 검사 실패 메세지 담기
-				model.addAttribute("uploadFileMsg", "업로드파일 선택해주세요");
-			}
-			
+
 			//예외 발생 시 출력
 			for(FieldError e : errors.getFieldErrors()) {
+				//커맨드 객체에서 에러 발생시 맵핑된 에러메세지
+				log.debug(Debug.KIS + " controller / noticeAdd / getDefaultMessage " +e.getDefaultMessage());
+				//"이름+Msg"에 메세지를 담아 모델에 추가
 				model.addAttribute(e.getField() + "Msg", e.getDefaultMessage());
 			}
-
-			//로그인한 직원 정보 가져오기
-			Map<String, Object> empDetail = employeeService.selectEmpOne(empNo);
 			
-			//세션에 있는 empNo 가져오기
-			String empGrade = (String)empDetail.get("empGrade");
-			log.debug(Debug.KIS + " Controller / noticeAdd / empGrade : " + empGrade);
-			model.addAttribute("empGrade", empGrade);
-			
+			//model에 form에 입력한 값 추가
+	        model.addAttribute("noticeRequest", noticeRequest);
+	        log.debug(Debug.KIS + " Controller / noticeAdd /  model  : " + model);
+	       
 			return "groupware/notice/noticeAdd";
 		}
-		 
-	
-	   // NoticeRequest 객체를 Notice 객체로 변환
-        Notice notice = noticeRequest.toNotice();
-
+		
+		
         // Notice 객체를 데이터베이스에 삽입
         noticeService.addNotice(noticeRequest);
 

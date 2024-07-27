@@ -46,8 +46,7 @@
                                     <div class="row mb-3">
                                         <label for="addTitle" class="col-sm-2 col-form-label">제목</label>
                                         <div class="col-sm-10">
-                                        	<input type="hidden" id="empGrade" name="empGrade" value="${empGrade}">
-                                            <input type="text" class="form-control" id="title" name="title">
+                                            <input type="text" class="form-control" id="title" name="title" value="${noticeRequest.title}">
                                         </div>
                                         <span class="validMsg">${titleMsg}</span>
                                     </div>
@@ -55,13 +54,13 @@
                                         <legend class="col-form-label col-sm-2 pt-0">등급</legend>
                                         <div class="col-sm-10">
                                             <div class="form-check">
-                                                <input class="form-check-input addGrade" type="radio" name="grade" id="addGrade1" value="1">
+                                                <input class="form-check-input addGrade" type="radio" name="grade" id="addGrade1" value="1" <c:if test="${noticeRequest.grade == 1}">checked</c:if>>
                                                 <label class="form-check-label" for="addGrade1">
                                                     직원 
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input addGrade" type="radio" name="grade" id="addGrade2" value="2">
+                                                <input class="form-check-input addGrade" type="radio" name="grade" id="addGrade2" value="2" <c:if test="${noticeRequest.grade == 2}">checked</c:if>>
                                                 <label class="form-check-label" for="addGrade2">
                                                     외주 업체 
                                                 </label>
@@ -74,19 +73,19 @@
                                         <legend class="col-form-label col-sm-2 pt-0">종류</legend>
                                         <div class="col-sm-10">
                                             <div class="form-check">
-                                                <input class="form-check-input addCategory" type="radio" name="category" id="addCategory1" value="1">
+                                                <input class="form-check-input addCategory" type="radio" name="category" id="addCategory1" value="1" <c:if test="${noticeRequest.category == 1}">checked</c:if>>
                                                 <label class="form-check-label" for="addCategory1">
                                                     필독 
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input addCategory" type="radio" name="category" id="addCategory2" value="2">
+                                                <input class="form-check-input addCategory" type="radio" name="category" id="addCategory2" value="2" <c:if test="${noticeRequest.category == 2}">checked</c:if>>
                                                 <label class="form-check-label" for="addCategory2">
                                                     일반
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input addCategory" type="radio" name="category" id="addCategory3" value="3">
+                                                <input class="form-check-input addCategory" type="radio" name="category" id="addCategory3" value="3"  <c:if test="${noticeRequest.category == 3}">checked</c:if>>
                                                 <label class="form-check-label" for="addCategory">
                                                     이벤트 
                                                 </label>
@@ -100,7 +99,7 @@
                                             게시 시작일
                                         </label>
                                         <div class="col-sm-4">
-                                            <input type="date" class="form-control" id="startDate" name="startDate">
+                                            <input type="date" class="form-control" id="startDate" name="startDate" value="${noticeRequest.startDate}">
                                         </div>
                                     </div>
                                     <!-- end date-->
@@ -109,7 +108,7 @@
                                             게시 종료일
                                         </label>
                                         <div class="col-sm-4">
-                                            <input type="date" class="form-control" id="endDate" name="endDate">
+                                            <input type="date" class="form-control" id="endDate" name="endDate" value="${noticeRequest.endDate}">
                                         </div>
                                     </div>
                                     
@@ -118,7 +117,7 @@
                                             내용
                                         </label>
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" style="height: 100px" name="content" id="content"></textarea>
+                                            <textarea class="form-control" style="height: 100px" name="content" id="content">${noticeRequest.content}</textarea>
                                         </div>
                                         <span class="validMsg">${contentMsg}</span>
                                     </div>
