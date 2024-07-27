@@ -9,17 +9,17 @@ $(document).ready(function() {
             // 대표자 노드 (admin)
             let adminNode = {
                 id: 1,
-                name: '대표자',
-                department: '행정부',
+                name: '이대표',
+                department: '인사부',
                 grade: '부장',
-                img: 'https://cdn.balkan.app/shared/empty-img-none.svg',
+                img: '/topaz/upload/admin.jpg',
                 pid: null
             };
 
             // 부서를 기준으로 데이터를 그룹화
             let departments = {};
             response.forEach(item => {
-                if (item.empName !== '대표자') { // 대표자는 제외
+                if (item.empName !== '이대표') { // 대표자는 제외
                     if (!departments[item.empDept]) {
                         departments[item.empDept] = [];
                     }
