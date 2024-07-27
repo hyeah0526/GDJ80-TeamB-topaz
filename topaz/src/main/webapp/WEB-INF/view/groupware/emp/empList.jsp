@@ -43,65 +43,69 @@
 			<div class="card">
 				<div class="card-body">
 
+		     		<div style="margin-bottom: 20px;">
+                   		<button type="button" class="moveBtn" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
+                   		<button type="button" class="moveBtn" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
+                   		<button type="button" class="moveBtn" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근무조회</button>
+                   	</div>
+
 			     	<form id="searchForm" action="/topaz/groupware/emp/empList" method="post" >
-			     		<div style="margin-bottom: 20px;">
-                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
-                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
-                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근무조회</button>
-                    	</div>
-				     	<!-- 입사년도 -->
-				     	<div class="hireDateDiv">
-				     		<label>입사년도</label>
-				     		 <div class="dateInput">
-                                <input type="date" name="startDate">
-                                <span>~</span>
-                                <input type="date" name="endDate">
-                            </div>
-				     	</div>
-				     	
-				     	<div class="deptYNDiv">
-					     	<!-- 재직사항 -->
-				     		<div>
-					     		<label>재직사항</label>
-					     		<select name="useYn">
-					     			<option value="">선택해주세요</option>
-					     			<option value="Y">재직</option>
-					     			<option value="N">퇴사</option>
-					     		</select>
-				     		</div>
-				     		
-							<!-- 부서명 -->
-							<div>
-					     		<label>부서명</label>
-					     		<select name="empDept">
-					     			<option value="">선택해주세요</option>
-					     			<option value="E">인사부</option>
-					     			<option value="M">마케팅부</option>
-					     			<option value="W">행정부</option>
-					     			<option value="C">고객 관리부</option>
-					     		</select>
-							</div>
-				     	</div>
-				     	
-				     	<div class="gradeNoDiv">
-					     	<!-- 직위 -->
-					     	<div>
-					     		<label>직위</label>
-					     		<select name="empGrade">
-					     			<option value="">선택해주세요</option>
-					     			<option value="1">사원</option>
-					     			<option value="2">대리</option>
-					     			<option value="3">팀장</option>
-					     			<option value="4">부장</option>
-					     		</select>
-				     		</div>
-				     		
-							<!-- 사원번호 -->
-				     		<div>
-								<label>사원번호</label>
-					     		<input type="text" name="empNo">
-					     	</div>				     	
-				     	</div>
+				     
+						<div class="inputDiv">
+							<!-- 입사년도 -->
+					     	<div class="hireDateDiv">
+					     		<label>입사년도</label>
+					     		 <div class="dateInput">
+	                                <input type="date" name="startDate">
+	                                <span>~</span>
+	                                <input type="date" name="endDate">
+	                            </div>
+					     	</div>
+					     	
+					     	<div class="deptYNDiv">
+						     	<!-- 재직사항 -->
+					     		<div>
+						     		<label>재직사항</label>
+						     		<select name="useYn">
+						     			<option value="">선택해주세요</option>
+						     			<option value="Y">재직</option>
+						     			<option value="N">퇴사</option>
+						     		</select>
+					     		</div>
+					     		
+								<!-- 부서명 -->
+								<div>
+						     		<label>부서명</label>
+						     		<select name="empDept">
+						     			<option value="">선택해주세요</option>
+						     			<option value="E">인사부</option>
+						     			<option value="M">마케팅부</option>
+						     			<option value="W">행정부</option>
+						     			<option value="C">고객 관리부</option>
+						     		</select>
+								</div>
+					     	</div>
+					     	
+					     	<div class="gradeNoDiv">
+						     	<!-- 직위 -->
+						     	<div>
+						     		<label>직위</label>
+						     		<select name="empGrade">
+						     			<option value="">선택해주세요</option>
+						     			<option value="1">사원</option>
+						     			<option value="2">대리</option>
+						     			<option value="3">팀장</option>
+						     			<option value="4">부장</option>
+						     		</select>
+					     		</div>
+					     		
+								<!-- 사원번호 -->
+					     		<div>
+									<label>사원번호</label>
+						     		<input type="text" name="empNo">
+						     	</div>				     	
+					     	</div>
+						</div>
 				     	
 				     	<div class="btnDiv">
 					     	<button type="submit">검색</button>

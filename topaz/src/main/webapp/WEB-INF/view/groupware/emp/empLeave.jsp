@@ -46,24 +46,25 @@
 					<!-- 메인 -->
 				     <div class="mainContent">
 				     
+			     		<div style="margin-bottom: 20px;">
+                    		<button type="button" class="moveBtn" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
+                    		<button type="button" class="moveBtn" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
+                    		<button type="button" class="moveBtn" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근무조회</button>
+                    	</div>
+
 				     	<form id="searchForm" action="/topaz/groupware/emp/empLeave" method="post" >
-				     		<div style="margin-bottom: 20px;">
-	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
-	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
-	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근무조회</button>
-	                    	</div>
 					     	
-					     	<div class="gradeNoDiv">
+					     	<div class="gradeNoDiv" style="margin-bottom: 20px;">
 						     	<!-- 사원 이름 -->
 						     	<div>
 						     		<label>사원이름</label>
-						     		<input type="text" name="empName">
+						     		<input type="text" name="empName" class="no-max-width">
 					     		</div>
 					     		
 								<!-- 사원 번호 -->
 					     		<div>
 									<label>사원번호</label>
-						     		<input type="text" name="empNo">
+						     		<input type="text" name="empNo" class="no-max-width">
 						     	</div>				     	
 					     	</div>
 					     	

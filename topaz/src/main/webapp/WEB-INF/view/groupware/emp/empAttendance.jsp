@@ -46,37 +46,45 @@
 					<!-- 메인 -->
 				     <div class="mainContent">
 				     
+			     		<div style="margin-bottom: 20px;">
+                    		<button type="button" class="moveBtn" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
+                    		<button type="button" class="moveBtn" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
+                    		<button type="button" class="moveBtn" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근무조회</button>
+                    	</div>
+                    	
 				     	<form id="searchForm" action="/topaz/groupware/emp/empAttendance" method="post" >
-				     		<div style="margin-bottom: 20px;">
-	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empList'">직원정보</button>
-	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empLeave'">연월차 조회</button>
-	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/emp/empAttendance'">근무조회</button>
-	                    	</div>
-					     	<!-- 입사년도 -->
-					     	<div class="hireDateDiv">
-					     		<label>기간</label>
-					     		 <div class="dateInput">
-	                                <input type="date" name="startDate">
-	                                <span>~</span>
-	                                <input type="date" name="endDate">
-                               		<input type="hidden" name="startDateHidden">
-   								 	<input type="hidden" name="endDateHidden">
-	                            </div>
-					     	</div>
 					     	
-	
-					     	<div class="gradeNoDiv">
-						     	<!-- 직위 -->
-						     	<div>
-						     		<label>사원이름</label>
-						     		<input type="text" name="empName">
-					     		</div>
-					     		
-								<!-- 사원번호 -->
-					     		<div>
-									<label>사원번호</label>
-						     		<input type="text" name="empNo">
-						     	</div>				     	
+					     	<div class="inputDiv">
+						     	<!-- 입사년도 -->
+						     	<div class="hireDateDiv">
+						     		<label>기간</label>
+						     		 <div class="dateInput" style="width: 700px;">
+		                                <input type="date" name="startDate">
+		                                <span>~</span>
+		                                <input type="date" name="endDate">
+	                               		<input type="hidden" name="startDateHidden">
+	   								 	<input type="hidden" name="endDateHidden">
+		                            </div>
+						     	</div>
+
+						     	<div class="gradeNoDiv">
+							     	<!-- 직위 -->
+							     	<div>
+							     		<label>사원이름</label>
+							     		<div>
+								     		<input type="text" name="empName" class="no-max-width">
+							     		</div>
+						     		</div>
+									<!-- 사원번호 -->
+						     		<div>
+										<label>사원번호</label>
+										<div>
+								     		<input type="text" name="empNo" class="no-max-width">
+										</div>
+							     	</div>	
+						     		
+						     	</div>
+
 					     	</div>
 					     	
 					     	<div class="btnDiv">

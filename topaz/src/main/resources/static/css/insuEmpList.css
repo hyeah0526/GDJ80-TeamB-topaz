@@ -22,6 +22,7 @@ form select {
     border-radius: 5px;
     box-sizing: border-box;
     width: 100%;
+    max-width: 400px;
 }
 
 form button {
@@ -116,10 +117,8 @@ h1.titleH1 {
 }
 
 @media (max-width: 768px) {
-    .deptYNDiv > div,
-    .gradeNoDiv > div {
-        width: 100%;
-        margin-bottom: 10px;
+    .inputDiv {
+        flex-direction: column;
     }
 }
 
@@ -151,6 +150,21 @@ h1.titleH1 {
 
 .remaining-leave .leave-type span {
     color: #007bff;
+}
+
+.inputDiv{
+	display: flex;
+	gap:50px;
+	margin-bottom: 20px;
+}
+
+.moveBtn{
+	width: 50px;
+	height: 50px;
+}
+
+form input.no-max-width {
+    max-width: none; 
 }
 
 #paginationUl {
