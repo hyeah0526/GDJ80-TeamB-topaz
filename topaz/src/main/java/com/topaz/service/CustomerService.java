@@ -127,6 +127,41 @@ public class CustomerService {
 		return myVolAppList;
 	}
 	
+	/*
+	 * 분류 번호: #16 - 고객 비밀번호 수정
+	 * 시작 날짜: 2024-07-27
+	 * 담당자: 한은혜
+	 */
+	public int modifyGstPw(String gstId, String oldPw, String newPw) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + " modifyGstPw gstId : " + gstId + Debug.END);
+		log.debug(Debug.HEH + " modifyGstPw gstId : " + oldPw + Debug.END);
+		log.debug(Debug.HEH + " modifyGstPw gstId : " + newPw + Debug.END);
+		// 비밀번호 수정
+		int updateRow = customerMapper.updateGstPw(gstId, oldPw, newPw);
+		
+		if(updateRow != 1) {
+			// 변경 실패일 경우
+			log.debug(Debug.HEH + " modifyGstPw updateRow 변경 실패시 0 : "+ updateRow + Debug.END);
+			throw new RuntimeException();
+			
+		} else if(updateRow == 1) {
+			// 변경 성공일 경우
+			log.debug(Debug.HEH + " modifyGstPw updateRow 변경 성공시 1 : "+ updateRow + Debug.END);
+			
+			int insertRow = customerMapper.insertGstPw(gstId, oldPw);
+			
+			if(insertRow != 1) {
+				// 변경 실패일 경우
+				log.debug(Debug.HEH + " modifyGstPw insertRow 변경 실패시 0 : "+ insertRow + Debug.END);
+				throw new RuntimeException();
+				
+			}
+			log.debug(Debug.HEH + " modifyGstPw insertRow 변경 성공시 1 : "+ insertRow + Debug.END);
+		}
+		return updateRow;
+	}
+	
 
 }
 

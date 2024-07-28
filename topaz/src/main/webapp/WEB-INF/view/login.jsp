@@ -109,6 +109,7 @@
 	                </div>
 	              </div>
 	            </div>
+	            
 	            <!-- 고객 회원가입 및 로그인 버튼 -->
 	            <div class="col-lg-4 col-md-6 align-items-center justify-content-center">
 	              <div class="d-flex justify-content-center py-4">
@@ -122,21 +123,15 @@
 	                    <div class="col-10 mb-4">
 			              	<a href="/topaz/customer/signUp" style="color: white; "><button class="btn btn-primary w-100" type="button" style="height: 50px;">고객 회원가입</button></a>
 			            </div>
-			            
 			            <div class="col-10 mb-4">
 			              	<a href="/topaz/customer/gstLogin" style="color: white; "><button class="btn btn-primary w-100" type="button" style="height: 50px;">고객 로그인</button></a>
 			            </div>
 	                </div>
 	              </div>
 	            </div>
-	            
-	            
-	            
 	          </div>
 	        </div>
-	
 	      </section>
-	
 	    </div>
 	</main><!-- End #main -->
 	<!-- =============================== Main 메인 끝 부분 ================================ -->

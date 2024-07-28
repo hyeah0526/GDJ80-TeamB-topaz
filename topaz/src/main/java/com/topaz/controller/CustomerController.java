@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.topaz.dto.Guest;
 import com.topaz.dto.GuestRequest;
@@ -237,4 +238,26 @@ public class CustomerController {
 		
 		return "customer/infoStep";
 	}
+	
+	/*
+	 * 서비스명: modifyGstPw : 고객 비밀번호 수정
+	 * 시작 날짜: 2024-07-27
+	 * 담당자: 한은혜
+	 */
+	@PostMapping("/customer/modifyGstPw")
+	public String modifyGstPw(@RequestParam(name="gstId") String gstId,
+						@RequestParam(name="oldPw") String oldPw,
+						@RequestParam(name="newPw") String newPw) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + " modifyGstPw gstId : " + gstId + Debug.END);
+		log.debug(Debug.HEH + " modifyGstPw gstId : " + oldPw + Debug.END);
+		log.debug(Debug.HEH + " modifyGstPw gstId : " + newPw + Debug.END);
+		
+		customerService.modifyGstPw(gstId, oldPw, newPw);
+		
+		return "redirect:/customer/gstMyInfo";
+	}
+	
+	
+	
 }

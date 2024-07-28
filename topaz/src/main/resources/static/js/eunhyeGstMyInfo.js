@@ -1,4 +1,11 @@
+
+
 $(document).ready(function(){
+	
+	// 비밀번호 값을 6글자로 보이도록 자르기
+    let password = "${gstDetail.gstPw}";
+    let displayedPassword = password.substring(0, 6);
+    $("input[name='gstPw']").val(displayedPassword);
 	
 	// 회원탈퇴 여부를 다시 묻는 모달 창 
 	$('#deleteGst_btn').click(function(){
@@ -36,11 +43,9 @@ $(document).ready(function(){
 	    
 	  }
 	
-	
 });
 
-
- // 입력값 유효성 검사
+	 // 입력값 유효성 검사
     function validateForm() {
         
         let validation = true;

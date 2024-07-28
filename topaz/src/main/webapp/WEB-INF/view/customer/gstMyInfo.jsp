@@ -63,13 +63,13 @@
                 <input type="text" name="gstId" value="${gstDetail.gstId}" readonly style="background-color: #F6F6F6;" class="form-control">
               </div>
               <div class="row justify-content-center">
-                <div class=" form-group">
+                <div class="col-8 form-group">
                   PW
-				<input type="password" value="${gstDetail.gstPw}" readonly style="background-color: #F6F6F6;" class="form-control" name="gstPw">				  <div class="id-message hide"></div>
+				<input type="password" readonly style="background-color: #F6F6F6;" class="form-control" name="gstPw">				  
                 </div>
-                <%-- <div class="col text-center mt-4">
+                <div class="col text-center mt-4">
                 	<button type="button" id="passwordModify_btn" onclick="window.location.href='${pageContext.request.contextPath}/customer/gstPWModify'">비밀번호 수정</button>
-                </div> --%>
+                </div>
               </div>
               <div class="form-group mt-3">
               	이름

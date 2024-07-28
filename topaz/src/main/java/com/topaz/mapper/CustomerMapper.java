@@ -27,4 +27,10 @@ public interface CustomerMapper {
 	/* 분류 번호 :  #16 - 고객 내 봉사 리스트 */
 	public List<Map<String, Object>> selectMyVolApp(String gstId);
 
+	/* 분류 번호 :  #16 - 고객 비밀번호 수정 : 비밀번호 수정 */
+	public int updateGstPw(String gstId, String oldPw, String newPw);
+
+	/* 분류 번호 :  #16 - 고객 비밀번호 수정 : 비밀번호 기록 추가 */
+	public int insertGstPw(String gstId, String oldPw);
+
 }
