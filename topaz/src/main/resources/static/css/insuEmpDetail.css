@@ -118,8 +118,8 @@ postInput button:hover {
 }
 
 .imagePreviewContainer {
-    width: 150px;
-    height: 200px;
+    max-width: 150px;
+    max-height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;

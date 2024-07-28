@@ -129,7 +129,7 @@ button:hover,
 }
 
 .imagePreviewContainer {
-    width: 150px;
+    width: 200px;
     height: 200px;
     display: flex;
     justify-content: center;
@@ -166,7 +166,7 @@ button:hover,
 }
 
 #preview {
-   	width: 150px;
+   	width: 200px;
     height: 200px;
     margin-top: 10px;
     border: 1px solid #ddd;

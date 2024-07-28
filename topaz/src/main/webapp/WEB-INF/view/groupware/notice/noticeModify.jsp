@@ -143,5 +143,6 @@
 	<!-- ======= footer 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/footer.jsp"></jsp:include>
 	<script src="/topaz/js/jihoonNoticeModify.js"></script>
+	<script src="/topaz/js/profileValidation.js"></script>
 </body>
 </html>

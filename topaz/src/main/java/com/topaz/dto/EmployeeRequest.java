@@ -49,7 +49,6 @@ public class EmployeeRequest {
     private String postNo;
 
     @NotBlank(message = "주소를 입력하세요.")
-    @Pattern(regexp = "^[a-zA-Z가-힣0-9\\s!@#$%^&*()_+|<>?:{}]{1,50}$", message = "주소는 한글, 숫자, 특수문자만 포함할 수 있습니다.")
     private String address;
 	
 	private String fileName;
