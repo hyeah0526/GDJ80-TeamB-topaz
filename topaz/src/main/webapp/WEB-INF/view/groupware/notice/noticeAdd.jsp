@@ -117,7 +117,7 @@
                                             내용
                                         </label>
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" style="height: 100px" name="content" id="content">${noticeRequest.content}</textarea>
+                                            <textarea class="form-control" style="height: 300px" name="content" id="content">${noticeRequest.content}</textarea>
                                         </div>
                                         <span class="validMsg">${contentMsg}</span>
                                     </div>

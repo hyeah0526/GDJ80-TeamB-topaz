@@ -106,7 +106,7 @@
                                 <div class="row mb-3">
                                     <label for="content" class="col-sm-2 col-form-label">내용</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" style="height: 100px" name="content" id="content"><c:out value="${noticeDetail.content}" escapeXml="false" /></textarea>
+                                        <textarea class="form-control" style="height: 500px" name="content" id="content"><c:out value="${noticeDetail.content}" escapeXml="false" /></textarea>
                                         <span class="validMsg">${contentMsg}</span>
                                     </div>
                                 </div>
