@@ -44,7 +44,7 @@ public class ApprovalController {
 		String empNo = (String)session.getAttribute("strId");
 		log.debug(Debug.PHA + "approval Controller empNo--> " + empNo + Debug.END);
 		
-		// 서명 등록 여부 가져오기
+		// 서명 등록 여부 및 기안개수 가져오기
 		Map<String, Object> empSign = approvalService.getEmpSign(empNo);
 		log.debug(Debug.PHA + "approval Controller empSign--> " + empSign + Debug.END);
 		

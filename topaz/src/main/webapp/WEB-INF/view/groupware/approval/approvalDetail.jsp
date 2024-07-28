@@ -144,7 +144,7 @@
 			        			<button type="button" class="btn btn-success mb-3" id="firstConfirm">승인</button>
 			        			<button type="button" class="btn btn-danger" id="firstReject">반려</button>
 			        		</c:if>
-			        		<c:if test="${a.firstApprovalDate ne null && a.approvalStateName ne '반려' || a.approvalStateName ne '취소'}">
+			        		<c:if test="${a.firstApprovalDate ne null && a.approvalStateName ne '반려' && a.approvalStateName ne '취소'}">
 			        			<img src="/topaz/assets/img/approvalSign/${a.firstApprovalSign}" height="100px;" width="100px;">
 			        		</c:if>
 			        	</td>

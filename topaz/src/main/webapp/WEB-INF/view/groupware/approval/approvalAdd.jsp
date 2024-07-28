@@ -54,7 +54,31 @@
 					</h6>
 				</c:if>
 				
-				<div class="row mb-4 approvalEmpInfo justify-content-center">
+				<!-- 총 기안 개수 -->
+				<div class="text-center mb-4">
+				    <div class="text-center alert alert-secondary" style="width:150px; display: inline-block; margin-right: 20px;">
+				        <i class="bi bi-collection me-1"></i>
+				        총 기안 <strong class="fs-4">${s.cntTotal}</strong>건
+				    </div>
+				
+				    <div class="text-center alert alert-secondary" style="width:150px; display: inline-block; margin-right: 20px;">
+				        <i class="bi bi-collection me-1"></i>
+				        휴가 <strong class="fs-4">${s.cntDayoff}</strong>건
+				    </div>
+				
+				    <div class="text-center alert alert-secondary" style="width:150px; display: inline-block; margin-right: 20px;">
+				        <i class="bi bi-collection me-1"></i>
+				        기획 <strong class="fs-4">${s.cntEvent}</strong>건
+				    </div>
+				
+				    <div class="text-center alert alert-secondary" style="width:150px; display: inline-block;">
+				        <i class="bi bi-collection me-1"></i>
+				        경비 <strong class="fs-4">${s.cntExpense}</strong>건
+				    </div>
+				</div>
+
+				<!-- 작성자 정보 -->
+				<div class="row mb-5 approvalEmpInfo justify-content-center" style="clear: left;">
 					<label for="profileImage" class="col-md-1 col-lg-1 col-form-label text-center">이름</label>
 					<div class="col-md-2 col-lg-2">
 						<input class="form-control" type="tel" value="${s.empName}(${s.empNo})" readonly>

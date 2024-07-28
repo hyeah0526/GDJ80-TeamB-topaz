@@ -21,7 +21,7 @@ public interface ApprovalMapper {
 	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 등록 */
 	int insertApprovalSignFile(UploadFile file);
 	
-	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 조회 */
+	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 및 기안 개수 조회 */
 	Map<String, Object> selectEmpSign(String empNo);
 	
 	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 수정 */

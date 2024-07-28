@@ -45,7 +45,7 @@
 	</insert>
 	
 	
-	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 조회 -->
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 서명 파일 및 기안 개수 조회 -->
 	<select id="selectEmpSign" parameterType="String" resultType="map">
 		SELECT 
 			  e.emp_no empNo
@@ -54,6 +54,10 @@
 			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E001' AND cd = e.emp_dept) empDeptName
 			, (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = e.emp_grade) empGradeName
 			, e.sign_file signFile
+			, (select COUNT(*) FROM approval_doc WHERE emp_no='admin') cntTotal
+			, (select COUNT(*) FROM approval_doc WHERE emp_no='admin' AND approval_type = '1') cntDayoff
+			, (select COUNT(*) FROM approval_doc WHERE emp_no='admin' AND approval_type = '2') cntEvent
+			, (select COUNT(*) FROM approval_doc WHERE emp_no='admin' AND approval_type = '3') cntExpense
 		FROM 
 			employee e 
 		LEFT JOIN file_upload f 

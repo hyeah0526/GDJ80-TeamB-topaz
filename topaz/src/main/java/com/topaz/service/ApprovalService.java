@@ -112,7 +112,7 @@ public class ApprovalService {
 	
 
 	/*
-	 * 분류 번호: #11 - 신규 결재 :: 결재 서명 여부 가져오기
+	 * 분류 번호: #11 - 신규 결재 :: 결재 서명 여부 및 기안 개수 가져오기
 	 * 시작 날짜: 2024-07-18
 	 * 담당자: 박혜아
 	*/
@@ -120,7 +120,7 @@ public class ApprovalService {
 		
 		log.debug(Debug.PHA + "getEmpSign service empNo--> " + empNo + Debug.END);
 		
-		// 서명여부가져오기
+		// 서명여부 및 기안 개수 가져오기
 		Map<String, Object> map = approvalMapper.selectEmpSign(empNo);
 		
 		return map;
