@@ -1,5 +1,6 @@
 package com.topaz.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.topaz.dto.Guest;
 import com.topaz.dto.GuestRequest;
@@ -83,6 +85,12 @@ public class CustomerController {
 	public String gstMyVolAppList() {
 		
 		return "/customer/gstMyVolAppList";
+	}
+	
+	@GetMapping("/customer/gstFindPW")
+	public String gstFindPW() {
+		
+		return "/customer/gstFindPW";
 	}
 	
 	/*
@@ -258,6 +266,25 @@ public class CustomerController {
 		return "redirect:/customer/gstMyInfo";
 	}
 	
-	
+	/*
+	 * 서비스명: findGstPw : 고객 비밀번호 찾기
+	 * 시작 날짜: 2024-07-28
+	 * 담당자: 한은혜
+	 */
+	@PostMapping("/customer/findGstPw")
+	@ResponseBody
+	public Map<String, String> findGstPw(@RequestParam(name="gstId") String gstId) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + " findGstPw gstId : " + gstId + Debug.END);
+		
+		String newPw = customerService.findGstPw(gstId);
+		
+		// 결과를 맵으로 반환
+	    Map<String, String> response = new HashMap<>();
+	    response.put("status", "success");
+	    response.put("newPw", newPw);
+
+	    return response;
+	}
 	
 }

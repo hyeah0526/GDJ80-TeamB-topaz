@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -162,7 +163,52 @@ public class CustomerService {
 		return updateRow;
 	}
 	
+	/*
+	 * 분류 번호: #16 - 고객 비밀번호 찾기 : 본인 확인
+	 * 시작 날짜: 2024-07-28
+	 * 담당자: 한은혜
+	 */
+	public String selectGuestName(String gstName, String gstId) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + " selectGuestName gstName : " + gstName + Debug.END);
+		
+		return customerMapper.selectGstName(gstName, gstId);
+	}
+	
+	/*
+	 * 분류 번호: #16 - 고객 비밀번호 찾기 : 임시 비밀번호
+	 * 시작 날짜: 2024-07-28
+	 * 담당자: 한은혜
+	 */
+	public String findGstPw(String gstId) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + " findGstPw gstId : " + gstId + Debug.END);
+		// 랜덤 문자+숫자 8글자 발급
+		String newPw = RandomStringUtils.randomAlphanumeric(8);
+		log.debug(Debug.HEH + " findGstPw newPw : " + newPw + Debug.END);
+		
+		int insertRow = customerMapper.insertGstFindPw(gstId);
+		
+		if(insertRow != 1) {
+			// 등록 실패일 경우
+			log.debug(Debug.HEH + " findGstPw insertRow 등록 실패시 0 : "+ insertRow + Debug.END);
+			throw new RuntimeException();
+			
+		} else if(insertRow == 1) {
+			// 등록 성공일 경우
+			log.debug(Debug.HEH + " findGstPw insertRow 등록 성공시 1 : "+ insertRow + Debug.END);
+			
+			int updateRow = customerMapper.updateGstFindPw(gstId, newPw);
+			
+			if(updateRow != 1) {
+				// 수정 실패일 경우
+				log.debug(Debug.HEH + " findGstPw updateRow 수정 실패시 0 : "+ updateRow + Debug.END);
+				throw new RuntimeException();
+			}
+			log.debug(Debug.HEH + " findGstPw updateRow 수정 성공시 1 : "+ updateRow + Debug.END);
+		}
+		
+		return newPw;
+	}
 
 }
-
-

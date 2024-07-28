@@ -120,4 +120,28 @@ public class CustomerRestController {
 		return list;
 	}
 	
+	
+	/*
+	 * 서비스명: nameCheck
+	 * 시작 날짜: 2024-07-28
+	 * 담당자: 한은혜
+	 */
+	@ResponseBody
+	@PostMapping("/customer/nameCheck")
+	public String nameCheck(@RequestParam(name = "gstName") String gstName,
+							@RequestParam(name = "gstId") String gstId) {
+		// 매개값 디버깅
+		log.debug(Debug.HEH + " nameCheck gstName : " + gstName + Debug.END);
+		log.debug(Debug.HEH + " nameCheck gstId : " + gstId + Debug.END);
+
+		String result = customerService.selectGuestName(gstName, gstId);
+		log.debug(Debug.HEH + " nameCheck result : " + result + Debug.END);
+
+		if(result == null) {
+			return "0";
+		}
+		
+		return "1";
+	}
+	
 }

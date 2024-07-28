@@ -32,5 +32,17 @@ public interface CustomerMapper {
 
 	/* 분류 번호 :  #16 - 고객 비밀번호 수정 : 비밀번호 기록 추가 */
 	public int insertGstPw(String gstId, String oldPw);
+	
+	/* 분류 번호 :  #16 - 고객 비밀번호 찾기 : 본인 이름 확인 */
+	public String selectGstName(String gstName, String gstId);
+
+	/* 분류 번호 :  #16 - 고객 비밀번호 찾기 : 임시 비밀번호 */
+	public Object findGstPw(String gstId, String newPw);
+
+	/* 분류 번호 :  #16 - 고객 비밀번호 찾기 : 이전 비밀번호 기록 추가 */
+	public int insertGstFindPw(String gstId);
+
+	/* 분류 번호 :  #16 - 고객 비밀번호 찾기 : 임시 비밀번호로 수정 */
+	public int updateGstFindPw(String gstId, String newPw);
 
 }

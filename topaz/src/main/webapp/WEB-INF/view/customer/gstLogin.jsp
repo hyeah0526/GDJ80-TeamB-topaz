@@ -64,7 +64,7 @@
 		              <div class="text-center mb-3 mt-3"><button type="submit">Login</button></div>
 		              <div class="row mb-5">
 			              <div class="col">
-			              	<a href="gstPWModify" style="color: white;"><button type="button">비밀번호 찾기</button></a>
+			              	<a href="gstFindPW" style="color: white;"><button type="button">비밀번호 찾기</button></a>
 			              </div>
 			              <div class="col">
 			              	<a href="signUp" style="color: white; "><button type="button">회원가입</button></a>

@@ -57,12 +57,10 @@
           <!-- 폼 이름 입력 -->
             <form action="${pageContext.request.contextPath}/customer/modifyGstPw" method="post" role="form" class="php-email-form">
               <div class="row">
-                <div class="col-8 form-group">
-                  <input type="text" name="gstId" id="gstId" class="form-control" placeholder="ID 4자 이상 입력">
+                <div class="col form-group">
+                	<% String gstId = (String) session.getAttribute("gstId"); %>
+                  <input type="text" name="gstId" id="gstId" value="<%= gstId %>" class="form-control" placeholder="ID 4자 이상 입력">
 				  <div class="id-message hide"></div>
-                </div>
-                <div class="col text-center">
-                	<button type="button" id="idCheck_btn">ID 확인</button>
                 </div>
               </div>
               
@@ -115,45 +113,12 @@
   <script type="text/javascript">
   
   	$(document).ready(function(){
-	    // ID 중복확인 버튼 클릭시 이벤트
-	    $('#idCheck_btn').click(function(){
-	        console.log('idCheck_btn 클릭');
-	        // ID 유효성 검사
-	        const gstId = $('#gstId').val().trim();
-	        const idPattern = /^[a-zA-Z0-9]{4,20}$/;
-	        
-	        if(gstId === ""){
-	            alert("ID를 입력해주세요.");
-	            $('#gstId').focus();
-	            return false;
-	        } else if(!idPattern.test(gstId)){
-	            alert("ID는 영어와 숫자를 사용하여 4-20자 입력해야합니다.");
-	            return false;
-	        }
-
-	        // idCheck 호출
-	        $.ajax({
-	            url:'/topaz/customer/idCheck',
-	            method:'post',
-	            data: { gstId: gstId },
-	            success:function(data){
-	                if(data == 0){
-	                    $('.id-message').removeClass('hide').text(' 존재하지 않는 ID입니다.').css('color', 'red');
-	                    $('#gstId').focus();
-	                } else {
-	                    $('.id-message').removeClass('hide').text(' 존재하는 ID입니다.').css('color', 'green');
-	                    $('#oldPw').focus();
-	                }
-	            }
-	        });
-	     });
 	    
 	    $('#pwMod_btn').click(function(e){
 	        e.preventDefault(); // 기본 폼 제출 방지
 	        console.log('pwMod_btn 클릭');
 	        
 	        let validation = true;
-	        const gstId = $('#gstId').val().trim();
 	        const oldPw = $("input[name='oldPw']").val().trim();
 	        const newPw = $("input[name='newPw']").val().trim();
 	        const newPwCk = $("input[name='newPwCk']").val().trim();
@@ -161,14 +126,7 @@
 	        const pwPattern = /^[a-zA-Z0-9]{4,20}$/;
 	        const idPattern = /^[a-zA-Z0-9]{4,20}$/;
 
-	        if(gstId === ""){
-	            alert("ID를 입력해주세요.");
-	            $('#gstId').focus();
-	            validation = false;
-	        } else if(!idPattern.test(gstId)){
-	            alert("ID는 영어와 숫자를 사용하여 4-20자 입력해야합니다.");
-	            validation = false;
-	        } else if(oldPw === ""){
+	        if(oldPw === ""){
 	            alert("이전 비밀번호를 입력해주세요.");
 	            $('#oldPw').focus();
 	            validation = false;
@@ -194,7 +152,6 @@
 	        }
 	    });
 	});
-  
   
   </script>
 

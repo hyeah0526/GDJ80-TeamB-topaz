@@ -10,7 +10,7 @@
 	<!-- Header -->
   <header id="header" class="header d-flex align-items-center sticky-top">
       <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-	      <a href="gstMain" class="logo d-flex align-items-center">
+	      <a href="/topaz/customer/gstMain" class="logo d-flex align-items-center">
 	        <!-- 로고 이미지 -->
 	        <img src="/topaz/assets/img/TOPAZ_logo.png" alt="">
 	        <h1 class="sitename">TOPAZ.</h1>
