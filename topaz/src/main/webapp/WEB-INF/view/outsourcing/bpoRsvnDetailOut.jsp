@@ -11,7 +11,7 @@
 	
 <body>
 	<!-- ======= header <Body> 부분 ======= -->
-	<jsp:include page="/WEB-INF/view/groupware/inc/hearderBody.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/view/groupware/inc/headerBodyOut.jsp"></jsp:include>
 	
 	<!-- ======= sideBar 부분 ======= -->
 	<jsp:include page="/WEB-INF/view/groupware/inc/sideBarOut.jsp"></jsp:include>
