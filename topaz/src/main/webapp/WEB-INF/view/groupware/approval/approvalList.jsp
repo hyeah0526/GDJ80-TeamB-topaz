@@ -57,54 +57,54 @@
 						
 							<form action="/topaz/groupware/approval/approvalList" id="searchForm" method="post">
 								<div class="row">
-									<div class="col-4 ms-5">
-	                                        <!-- 탭 네비게이션 -->
-	                                        <ul class="nav nav-tabs" id="approvalTabs" role="tablist">
-	                                            <li class="nav-item" role="presentation">
-	                                                <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true" data-category="">전체</button>
-	                                            </li>
-	                                            <li class="nav-item" role="presentation">
-	                                                <button class="nav-link" id="nav-drafts-tab" data-bs-toggle="tab" data-bs-target="#nav-drafts" type="button" role="tab" aria-controls="nav-drafts" aria-selected="false" data-category="c1">기안함</button>
-	                                            </li>
-	                                            <li class="nav-item" role="presentation">
-	                                                <button class="nav-link" id="nav-received-tab" data-bs-toggle="tab" data-bs-target="#nav-received" type="button" role="tab" aria-controls="nav-received" aria-selected="false" data-category="c2">수신함</button>
-	                                            </li>
-	                                            <li class="nav-item" role="presentation">
-	                                                <button class="nav-link" id="nav-approved-tab" data-bs-toggle="tab" data-bs-target="#nav-approved" type="button" role="tab" aria-controls="nav-approved" aria-selected="false" data-category="c3">승인함</button>
-	                                            </li>
-	                                            <li class="nav-item" role="presentation">
-	                                                <button class="nav-link" id="nav-canceled-tab" data-bs-toggle="tab" data-bs-target="#nav-canceled" type="button" role="tab" aria-controls="nav-canceled" aria-selected="false" data-category="c4">취소/반려함</button>
-	                                            </li>
-	                                            <li class="nav-item" role="presentation">
-	                                                <button class="nav-link" id="nav-finalized-tab" data-bs-toggle="tab" data-bs-target="#nav-finalized" type="button" role="tab" aria-controls="nav-finalized" aria-selected="false" data-category="c5">결재함</button>
-	                                            </li>
-	                                        </ul>
-	                                    </div>
-									<div class="col container">
-	                                    <div class="row justify-content-center form-group g-3 align-items-center">
-	                                        <div class="col-auto">
-	                                            <label for="searchDateStart" class="col-form-label">결재 등록일</label>
-	                                        </div>
-	                                        <div class="col-auto">
-	                                            <input type="date" name="searchDateStart" style="width: 160px;" class="form-control" id="searchDateStart">
-	                                        </div>
-	                                        <div class="col-auto">
-	                                            <span>~</span>
-	                                        </div>
-	                                        <div class="col-auto me-3">
-	                                            <input type="date" name="searchDateEnd" style="width: 160px;" class="form-control" id="searchDateEnd">
-	                                        </div>
-	                                        <div class="col-auto">
-	                                            <label for="searchWord" class="col-form-label">제목</label>
-	                                        </div>
-	                                        <div class="col-auto">
-	                                            <input type="text" name="searchWord" style="width: 160px;" id="searchWord" class="form-control" placeholder="검색어 입력">
-	                                        </div>
-	                                        <div class="col-auto">
-	                                            <button type="button" id="searchButton" class="btn btn-primary">검색</button>
-	                                        </div>
-	                                    </div>
-	                                </div>
+									<div class="col ms-5">
+                                        <!-- 탭 네비게이션 -->
+                                        <ul class="nav nav-tabs" id="approvalTabs" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true" data-category="">전체</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="nav-drafts-tab" data-bs-toggle="tab" data-bs-target="#nav-drafts" type="button" role="tab" aria-controls="nav-drafts" aria-selected="false" data-category="c1">기안함</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="nav-received-tab" data-bs-toggle="tab" data-bs-target="#nav-received" type="button" role="tab" aria-controls="nav-received" aria-selected="false" data-category="c2">수신함</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="nav-approved-tab" data-bs-toggle="tab" data-bs-target="#nav-approved" type="button" role="tab" aria-controls="nav-approved" aria-selected="false" data-category="c3">승인함</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="nav-canceled-tab" data-bs-toggle="tab" data-bs-target="#nav-canceled" type="button" role="tab" aria-controls="nav-canceled" aria-selected="false" data-category="c4">취소/반려함</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="nav-finalized-tab" data-bs-toggle="tab" data-bs-target="#nav-finalized" type="button" role="tab" aria-controls="nav-finalized" aria-selected="false" data-category="c5">결재함</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col d-flex justify-content-end mt-3 me-5">
+                                    <div class="row justify-content-center form-group g-3 align-items-center">
+                                        <div class="col-auto">
+                                            <label for="searchDateStart" class="col-form-label">결재 등록일</label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <input type="date" name="searchDateStart" style="width: 160px;" class="form-control" id="searchDateStart">
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>~</span>
+                                        </div>
+                                        <div class="col-auto me-3">
+                                            <input type="date" name="searchDateEnd" style="width: 160px;" class="form-control" id="searchDateEnd">
+                                        </div>
+                                        <div class="col-auto">
+                                            <label for="searchWord" class="col-form-label">제목</label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <input type="text" name="searchWord" style="width: 160px;" id="searchWord" class="form-control" placeholder="검색어 입력">
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="button" id="searchButton" class="btn btn-primary">검색</button>
+                                        </div>
+                                    </div>
                                 </div>
 							</form>
 						</div>
