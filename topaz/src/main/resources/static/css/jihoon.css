@@ -76,6 +76,31 @@
     
 }
 
+.imagePreviewContainer {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+.removeImage {
+    position: absolute;
+    top: 0px;
+    left: 230px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 0; 
+}
+
+.removeImage:hover {
+    transform: scale(1.1);
+}
+
 #currentFile{
 	margin-top: 20px;
 }
@@ -86,3 +111,17 @@
 	display: flex;
 	justify-content: flex-end;
 }
+
+#previewContainer{
+	width: 200px;
+    height: 200px;
+}
+
+#preview{
+   	width: 300px;
+    height: 200px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+

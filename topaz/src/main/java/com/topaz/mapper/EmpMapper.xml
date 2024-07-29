@@ -416,7 +416,6 @@
 	<!-- 분류 번호 :  #4 - 전체 직원 근무 조회 -->
 	<select id="selectEmpAttendance" resultType="Map">
 		SELECT
-			ROW_NUMBER() OVER (ORDER BY ch.reg_time DESC) AS NO, 
 			DATE(ch.start_time) date, 
 			em.emp_name empName, 
 			ch.emp_no empNo, 
@@ -442,6 +441,7 @@
         <if test="empName != null and empName != ''">
             AND em.emp_name LIKE CONCAT('%', #{empName}, '%')
         </if>
+        	ORDER BY ch.reg_time DESC
         LIMIT #{currentPage}, #{rowPerPage}
 	</select>
 	
@@ -457,7 +457,7 @@
 		ON
 			ch.emp_no = em.emp_no
 		WHERE
-        1=1
+        	1=1
       	<if test="startDateHidden  != null and startDateHidden  != ''">
 		    AND ch.start_time &gt;= #{startDateHidden }
 		</if>

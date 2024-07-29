@@ -10,7 +10,7 @@
 <head>
     <!-- CSS / JS -->
     <link href="/topaz/css/jihoon.css" rel="stylesheet">
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Jquery -->
 </head>
     <!-- ======= header <Head> 부분 ======= -->
     <jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
@@ -131,7 +131,7 @@
 	                                        <input class="form-control" type="file" name="uploadFile" id="uploadFile">
 	                                        <span class="validMsg">${uploadFileMsg}</span>
 										</div>
-                                        <div id="previewContainer" class="imagePreviewContainer" style="display:none; margin-top: 20px; margin-bottom: 20px;" >
+                                        <div id="previewContainer" class="imagePreviewContainer" style="display:none; margin-top: 20px; margin-bottom: 20px; margin-left: 80px;" >
                                             <img id="preview">
                                             <span id="removeImage" class="removeImage">&times;</span>
                                         </div>

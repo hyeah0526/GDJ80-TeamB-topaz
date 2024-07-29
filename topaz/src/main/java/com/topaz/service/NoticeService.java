@@ -28,9 +28,6 @@ public class NoticeService {
 	
 	@Autowired UploadFileMapper uploadFilemapper;
 	
-	@Autowired UploadFileService uploadFileService;
-	
-	
 	/*
 	 * 분류 번호: #10 - 공지 사항 삭제
 	 * 시작 날짜: 2024-07-07
@@ -164,6 +161,7 @@ public class NoticeService {
 			
 			log.debug(Debug.KIS + "/ service / addNotice / file: " + file);
 			
+			//파일저장
 			int fileRow = uploadFilemapper.insertUploadFile(file);
 			
 			log.debug(Debug.KIS + "/ service / addNotice / fileRow: " + fileRow);

@@ -9,7 +9,7 @@ $(document).ready(function() {
     });
 
     handleCategoryAndDate(grade.filter(':checked').val());
-    
+
     function handleCategoryAndDate(selectedGrade) {
         if (selectedGrade === undefined) {
             disableCategory();
@@ -80,11 +80,14 @@ $(document).ready(function() {
         startDate.prop('disabled', false);
         endDate.prop('disabled', false);
     }
-    
-
 
     $('#modifyNoticeForm').submit(formSubmit);
 
+    $('#uploadFile').change(function() {
+        if (this.files && this.files.length > 0) {
+            $('#currentFile').hide();
+        }
+    });
 });
 
 function formSubmit(event) {
@@ -95,8 +98,6 @@ function formSubmit(event) {
     const selectedStartDate = $('#startDate').val().trim();
     const selectedEndDate = $('#endDate').val().trim();
 
-	
-	
     if (!title || title.length < 10) {
         alert("제목은 10자 이상 입력하세요.");
         $("#title").focus();
@@ -135,7 +136,7 @@ function formSubmit(event) {
         event.preventDefault();
         return false;
     }
-	
+
     // 폼 제출 계속 진행
     return true;
 }

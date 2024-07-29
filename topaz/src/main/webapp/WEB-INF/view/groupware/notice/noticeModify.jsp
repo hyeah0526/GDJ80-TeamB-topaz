@@ -121,6 +121,11 @@
                                             </div>
                                         </c:if>
                                         
+                                         <div id="previewContainer" class="imagePreviewContainer" style="display:none; margin-top: 20px; margin-bottom: 20px; margin-left: 80px;" >
+                                            <img id="preview">
+                                            <span id="removeImage" class="removeImage">&times;</span>
+                                        </div>
+                                        
                                         <span class="validMsg">${fileMsg}</span>
                                         <input type="hidden" id="currentFilePath" name="currentFilePath" value="${noticeDetail.fileName}">
                                         <input type="hidden" id="currentFileName" name="currentFileName" value="${noticeDetail.fileName}">
