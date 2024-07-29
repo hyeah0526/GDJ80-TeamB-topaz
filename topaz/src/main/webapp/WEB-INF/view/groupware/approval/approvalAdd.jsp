@@ -34,7 +34,7 @@
 
 	<!-- section 시작 -->
     <section class="section">
-	    <div class="row justify-content-center"><div class="col-lg-8">
+	    <div class="row justify-content-center"><div class="col-lg-10">
 	    	<div class="card"><div class="card-body">
 	    		<!-- 서명 여부 조회(signFile/empGrade/empDeptName/empName/empNo) -->
 	    		<c:set var="s" value="${empSign}"></c:set>
@@ -301,8 +301,11 @@
 						
 						<div class="row mb-4 justify-content-center">
 							<label for="profileImage" class="col-lg-2 col-form-label">내 용</label>
-							<div class="col-lg-4" id="">
-								<textarea class="form-control" id="eventThird" name="docThirdContent" style="height: 150px;" placeholder="기획 내용을 상세히 작성해주세요"></textarea>
+						</div>
+						
+						<div class="row mb-4 justify-content-center">
+							<div class="col-lg-10">
+								<textarea class="form-control" id="eventThird" name="docThirdContent" style="height: 500px;" placeholder="기획 내용을 상세히 작성해주세요"></textarea>
 							</div>
 						</div>
 						

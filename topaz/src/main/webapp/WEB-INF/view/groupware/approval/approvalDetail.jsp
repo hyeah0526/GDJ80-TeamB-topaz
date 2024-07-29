@@ -153,7 +153,7 @@
 			        			<button type="button" class="btn btn-success mb-3" id="finalConfirm">승인</button>
 			        			<button type="button" class="btn btn-danger" id="finalReject">반려</button>
 			        		</c:if>
-			        		<c:if test="${a.finalApprovalDate ne null && a.approvalStateName ne '반려' || a.approvalStateName ne '취소'}">
+			        		<c:if test="${a.finalApprovalDate ne null && a.approvalStateName ne '반려' && a.approvalStateName ne '취소'}">
 			        			<img src="/topaz/assets/img/approvalSign/${a.finalApprovalSign}" height="100px;" width="100px;">
 			        		</c:if>
 			        	</td>
@@ -250,7 +250,7 @@
 	    				</tr>
 	    				<tr>
 	    					<td colspan="4" style="height: 500px; align-content: start;">
-	    						<textarea style="width: 90%; height: 500px; border: none; pointer-events: none;" readonly>${a.docThirdContent}</textarea>
+	    						<textarea style="width: 100%; height: 500px; border: none; pointer-events: none;" readonly>${a.docThirdContent}</textarea>
 	    					</td>
 	    				</tr>
 	    			</table>
