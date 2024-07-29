@@ -11,14 +11,39 @@
        .clickable-row {
            cursor: pointer;
        }
+       .search-form-container {
+           text-align: right;
+           align-items: center;
+       }
+       .search-form-container form {
+           display: inline-flex;
+           align-items: center;
+       }
+       .form-group {
+           margin-right: 15px; 
+           display: flex;
+           align-items: center;
+       }
+       .form-group label {
+           margin-right: 10px; 
+           margin-bottom: 0px;
+           white-space: nowrap; 
+           align-items: center;
+       }
+       .form-group input {
+           width: 200px;
+           align-items: center;
+       }
+       .form-group:last-child {
+           margin-right: 0; /
+       }
    </style>
    
-   	<!-- JQuery -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-   <!-- ======= header <Body> 부분 ======= -->
    <jsp:include page="/WEB-INF/view/groupware/inc/hearderBody.jsp"></jsp:include>
    
    <!-- ======= sideBar 부분 ======= -->
@@ -45,26 +70,20 @@
                 <h5 class="card-title"></h5>
          
                 <!-- 봉사 날짜, 내용 검색 -->
-                <form id="searchForm" action="/topaz/groupware/volunteer/volunteerList" method="get">
-                    <div class="row justify-content-center d-flex align-items-center">
-                        <div class="col-4">
-                            <div class="row form-group d-flex align-items-center">
-                                <label class="col-4" for="searchDate">봉사 시작 날짜</label>
-                                <input type="date" name="searchDate" style="width: 300px;" class="col form-control me-5" id="searchDate">
-                            </div>           
+                <div class="search-form-container justify-content-center">
+                    <form id="searchForm" action="/topaz/groupware/volunteer/volunteerList" method="get">
+                        <div class="form-group">
+                            <label class="form-label" for="searchDate">봉사 시작 날짜</label>
+                            <input type="date" name="searchDate" class="form-control" id="searchDate">
                         </div>
-                        <div class="col-4">
-                        	<div class="row form-group d-flex align-items-center">
-	                            <label class="col-3" for="searchDate">봉사 내용</label>
-	                            <input type="text" name="searchWord" id="searchWord" class="col form-control me-5" style="width: 300px; display: inline;">
-                        	</div>
+                        <div class="form-group">
+                            <label class="form-label" for="searchWord">봉사 내용</label>
+                            <input type="text" name="searchWord" id="searchWord" class="form-control">
                         </div>
-                        
-                        <div class="col-2">
-                            <button type="button" id="searchButton" class="btn btn-primary">검색</button>
-                        </div>
-                    </div>
-                </form>
+                        <button type="submit" id="search_btn" class="btn btn-primary me-3">검색</button>
+                        <button type="submit" id="reset_btn" class="btn btn-primary">초기화</button>
+                    </form>
+                </div>
                 <h5 class="card-title"></h5>
                 <!-- 봉사 신청 정보 리스트 -->
                 <table class="table table-hover">
@@ -247,10 +266,22 @@
         console.log("volunteerList page load ", )
     
         // 검색 버튼 클릭 시 첫번째 페이지로 조회하기
-        $('#searchButton').click(function() {
+        $('#search_btn').click(function() {
             volunteerList(1);
         });
     
+     	// 초기화 버튼 클릭 시 폼 입력값 초기화
+        $('#reset_btn').click(function() {
+            $('#searchForm')[0].reset(); 
+            volunteerList(1);
+        });
+     	
+     	// 폼이 제출되면 검색
+        $('#searchForm').submit(function(e) {
+            e.preventDefault(); 
+            volunteerList(1);
+        });
+     
         // 페이징 버튼 클릭 시
         $('#paginationUl').on('click', '.bpoListPage', function(e) {
             e.preventDefault(); // 링크 기본 동작 방지
