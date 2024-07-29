@@ -26,6 +26,13 @@
 
   <!-- Main CSS File -->
   <link href="/topaz/assets/css/main.css" rel="stylesheet">
+  <style type="text/css">
+  	.disabled {
+	    background-color: #BDBDBD !important;
+	    cursor: not-allowed; 
+	    color: #666666; 
+	}
+  </style>
 </head>
 
 <body class="team-page">

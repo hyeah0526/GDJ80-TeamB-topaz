@@ -16,6 +16,27 @@
 	      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
 	        <div class="container">
 	          <div class="row justify-content-center">
+	              
+	            <!-- 고객 회원가입 및 로그인 버튼 -->
+	            <div class="col-lg-4 col-md-6 align-items-center justify-content-center">
+	              <div class="d-flex justify-content-center py-4">
+	                <a class="logo d-flex align-items-center w-auto">
+	                  <img src="/topaz/assets/img/logo.png" alt="">
+	                  <span class="d-none d-lg-block">고객으로 회원가입 및 로그인</span>
+	                </a>
+	              </div><!-- End Logo -->
+	              <div class="card mb-3">
+	                <div class="card-body d-flex flex-column align-items-center justify-content-center" style="height: 463.56px;">
+	                    <div class="col-10 mb-4">
+			              	<a href="/topaz/customer/signUp" style="color: white; "><button class="btn btn-primary w-100" type="button" style="height: 50px;">고객 회원가입</button></a>
+			            </div>
+			            <div class="col-10 mb-4">
+			              	<a href="/topaz/customer/gstLogin" style="color: white; "><button class="btn btn-primary w-100" type="button" style="height: 50px;">고객 로그인</button></a>
+			            </div>
+	                </div>
+	              </div>
+	            </div>
+	          
 	          	<!-- 직원 로그인 폼 -->
 	            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 	              <div class="d-flex justify-content-center py-4">
@@ -106,26 +127,6 @@
 	                      <button class="btn btn-primary w-100" type="submit">Login</button>
 	                    </div>
 	                  </form>
-	                </div>
-	              </div>
-	            </div>
-	            
-	            <!-- 고객 회원가입 및 로그인 버튼 -->
-	            <div class="col-lg-4 col-md-6 align-items-center justify-content-center">
-	              <div class="d-flex justify-content-center py-4">
-	                <a class="logo d-flex align-items-center w-auto">
-	                  <img src="/topaz/assets/img/logo.png" alt="">
-	                  <span class="d-none d-lg-block">고객으로 회원가입 및 로그인</span>
-	                </a>
-	              </div><!-- End Logo -->
-	              <div class="card mb-3">
-	                <div class="card-body d-flex flex-column align-items-center justify-content-center" style="height: 463.56px;">
-	                    <div class="col-10 mb-4">
-			              	<a href="/topaz/customer/signUp" style="color: white; "><button class="btn btn-primary w-100" type="button" style="height: 50px;">고객 회원가입</button></a>
-			            </div>
-			            <div class="col-10 mb-4">
-			              	<a href="/topaz/customer/gstLogin" style="color: white; "><button class="btn btn-primary w-100" type="button" style="height: 50px;">고객 로그인</button></a>
-			            </div>
 	                </div>
 	              </div>
 	            </div>
