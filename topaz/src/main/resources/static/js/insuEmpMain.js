@@ -20,8 +20,8 @@ $(document).ready(function() {
 
                     const noticeHTML = `
 	                    <div class="activity-item d-flex">
-	                    	<div class="" id="e1e1"><a href="#" class="fw-bold text-dark">${n.category}</a></div>
-		                  	<div class="activity-content" id="e2e2" style="display: flex; justify-content: space-between; width: 80%;">
+	                    	<div class="text-center" style="width:50px;"><a href="#" class="fw-bold text-dark">${n.category}</a></div>
+		                  	<div class="activity-content" style="display: flex; justify-content: space-between; width: 90%;">
 		                    	<span style="text-align: left;">
 		                    		<a href="/topaz/groupware/notice/noticeDetail?newsNo=${n.newsNo}" style="color:#444444;">
 		                    			${n.titleSub}...

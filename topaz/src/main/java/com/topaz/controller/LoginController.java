@@ -1,8 +1,11 @@
 package com.topaz.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +83,7 @@ public class LoginController {
         }else if(empGrade.equals("4")) {
         	empGradeName = "부장";
         	
-        }
+        };
         
         // 공통코드 E001(E:인사부, M:마케팅부, W:행정부, C:고객관리부)
         if(empDept.equals("E")) {
@@ -94,8 +97,7 @@ public class LoginController {
         	
         }else if(empDept.equals("C")) {
         	empDeptName = "고객관리부";
-        }
-        
+        };
         
         log.debug(Debug.PHA + " controller / empMain / empGradeName " + empGradeName + Debug.END);
         log.debug(Debug.PHA + " controller / empMain / empDeptName " + empDeptName + Debug.END);
@@ -105,6 +107,7 @@ public class LoginController {
         model.addAttribute("empName", employee.get("empName"));
         model.addAttribute("empNo", employee.get("empNo"));
         model.addAttribute("empHiredate", employee.get("empHiredate"));
+        model.addAttribute("hireDays", employee.get("hireDays"));
         model.addAttribute("fileName", employee.get("fileName"));
         model.addAttribute("empGradeName", empGradeName);
         model.addAttribute("empDeptName", empDeptName);
@@ -112,6 +115,7 @@ public class LoginController {
 		return "/groupware/empMain";
 	}
 	
+
 
 	/*
 	 * 서비스명: empMain.jsp 뷰 / 스케줄러 데이터 반환

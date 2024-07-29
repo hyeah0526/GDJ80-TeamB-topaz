@@ -129,7 +129,9 @@
 							<img src="/topaz/upload/${fileName}" width="200px;" height="200px;" class="rounded-circle">
 						</div>
 						<div class="ps-3">
-							<h5 class="small pt-1 fw-bold"><span class="text-muted pt-1 mb-1">입사 : ${empHiredate}</span></h5>
+							<h5 class="small pt-1 fw-bold">
+							<span class="text-muted pt-1 mb-1">입사 : ${empHiredate}</span> 
+							<span class="text-danger pt-1 mb-1">&nbsp;+${hireDays} Days</span></h5>
 							<h6 class="card-title">${empName}&nbsp;(${empNo})</h6>
 							<h5 style="color: #012970;" class="small pt-1 fw-bold">
 								${empDeptName}
