@@ -89,7 +89,7 @@
              <div class="row">
              	<label for="volContent" class="col-3 col-form-label">봉사 내용</label>
                 <div class="col-9 form-group">
-                 	<input type="text" name="volContent" id="volContent" class="form-control" value="${v.volContent}" readonly>
+					<textarea rows="" cols="" style="height: 160px;" class="form-control" name="volContent" id="volContent" readonly>${v.volContent}</textarea>
                 </div>
              </div>
              

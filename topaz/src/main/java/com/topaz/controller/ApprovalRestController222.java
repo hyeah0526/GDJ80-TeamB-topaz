@@ -35,7 +35,7 @@ public class ApprovalRestController222 {
 	@GetMapping("/approval/approvalList")
 	public Map<String, Object> approvalList(HttpServletRequest httpServletRequest,
 								@RequestParam(name="currentPage", defaultValue="1") int currentPage,
-								@RequestParam(name="rowPerPage", defaultValue="10") int rowPerPage,
+								@RequestParam(name="rowPerPage", defaultValue="5") int rowPerPage,
 								@RequestParam(name="searchDateStart", defaultValue="") String searchDateStart,
 								@RequestParam(name="searchDateEnd", defaultValue="") String searchDateEnd,
 								@RequestParam(name="approvalCategory", defaultValue="") String approvalCategory,

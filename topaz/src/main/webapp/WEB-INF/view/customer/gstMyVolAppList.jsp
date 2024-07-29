@@ -27,6 +27,11 @@
 
   <!-- Main CSS File -->
   <link href="/topaz/assets/css/main.css" rel="stylesheet">
+  <style type="text/css">
+  	th {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body class="team-page">
@@ -59,10 +64,10 @@
           <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">봉사 일시</th>
-                  <th scope="col">봉사 내용</th>
+                  <th scope="col" style="width: 170px;">봉사 일시</th>
+                  <th scope="col" style="width: 300px;">봉사 내용</th>
                   <th scope="col">신청 인원</th>
-                  <th scope="col">신청 내용</th>
+                  <th scope="col" style="width: 300px;">신청 내용</th>
                   <th scope="col">신청 상태</th>
                   <th scope="col"></th>
                 </tr>
@@ -119,9 +124,9 @@
                   let row = '<tr data-vol-app-no="' + item.volAppNo + '" data-vol-no="'+ item.volNo + '">';
                   row += '<td scope="row">' + item.volStartTime + ' - ' + item.volEndTime + '</td>';
                   row += '<td>' + item.volContent + '</td>';
-                  row += '<td>' + item.volAppPeople + '</td>';
-                  row += '<td>' + item.volAppComment + '</td>';
-                  row += '<td>' + item.volAppState + '</td>';
+                  row += '<td style="text-align: center;">' + item.volAppPeople + '</td>';
+                  row += '<td style="text-align: center;">' + item.volAppComment + '</td>';
+                  row += '<td style="text-align: center;">' + item.volAppState + '</td>';
                   
                	  // 신청 상태가 '대기'일 때에만 취소버튼 활성화
                   let buttonClass = 'btn-secondary';

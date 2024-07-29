@@ -35,8 +35,12 @@
            align-items: center;
        }
        .form-group:last-child {
-           margin-right: 0; /
+           margin-right: 0; 
        }
+       
+      th {
+      	text-align: center;
+      }
    </style>
    
    <!-- JQuery -->
@@ -89,11 +93,11 @@
                 <table class="table table-hover">
                     <thead>
                       <tr>
-                        <th scope="col">봉사 시작 시간</th>
-                        <th scope="col">봉사 내용</th>
+                        <th scope="col" style="width: 170px;">봉사 시작 시간</th>
+                        <th scope="col" style="width: 300px;">봉사 내용</th>
                         <th scope="col">신청자 ID</th>
                         <th scope="col">신청 인원</th>
-                        <th scope="col">신청 내용</th>
+                        <th scope="col" style="width: 300px;">신청 내용</th>
                         <th scope="col">상태</th>
                       </tr>
                     </thead>
@@ -127,10 +131,10 @@
 			<form id="volunteerAppDetailForm" action="" method="post">
 				<div class="modal-body">
 					<div class="row mb-5">
-			             	<label for="volTime" class="col-3 mb-3 col-form-label">봉사 일시</label>
-			                <div class="col-9 form-group">
-			                 	<input type="text" name="volTime" id="volTime" class="form-control" readonly>
-			                </div>
+		             	<label for="volTime" class="col-3 mb-3 col-form-label">봉사 일시</label>
+		                <div class="col-9 ">
+		                 	<input type="text" name="volTime" id="volTime" class="form-control" readonly>
+		                </div>
 						
 						<label for="volPeople" class="col-3 mb-3 col-form-label">신청 가능 인원</label>
 						<div class="col-9 mb-3">
@@ -320,10 +324,10 @@
                             let row = '<tr class="clickable-row" data-vol-app-no="' + item.volAppNo + '">';
                             row += '<td scope="row">' + item.volStarttime + '</td>';
                             row += '<td>' + item.volContent + '</td>';
-                            row += '<td>' + item.gstId + '</td>';
-                            row += '<td>' + item.volAppPeople + '</td>';
+                            row += '<td style="text-align: center;">' + item.gstId + '</td>';
+                            row += '<td style="text-align: center;">' + item.volAppPeople + '</td>';
                             row += '<td>' + item.volAppComment + '</td>';
-                            row += '<td>' + item.volAppState + '</td>';
+                            row += '<td style="text-align: center;">' + item.volAppState + '</td>';
                             row += '</tr>';
 
                             // tbody에 행 추가
