@@ -6,11 +6,24 @@
 	<jsp:include page="/WEB-INF/view/groupware/inc/headerHead.jsp"></jsp:include>
 	
 <head>
-   <style>
-       .clickable-row {
+	<meta charset="UTF-8">
+   	<style>
+      .clickable-row {
            cursor: pointer;
-       }
-   </style>
+      }
+        .table-container {
+        margin: 0 auto;
+        width: 90%;
+      }
+
+      .table td, .table th {
+        padding-left: 100px; 
+      }
+      
+      .btn-group .btn.approval-category {
+            width: 80px;
+        }
+   	</style>
 </head>
 
 <body>
@@ -40,73 +53,84 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-body">
-						
-						<!-- Table with stripped rows -->
 						<div id="searchFormContainer" style="margin-top: 20px;">
-							
 						
 							<form action="/topaz/groupware/approval/approvalList" id="searchForm" method="post">
-								<div id="approvalStateContainer" style="margin-bottom: 30px;">
-									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="">전체</button>
-									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c1">기안함</button>
-									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c2">수신함</button>
-									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c3">승인함</button>
-									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c4">취소/반려함</button>
-									<button type="button" name="approvalCategory" class="btn btn-primary approval-category" data-category="c5">결재함</button>
-								</div>
-								<div class="container">
-                                    <div class="row justify-content-center form-group g-3 align-items-center">
-                                        <div class="col-auto">
-                                            <label for="searchDateStart" class="col-form-label">결재 등록일</label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <input type="date" name="searchDateStart" style="width: 200px;" class="form-control" id="searchDateStart">
-                                        </div>
-                                        <div class="col-auto">
-                                            <span>~</span>
-                                        </div>
-                                        <div class="col-auto me-5">
-                                            <input type="date" name="searchDateEnd" style="width: 200px;" class="form-control" id="searchDateEnd">
-                                        </div>
-                                        <div class="col-auto">
-                                            <label for="searchWord" class="col-form-label">제목</label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <input type="text" name="searchWord" style="width: 200px;" id="searchWord" class="form-control" placeholder="검색어 입력">
-                                        </div>
-                                        <div class="col-auto">
-                                            <button type="button" id="searchButton" class="btn btn-primary">검색</button>
-                                        </div>
-                                    </div>
+								<div class="row">
+									<div class="col-4 ms-5">
+	                                        <!-- 탭 네비게이션 -->
+	                                        <ul class="nav nav-tabs" id="approvalTabs" role="tablist">
+	                                            <li class="nav-item" role="presentation">
+	                                                <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true" data-category="">전체</button>
+	                                            </li>
+	                                            <li class="nav-item" role="presentation">
+	                                                <button class="nav-link" id="nav-drafts-tab" data-bs-toggle="tab" data-bs-target="#nav-drafts" type="button" role="tab" aria-controls="nav-drafts" aria-selected="false" data-category="c1">기안함</button>
+	                                            </li>
+	                                            <li class="nav-item" role="presentation">
+	                                                <button class="nav-link" id="nav-received-tab" data-bs-toggle="tab" data-bs-target="#nav-received" type="button" role="tab" aria-controls="nav-received" aria-selected="false" data-category="c2">수신함</button>
+	                                            </li>
+	                                            <li class="nav-item" role="presentation">
+	                                                <button class="nav-link" id="nav-approved-tab" data-bs-toggle="tab" data-bs-target="#nav-approved" type="button" role="tab" aria-controls="nav-approved" aria-selected="false" data-category="c3">승인함</button>
+	                                            </li>
+	                                            <li class="nav-item" role="presentation">
+	                                                <button class="nav-link" id="nav-canceled-tab" data-bs-toggle="tab" data-bs-target="#nav-canceled" type="button" role="tab" aria-controls="nav-canceled" aria-selected="false" data-category="c4">취소/반려함</button>
+	                                            </li>
+	                                            <li class="nav-item" role="presentation">
+	                                                <button class="nav-link" id="nav-finalized-tab" data-bs-toggle="tab" data-bs-target="#nav-finalized" type="button" role="tab" aria-controls="nav-finalized" aria-selected="false" data-category="c5">결재함</button>
+	                                            </li>
+	                                        </ul>
+	                                    </div>
+									<div class="col container">
+	                                    <div class="row justify-content-center form-group g-3 align-items-center">
+	                                        <div class="col-auto">
+	                                            <label for="searchDateStart" class="col-form-label">결재 등록일</label>
+	                                        </div>
+	                                        <div class="col-auto">
+	                                            <input type="date" name="searchDateStart" style="width: 160px;" class="form-control" id="searchDateStart">
+	                                        </div>
+	                                        <div class="col-auto">
+	                                            <span>~</span>
+	                                        </div>
+	                                        <div class="col-auto me-3">
+	                                            <input type="date" name="searchDateEnd" style="width: 160px;" class="form-control" id="searchDateEnd">
+	                                        </div>
+	                                        <div class="col-auto">
+	                                            <label for="searchWord" class="col-form-label">제목</label>
+	                                        </div>
+	                                        <div class="col-auto">
+	                                            <input type="text" name="searchWord" style="width: 160px;" id="searchWord" class="form-control" placeholder="검색어 입력">
+	                                        </div>
+	                                        <div class="col-auto">
+	                                            <button type="button" id="searchButton" class="btn btn-primary">검색</button>
+	                                        </div>
+	                                    </div>
+	                                </div>
                                 </div>
 							</form>
 						</div>
 						<br>
-						
-						<div class="button-container" style="display: flex; justify-content: flex-end;">
-							<a href="/topaz/groupware/approval/approvalAdd" class="btn btn-primary">신규 작성</a>
-						</div>						
-						
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th scope="col">결재 종류</th>
-									<th scope="col">제목</th>
-									<th scope="col">작성자</th>
-									<th scope="col">상태</th>
-									<th scope="col">신청 날짜</th>
-								</tr>	
-								
-							<tbody id="tableBody">
-								<!-- Ajax 데이터 조회 추가 -->
-							</tbody>
-						</table>
-						
-					<nav aria-label="Page navigation example">
-						<ul class="pagination" id="paginationUl">
-			           </ul>
-					</nav>				
-						<!-- End Table with stripped rows -->
+						<div class="table-container mb-3">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">결재 종류</th>
+										<th scope="col">제목</th>
+										<th scope="col">작성자</th>
+										<th scope="col">상태</th>
+										<th scope="col">신청 날짜</th>
+									</tr>	
+									
+								<tbody id="tableBody">
+									<!-- Ajax 데이터 조회 추가 -->
+								</tbody>
+							</table>
+						</div>
+						<div class="d-flex justify-content-center">
+							<nav aria-label="Page navigation example">
+								<ul class="pagination" id="paginationUl">
+					            </ul>
+							</nav>				
+						</div>
 					</div>
 				</div>
 			</div>
@@ -162,7 +186,10 @@
 	    }
 	
 	    $(document).ready(function() {
-	    	
+	        // 결재 목록 페이지 로드 시 기본적으로 '전체' 탭에 active 부여
+            $('#nav-all-tab').addClass('active');
+            $('#nav-all').addClass('show active');
+
 	    	// 결재함 접근 권한 제어
             if (empGrade >= 4) {
                 // empGrade가 4 이상일 때만 관련 UI 요소 표시
@@ -177,10 +204,16 @@
 	        console.log("approvalList page load ");
 	    
 	        // 결재 카테고리 클릭 시
-	        $('.approval-category').click(function() {
+	        $('#approvalTabs .nav-link').click(function() {
 	            approvalCategory = $(this).data('category'); // data-category에서 값 읽기
 	            console.log("approvalCategory : ", typeof approvalCategory);
 
+	            $('#approvalTabs .nav-link').removeClass('active'); // 모든 버튼에서 active 클래스 제거
+	            $(this).addClass('active'); // 클릭된 버튼에 active 클래스 추가
+	            
+	            $('#approvalTabContent .tab-pane').removeClass('show active'); // 모든 탭 콘텐츠에서 show active 클래스 제거
+                $($(this).data('bsTarget')).addClass('show active'); // 클릭된 탭에 show active 클래스 추가
+                
 	            approvalList(1, approvalCategory); // AJAX 요청으로 데이터 로드
 	            
 	        });
@@ -282,7 +315,7 @@
 	         
 	        }
 	     	// 카테고리 버튼 클릭 시 검색 폼 값 초기화
-	        $('.approval-category').on('click', function() {
+	        $('#approvalTabs .nav-link').on('click', function() {
 	            $('#searchDateStart').val(''); // 시작 날짜 초기화
 	            $('#searchDateEnd').val(''); // 종료 날짜 초기화
 	            $('#searchWord').val(''); // 검색어 초기화

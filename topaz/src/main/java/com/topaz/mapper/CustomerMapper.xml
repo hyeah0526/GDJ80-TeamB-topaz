@@ -125,7 +125,10 @@
 	<!-- 분류 번호: #16 - 비밀번호 수정 : 기존 비밀번호 수정 -->
 	<update id="updateGstPw" parameterType="String">
 		UPDATE guest 
-		SET gst_pw = SHA2(#{newPw}, 256)
+		SET 
+			gst_pw = SHA2(#{newPw}, 256),
+			mod_time = NOW(),
+			mod_id = #{gstId}
 		WHERE gst_id = #{gstId}
 		AND gst_pw = SHA2(#{oldPw}, 256)
 	</update>
@@ -189,7 +192,10 @@
 	<!-- 분류 번호: #16 - 비밀번호 찾기 : 기존 비밀번호 수정 -->
 	<update id="updateGstFindPw" parameterType="String">
 		UPDATE guest 
-		SET gst_pw = SHA2(#{newPw}, 256)
+		SET 
+			gst_pw = SHA2(#{newPw}, 256),
+			mod_time = NOW(),
+			mod_id = #{gstId}
 		WHERE gst_id = #{gstId}
 	</update>
 	
