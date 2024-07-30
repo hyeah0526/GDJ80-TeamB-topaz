@@ -55,7 +55,7 @@
 	                          	<!-- 고객 선택 -->
 							    <div class="info-item mb-3">
 								    <span class="label">이름</span>
-								    <select name="gstSelect" class="form-control" style="width: 200px; display: inline;" onchange="updateGstId()">
+								    <select name="gstSelect" class="form-select" style="width: 200px; display: inline;" onchange="updateGstId()">
 								    	<option style="text-align: center;">=====선택=====</option>
 								        <c:forEach items="${gstOne}" var="guest">
 								            <option value="${guest.gstId}" data-email="${guest.gstEmail}" 
@@ -116,7 +116,7 @@
 									    <!-- 객실 선택 -->
 								    <div class="info-item mb-3">
 								    	<span class="label">객실</span>
-								        <select name="roomNo" class="form-control" style="width: 200px; display: inline;" onchange="updateRoom()">
+								        <select name="roomNo" class="form-select" style="width: 200px; display: inline;" onchange="updateRoom()">
 								        	<option style="text-align: center;">=====선택=====</option>
 								            <c:forEach items="${room}" var="c">
 								                <option value="${c.roomNo}" data-type="${c.roomType }"

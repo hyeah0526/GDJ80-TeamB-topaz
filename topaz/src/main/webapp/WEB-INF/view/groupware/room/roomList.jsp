@@ -51,25 +51,21 @@
 	            <div class="container">
 	                <div class="row mb-3 align-items-center">
 	                    <div class="col-md-3 form-group">
-	                        <label for="type" class="form-label">입주상태</label>
 	                        <select id="state" class="form-select" aria-label="Select state">
 	                            <option value="">입주상태를 선택하세요</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-md-3 form-group">
-	                        <label for="dong" class="form-label">동</label>
 	                        <select id="dong" class="form-select" aria-label="Select dong">
 	                            <option value="">동을 선택하세요</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-md-3 form-group">
-	                        <label for="type" class="form-label">타입</label>
 	                        <select id="type" class="form-select" aria-label="Select type">
 	                            <option value="">타입을 선택하세요</option>
 	                        </select>
 	                    </div>
 	                    <div class="col-md-3 form-group">
-	                        <label for="ho" class="form-label">호수</label>
 	                        <select id="ho" class="form-select" aria-label="Select ho number">
 	                            <option value="">호수를 선택하세요</option>
 	                        </select>
