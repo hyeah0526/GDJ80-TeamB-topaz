@@ -60,7 +60,6 @@
                                     <!-- 직원번호 -->
                                     <label>직원번호</label>
                                     <input type="text" name="empNo" class="step" value="${empDetail.empNo}" readonly style="background-color: #c8c8c8;">
-                                    
                                 </div>
                                 
                                 <div class="formGroup">

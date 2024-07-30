@@ -50,8 +50,8 @@
 				     		<input type="hidden" name="empNo" value="${empNo}">
 				     		<div style="margin-bottom: 20px;">
                		            <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myInfo'">내 정보 조회</button>
-	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myPwModify?empNo=${empDetail.empNo}'">비밀번호 수정</button>
-	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myLeaveMain?empNo=${empDetail.empNo}'">휴가 조회</button>
+	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myPwModify?empNo=${empNo}'">비밀번호 수정</button>
+	                    		<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/groupware/myPage/myLeaveMain?empNo=${empNo}'">휴가 조회</button>
 	                    	</div>
 					     	
 					     	<div class="hireDateDiv">
