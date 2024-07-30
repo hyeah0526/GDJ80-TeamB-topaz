@@ -17,7 +17,7 @@
       }
 
       .table td, .table th {
-        padding-left: 100px; 
+        padding-left: 30px; 
       }
       
       .btn-group .btn.approval-category {
@@ -57,7 +57,7 @@
 						
 							<form action="/topaz/groupware/approval/approvalList" id="searchForm" method="post">
 								<div class="row">
-									<div class="col ms-5">
+									<div class="col">
                                         <!-- 탭 네비게이션 -->
                                         <ul class="nav nav-tabs" id="approvalTabs" role="tablist">
                                             <li class="nav-item" role="presentation">
@@ -113,11 +113,11 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
-										<th scope="col">결재 종류</th>
-										<th scope="col">제목</th>
-										<th scope="col">작성자</th>
-										<th scope="col">상태</th>
-										<th scope="col">신청 날짜</th>
+										<th scope="col" style="width: 150px; text-align: center;">결재 종류</th>
+										<th scope="col" style="width: 400px; text-align: center;">제목</th>
+										<th scope="col" style="width: 150px;">작성자</th>
+										<th scope="col" style="width: 150px;">상태</th>
+										<th scope="col" style="width: 220px; text-align: center;">신청 날짜</th>
 									</tr>	
 									
 								<tbody id="tableBody">
@@ -282,11 +282,11 @@
 	                    if (response && response.list) {
 	                        response.list.forEach(function(item) {
 	                            let row = '<tr class="clickable-row" data-approval-doc-no="' + item.approvalDocNo + '">';
-	                            row += '<td scope="row">' + item.approvalType + '</td>';
+	                            row += '<td scope="row" style="text-align: center;">' + item.approvalType + '</td>';
 	                            row += '<td>' + item.docTitle + '</td>';
 	                            row += '<td>' + item.empNo + '</td>';
 	                            row += '<td>' + item.approvalState + '</td>';
-	                            row += '<td>' + item.regTime + '</td>';
+	                            row += '<td style="text-align: center;">' + item.regTime + '</td>';
 	                            row += '</tr>';
 
 	                            // tbody에 행 추가
