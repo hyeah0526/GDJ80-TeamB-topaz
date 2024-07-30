@@ -176,7 +176,7 @@
 	    				<tr>
 	    					<th>휴가종류</th>
 	    					<td>
-	    						<c:if test="${a.docFirstContent eq 'A'}">
+	    						<c:if test="${a.docFirstContent eq 'Y'}">
 	    							연차
 	    						</c:if>
 	    						<c:if test="${a.docFirstContent eq 'M'}">

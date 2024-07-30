@@ -161,7 +161,7 @@ $(document).ready(function(){
 		$('#dayOffDate').empty();
 		
 		// 선택된 휴가 종류에 따라 해당하는 기간 입력 필드 보이기
-		if (selectedOption === 'A' || selectedOption === 'M') {
+		if (selectedOption === 'Y' || selectedOption === 'M') {
 			// 연차 , 월차 선택시
 			$('#dayOffDate').append('<label for="profileImage" class="col-lg-2 col-form-label">기 간</label>' +
 							           '<div class="col-lg-2">' +

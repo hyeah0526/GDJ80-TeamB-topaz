@@ -375,6 +375,14 @@ public class ApprovalService {
 				
 			}
 			
+			
+			// 만약 시작일과 종료일이 같은 경우
+			if(leaveHistory.getStartTime().equals(leaveHistory.getEndTime())) {
+				log.debug(Debug.PHA + "modApprovalState service 신청일과 종료일이 같음!" + Debug.END);
+				leaveHistory.setLeaveCount((float) 1.0);
+			}
+			
+			
 			log.debug(Debug.PHA + "modApprovalState service leaveHistory"+ leaveHistory + Debug.END);
 			
 			// leave_history테이블에 insert 등록하기
