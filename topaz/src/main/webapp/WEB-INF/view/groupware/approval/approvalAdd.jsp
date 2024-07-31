@@ -40,19 +40,8 @@
 	    		<c:set var="s" value="${empSign}"></c:set>
 	    		<input type="hidden" name="empGrade" id="empGrade" value="${s.empGrade}">
 	    		<input type="hidden" id="signFile" value="${s.signFile}">
-				<!-- 서명이 없을 경우 신규 등록 버튼 -->
-				<c:if test="${s.signFile eq null}">
-					<h6 class="card-title">
-						<button type="button" id="approvalSignAddBtn" class="btn btn-primary">서명등록</button>
-					</h6>
-				</c:if>
-				<!-- 서명이 있을 경우 수정 버튼 -->
-				<c:if test="${s.signFile ne null}">
-					<h6 class="card-title">
-						<button type="button" id="approvalSignModBtn" class="btn btn-primary">서명수정</button>
-						<input type="hidden" name="oldSignFile" id="oldSignFile" value="${s.signFile}">
-					</h6>
-				</c:if>
+				
+				<h6 class="card-title"></h6>
 				
 				<!-- 총 기안 개수 -->
 				<div class="text-center mb-4">
@@ -76,6 +65,22 @@
 				        경비 <strong class="fs-4">${s.cntExpense}</strong>건
 				    </div>
 				</div>
+				
+				<!-- 등록된 서명 표시 및 서명수정버튼 -->
+				<c:if test="${s.signFile ne null}">
+					<div class="text-center">
+						<button type="button" id="approvalSignModBtn" class="btn btn-primary">서명수정</button>
+						<input type="hidden" name="oldSignFile" id="oldSignFile" value="${s.signFile}">
+						<img src="/topaz/assets/img/approvalSign/${s.signFile}" width="200px" height="100px;">
+					</div>
+				</c:if>
+				
+				<!-- 서명 등록 버튼 활성화 -->
+				<c:if test="${s.signFile eq null}">
+					<div class="text-center">
+						<button type="button" id="approvalSignAddBtn" class="btn btn-primary mb-3">서명등록</button>
+					</div>
+				</c:if>
 
 				<!-- 작성자 정보 -->
 				<div class="row mb-5 approvalEmpInfo justify-content-center" style="clear: left;">
