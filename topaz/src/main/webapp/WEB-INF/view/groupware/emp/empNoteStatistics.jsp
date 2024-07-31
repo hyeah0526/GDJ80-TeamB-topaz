@@ -43,7 +43,6 @@
                     <!-- 메인 -->
                	
 		            <!-- Bar Chart -->
-             		<h5 class="card-title">쪽지 통계</h5>
 		            <div class="chartDiv">
 	             		<canvas id="barChart"></canvas>
 		            </div>

@@ -40,11 +40,6 @@
         <div class="container">
             <div class="colorDiv">
             
-                <!-- 제목 -->
-                <div class="title">
-                    <h1 class="titleH1">정보 상세</h1>
-                </div>
-            
                 <!-- 메인 -->
                  <div class="mainContent">
                     
