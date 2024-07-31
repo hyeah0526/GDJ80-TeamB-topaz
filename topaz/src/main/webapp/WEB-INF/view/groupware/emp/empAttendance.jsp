@@ -54,43 +54,56 @@
                     	
 				     	<form id="searchForm" action="/topaz/groupware/emp/empAttendance" method="post" >
 					     	
-					     	<div class="inputDiv">
-						     	<!-- 입사년도 -->
-						     	<div class="hireDateDiv">
-						     		<label>기간</label>
-						     		 <div class="dateInput" style="width: 700px;">
-		                                <input type="date" name="startDate">
-		                                <span>~</span>
-		                                <input type="date" name="endDate">
-	                               		<input type="hidden" name="startDateHidden">
-	   								 	<input type="hidden" name="endDateHidden">
-		                            </div>
-						     	</div>
-
-						     	<div class="gradeNoDiv">
-							     	<!-- 직위 -->
-							     	<div>
-							     		<label>사원이름</label>
-							     		<div>
-								     		<input type="text" name="empName" class="no-max-width">
-							     		</div>
-						     		</div>
-									<!-- 사원번호 -->
-						     		<div>
-										<label>사원번호</label>
-										<div>
-								     		<input type="text" name="empNo" class="no-max-width">
-										</div>
-							     	</div>	
-						     		
-						     	</div>
-
-					     	</div>
 					     	
-					     	<div class="btnDiv">
-						     	<button type="submit">검색</button>
-						     	<button type="button" class="resetBtn">초기화</button>
+					     	<div class="col d-flex justify-content-end mt-3" >
+					     		 <div class="row justify-content-center form-group g-3 align-items-center">
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<label class="col-form-label">기간</label>
+					     		 	</div>
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<input type="date" name="startDate" class="no-max-width">
+					     		 	</div>
+				     		 	 	
+				     		 	 	<div class="col-auto">
+                                        <span>~</span>
+                                    </div>
+
+					     		 	<div class="col-auto">
+					     		 		<input type="date" name="endDate" class="no-max-width">
+					     		 	</div>
+				     		 	 	
+					     		 	<input type="hidden" name="startDateHidden">
+   								 	<input type="hidden" name="endDateHidden">
+					     		 	
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<label class="col-form-label">사원이름</label>
+					     		 	</div>
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<input type="text" name="empName" class="no-max-width" style="width: 130px;">
+					     		 	</div>
+					     		 	
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<label class="col-form-label">사원번호</label>
+					     		 	</div>
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<input type="text" name="empNo" class="no-max-width" style="width: 130px;">
+					     		 	</div>
+					     		 	
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<button type="submit">검색</button>
+						     			<button type="button" class="resetBtn">초기화</button>
+					     		 	</div>
+					     		 	
+					     		 </div>
 					     	</div>
+
 				     	</form>
 				     	
 				     	

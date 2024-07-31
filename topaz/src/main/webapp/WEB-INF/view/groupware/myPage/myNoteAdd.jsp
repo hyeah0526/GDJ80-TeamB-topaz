@@ -68,9 +68,13 @@
                             
                             <div class="form-group" style="margin-top: 40px">
                                 <label for="searchDept">직원 검색</label>
-                                <input type="text" id="searchDept" name="searchDept" class="form-control" placeholder="직원명을 입력하세요" style="width: 30%;">
-                                <button type="button" id="searchButton" class="btn btn-primary">검색</button>
-                                <button type="button" id="resetButton" class="btn btn-secondary">리셋</button>
+                                <div style="display: flex;">
+	                                <input type="text" id="searchDept" name="searchDept" class="form-control" placeholder="직원명을 입력하세요" style="width: 30%;">
+	                                <div style="margin-left: 10px;">
+		                                <button type="button" id="searchButton" class="btn btn-primary">검색</button>
+		                                <button type="button" id="resetButton" class="btn btn-secondary">리셋</button>
+	                                </div>
+                                </div>
                             </div>
                             
                             <div class="form-group">

@@ -54,24 +54,33 @@
 
 				     	<form id="searchForm" action="/topaz/groupware/emp/empLeave" method="post" >
 					     	
-					     	<div class="gradeNoDiv" style="margin-bottom: 20px;">
-						     	<!-- 사원 이름 -->
-						     	<div>
-						     		<label>사원이름</label>
-						     		<input type="text" name="empName" class="no-max-width">
-					     		</div>
-					     		
-								<!-- 사원 번호 -->
-					     		<div>
-									<label>사원번호</label>
-						     		<input type="text" name="empNo" class="no-max-width">
-						     	</div>				     	
+					     	<div class="col d-flex justify-content-end mt-3" >
+					     		 <div class="row justify-content-center form-group g-3 align-items-center">
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<label class="col-form-label">사원이름</label>
+					     		 	</div>
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<input type="text" name="empName" class="no-max-width" style="width: 130px;">
+					     		 	</div>
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<label class="col-form-label">사원번호</label>
+					     		 	</div>
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<input type="text" name="empNo" class="no-max-width" style="width: 130px;">
+					     		 	</div>
+					     		 	
+					     		 	<div class="col-auto">
+					     		 		<button type="submit">검색</button>
+						     			<button type="button" class="resetBtn">초기화</button>
+					     		 	</div>
+					     		 	
+					     		 </div>
 					     	</div>
 					     	
-					     	<div class="btnDiv">
-						     	<button type="submit">검색</button>
-						     	<button type="button" class="resetBtn">초기화</button>
-					     	</div>
 				     	</form>
 				     	
 				     	
