@@ -15,6 +15,24 @@
 		  border: none;
 		  padding: 8px;
 		}
+		
+		 /* 일요일 날짜 색상 */
+		.fc-day-sun a {
+		  color: red;
+		  text-decoration: none;
+		}
+		
+		/* 토요일 날짜 색상 */
+		.fc-day-sat a {
+		  color: blue;
+		  text-decoration: none;
+		}
+
+		/* 평일 날짜 색상 */
+		.fc-day-mon a, .fc-day-tue a, .fc-day-wed a,.fc-day-thu a, .fc-day-fri a {
+		  color: #012970;
+		  text-decoration: none;
+		}
 	</style>
     
     <!-- Fullcalendar -->
