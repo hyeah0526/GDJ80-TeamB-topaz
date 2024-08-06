@@ -117,7 +117,7 @@
                                         <input class="form-control" type="file" id="uploadFile" name="uploadFile">
                                         <c:if test="${noticeDetail.filePath != null}">
                                             <div id="currentFile">
-                                                <p>기존 파일: <img src="<c:url value='/${noticeDetail.filePath}'/>" alt="첨부 이미지" style="max-width: 100%; height: auto;"></p>
+                                                <p>기존 파일: <img src="/topaz/upload/emp/${noticeDetail.fileName}" alt="첨부 이미지" style="max-width: 100%; height: auto;"></p>
                                             </div>
                                         </c:if>
                                         

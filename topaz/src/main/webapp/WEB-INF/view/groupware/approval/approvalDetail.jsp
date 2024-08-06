@@ -136,7 +136,7 @@
 			        <tr>
 			        	<td style="height:130px;">
 			        		<c:if test="${a.approvalStateName ne '취소'}">
-			        		<img src="/topaz/assets/img/approvalSign/${a.signFile}" height="100px;" width="100px;">
+			        		<img src="/topaz/upload/approvalSign/${a.signFile}" height="100px;" width="100px;">
 			        		</c:if>
 			        	</td>
 			        	<td style="height:130px;">
@@ -145,7 +145,7 @@
 			        			<button type="button" class="btn btn-danger" id="firstReject">반려</button>
 			        		</c:if>
 			        		<c:if test="${a.firstApprovalDate ne null && a.approvalStateName ne '반려' && a.approvalStateName ne '취소'}">
-			        			<img src="/topaz/assets/img/approvalSign/${a.firstApprovalSign}" height="100px;" width="100px;">
+			        			<img src="/topaz/upload/approvalSign/${a.firstApprovalSign}" height="100px;" width="100px;">
 			        		</c:if>
 			        	</td>
 			        	<td style="height:130px;">
@@ -154,7 +154,7 @@
 			        			<button type="button" class="btn btn-danger" id="finalReject">반려</button>
 			        		</c:if>
 			        		<c:if test="${a.finalApprovalDate ne null && a.approvalStateName ne '반려' && a.approvalStateName ne '취소'}">
-			        			<img src="/topaz/assets/img/approvalSign/${a.finalApprovalSign}" height="100px;" width="100px;">
+			        			<img src="/topaz/upload/approvalSign/${a.finalApprovalSign}" height="100px;" width="100px;">
 			        		</c:if>
 			        	</td>
 			        </tr>
@@ -285,7 +285,7 @@
 	    						<textarea style="width: 100%; height: 500px; border: none;pointer-events: none;" readonly>${a.docThirdContent}</textarea>
 	    					</td>
 	    					<td colspan="1" class="text-center">
-	    						<img width="250px" src="/topaz/assets/img/approvalDoc/${a.fileName}">
+	    						<img width="250px" src="/topaz/upload/approvalDoc/${a.fileName}">
 	    					</td>
 	    				</tr>
 	    			</table>

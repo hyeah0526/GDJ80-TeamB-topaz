@@ -66,7 +66,7 @@
 		                <h2 class="title">${newsOne.title }</h2>
 		                <div class="post-img">
 		                <br>
-		                  <img src="/topaz/assets/img/guest/${newsOne.fileName }" alt="" class="img-fluid" width="600px">
+		                  <img src="/topaz/upload/guest/${newsOne.fileName}" alt="" class="img-fluid" width="600px">
 		                </div>
 		                <p>
 		                <textarea class="form-control" rows="7" cols="20" readonly style="text-align: center">${newsOne.content }</textarea>

@@ -71,7 +71,7 @@
 					<div class="text-center">
 						<button type="button" id="approvalSignModBtn" class="btn btn-primary">서명수정</button>
 						<input type="hidden" name="oldSignFile" id="oldSignFile" value="${s.signFile}">
-						<img src="/topaz/assets/img/approvalSign/${s.signFile}" width="200px" height="100px;">
+						<img src="/topaz/upload/approvalSign/${s.signFile}" width="200px" height="100px;">
 					</div>
 				</c:if>
 				
@@ -466,7 +466,7 @@
 				<div class="modal-body text-center" style="margin: auto;">
 					<h5 class="modal-title">기존 서명</h5>
 					<div>
-						<img src="/topaz/assets/img/approvalSign/${s.signFile}">
+						<img src="/topaz/upload/approvalSign/${s.signFile}">
 					</div>
 					<hr>
 					<!-- 서명패드 표시 -->

@@ -94,7 +94,7 @@
                                 <div class="swiper-slide">
                                     <div class="team">
                                         <div class="pic">
-                                            <a href="/topaz/customer/newsDetail?newsNo=${newsItem.newsNo }"><img src="/topaz/assets/img/guest/${newsItem.fileName}" alt="Image" class="img-fluid" style="width: 400px; height: 300px"></a>
+                                            <a href="/topaz/customer/newsDetail?newsNo=${newsItem.newsNo }"><img src="/topaz/upload/guest/${newsItem.fileName}" alt="Image" class="img-fluid" style="width: 400px; height: 300px"></a>
                                         </div>
                                         <h3 class="">
                                             <a href="/topaz/customer/newsDetail?newsNo=${newsItem.newsNo }"><span class="">${newsItem.title}</span></a>

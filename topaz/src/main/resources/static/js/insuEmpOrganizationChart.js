@@ -12,7 +12,7 @@ $(document).ready(function() {
                 name: '이대표',
                 department: '인사부',
                 grade: '부장',
-                img: '/topaz/upload/admin.jpg',
+                img: '/topaz/upload/emp/admin.jpg',
                 pid: null
             };
 
@@ -44,7 +44,7 @@ $(document).ready(function() {
                         name: manager.empName,
                         department: manager.empDept,
                         grade: manager.empGrade,
-                        img: manager.file_name ? '/topaz/upload/' + manager.file_name : 'https://cdn.balkan.app/shared/empty-img-none.svg',
+                        img: manager.file_name ? '/topaz/upload/emp/' + manager.file_name : 'https://cdn.balkan.app/shared/empty-img-none.svg',
                         pid: 1 // 대표자에게 연결
                     };
                     managerIds.push(currentId);
@@ -61,7 +61,7 @@ $(document).ready(function() {
                         name: teamLeader.empName,
                         department: teamLeader.empDept,
                         grade: teamLeader.empGrade,
-                        img: teamLeader.file_name ? '/topaz/upload/' + teamLeader.file_name : 'https://cdn.balkan.app/shared/empty-img-none.svg',
+                        img: teamLeader.file_name ? '/topaz/upload/emp/' + teamLeader.file_name : 'https://cdn.balkan.app/shared/empty-img-none.svg',
                         pid: managerIds[index % managerIds.length] // 부장들에게 순차적으로 연결
                     };
                     teamLeaderIds.push(currentId);
@@ -78,7 +78,7 @@ $(document).ready(function() {
                         name: assistant.empName,
                         department: assistant.empDept,
                         grade: assistant.empGrade,
-                        img: assistant.file_name ? '/topaz/upload/' + assistant.file_name : 'https://cdn.balkan.app/shared/empty-img-none.svg',
+                        img: assistant.file_name ? '/topaz/upload/emp/' + assistant.file_name : 'https://cdn.balkan.app/shared/empty-img-none.svg',
                         pid: teamLeaderIds[index % teamLeaderIds.length] // 팀장들에게 순차적으로 연결
                     };
                     assistantIds.push(currentId);
@@ -94,7 +94,7 @@ $(document).ready(function() {
                         name: employee.empName,
                         department: employee.empDept,
                         grade: employee.empGrade,
-                        img: employee.file_name ? '/topaz/upload/' + employee.file_name : 'https://cdn.balkan.app/shared/empty-img-none.svg',
+                        img: employee.file_name ? '/topaz/upload/emp/' + employee.file_name : 'https://cdn.balkan.app/shared/empty-img-none.svg',
                         pid: assistantIds[index % assistantIds.length] // 대리들에게 순차적으로 연결
                     };
                     nodes.push(employeeNode);

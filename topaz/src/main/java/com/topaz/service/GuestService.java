@@ -115,9 +115,13 @@ public class GuestService {
 			
 			
 			// 파일 폴더에 저장하기
+			 File emptyFile = new File("/home/ubuntu/tomcat/apache-tomcat-10.1.24/webapps/topaz/upload/guest/" + file.getFileName());
+			/*
 			File emptyFile = new File(System.getProperty("user.dir") 
 					+ "/src/main/resources/static/assets/img/guest/" 
 					+ file.getFileName());
+			*/
+			
 			try {
 				// mf안에 있는 getinputStream을 가져와서 비어있는 emptyFile로 복사를 함 
 				mf.transferTo(emptyFile);
@@ -212,10 +216,12 @@ public class GuestService {
 		log.debug(Debug.PSJ + insertGstFile + Debug.END);
 
 		// 파일 upload폴더에 저장하기
+		 File emptyFile = new File("/home/ubuntu/tomcat/apache-tomcat-10.1.24/webapps/topaz/upload/guest/" + file.getFileName());
+		/*
 		File emptyFile = new File(System.getProperty("user.dir") 
 									+ "/src/main/resources/static/assets/img/guest/" 
 									+ file.getFileName());
-		
+		*/
 		try {
 			// mf안에 있는 getinputStream을 가져와서 비어있는 emptyFile로 복사를 함 
 			mf.transferTo(emptyFile);

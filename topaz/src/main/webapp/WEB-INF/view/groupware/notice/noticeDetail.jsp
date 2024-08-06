@@ -117,7 +117,7 @@
 								        <c:if test="${noticeDetail.filePath != null}">
 								            <c:choose>
 								                <c:when test="${fn:contains(noticeDetail.filePath, '.png') || fn:contains(noticeDetail.filePath, '.jpg') || fn:contains(noticeDetail.filePath, '.jpeg')}">
-								                    <img  src="<c:url value='/${noticeDetail.filePath}'/>" alt="첨부 이미지" style="max-width: 100%; height: auto;">
+								                    <img src="/topaz/upload/emp/${noticeDetail.fileName}" alt="첨부 이미지" style="max-width: 100%; height: auto;">
 								                </c:when>
 								                <c:otherwise>
 								                    <span>첨부 파일: ${noticeDetail.filePath}</span>

@@ -52,7 +52,8 @@ public class NoticeService {
 		log.debug(Debug.KIS + " service / modifyNotice / noticeRequest: " + noticeRequest);
 		
 		// 파일 업로드 경로
-		String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
+		//String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
+		String imagePath = "/home/ubuntu/tomcat/apache-tomcat-10.1.24/webapps/topaz/upload/notice/";
 		log.debug(Debug.KIS + "/ service / modifyNotice noticeRequest: " + imagePath);
 		
 		// 업로드 파일 확인
@@ -135,7 +136,8 @@ public class NoticeService {
 		log.debug(Debug.KIS + "/ service / addNotice noticeRequest: " + noticeRequest);
 		
 		// 파일 업로드 경로
-		String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
+		//String imagePath = System.getProperty("user.dir") + "/src/main/resources/static/upload/";
+		String imagePath = "/home/ubuntu/tomcat/apache-tomcat-10.1.24/webapps/topaz/upload/notice/";
 	    
 		log.debug(Debug.KIS + "/ service / addNotice noticeRequest: " + imagePath);
 		

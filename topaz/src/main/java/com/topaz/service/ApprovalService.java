@@ -89,10 +89,14 @@ public class ApprovalService {
 		}
 		
         // 파일 폴더에 저장
+        //log.debug(Debug.PHA + "System.getProperty(\"user.dir\")" + System.getProperty("user.dir") + Debug.END);
+        File emptyFile = new File("/home/ubuntu/tomcat/apache-tomcat-10.1.24/webapps/topaz/upload/approvalSign/" + filename);
+        /*
         File emptyFile = new File(System.getProperty("user.dir") 
 						        	//+"/src/main/webapp/WEB-INF/view/groupware/approval/"
 									+ "/src/main/resources/static/assets/img/approvalSign/" 
 									+ filename);
+        */
         
         // 파일로 저장 시키기
         try {
@@ -148,10 +152,13 @@ public class ApprovalService {
         log.debug(Debug.PHA + "modSign service modFileName--> " + modFileName + Debug.END);
         
         // 파일 폴더에 저장
+       // File emptyModFile = new File("/home/ubuntu/tomcat/apache-tomcat-10.1.24/webapps/topaz/WEB-INF/upload/approvalSign/" + modFileName);
+        File emptyModFile = new File("/home/ubuntu/tomcat/apache-tomcat-10.1.24/webapps/topaz/upload/approvalSign/" + modFileName);
+        /*
         File emptyModFile = new File(System.getProperty("user.dir") 
 									+ "/src/main/resources/static/assets/img/approvalSign/" 
 									+ modFileName);
-        
+        */        
         // file_upload,Employee테이블 수정시간 변경해주기
         int updateRow = approvalMapper.updateApprovalSign(empNo);
         
@@ -274,9 +281,12 @@ public class ApprovalService {
 			
 			
 			// 파일 upload폴더에 저장하기
+			File emptyFile = new File("/home/ubuntu/tomcat/apache-tomcat-10.1.24/webapps/topaz/upload/approvalDoc/" + file.getFileName());
+			/*
 			File emptyFile = new File(System.getProperty("user.dir") 
 										+ "/src/main/resources/static/assets/img/approvalDoc/" 
 										+ file.getFileName());
+			*/
 			try {
 				// approvalDocRequest안에 있는 getinputStream을 가져와서 비어있는 emptyFile로 복사를 함 
 				approvalDocRequest.getUploadFile().transferTo(emptyFile);
