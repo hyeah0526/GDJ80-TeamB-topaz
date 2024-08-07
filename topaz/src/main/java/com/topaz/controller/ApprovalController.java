@@ -121,4 +121,52 @@ public class ApprovalController {
 	
 	
 	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-08-07
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/groupware/approval/approvalDoc") 
+	public String approvalDoc() {
+		
+		
+		return "groupware/approval/approvalDoc";
+	}
+	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-08-07
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/groupware/approval/approvalDayOff") 
+	public String approvalDayOff() {
+		
+		
+		return "groupware/approval/approvalDayOff";
+	}
+	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-08-07
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/groupware/approval/approvalProposal") 
+	public String approvalProposal() {
+		
+		
+		return "groupware/approval/approvalProposal";
+	}
+	
+	/*
+	 * 서비스명: 
+	 * 시작 날짜: 2024-08-07
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/groupware/approval/approvalExpense") 
+	public String approvalExpense() {
+		
+		
+		return "groupware/approval/approvalExpense";
+	}
+	
 }
