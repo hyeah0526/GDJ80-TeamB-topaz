@@ -135,19 +135,29 @@ public class ApprovalController {
 	
 	/*
 	 * 서비스명: 
-	 * 시작 날짜: 2024-08-07
+	 * 시작 날짜: 2024-08-09
 	 * 담당자: 박혜아
 	*/
 	@GetMapping("/groupware/approval/approvalDayOff") 
-	public String approvalDayOff() {
+	public String approvalDayOff(Model model, HttpServletRequest httpServletRequest) {
+		// 세션가져와서 empNo세팅
+		HttpSession session = httpServletRequest.getSession();
+		String empNo = (String)session.getAttribute("strId");
+		log.debug(Debug.PHA + "approval Controller empNo--> " + empNo + Debug.END);
 		
+		// 서명여부 및 기안자 정보
+		Map<String, Object> empSign = approvalService.getEmpSign(empNo);
+		log.debug(Debug.PHA + "approval Controller empSign--> " + empSign + Debug.END);
+		
+		// 모델에 값담기
+		model.addAttribute("empSign", empSign);
 		
 		return "groupware/approval/approvalDayOff";
 	}
 	
 	/*
 	 * 서비스명: 
-	 * 시작 날짜: 2024-08-07
+	 * 시작 날짜: 2024-08-
 	 * 담당자: 박혜아
 	*/
 	@GetMapping("/groupware/approval/approvalProposal") 
@@ -159,7 +169,7 @@ public class ApprovalController {
 	
 	/*
 	 * 서비스명: 
-	 * 시작 날짜: 2024-08-07
+	 * 시작 날짜: 2024-08-
 	 * 담당자: 박혜아
 	*/
 	@GetMapping("/groupware/approval/approvalExpense") 
