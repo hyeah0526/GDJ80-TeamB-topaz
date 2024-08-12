@@ -47,4 +47,10 @@ public interface ApprovalMapper {
 	
 	/* 분류 번호: #11 - 전자결재 상세 페이지 :: 휴가신청서 '승인'상태 시 등록 */
 	int insertLeaveHistory(LeaveHistory leaveHistory);
+	
+	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 부서정보 가져오기 */
+	List<Map<String, Object>> selectDepartments();
+	
+	/* 분류 번호: #11 - 전자결재 신청 페이지 :: 결재자 이름 가져오기 */
+	List<Map<String, Object>> selectApprovalName(String department);
 }

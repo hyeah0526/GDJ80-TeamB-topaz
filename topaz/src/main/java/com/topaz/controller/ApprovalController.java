@@ -149,8 +149,13 @@ public class ApprovalController {
 		Map<String, Object> empSign = approvalService.getEmpSign(empNo);
 		log.debug(Debug.PHA + "approval Controller empSign--> " + empSign + Debug.END);
 		
+		// 부서 정보 가져오기
+		List<Map<String, Object>> departments = approvalService.getDepartments();
+		log.debug(Debug.PHA + "approval Controller departments--> " + departments + Debug.END);
+		
 		// 모델에 값담기
 		model.addAttribute("empSign", empSign);
+		model.addAttribute("departments", departments);
 		
 		return "groupware/approval/approvalDayOff";
 	}

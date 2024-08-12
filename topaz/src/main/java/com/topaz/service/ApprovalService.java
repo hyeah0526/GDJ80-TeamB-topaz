@@ -404,4 +404,43 @@ public class ApprovalService {
 		
 		return updateRow+insertRow;
 	}
+	
+	
+	
+	
+	/*
+	 * 분류 번호: #11 - 전자결재 신청 페이지 :: 부서정보 가져오기
+	 * 시작 날짜: 2024-08-12
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getDepartments(){
+		
+		// 결재자 리스트 가져오기
+		List<Map<String, Object>> list = approvalMapper.selectDepartments();
+		log.debug(Debug.PHA + "getDepartments service map--> " + list + Debug.END);
+		
+		return list;
+		
+	}
+	
+	
+	
+	/*
+	 * 분류 번호: #11 - 전자결재 신청 페이지 :: 결재자이름 가져오기
+	 * 시작 날짜: 2024-08-12
+	 * 담당자: 박혜아
+	*/
+	public List<Map<String, Object>> getApprovalName(String department){
+		log.debug(Debug.PHA + "getDepartments service department--> " + department + Debug.END);
+		
+		// 결재자 이름 가져오기
+		List<Map<String, Object>> list = approvalMapper.selectApprovalName(department);
+		log.debug(Debug.PHA + "getApprovalName service list--> " + list + Debug.END);
+		
+		return list;
+		
+	}
+	
+	
+	
 }

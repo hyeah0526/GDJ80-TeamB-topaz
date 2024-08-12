@@ -299,4 +299,23 @@
 			, #{useYn}
 		)
 	</insert>
+	
+	
+	<!-- 분류 번호: #11 - 전자결재 신청 페이지 :: 부서정보 가져오기 -->
+	<select id="selectDepartments" resultType="map">
+		SELECT cd deptCode, cd_nm deptName 
+		FROM common_code 
+		WHERE crp_cd = 'E001'
+	</select>
+	
+	
+	<!--  -->
+	<select id="selectApprovalName" parameterType="String" resultType="map">
+		SELECT 
+			  emp_no empNo, 
+			  emp_name empName, 
+			  (SELECT cd_nm FROM common_code WHERE crp_cd = 'E002' AND cd = emp_grade) empGrade
+		FROM  employee 
+		WHERE emp_dept = #{department}
+	</select>
 </mapper>

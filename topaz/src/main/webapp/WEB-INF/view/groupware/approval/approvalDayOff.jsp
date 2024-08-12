@@ -81,14 +81,17 @@
 	    		<!-- 결재선 추가 -->
 	    		<div class="row mb-3 align-items-center">
 		    		<div class="col-md-2 form-group">
-			    		<select class="form-select">
-			    			<option>부서</option>
+			    		<select class="form-select" id="departmentsSelect">
+			    			<option value="">부서 선택</option>
+			    			<c:forEach var="d" items="${departments}">
+			    				<option value="${d.deptCode}">${d.deptName}</option>
+			    			</c:forEach>
 			    		</select>
 		    		</div>
 		    		
 		    		<div class="col-md-2 form-group">
-			    		<select class="form-select">
-			    			<option>이름</option>
+			    		<select class="form-select" id="nameSelect">
+			    			<option>이름 선택</option>
 			    		</select>
 		    		</div>
 		    		
@@ -393,8 +396,32 @@
 	            });
 	        }
 		}
+	    
+	    
 	});
 	
+	
+	/* 결재선 선택 */
+	$('#departmentsSelect').change(function() {
+		console.log('departmentsSelect change event : ', $('#departmentsSelect').val());
+		
+		$.ajax({
+			async : true, // 기본값은 true(비동기요청), false(동기요청)
+			url : '/topaz/approval/approvalNameSelect',
+			type : 'get',
+			data : {department : $('#departmentsSelect').val()}, // 부서 선택
+			success : function(result) {
+				console.log(result, " <--result");
+				
+				$('#nameSelect').html('<option value="">이름 선택</option>');
+				
+				// 부서에 따른 이름출력
+				$(result).each(function(index, item){ 
+					$('#nameSelect').append('<option value="'+item.empNo+'">'+item.empName+' '+item.empGrade+'</option>');
+				});
+			}
+		});
+	});
 		
 	</script>
 </body>

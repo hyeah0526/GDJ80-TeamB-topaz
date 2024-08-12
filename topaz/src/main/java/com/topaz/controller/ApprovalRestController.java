@@ -133,5 +133,22 @@ public class ApprovalRestController {
 		
 		return updateState;
 	}
+	
+
+	/*
+	 * 서비스명: modApprovalState
+	 * 시작 날짜: 2024-08-12
+	 * 담당자: 박혜아
+	*/
+	@GetMapping("/approval/approvalNameSelect")
+	public List<Map<String, Object>> approvalNameSelect(@RequestParam("department") String department){
+		
+		log.debug(Debug.PHA + "firstApprovalSelect REstController department--> " + department + Debug.END);
+		
+		List<Map<String, Object>> approvalName = approvalService.getApprovalName(department);
+		
+		return approvalName; 
+	}
+	
 
 }
