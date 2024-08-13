@@ -85,6 +85,7 @@
 			    			<option value="">부서 선택</option>
 			    			<c:forEach var="d" items="${departments}">
 			    				<option value="${d.deptCode}">${d.deptName}</option>
+			    				
 			    			</c:forEach>
 			    		</select>
 		    		</div>
@@ -96,12 +97,17 @@
 		    		</div>
 		    		
 		    		<div class="col-md-2 form-group">
-		    			<button class="btn btn-primary">추가</button>
+		    			<button class="btn btn-primary" id="approvalAddBtn">추가</button>
 		    		</div>
 	    		</div>
 	    		
 	    		<!-- 선택된 내용 출력 -->
-	    		<div><strong>[1]</strong> 부서, 직위, 이름 <a href="#"><span class="text-danger small pt-1 fw-bold">X</span></a></div>
+	    		<div id="approvalAddDiv">
+	    			<table border="1">
+	    				<tr></tr>
+	    				<tr></tr>
+	    			</table>
+	    		</div>
 	    	</div></div>
 	    </div></div>
 	    
@@ -417,11 +423,33 @@
 				
 				// 부서에 따른 이름출력
 				$(result).each(function(index, item){ 
-					$('#nameSelect').append('<option value="'+item.empNo+'">'+item.empName+' '+item.empGrade+'</option>');
+					$('#nameSelect').append('<option value="'+item.empNo+'">'+'<span id="nameAll">'+item.empName+' '+item.empGrade+'</span></option>');
 				});
 			}
 		});
 	});
+	
+	
+	
+	/* 결재서 추가 버튼 클릭 이벤트 */
+	$('#approvalAddBtn').click(function() {
+		 console.log('결재선 추가');
+
+		    // 변수 설정
+		    let departmentsVal = $('#departmentsSelect').val();
+		    let selectedOption = $('#nameSelect option:selected').val();
+		    let approvalNo = 0;
+
+		    console.log('departmentsVal--> ', departmentsVal);
+		    console.log('selectedOption--> ', selectedOption);
+
+		    // 첫 번째 tr에 새로운 td 추가
+		    $('#approvalAddDiv table tr:first').append('<td>' + selectedOption + '</td>');
+		    
+		    // 두 번째 tr에 새로운 td 추가
+		    $('#approvalAddDiv table tr:eq(1)').append('<td>1 (' + departmentsVal + ')</td>');
+	});
+	
 		
 	</script>
 </body>
