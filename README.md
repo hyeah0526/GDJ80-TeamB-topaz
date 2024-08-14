@@ -15,11 +15,12 @@
 <img src="https://github.com/hyeah0526/GDJ80-TeamB-topaz/blob/b604b4b91f1e67d116f6fbb620026f718346c888/topaz/src/main/resources/static/document/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EB%AA%85%EC%84%B8%EC%84%9C.png" width="800"/>
 
 
-## 4.  WBS / ERD / 테이블 정의서 / 전체 시연 영상
+## 4.  WBS / ERD / 테이블 정의서 / 전체 시연 영상 / 배포
 - [WBS 링크 이동](https://github.com/hyeah0526/GDJ80-TeamB-topaz/blob/b604b4b91f1e67d116f6fbb620026f718346c888/topaz/src/main/resources/static/document/WBS.png)
 - [ERD 다이어그램 링크 이동](https://github.com/hyeah0526/GDJ80-TeamB-topaz/blob/b604b4b91f1e67d116f6fbb620026f718346c888/topaz/src/main/resources/static/document/ERD.png)
 - [테이블 정의서](https://docs.google.com/spreadsheets/d/1pRGr-6jWC95Qof-Y3daB35SteG2AeWJwrXgm1-QNgTY/edit?usp=sharing)
 - [전체 시연 영상](https://drive.google.com/file/d/1A6D8HMPHWv3ssWJc-uqp4OXnm9PWonpR/view?usp=sharing)
+- [배포 링크 이동](http://52.79.81.56/topaz/login)
 
 ## 5. 담당 기능
 ### 1. 사내일정
